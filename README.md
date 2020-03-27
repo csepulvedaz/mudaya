@@ -80,29 +80,6 @@ Alongside the associated backend:
 * Have a reliable database access of potential customers and service providers 
 * Have a map-based approach between providers and customers
 
-## Configuration
-
-Here you should write what are all of the configurations a user can enter when
-using the project.
-
-#### Argument 1
-Type: `String`  
-Default: `'default value'`
-
-State what an argument does and how you can use it. If needed, you can provide
-an example below.
-
-Example:
-```bash
-awesome-project "Some other value"  # Prints "You're nailing this readme!"
-```
-
-#### Argument 2
-Type: `Number|Boolean`  
-Default: 100
-
-Copy-paste as many of these as you need.
-
 ## Contributing
 
 If you'd like to contribute, please fork the repository and use a feature
