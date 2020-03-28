@@ -1,4 +1,4 @@
-![Image description](public\Logo_MudaYa_low.png)
+![Image description](https://github.com/csepulvedaz/mudaya/blob/master/public/Logo_MudaYa_low.png)
 
 # MudaYa
 > Software Engineering II Proyect - Universidad Nacional de Colombia
