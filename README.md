@@ -1,4 +1,4 @@
-![Image description](public\Logo_MudaYa_low.PNG)
+![Image description](public\Logo_MudaYa_low.png)
 
 # MudaYa
 > Software Engineering II Proyect - Universidad Nacional de Colombia
