@@ -9,6 +9,8 @@ import {
     Redirect
 } from "react-router-dom";
 
+console.log(process.env.REACT_APP_GOOGLE_API_KEY)
+
 const App = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
