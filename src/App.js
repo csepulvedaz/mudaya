@@ -12,10 +12,16 @@ import {
 const App = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [surName, setSurName] = useState("");
+    const [identification, setIdentification] = useState("");
+    const [phone, setPhone] = useState("");
+
+    const [driver, setDriver] = useState(false);
 
     return (
         <Router>
-            <Redirect to="/" />
+            <Redirect to="/registro" />
             <Switch>
                 <Route exact path="/">
                     <Login
@@ -29,7 +35,15 @@ const App = () => {
                     <Main />
                 </Route>
                 <Route path="/registro">
-                    <Signin />
+                    <Signin 
+                        setEmail={setEmail}
+                        setPassword={setPassword}
+                        setFirstName={setFirstName}
+                        setSurName={setSurName}
+                        setIdentification={setIdentification}
+                        setPhone={setPhone}
+                        setDriver={setDriver}
+                    />
                 </Route>
             </Switch>
         </Router>

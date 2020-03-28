@@ -1,125 +1,167 @@
-//This is singup
-import React, { useState } from "react";
-import "antd/dist/antd.css";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-    Form,
-    Input,
-    Button,
-    Radio,
-    Select,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch
-} from "antd";
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const useStyles = makeStyles(() => ({
-    paper: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        background: "#ccc"
-    },
-    form: {
-        width: "500px",
-        background: "#fafafa"
-    },
-    input: {
-        height:"100px"
-    }
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-const Signin = () => {
-    const classes = useStyles();
-    const [componentSize, setComponentSize] = useState("small");
-
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
-    };
-
-    return (
-        <div className={classes.paper}>
-            <Form
-                className={classes.form}
-                labelCol={{
-                    span: 4
-                }}
-                wrapperCol={{
-                    span: 14
-                }}
-                layout="horizontal"
-                initialValues={{
-                    size: componentSize
-                }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize}
-            >
-                <Form.Item label="Form Size" name="size">
-                    <Radio.Group>
-                        <Radio.Button value="small">Small</Radio.Button>
-                        <Radio.Button value="middle">Middle</Radio.Button>
-                        <Radio.Button value="large">Large</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Input">
-                    <Input className={classes.input}/>
-                </Form.Item>
-                <Form.Item label="Select">
-                    <Select>
-                        <Select.Option value="demo">Demo</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item label="TreeSelect">
-                    <TreeSelect
-                        treeData={[
-                            {
-                                title: "Light",
-                                value: "light",
-                                children: [
-                                    {
-                                        title: "Bamboo",
-                                        value: "bamboo"
-                                    }
-                                ]
-                            }
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="Cascader">
-                    <Cascader
-                        options={[
-                            {
-                                value: "zhejiang",
-                                label: "Zhejiang",
-                                children: [
-                                    {
-                                        value: "hangzhou",
-                                        label: "Hangzhou"
-                                    }
-                                ]
-                            }
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="DatePicker">
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item label="InputNumber">
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item label="Switch">
-                    <Switch />
-                </Form.Item>
-                <Form.Item label="Button">
-                    <Button>Button</Button>
-                </Form.Item>
-            </Form>
-        </div>
-    );
+const handleClick = e => {
+    e.preventDefault();
 };
 
-export default Signin;
+const SignUp = props => {
+  const classes = useStyles();
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Registro
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                name="firstName"
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="Nombre"
+                autoFocus
+                onChange={e => props.setFirstName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="surName"
+                label="Apellido"
+                name="surName"
+                autoComplete="sname"
+                onChange={e => props.setSurName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="identification"
+                label="Cédula"
+                name="identification"
+                autoComplete="identification"
+                onChange={e => props.setIdentification(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phone"
+                label="Número de celular"
+                name="phone"
+                autoComplete="phone"
+                onChange={e => props.setPhone(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Correo electrónico"
+                name="email"
+                autoComplete="email"
+                onChange={e => props.setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Contraseña"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={e => props.setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="Soy Conductor"
+                onClick={handleClick}                
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="Soy Cliente"
+                onClick={handleClick} 
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Registrarse
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="#" variant="body2">
+                Ya estás registrado? Incia Sesión
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  );
+}
+
+export default SignUp;
