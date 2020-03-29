@@ -97,11 +97,12 @@ const Login = props => {
                             Ingresar
                         </Link>
                     </Button>
-                    <Grid container>
+                    <Grid container direction="row" justify="center">
                         <Grid item>
-                            <Link href="#" variant="body2">
-                                {"No tienes cuenta?"}
-                            </Link>
+                            <Typography variant="body1">
+                                No tienes cuenta?{" "}
+                                <Link to="/registro">Entra, es gratis!</Link>
+                            </Typography>
                         </Grid>
                     </Grid>
                 </form>
