@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 1px #ccc",
+        boxShadow: "1px 1px 10px #ccc",
         borderRadius: "5px",
         marginBottom: "10px"
     },
@@ -45,20 +45,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignUp = props => {
-    const [open, setOpen] = React.useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [id, setId] = useState("");
+    const [phone, setPhone] = useState("");
+    const [isDriver, setIsDriver] = useState(false);
+    const [visible, setVisible] = useState(false);
+
     const classes = useStyles();
     let history = useHistory();
 
     const toMain = () => {
         history.push("/principal");
-    }
-
-    const openModal = () => {
-        setOpen(true);
     };
 
-    const handleChange = () => {
-        props.setIsDriver(!props.isDriver);
+    const openModal = () => {
+        setVisible(true);
+    };
+
+    const handleCheckbox = () => {
+        setIsDriver(!props.isDriver);
     };
 
     return (
@@ -78,7 +86,7 @@ const SignUp = props => {
                                 fullWidth
                                 label="Nombre"
                                 autoFocus
-                                onChange={e => props.setName(e.target.value)}
+                                onChange={e => setName(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -87,7 +95,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Apellido"
-                                onChange={e => props.setSurname(e.target.value)}
+                                onChange={e => setSurname(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -96,7 +104,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Cédula"
-                                onChange={e => props.setId(e.target.value)}
+                                onChange={e => setId(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -105,7 +113,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Número celular"
-                                onChange={e => props.setPhone(e.target.value)}
+                                onChange={e => setPhone(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -114,7 +122,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Correo electrónico"
-                                onChange={e => props.setEmail(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -124,9 +132,7 @@ const SignUp = props => {
                                 fullWidth
                                 label="Contraseña"
                                 type="password"
-                                onChange={e =>
-                                    props.setPassword(e.target.value)
-                                }
+                                onChange={e => setPassword(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -134,8 +140,8 @@ const SignUp = props => {
                                 control={
                                     <Checkbox
                                         color="primary"
-                                        checked={!props.isDriver}
-                                        onChange={handleChange}
+                                        checked={!isDriver}
+                                        onChange={handleCheckbox}
                                     />
                                 }
                                 label="Soy Cliente"
@@ -144,8 +150,8 @@ const SignUp = props => {
                                 control={
                                     <Checkbox
                                         color="primary"
-                                        checked={props.isDriver}
-                                        onChange={handleChange}
+                                        checked={isDriver}
+                                        onChange={handleCheckbox}
                                     />
                                 }
                                 label="Soy Conductor"
@@ -158,11 +164,11 @@ const SignUp = props => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={(props.isDriver)? openModal : toMain}
+                    onClick={isDriver ? openModal : toMain}
                 >
                     Registrarse
                 </Button>
-                <Modal open={open} />
+                <Modal visible={visible} />
             </div>
         </Container>
     );

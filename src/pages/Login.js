@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 1px #ccc",
+        boxShadow: "1px 1px 10px #ccc",
         borderRadius: "5px"
     },
     form: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center"
     },
     submit: {
-        margin: theme.spacing(4, 0, 2),
+        margin: theme.spacing(4, 0, 3),
         width: "100%"
     },
     truck: {
@@ -46,6 +46,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = props => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const classes = useStyles();
     let history = useHistory();
 
@@ -71,7 +73,7 @@ const Login = props => {
                         label="Correo"
                         autoComplete="email"
                         autoFocus
-                        onChange={e => props.setEmail(e.target.value)}
+                        onChange={e => setEmail(e.target.value)}
                         // onKeyDown={e => {
                         //     if (e.key === "Enter") props.onPressLogin();
                         // }}
@@ -84,7 +86,7 @@ const Login = props => {
                         label="Contraseña"
                         type="password"
                         // autoComplete="current-password"
-                        onChange={e => props.setPassword(e.target.value)}
+                        onChange={e => setPassword(e.target.value)}
                         // onKeyDown={e => {
                         //     if (e.key === "Enter") props.onPressLogin();
                         // }}

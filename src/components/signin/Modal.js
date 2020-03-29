@@ -24,7 +24,7 @@ const Login = props => {
 
     return (
         <Modal
-            visible={props.open}
+            visible={props.visible}
             closable={false}
             title={
                 <div className={classes.modalText}>
