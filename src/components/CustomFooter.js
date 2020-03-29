@@ -7,7 +7,7 @@ const CustomFooter = () => {
 
     return (
         <Footer theme="light" style={{ textAlign: 'center' }}>
-            proc
+            Footer
         </Footer>
     );
 };
