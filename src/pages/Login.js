@@ -10,19 +10,25 @@ import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
+    "@global": {
+        body: {
+            height: "0px",
+            background: "#fafafa"
+        }
+    },
     paper: {
         marginTop: theme.spacing(12),
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main
+        alignItems: "center",
+        backgroundColor: "#fff",
+        padding: "30px",
+        boxShadow: "1px 1px 1px #ccc",
+        borderRadius: "5px"
     },
     form: {
-        width: "80%", // Fix IE 11 issue.
+        width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(1),
         display: "flex",
         flexDirection: "column",
@@ -30,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center"
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(4, 0, 2),
         width: "100%"
     },
     truck: {
@@ -38,10 +44,6 @@ const useStyles = makeStyles(theme => ({
         color: "#ccc"
     }
 }));
-
-const handleClick = e => {
-    e.preventDefault();
-};
 
 const Login = props => {
     const classes = useStyles();
@@ -82,26 +84,33 @@ const Login = props => {
                         //     if (e.key === "Enter") props.onPressLogin();
                         // }}
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={handleClick}
+                    <Link
+                        to="/principal"
+                        style={{ textDecoration: "none", color: "#fff" }}
                     >
-                        <Link
-                            to="/principal"
-                            style={{ textDecoration: "none", color: "#fff" }}
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
                         >
                             Ingresar
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                     <Grid container direction="row" justify="center">
                         <Grid item>
                             <Typography variant="body1">
                                 No tienes cuenta?{" "}
-                                <Link to="/registro">Entra, es gratis!</Link>
+                                <Link
+                                    to="/registro"
+                                    style={{
+                                        textDecoration: "none",
+                                        color: "#FF544D"
+                                    }}
+                                >
+                                    Entra, es gratis!
+                                </Link>
                             </Typography>
                         </Grid>
                     </Grid>

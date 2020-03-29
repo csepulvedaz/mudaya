@@ -9,25 +9,34 @@ import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link } from "react-router-dom";
+import Modal from "../components/signin/Modal";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
+    "@global": {
+        body: {
+            height: "0px",
+            backgroundColor: "#fafafa"
+        }
+    },
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(7),
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+        padding: "30px",
+        boxShadow: "1px 1px 1px #ccc",
+        borderRadius: "5px",
+        marginBottom: "10px"
     },
     form: {
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(3)
     },
     submit: {
-        margin: theme.spacing(3, 0, 2)
+        margin: theme.spacing(2, 0, 0)
     },
     truck: {
         fontSize: "50px",
@@ -36,11 +45,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignUp = props => {
-    const handleChange = event => {
-        props.setIsDriver(!props.isDriver);
+    const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
+    let history = useHistory();
+
+    const toMain = () => {
+        history.push("/principal");
+    }
+
+    const openModal = () => {
+        setOpen(true);
     };
 
-    const classes = useStyles();
+    const handleChange = () => {
+        props.setIsDriver(!props.isDriver);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -133,21 +152,17 @@ const SignUp = props => {
                             />
                         </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        <Link
-                            to="/principal"
-                            style={{ textDecoration: "none", color: "#fff" }}
-                        >
-                            Registrarse
-                        </Link>
-                    </Button>
                 </form>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={(props.isDriver)? openModal : toMain}
+                >
+                    Registrarse
+                </Button>
+                <Modal open={open} />
             </div>
         </Container>
     );
