@@ -1,124 +1,156 @@
-import React, { useState } from "react";
-import "antd/dist/antd.css";
+import React from "react";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-    Form,
-    Input,
-    Button,
-    Radio,
-    Select,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch
-} from "antd";
+import Container from "@material-ui/core/Container";
+import { Link } from "react-router-dom";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     paper: {
+        marginTop: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        background: "#ccc"
+        alignItems: "center"
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main
     },
     form: {
-        width: "500px",
-        background: "#fafafa"
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(3)
     },
-    input: {
-        height:"100px"
+    submit: {
+        margin: theme.spacing(3, 0, 2)
+    },
+    truck: {
+        fontSize: "50px",
+        color: "#ccc"
     }
 }));
 
-const Signin = () => {
-    const classes = useStyles();
-    const [componentSize, setComponentSize] = useState("small");
-
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
+const SignUp = props => {
+    const handleChange = event => {
+        props.setIsDriver(!props.isDriver);
     };
 
+    const classes = useStyles();
+
     return (
-        <div className={classes.paper}>
-            <Form
-                className={classes.form}
-                labelCol={{
-                    span: 4
-                }}
-                wrapperCol={{
-                    span: 14
-                }}
-                layout="horizontal"
-                initialValues={{
-                    size: componentSize
-                }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize}
-            >
-                <Form.Item label="Form Size" name="size">
-                    <Radio.Group>
-                        <Radio.Button value="small">Small</Radio.Button>
-                        <Radio.Button value="middle">Middle</Radio.Button>
-                        <Radio.Button value="large">Large</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Input">
-                    <Input className={classes.input}/>
-                </Form.Item>
-                <Form.Item label="Select">
-                    <Select>
-                        <Select.Option value="demo">Demo</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item label="TreeSelect">
-                    <TreeSelect
-                        treeData={[
-                            {
-                                title: "Light",
-                                value: "light",
-                                children: [
-                                    {
-                                        title: "Bamboo",
-                                        value: "bamboo"
-                                    }
-                                ]
-                            }
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="Cascader">
-                    <Cascader
-                        options={[
-                            {
-                                value: "zhejiang",
-                                label: "Zhejiang",
-                                children: [
-                                    {
-                                        value: "hangzhou",
-                                        label: "Hangzhou"
-                                    }
-                                ]
-                            }
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="DatePicker">
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item label="InputNumber">
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item label="Switch">
-                    <Switch />
-                </Form.Item>
-                <Form.Item label="Button">
-                    <Button>Button</Button>
-                </Form.Item>
-            </Form>
-        </div>
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+                <LocalShippingIcon className={classes.truck} />
+                <Typography component="h1" variant="h5">
+                    Registro
+                </Typography>
+                <form className={classes.form} noValidate>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Nombre"
+                                autoFocus
+                                onChange={e => props.setName(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Apellido"
+                                onChange={e => props.setSurname(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Cédula"
+                                onChange={e => props.setId(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Número celular"
+                                onChange={e => props.setPhone(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Correo electrónico"
+                                onChange={e => props.setEmail(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                label="Contraseña"
+                                type="password"
+                                onChange={e =>
+                                    props.setPassword(e.target.value)
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        color="primary"
+                                        checked={!props.isDriver}
+                                        onChange={handleChange}
+                                    />
+                                }
+                                label="Soy Cliente"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        color="primary"
+                                        checked={props.isDriver}
+                                        onChange={handleChange}
+                                    />
+                                }
+                                label="Soy Conductor"
+                            />
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        <Link
+                            to="/principal"
+                            style={{ textDecoration: "none", color: "#fff" }}
+                        >
+                            Registrarse
+                        </Link>
+                    </Button>
+                </form>
+            </div>
+        </Container>
     );
 };
 
-export default Signin;
+export default SignUp;

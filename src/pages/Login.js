@@ -2,13 +2,12 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
-
-import "../index.css";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -49,6 +48,7 @@ const Login = props => {
 
     return (
         <Container component="main" maxWidth="xs">
+            <CssBaseline />
             <div className={classes.paper}>
                 <LocalShippingIcon className={classes.truck} />
 
@@ -64,7 +64,6 @@ const Login = props => {
                         label="Correo"
                         autoComplete="email"
                         autoFocus
-                        value={props.email}
                         onChange={e => props.setEmail(e.target.value)}
                         // onKeyDown={e => {
                         //     if (e.key === "Enter") props.onPressLogin();
@@ -78,7 +77,6 @@ const Login = props => {
                         label="Contraseña"
                         type="password"
                         // autoComplete="current-password"
-                        value={props.password}
                         onChange={e => props.setPassword(e.target.value)}
                         // onKeyDown={e => {
                         //     if (e.key === "Enter") props.onPressLogin();
@@ -92,17 +90,17 @@ const Login = props => {
                         className={classes.submit}
                         onClick={handleClick}
                     >
-                        <Link to="/principal" style={{textDecoration:"none", color:"#fff"}}>Ingresar</Link>
+                        <Link
+                            to="/principal"
+                            style={{ textDecoration: "none", color: "#fff" }}
+                        >
+                            Ingresar
+                        </Link>
                     </Button>
                     <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
                         <Grid item>
                             <Link href="#" variant="body2">
-                                {"No tienes cuenta? Entra"}
+                                {"No tienes cuenta?"}
                             </Link>
                         </Grid>
                     </Grid>
