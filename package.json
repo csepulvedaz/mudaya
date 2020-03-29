@@ -9,8 +9,12 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.0.4",
+    "dotenv": "^8.2.0",
+    "google-maps-react": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-google-maps": "^9.4.5",
+    "react-infinite-scroller": "^1.2.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"
   },
@@ -34,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "reqwest": "^2.0.5"
   }
 }
