@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
 import Main from "./pages/Main";
+import VehicleForm from "./pages/VehicleForm";
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,7 +10,7 @@ import {
     Redirect
 } from "react-router-dom";
 
-console.log(process.env.REACT_APP_GOOGLE_API_KEY)
+console.log(process.env.REACT_APP_GOOGLE_API_KEY);
 
 const App = () => {
     const [email, setEmail] = useState("");
@@ -24,16 +25,13 @@ const App = () => {
         <Router>
             <Switch>
                 <Route exact path="/">
-                    <Login
-                        setEmail={setEmail}
-                        setPassword={setPassword}
-                    />
+                    <Login setEmail={setEmail} setPassword={setPassword} />
                 </Route>
                 <Route path="/principal">
                     <Main />
                 </Route>
                 <Route path="/registro">
-                    <Signin 
+                    <Signin
                         setEmail={setEmail}
                         setPassword={setPassword}
                         setName={setName}
@@ -43,6 +41,9 @@ const App = () => {
                         setIsDriver={setIsDriver}
                         isDriver={isDriver}
                     />
+                </Route>
+                <Route path="/vehiculo">
+                    <VehicleForm />
                 </Route>
             </Switch>
         </Router>
