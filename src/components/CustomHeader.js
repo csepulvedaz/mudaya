@@ -1,7 +1,10 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import {Layout, Menu} from "antd";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const { Header } = Layout;
 const useStyles = makeStyles(theme => ({
@@ -11,6 +14,14 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
+    },
+    profile: {
+        fontSize: "45px",
+        color: "#ccc",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBlockEnd : "9px"
     }
 }));
 
@@ -28,12 +39,21 @@ const CustomHeader = () => {
             }}
         >
             <Menu theme="light" mode="horizontal" defaultSelectedKeys={["0"]}>
-                <Menu.Item key="0">
+                <Menu.Item key="0" title = "Inicio" onClick={event =>  window.location.href='/principal'}>
                     <LocalShippingIcon className={classes.truck} />
                 </Menu.Item>
-                <Menu.Item key="1">nav 1</Menu.Item>
-                <Menu.Item key="2">nav 2</Menu.Item>
-                <Menu.Item key="3">nav 3</Menu.Item>
+                <Menu.Item key="1" title = "Mi Perfil">
+                    <AccountCircleIcon className={classes.profile} />
+                </Menu.Item>
+                {/*<Menu.Item key="2" title = "Mis Coversaciones">*/}
+                {/*    <ChatIcon className={classes.profile} />*/}
+                {/*</Menu.Item>*/}
+                <Menu.Item key="3" title = "Mis Pedidos">
+                    <AssignmentIcon className={classes.profile} />
+                </Menu.Item>
+                <Menu.Item key="4" title = "Cerrar Sesion" onClick={event =>  window.location.href='/'}>
+                    <ExitToAppIcon className={classes.profile} />
+                </Menu.Item>
             </Menu>
         </Header>
     );

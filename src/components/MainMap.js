@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import React, {Component} from 'react';
+import {GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
 
 import CurrentLocation from './Location';
 
@@ -32,7 +32,7 @@ export class MapContainer extends Component {
                 centerAroundCurrentLocation
                 google={this.props.google}
             >
-                <Marker onClick={this.onMarkerClick} name={'current location'} />
+                <Marker onClick={this.onMarkerClick} name={'Tu ubicacion'} />
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
