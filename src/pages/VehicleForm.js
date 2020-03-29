@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 1px #ccc",
+        boxShadow: "1px 1px 10px #ccc",
         borderRadius: "5px",
         marginBottom: "10px"
     },

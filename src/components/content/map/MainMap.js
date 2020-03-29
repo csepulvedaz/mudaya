@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
-
 import CurrentLocation from './Location';
 
 export class MapContainer extends Component {
