@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     "@global": {
@@ -47,6 +47,11 @@ const useStyles = makeStyles(theme => ({
 
 const Login = props => {
     const classes = useStyles();
+    let history = useHistory();
+
+    const handleOnClick = () => {
+        history.push("/principal");
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -84,20 +89,18 @@ const Login = props => {
                         //     if (e.key === "Enter") props.onPressLogin();
                         // }}
                     />
-                    <Link
-                        to="/principal"
-                        style={{ textDecoration: "none", color: "#fff" }}
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={handleOnClick}
                     >
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
                             Ingresar
-                        </Button>
-                    </Link>
+                    </Button>
+
                     <Grid container direction="row" justify="center">
                         <Grid item>
                             <Typography variant="body1">
@@ -105,8 +108,7 @@ const Login = props => {
                                 <Link
                                     to="/registro"
                                     style={{
-                                        textDecoration: "none",
-                                        color: "#FF544D"
+                                        textDecoration: "none"
                                     }}
                                 >
                                     Entra, es gratis!
