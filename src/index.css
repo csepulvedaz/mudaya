@@ -13,3 +13,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-btn:hover, .ant-btn:focus {
+  color: #FCB625 !important;
+  background-color: #fff;
+  border-color: #FCB625 !important;
+}

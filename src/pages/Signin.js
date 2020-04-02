@@ -66,7 +66,7 @@ const SignUp = props => {
     };
 
     const handleCheckbox = () => {
-        setIsDriver(!props.isDriver);
+        setIsDriver(!isDriver);
     };
 
     return (
