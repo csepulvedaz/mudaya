@@ -21,7 +21,7 @@ const Main = () => {
     return (
         <Layout theme="light">
             <CustomHeader />
-            <CustomContent></CustomContent>
+            <CustomContent/>
             <CustomFooter />
         </Layout>
     );
