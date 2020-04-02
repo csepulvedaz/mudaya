@@ -2,6 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
+import CardService from "./CardService";
 
 const { Content } = Layout;
 
@@ -22,7 +23,11 @@ const useStyles = makeStyles(theme => ({
 
 const CustomContent = () => {
     const classes = useStyles();
-    return <Content className={classes.content}></Content>;
+    return (<Content className={classes.content}>
+        <div>
+            <CardService/>
+        </div>
+    </Content>);
 };
 
 export default CustomContent;
