@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Button } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const { Header } = Layout;
 
@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "space-between",
         position: "fixed",
         width: "100%",
-        padding: "0",
         background: "#fff",
         height: "auto",
         zIndex: "1",
@@ -49,13 +48,17 @@ const useStyles = makeStyles(theme => ({
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         backgroundColor: " #ffffff"
     },
-    icon: { fontSize: "40px", color: "#42c3cf" },
+    icon: {
+        fontSize: "40px",
+        color: "#42c3cf"
+    },
     button: {
         height: "45px",
         margin: "10px 20px",
-        borderRadius: "5px",
+        borderRadius: "9px",
         background: "#FCB625",
         color: "#fff",
+        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         fontSize: "16px"
     },
     container: {
@@ -65,8 +68,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CustomHeader = () => {
+    const [navigate, setNavigate] = useState(false);
     const classes = useStyles();
-    let history = useHistory();
+
+    const logout = () => {
+        localStorage.clear("token");
+        setNavigate(true);
+    };
+    if (navigate) return <Redirect to="/" push={true} />;
     return (
         <Header theme="light" className={classes.header}>
             <div className={classes.container}>
@@ -76,7 +85,7 @@ const CustomHeader = () => {
                     </p>
                 </div>
                 <Button
-                    icon={<AccountCircleIcon className={classes.icon} />}
+                    icon={<PersonIcon className={classes.icon} />}
                     className={classes.box}
                     onClick={() => alert("Perfil presionado")}
                 />
@@ -84,14 +93,14 @@ const CustomHeader = () => {
             <div className={classes.container}>
                 <Button
                     className={classes.button}
-                    onClick={() => alert("Perfil presionado")}
+                    // onClick={() => alert("Vehiculo presionado")}
                 >
                     PUBLICA TU VEHICULO
                 </Button>
                 <Button
                     icon={<ExitToAppIcon className={classes.icon} />}
                     className={classes.box}
-                    onClick={() => history.push("/")}
+                    onClick={logout}
                 />
             </div>
         </Header>

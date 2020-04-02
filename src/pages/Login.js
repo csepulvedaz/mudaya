@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Login = props => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const classes = useStyles();
@@ -83,6 +83,7 @@ const Login = props => {
                         margin="normal"
                         required
                         fullWidth
+                        autoComplete="current-password"
                         label="Contraseña"
                         type="password"
                         // autoComplete="current-password"
@@ -93,7 +94,7 @@ const Login = props => {
                     />
 
                     <Button
-                        type="submit"
+                        // type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"

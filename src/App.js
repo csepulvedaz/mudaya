@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
 import Main from "./pages/Main";
@@ -7,7 +7,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Redirect
+    // Redirect
 } from "react-router-dom";
 
 const App = () => {

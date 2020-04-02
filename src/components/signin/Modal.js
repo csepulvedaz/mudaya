@@ -35,19 +35,13 @@ const Login = props => {
                 </div>
             }
             footer={[
-                <Link to="/principal" className={classes.link}>
-                    <Button
-                        key="back"
-                        key="submit"
-                        variant="contained"
-                        className={classes.submit}
-                    >
+                <Link to="/principal" key="back" className={classes.link}>
+                    <Button variant="contained" className={classes.submit}>
                         Ahora no
                     </Button>
                 </Link>,
-                <Link to="/vehiculo" className={classes.link}>
+                <Link to="/vehiculo" key="submit" className={classes.link}>
                     <Button
-                        key="submit"
                         variant="contained"
                         color="primary"
                         className={classes.submit}
