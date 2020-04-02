@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
-import CardService from "./CardService";
+import ServicesCardPanel from "./ServicesCardPanel";
 
 const { Content } = Layout;
 
@@ -24,9 +24,7 @@ const useStyles = makeStyles(theme => ({
 const CustomContent = () => {
     const classes = useStyles();
     return (<Content className={classes.content}>
-        <div>
-            <CardService/>
-        </div>
+        <ServicesCardPanel/>
     </Content>);
 };
 

@@ -3,9 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-//import testimage from "../../assets/ourservices1.jpg";
 import CardMedia from '@material-ui/core/CardMedia';
-import Collapse from '@material-ui/core/Collapse';
 import illustration1 from "../../assets/ourservices1.jpg";  
 
 const useStyles = makeStyles({
@@ -16,6 +14,7 @@ const useStyles = makeStyles({
     height: "250px",
     boxShadow: "0 6px 4px 0 rgba(0, 0, 0, 0.16)",
     backgroundColor: "#ffffff",
+    margin: "10px 25px",
   },
   cardTitle: {
     width: "135px",
@@ -44,10 +43,8 @@ const useStyles = makeStyles({
   },
   media: {
     height:"120px",
-    paddingTop: '56.25%', // 16:9
     width: "135px",
     margin: "0px 0px 16px 0px",
-    //height: "120px",
   },
 });
 
