@@ -3,7 +3,7 @@ import { Layout, Button } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const { Header } = Layout;
 
@@ -70,11 +70,16 @@ const useStyles = makeStyles(theme => ({
 const CustomHeader = () => {
     const [navigate, setNavigate] = useState(false);
     const classes = useStyles();
+    let history = useHistory();
 
     const logout = () => {
         localStorage.clear("token");
         setNavigate(true);
     };
+    const toProfile = () => {
+        history.push("/perfil");
+    };
+
     if (navigate) return <Redirect to="/" push={true} />;
     return (
         <Header theme="light" className={classes.header}>
@@ -87,7 +92,8 @@ const CustomHeader = () => {
                 <Button
                     icon={<PersonIcon className={classes.icon} />}
                     className={classes.box}
-                    onClick={() => alert("Perfil presionado")}
+                    //onClick={() => alert("Perfil presionado")}
+                    onClick={toProfile}
                 />
             </div>
             <div className={classes.container}>

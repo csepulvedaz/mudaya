@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Signin from "./pages/Signin";
 import Main from "./pages/Main";
 import VehicleForm from "./pages/VehicleForm";
+import Profile from "./pages/Profile";
 import {
     BrowserRouter as Router,
     Switch,
@@ -25,6 +26,9 @@ const App = () => {
                 </Route>
                 <Route path="/vehiculo">
                     <VehicleForm />
+                </Route>
+                <Route path="/perfil">
+                    <Profile/>
                 </Route>
             </Switch>
         </Router>
