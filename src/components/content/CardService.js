@@ -56,16 +56,20 @@ export default function CardService() {
       <CardContent>
         <div>
           <Typography className={classes.cardTitle} >
+            {/*this.props.serviceCards.title*/}
             PUBLICACIÓN DE VEHÍCULO
           </Typography>
 
           <CardMedia
               className={classes.media}
+              /*this.props.serviceCards.imageSource*/
+              /*this.props.serviceCards.imageTitle*/
               image={illustration1}
               title="Ilustration 1"
           />
 
           <Typography className={classes.cardText} >
+            {/*this.props.serviceCards.text*/}
             Haz conocer tu negocio
           </Typography>
         </div>
