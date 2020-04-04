@@ -4,14 +4,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import img from "../../assets/ourservices1.jpg";
 
 const useStyles = makeStyles({
     root: {
         width: "190px",
         margin: "10px 25px",
-        height:"230px",
-        borderRadius:"9px"
+        height: "230px",
+        borderRadius: "9px",
     },
     cardTitle: {
         fontSize: "15px",
@@ -28,28 +27,29 @@ const useStyles = makeStyles({
     },
 });
 
-export default function CardService() {
+export default function CardService(props) {
     const classes = useStyles();
 
     return (
         <Card className={classes.root} elevation={4}>
             <CardContent className={classes.content}>
                 <Typography className={classes.cardTitle}>
-                    {/*this.props.serviceCards.title*/}
-                    PUBLICACIÓN DE VEHÍCULO
+                    {props.text}
                 </Typography>
 
                 <CardMedia
                     className={classes.media}
-                    /*this.props.serviceCards.imageSource*/
-                    /*this.props.serviceCards.imageTitle*/
-                    image={img}
+                    image={props.image}
                     title="img"
                 />
 
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {/*this.props.serviceCards.text*/}
-                    Haz conocer tu negocio
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    align="center"
+                >
+                    {props.describe}
                 </Typography>
             </CardContent>
         </Card>
