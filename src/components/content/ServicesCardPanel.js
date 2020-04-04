@@ -9,31 +9,72 @@ import img4 from "../../assets/ourservices4.jpg";
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        height: "300px",
         display: "flex",
-        flexDirection: "row",
         justifyContent: "center",
-        backdropFilter: "blur(9px)",
-        padding: "20px 0px",
+        margin: "20px 0px",
+    },
+    box: {
+        // width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backdropFilter: "blur(9px) brightness(100%) contrast(40%)",
+        borderRadius: "13px",
+        padding: "20px 20px",
+        letterSpacing: "2px",
+    },
+    panel: {
+        display: "flex",
+        justifyContent: "center",
+    },
+    title: {
+        textAlign: "center",
+        color: "#ffffff",
+        fontWeight: "600",
+        fontSize: "22px",
     },
 }));
 
 const ServicesCardPanel = () => {
     const classes = useStyles();
-    const text1 = "PUBLICACIÓN";
-    const text2 = "EMPRESAS";
-    const text3 = "HOGARES";
-    const text4 = "LARGA DISTANCIA";
-    const describe1 = "Haz conocer tu negocio";
-    const describe2 = "Apropiado para grandes volumenes";
-    const describe3 = "Ideal para mudanzas familiares";
-    const describe4 = "Especial para grandes recorridos";
+    const services = [
+        {
+            img: img1,
+            text: "PUBLICACIÓN",
+            description: "Haz conocer tu negocio",
+        },
+        {
+            img: img2,
+            text: "EMPRESAS",
+            description: "Apropiado para grandes volumenes",
+        },
+        {
+            img: img3,
+            text: "HOGARES",
+            description: "Ideal para mudanzas familiares",
+        },
+        {
+            img: img4,
+            text: "LARGA DISTANCIA",
+            description: "Especial para grandes recorridos",
+        },
+    ];
     return (
         <div className={classes.content}>
-            <CardService image={img1} text={text1} describe={describe1}/>
-            <CardService image={img2} text={text2} describe={describe2}/>
-            <CardService image={img3} text={text3} describe={describe3}/>
-            <CardService image={img4} text={text4} describe={describe4}/>
+            <div className={classes.box}>
+                <h3 className={classes.title} gutterBottom={true}>
+                    NUESTROS SERVICIOS
+                </h3>
+                <div className={classes.panel}>
+                    {services.map((value, index) => (
+                        <CardService
+                            key={index}
+                            image={value.img}
+                            text={value.text}
+                            description={value.description}
+                        />
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };

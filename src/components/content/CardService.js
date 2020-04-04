@@ -8,13 +8,13 @@ import CardMedia from "@material-ui/core/CardMedia";
 const useStyles = makeStyles({
     root: {
         width: "190px",
-        margin: "10px 25px",
         height: "230px",
+        margin: "10px 25px",
         borderRadius: "9px",
     },
     cardTitle: {
         fontSize: "15px",
-        fontWeight: "bold",
+        fontWeight: "600",
         lineHeight: "1.33",
         textAlign: "center",
         color: "#505050",
@@ -32,7 +32,7 @@ export default function CardService(props) {
 
     return (
         <Card className={classes.root} elevation={4}>
-            <CardContent className={classes.content}>
+            <CardContent>
                 <Typography className={classes.cardTitle}>
                     {props.text}
                 </Typography>
@@ -49,7 +49,7 @@ export default function CardService(props) {
                     component="p"
                     align="center"
                 >
-                    {props.describe}
+                    {props.description}
                 </Typography>
             </CardContent>
         </Card>
