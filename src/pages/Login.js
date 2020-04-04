@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
@@ -9,12 +9,12 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Link, useHistory } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
             height: "0px",
-            background: "#fafafa"
-        }
+            background: "#fafafa",
+        },
     },
     paper: {
         marginTop: theme.spacing(12),
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#fff",
         padding: "30px",
         boxShadow: "1px 1px 10px #ccc",
-        borderRadius: "5px"
+        borderRadius: "5px",
     },
     form: {
         width: "100%", // Fix IE 11 issue.
@@ -33,16 +33,16 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     submit: {
         margin: theme.spacing(4, 0, 3),
-        width: "100%"
+        width: "100%",
     },
     truck: {
         fontSize: "100px",
-        color: "#ccc"
-    }
+        color: "#ccc",
+    },
 }));
 
 const Login = () => {
@@ -53,7 +53,7 @@ const Login = () => {
 
     const handleOnClick = () => {
         history.push("/principal");
-    }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -73,7 +73,7 @@ const Login = () => {
                         label="Correo"
                         autoComplete="email"
                         autoFocus
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         // onKeyDown={e => {
                         //     if (e.key === "Enter") props.onPressLogin();
                         // }}
@@ -87,7 +87,7 @@ const Login = () => {
                         label="Contraseña"
                         type="password"
                         // autoComplete="current-password"
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                         // onKeyDown={e => {
                         //     if (e.key === "Enter") props.onPressLogin();
                         // }}
@@ -101,7 +101,7 @@ const Login = () => {
                         className={classes.submit}
                         onClick={handleOnClick}
                     >
-                            Ingresar
+                        Ingresar
                     </Button>
 
                     <Grid container direction="row" justify="center">
@@ -111,7 +111,7 @@ const Login = () => {
                                 <Link
                                     to="/registro"
                                     style={{
-                                        textDecoration: "none"
+                                        textDecoration: "none",
                                     }}
                                 >
                                     Entra, es gratis!
