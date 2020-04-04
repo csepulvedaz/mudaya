@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         // justifyContent: "center",
-        alignItems:"center",
+        // alignItems:"flex-end",
         background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
         backgroundColor: "#fafafa",

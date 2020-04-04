@@ -49,7 +49,7 @@ export default function CardService(props) {
                     component="p"
                     align="center"
                 >
-                    {props.describe}
+                    {props.description}
                 </Typography>
             </CardContent>
         </Card>
