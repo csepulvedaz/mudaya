@@ -41,25 +41,29 @@ const VehiclesCardPanel = () => {
             capacity: "10",
             vehicleHeight: "3",
             stars: 1,
-        },{
+        },
+        {
             img: img1,
             title: "Camión",
             capacity: "8",
             vehicleHeight: "2.5",
             stars: 4,
-        },{
+        },
+        {
             img: img1,
             title: "Tractomula",
             capacity: "5",
             vehicleHeight: "3",
             stars: 3.5,
-        },{
+        },
+        {
             img: img1,
             title: "Camioneta",
             capacity: "7",
             vehicleHeight: "3",
             stars: 5,
-        },{
+        },
+        {
             img: img1,
             title: "Van",
             capacity: "4",
@@ -76,6 +80,7 @@ const VehiclesCardPanel = () => {
                 <div className={classes.panel}>
                     {vehicles.map((value, index) => (
                         <CardVehicle
+                            key={index}
                             image={value.img}
                             title={value.title}
                             capacity={value.capacity}

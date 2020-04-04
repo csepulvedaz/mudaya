@@ -61,7 +61,7 @@ const ServicesCardPanel = () => {
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title} gutterBottom={true}>
+                <h3 className={classes.title}>
                     NUESTROS SERVICIOS
                 </h3>
                 <div className={classes.panel}>
