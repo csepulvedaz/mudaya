@@ -4,21 +4,23 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const { Footer } = Layout;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     footer: {
-        textAlign: "center"
-    }
+        textAlign: "center",
+        background: "#727272",
+        color: "#fff",
+    },
 }));
 
 const CustomFooter = () => {
     const classes = useStyles();
     return (
-        <Footer theme="light" className={classes.footer}>
-            MudaYa ©2020 Created for Software Engineering II
+        <Footer className={classes.footer}>
+            UNIVERSIDAD NACIONAL DE COLOMBIA
             <br />
-            Universidad Nacional de Colombia
+            INGENIERIA DE SOFTWARE II
             <br />
-            All Rights reserved. For further information
+            MudaYa ©2020 Todos los derechos reservados.
             <br />
         </Footer>
     );

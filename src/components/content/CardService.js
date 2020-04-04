@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     },
     cardTitle: {
         fontSize: "15px",
-        fontWeight: "bold",
+        fontWeight: "600",
         lineHeight: "1.33",
         textAlign: "center",
         color: "#505050",

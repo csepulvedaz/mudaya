@@ -10,11 +10,27 @@ const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
         display: "flex",
-        flexDirection: "row",
         justifyContent: "center",
-        backdropFilter: "blur(9px)",
-        padding: "20px 0px",
         margin: "20px 0px",
+    },
+    box: {
+        // width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backdropFilter: "blur(9px) brightness(100%) contrast(40%)",
+        borderRadius: "13px",
+        padding: "20px 20px",
+        letterSpacing: "2px",
+    },
+    panel: {
+        display: "flex",
+        justifyContent: "center",
+    },
+    title: {
+        textAlign: "center",
+        color: "#ffffff",
+        fontWeight: "600",
+        fontSize: "22px",
     },
 }));
 
@@ -44,13 +60,21 @@ const ServicesCardPanel = () => {
     ];
     return (
         <div className={classes.content}>
-            {services.map((value) => (
-                <CardService
-                    image={value.img}
-                    text={value.text}
-                    description={value.description}
-                />
-            ))}
+            <div className={classes.box}>
+                <h3 className={classes.title} gutterBottom={true}>
+                    NUESTROS SERVICIOS
+                </h3>
+                <div className={classes.panel}>
+                    {services.map((value, index) => (
+                        <CardService
+                            key={index}
+                            image={value.img}
+                            text={value.text}
+                            description={value.description}
+                        />
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };

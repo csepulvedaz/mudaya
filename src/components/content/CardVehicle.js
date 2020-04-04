@@ -5,17 +5,42 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import { CardActionArea } from "@material-ui/core";
+import { Rate, Button } from "antd";
 
 const useStyles = makeStyles({
     root: {
         width: "170px",
-        height: "180px",
-        margin: "10px 25px",
+        height: "220px",
+        margin: "20px 25px",
         borderRadius: "9px",
     },
     media: {
         height: 50,
         marginTop: "15px",
+    },
+    title: { textAlign: "center", color: "#3d3d3d" },
+    text: {
+        fontSize: "12px",
+        textAlign: "center",
+    },
+    boldText: { fontWeight: "bold" },
+    footer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    rate: {
+        margin: "5px 0px",
+        fontSize: "14px",
+    },
+    button: {
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: "#FCB625",
+        color: "#fff",
+        fontWeight:"600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        fontSize: "13px",
     },
 });
 
@@ -33,18 +58,50 @@ export default function CardVehicle(props) {
             </CardActionArea>
             <CardContent>
                 <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     color="textPrimary"
                     component="p"
+                    className={classes.title}
+                    gutterBottom={true}
                 >
                     {props.title}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    - Capacidad: {props.capacity}
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Capacidad:{" "}
+                    <span className={classes.boldText}>
+                        {props.capacity}m<sup>3</sup>
+                    </span>
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    - Altura: {props.vehicleHeight}
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Altura:{" "}
+                    <span className={classes.boldText}>
+                        {props.vehicleHeight}m
+                    </span>
                 </Typography>
+                <div className={classes.footer}>
+                    <Rate
+                        disabled
+                        allowHalf
+                        defaultValue={props.stars}
+                        className={classes.rate}
+                    />
+                    <Button
+                        className={classes.button}
+                        // onClick={() => alert("Vehiculo presionado")}
+                    >
+                        Ver más...
+                    </Button>
+                </div>
             </CardContent>
         </Card>
     );
