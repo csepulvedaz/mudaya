@@ -4,52 +4,46 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
+import { CardActionArea } from "@material-ui/core";
 
 const useStyles = makeStyles({
     root: {
-        width: "190px",
-        height: "230px",
+        width: "170px",
+        height: "180px",
         margin: "10px 25px",
         borderRadius: "9px",
     },
-    cardTitle: {
-        fontSize: "15px",
-        fontWeight: "bold",
-        lineHeight: "1.33",
-        textAlign: "center",
-        color: "#505050",
-    },
     media: {
-        height: "100px",
-        // width: "135px",
-        margin: "20px 5px",
-        borderRadius: "9px",
+        height: 50,
+        marginTop: "15px",
     },
 });
 
-export default function CardService(props) {
+export default function CardVehicle(props) {
     const classes = useStyles();
 
     return (
         <Card className={classes.root} elevation={4}>
-            <CardContent>
-                <Typography className={classes.cardTitle}>
-                    {props.text}
-                </Typography>
-
+            <CardActionArea>
                 <CardMedia
                     className={classes.media}
                     image={props.image}
                     title="img"
                 />
-
+            </CardActionArea>
+            <CardContent>
                 <Typography
-                    variant="body2"
-                    color="textSecondary"
+                    variant="subtitle1"
+                    color="textPrimary"
                     component="p"
-                    align="center"
                 >
-                    {props.describe}
+                    {props.title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    - Capacidad: {props.capacity}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    - Altura: {props.vehicleHeight}
                 </Typography>
             </CardContent>
         </Card>

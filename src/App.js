@@ -4,6 +4,7 @@ import Signin from "./pages/Signin";
 import Main from "./pages/Main";
 import VehicleForm from "./pages/VehicleForm";
 import Profile from "./pages/Profile";
+import 'typeface-roboto';
 import {
     BrowserRouter as Router,
     Switch,

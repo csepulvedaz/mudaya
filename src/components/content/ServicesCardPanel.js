@@ -9,12 +9,12 @@ import img4 from "../../assets/ourservices4.jpg";
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        height: "300px",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
         backdropFilter: "blur(9px)",
         padding: "20px 0px",
+        margin:"20px 0px"
     },
 }));
 

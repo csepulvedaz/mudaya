@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
         margin: "10px 20px 10px 0px",
     },
     textoLogo: {
-        fontFamily: "Open Sans",
         fontSize: "22px",
         fontWeight: "light",
         lineHeight: "2",
