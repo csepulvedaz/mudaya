@@ -3,11 +3,11 @@ import { Layout, Button } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const { Header } = Layout;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     header: {
         display: "flex",
         justifyContent: "space-between",
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
         background: "#fff",
         height: "auto",
         zIndex: "1",
-        padding: "0px 20px"
+        padding: "0px 20px",
     },
     logo: {
         width: "150px",
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         borderRadius: "25px",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.15)",
         backgroundColor: "#ffffff",
-        margin: "10px 20px 10px 0px"
+        margin: "10px 20px 10px 0px",
     },
     textoLogo: {
         fontFamily: "Open Sans",
@@ -32,10 +32,10 @@ const useStyles = makeStyles(theme => ({
         fontWeight: "light",
         lineHeight: "2",
         textAlign: "center",
-        color: "#8a8a8a"
+        color: "#8a8a8a",
     },
     textoLogoBold: {
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     box: {
         width: "45px",
@@ -46,11 +46,11 @@ const useStyles = makeStyles(theme => ({
         margin: "10px 0px",
         borderRadius: "9px",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
-        backgroundColor: " #ffffff"
+        backgroundColor: " #ffffff",
     },
     icon: {
         fontSize: "40px",
-        color: "#42c3cf"
+        color: "#42c3cf",
     },
     button: {
         height: "45px",
@@ -59,22 +59,27 @@ const useStyles = makeStyles(theme => ({
         background: "#FCB625",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
-        fontSize: "16px"
+        fontSize: "16px",
     },
     container: {
         display: "flex",
-        justifyContent: "space-between"
-    }
+        justifyContent: "space-between",
+    },
 }));
 
 const CustomHeader = () => {
     const [navigate, setNavigate] = useState(false);
     const classes = useStyles();
+    let history = useHistory();
 
     const logout = () => {
         localStorage.clear("token");
         setNavigate(true);
     };
+    const toProfile = () => {
+        history.push("/perfil");
+    };
+
     if (navigate) return <Redirect to="/" push={true} />;
     return (
         <Header theme="light" className={classes.header}>
@@ -87,7 +92,7 @@ const CustomHeader = () => {
                 <Button
                     icon={<PersonIcon className={classes.icon} />}
                     className={classes.box}
-                    onClick={() => alert("Perfil presionado")}
+                    onClick={toProfile}
                 />
             </div>
             <div className={classes.container}>
