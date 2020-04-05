@@ -1,22 +1,20 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Button, Col, Row, Select} from 'antd';
-
-const { Option } = Select;
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Col, Row, Select } from "antd";
 
 const capacityOptions = [
-    {value:"4"},
-    {value:"5"},
-    {value:"7"},
-    {value:"8"},
-    {value:"10"}
+    { value: "4" },
+    { value: "5" },
+    { value: "7" },
+    { value: "8" },
+    { value: "10" },
 ];
 const zoneOptions = [
-    {value:"chico"},
-    {value:"otro"},
-    {value:"sd"},
-    {value:"8sad"},
-    {value:"sdawe"}
+    { value: "Chico" },
+    { value: "Otro" },
+    { value: "sd" },
+    { value: "8sad" },
+    { value: "sdawe" },
 ];
 
 function onChange(value) {
@@ -24,15 +22,15 @@ function onChange(value) {
 }
 
 function onBlur() {
-    console.log('blur');
+    console.log("blur");
 }
 
 function onFocus() {
-    console.log('focus');
+    console.log("focus");
 }
 
 function onSearch(val) {
-    console.log('search:', val);
+    console.log("search:", val);
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -40,16 +38,13 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        margin: "0px 0px",
+        backdropFilter: "opacity(60%) contrast(80%)",
+        padding: "50px 0px",
     },
     box: {
-        // width: "100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
-        backdropFilter: "blur(9px) brightness(100%) contrast(40%)",
-        borderRadius: "13px",
-        padding: "20px 20px",
-        letterSpacing: "2px",
     },
     panel: {
         display: "flex",
@@ -60,12 +55,13 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         fontWeight: "600",
         fontSize: "22px",
+        marginBottom: "30px",
     },
     button: {
         height: "45px",
         borderRadius: "9px",
         background: "#FCB625",
-        fontWeight:"600",
+        fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         fontSize: "16px",
@@ -85,8 +81,11 @@ const FilterVehiclePanel = () => {
                     ENCUENTRA EL VEHÍCULO QUE MÁS SE ADAPTE A TUS NECESIDADES
                 </h3>
                 <div className={classes.panel}>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} align="middle">
-                        <Col className="gutter-row">
+                    <Row
+                        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+                        align="middle"
+                    >
+                        <Col>
                             <Select
                                 className={classes.select}
                                 size={"large"}
@@ -99,17 +98,19 @@ const FilterVehiclePanel = () => {
                                 onBlur={onBlur}
                                 onSearch={onSearch}
                                 filterOption={(input, option) =>
-                                    option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    option.value
+                                        .toLowerCase()
+                                        .indexOf(input.toLowerCase()) >= 0
                                 }
                                 options={zoneOptions}
                             />
                         </Col>
-                        <Col className="gutter-row">
+                        <Col>
                             <Select
                                 className={classes.select}
                                 size={"large"}
                                 showSearch
-                                placeholder="Busca por capacidad(m3)"
+                                placeholder={"Busca por capacidad"}
                                 optionFilterProp="value"
                                 allowClear
                                 onChange={onChange}
@@ -117,12 +118,14 @@ const FilterVehiclePanel = () => {
                                 onBlur={onBlur}
                                 onSearch={onSearch}
                                 filterOption={(input, option) =>
-                                    option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    option.value
+                                        .toLowerCase()
+                                        .indexOf(input.toLowerCase()) >= 0
                                 }
                                 options={capacityOptions}
                             />
                         </Col>
-                        <Col className="gutter-row">
+                        <Col>
                             <Button
                                 className={classes.button}
                                 // onClick={() => alert("Buscar presionado")}

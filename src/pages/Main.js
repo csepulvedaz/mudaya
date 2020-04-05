@@ -6,12 +6,12 @@ import CustomFooter from "../components/footer/CustomFooter";
 import CustomContent from "../components/content/CustomContent";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
-            background: "#fafafa"
-        }
-    }
+            background: "#fafafa",
+        },
+    },
 }));
 
 const Main = () => {
