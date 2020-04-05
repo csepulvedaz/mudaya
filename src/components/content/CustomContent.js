@@ -1,9 +1,10 @@
 import React from "react";
-import { Layout } from "antd";
-import { makeStyles } from "@material-ui/core/styles";
+import {Layout} from "antd";
+import {makeStyles} from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
 import ServicesCardPanel from "./ServicesCardPanel";
 import VehiclesCardPanel from "./VehiclesCardPanel";
+import FilterVehiclePanel from "./FilterVehiclePanel";
 
 const { Content } = Layout;
 
@@ -26,6 +27,7 @@ const CustomContent = () => {
     const classes = useStyles();
     return (
         <Content className={classes.content}>
+            <FilterVehiclePanel />
             <ServicesCardPanel />
             <VehiclesCardPanel />
         </Content>
