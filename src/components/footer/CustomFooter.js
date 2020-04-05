@@ -7,7 +7,7 @@ const { Footer } = Layout;
 const useStyles = makeStyles((theme) => ({
     footer: {
         textAlign: "center",
-        background: "#727272",
+        background: "#BFBFBF",
         color: "#fff",
     },
 }));

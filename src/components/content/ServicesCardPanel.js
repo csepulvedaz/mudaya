@@ -11,16 +11,15 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        margin: "20px 0px",
+        margin: "50px 0px",
     },
     box: {
         // width: "100%",
         display: "flex",
         flexDirection: "column",
-        backdropFilter: "blur(9px) brightness(100%) contrast(40%)",
+        backdropFilter: "blur(9px) opacity(70%) contrast(30%)",
         borderRadius: "13px",
         padding: "20px 20px",
-        letterSpacing: "2px",
     },
     panel: {
         display: "flex",
@@ -61,9 +60,7 @@ const ServicesCardPanel = () => {
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title}>
-                    NUESTROS SERVICIOS
-                </h3>
+                <h3 className={classes.title}>NUESTROS SERVICIOS</h3>
                 <div className={classes.panel}>
                     {services.map((value, index) => (
                         <CardService

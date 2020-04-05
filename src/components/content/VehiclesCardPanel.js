@@ -6,9 +6,11 @@ import img1 from "../../assets/van.png";
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        background: "#fff",
+        // background: "#fff",
+        backdropFilter: "opacity(60%) contrast(80%)",
         display: "flex",
         justifyContent: "center",
+        paddingBottom: "20px",
     },
     box: {
         // width: "100%",
@@ -16,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         justifyContent: "space-around",
         padding: "20px 20px",
-        letterSpacing: "2px",
     },
     panel: {
         background: "#f5f5f5",
@@ -26,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#3d3d3d",
-        fontWeight: "bold",
+        color: "#fff",
+        fontWeight: "600",
         fontSize: "22px",
     },
 }));
@@ -74,9 +75,7 @@ const VehiclesCardPanel = () => {
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title} gutterBottom={true}>
-                    VEHICULOS DISPONIBLES
-                </h3>
+                <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
                 <div className={classes.panel}>
                     {vehicles.map((value, index) => (
                         <CardVehicle
