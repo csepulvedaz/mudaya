@@ -29,7 +29,7 @@ const App = () => {
                     <VehicleForm />
                 </Route>
                 <Route path="/perfil">
-                    <Profile/>
+                    <Profile />
                 </Route>
             </Switch>
         </Router>

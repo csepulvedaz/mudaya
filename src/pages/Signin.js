@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -11,13 +11,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Modal from "../components/signin/Modal";
 import { useHistory } from "react-router-dom";
+import gql from "graphql-tag";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
             height: "0px",
-            backgroundColor: "#fafafa"
-        }
+            backgroundColor: "#fafafa",
+        },
     },
     paper: {
         marginTop: theme.spacing(7),
@@ -29,35 +31,91 @@ const useStyles = makeStyles(theme => ({
         padding: "30px",
         boxShadow: "1px 1px 10px #ccc",
         borderRadius: "5px",
-        marginBottom: "10px"
+        marginBottom: "10px",
     },
     form: {
         width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(3)
+        marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(2, 0, 0)
+        margin: theme.spacing(2, 0, 0),
     },
     truck: {
         fontSize: "50px",
-        color: "#ccc"
-    }
+        color: "#ccc",
+    },
 }));
 
-const SignUp = props => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+const CREATE_USER = gql`
+    mutation CreateUser(
+        $_id: Int!
+        $name: String!
+        $surname: String!
+        $phone: Int!
+        $email: String!
+        $password: String!
+    ) {
+        createUser(
+            _id: $_id
+            name: $name
+            surname: $surname
+            phone: $phone
+            email: $email
+            password: $password
+        ) {
+            _id
+            name
+            surname
+            phone
+            email
+            password
+        }
+    }
+`;
+
+const q = gql`
+    {
+        Users {
+            _id
+            name
+            surname
+            phone
+            email
+            password
+        }
+    }
+`;
+
+const SignUp = (props) => {
+    const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
-    const [id, setId] = useState("");
-    const [phone, setPhone] = useState("");
+    const [phone, setPhone] = useState(0);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [isDriver, setIsDriver] = useState(false);
     const [visible, setVisible] = useState(false);
-
+    const [createUser, { dat }] = useMutation(CREATE_USER);
     const classes = useStyles();
     let history = useHistory();
 
+    const { loading, error, data } = useQuery(q);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+    console.log(data);
+
     const toMain = () => {
+        createUser({
+            variables: {
+                _id: id,
+                name: name,
+                surname: surname,
+                phone: phone,
+                email: email,
+                password: password,
+            },
+        });
         history.push("/principal");
     };
 
@@ -86,7 +144,7 @@ const SignUp = props => {
                                 fullWidth
                                 label="Nombre"
                                 autoFocus
-                                onChange={e => setName(e.target.value)}
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -95,7 +153,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Apellido"
-                                onChange={e => setSurname(e.target.value)}
+                                onChange={(e) => setSurname(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -104,7 +162,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Cédula"
-                                onChange={e => setId(e.target.value)}
+                                onChange={(e) => setId(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -113,7 +171,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Número celular"
-                                onChange={e => setPhone(e.target.value)}
+                                onChange={(e) => setPhone(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -122,7 +180,7 @@ const SignUp = props => {
                                 required
                                 fullWidth
                                 label="Correo electrónico"
-                                onChange={e => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -132,7 +190,7 @@ const SignUp = props => {
                                 fullWidth
                                 label="Contraseña"
                                 // type="password"
-                                onChange={e => setPassword(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
