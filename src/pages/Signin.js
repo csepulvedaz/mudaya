@@ -11,8 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Modal from "../components/signin/Modal";
 import { useHistory } from "react-router-dom";
-import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { gql, useQuery, useMutation } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -47,22 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CREATE_USER = gql`
-    mutation CreateUser(
-        $_id: Int!
-        $name: String!
-        $surname: String!
-        $phone: Int!
-        $email: String!
-        $password: String!
-    ) {
-        createUser(
-            _id: $_id
-            name: $name
-            surname: $surname
-            phone: $phone
-            email: $email
-            password: $password
-        ) {
+    mutation CreateUser($input: userInput!) {
+        createUser(input: $input) {
             _id
             name
             surname
@@ -73,53 +58,55 @@ const CREATE_USER = gql`
     }
 `;
 
-const q = gql`
-    {
-        Users {
-            _id
-            name
-            surname
-            phone
-            email
-            password
-        }
-    }
-`;
+// const q = gql`
+//     {
+//         Users {
+//             _id
+//             name
+//             surname
+//             phone
+//             email
+//             password
+//         }
+//     }
+// `;
 
 const SignUp = (props) => {
-    const [id, setId] = useState(0);
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [phone, setPhone] = useState(0);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [id, setId] = useState(123567);
+    const [name, setName] = useState("asdad");
+    const [surname, setSurname] = useState("asdasd");
+    const [phone, setPhone] = useState(123423);
+    const [email, setEmail] = useState("correo@correos.com");
+    const [password, setPassword] = useState("sdfsdf");
     const [isDriver, setIsDriver] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [createUser, { dat }] = useMutation(CREATE_USER);
+    const [createUser] = useMutation(CREATE_USER);
     const classes = useStyles();
     let history = useHistory();
 
-    const { loading, error, data } = useQuery(q);
+    // const { loading, error, data } = useQuery(q);
+    // if (loading) return <p>Loa ding...</p>;
+    // if (error) return <p>Error :(</p>;
+    // console.log(data);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-    console.log(data);
-
-    const toMain = () => {
-        createUser({
-            variables: {
-                _id: id,
-                name: name,
-                surname: surname,
-                phone: phone,
-                email: email,
-                password: password,
-            },
+    const toMain = async (e) => {
+        let input = {
+            id,
+            name,
+            surname,
+            phone,
+            email,
+            password,
+        };
+        e.preventDefault();
+        // history.push("/principal");
+        return await createUser({
+            variables: { input },
         });
-        history.push("/principal");
     };
 
-    const openModal = () => {
+    const openModal = (e) => {
+        e.preventDefault();
         setVisible(true);
     };
 
@@ -222,7 +209,7 @@ const SignUp = (props) => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={isDriver ? openModal : toMain}
+                    onClick={isDriver ? (e) => openModal(e) : (e) => toMain(e)}
                 >
                     Registrarse
                 </Button>
