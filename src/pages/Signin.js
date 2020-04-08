@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -10,8 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Modal from "../components/signin/Modal";
-import { useHistory } from "react-router-dom";
-import { gql, useQuery, useMutation } from "@apollo/client";
+
+import { CREATE_USER } from "../graphql/mutations";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -45,32 +47,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CREATE_USER = gql`
-    mutation CreateUser($input: userInput!) {
-        createUser(input: $input) {
-            _id
-            name
-            surname
-            phone
-            email
-            password
-        }
-    }
-`;
-
-const query = gql`
-    {
-        Users {
-            _id
-            name
-            surname
-            phone
-            email
-            password
-        }
-    }
-`;
-
 const SignUp = (props) => {
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
@@ -83,11 +59,6 @@ const SignUp = (props) => {
     const [createUser] = useMutation(CREATE_USER);
     const classes = useStyles();
     let history = useHistory();
-
-    // const { loading, error, data } = useQuery(query);
-    // if (loading) return <p>Loa ding...</p>;
-    // if (error) return <p>Error :(</p>;
-    // console.log(data);
 
     const toMain = async (e) => {
         let input = {
