@@ -58,48 +58,48 @@ const CREATE_USER = gql`
     }
 `;
 
-// const q = gql`
-//     {
-//         Users {
-//             _id
-//             name
-//             surname
-//             phone
-//             email
-//             password
-//         }
-//     }
-// `;
+const query = gql`
+    {
+        Users {
+            _id
+            name
+            surname
+            phone
+            email
+            password
+        }
+    }
+`;
 
 const SignUp = (props) => {
-    const [id, setId] = useState(123567);
-    const [name, setName] = useState("asdad");
-    const [surname, setSurname] = useState("asdasd");
+    const [id, setId] = useState(0);
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
     const [phone, setPhone] = useState(123423);
-    const [email, setEmail] = useState("correo@correos.com");
-    const [password, setPassword] = useState("sdfsdf");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [isDriver, setIsDriver] = useState(false);
     const [visible, setVisible] = useState(false);
     const [createUser] = useMutation(CREATE_USER);
     const classes = useStyles();
     let history = useHistory();
 
-    // const { loading, error, data } = useQuery(q);
+    // const { loading, error, data } = useQuery(query);
     // if (loading) return <p>Loa ding...</p>;
     // if (error) return <p>Error :(</p>;
     // console.log(data);
 
     const toMain = async (e) => {
         let input = {
-            id,
-            name,
-            surname,
-            phone,
-            email,
-            password,
+            _id: id,
+            name: name,
+            surname: surname,
+            phone: phone,
+            email: email,
+            password: password,
         };
         e.preventDefault();
-        // history.push("/principal");
+        history.push("/principal");
         return await createUser({
             variables: { input },
         });
