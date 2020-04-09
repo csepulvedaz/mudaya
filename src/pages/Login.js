@@ -11,7 +11,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Link, useHistory } from "react-router-dom";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "100px",
         color: "#ccc",
     },
-    errorMessage: { marginTop: "20px", color: "red" },
+    errorMessage: { marginTop: "15px", color: "red", fontSize: "12px" },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
@@ -115,22 +115,22 @@ const Login = () => {
                                 }
                                 InputProps={{
                                     classes: {
-                                        root: classes.cssLabel,
                                         notchedOutline: classes.notchedOutline,
                                         focused: classes.focused,
                                     },
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            {formik.touched.email &&
-                                                formik.errors.email && (
+                                            <ErrorMessage name="email">
+                                                {(msg) => (
                                                     <p
                                                         className={
                                                             classes.errorMessage
                                                         }
                                                     >
-                                                        Requerido
+                                                        {msg}
                                                     </p>
                                                 )}
+                                            </ErrorMessage>
                                         </InputAdornment>
                                     ),
                                     startAdornment: (
@@ -163,16 +163,17 @@ const Login = () => {
                                     },
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            {formik.touched.password &&
-                                                formik.errors.password && (
+                                            <ErrorMessage name="password">
+                                                {(msg) => (
                                                     <p
                                                         className={
                                                             classes.errorMessage
                                                         }
                                                     >
-                                                        Requerido
+                                                        {msg}
                                                     </p>
                                                 )}
+                                            </ErrorMessage>
                                         </InputAdornment>
                                     ),
                                     startAdornment: (
