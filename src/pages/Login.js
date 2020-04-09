@@ -8,7 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Link, useHistory } from "react-router-dom";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,13 +46,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "100px",
         color: "#ccc",
     },
-    errorInput: {
-        border: "1px red solid",
-    },
-    errorMessage: {
-        color: "red",
-        textAlign: "left",
-    },
+    errorMessage: { marginTop: "20px", color: "red" },
 }));
 
 const Login = () => {
@@ -94,25 +89,35 @@ const Login = () => {
                         >
                             <TextField
                                 fullWidth
-                                autoFocus
                                 variant="outlined"
                                 margin="normal"
                                 label="Correo"
                                 name="email"
                                 type="email"
                                 {...formik.getFieldProps("email")}
-                                // onChange={(e) => setEmail(e.target.value)}
+                                error={
+                                    formik.touched.email && formik.errors.email
+                                }
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            {formik.touched.email &&
+                                                formik.errors.email && (
+                                                    <p
+                                                        className={
+                                                            classes.errorMessage
+                                                        }
+                                                    >
+                                                        Requerido
+                                                    </p>
+                                                )}
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 // onKeyDown={e => {
                                 //     if (e.key === "Enter") props.onPressLogin();
                                 // }}
                             />
-                            <ErrorMessage name="email">
-                                {(errorMessage) => (
-                                    <div className={classes.errorMessage}>
-                                        {errorMessage}
-                                    </div>
-                                )}
-                            </ErrorMessage>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -121,26 +126,37 @@ const Login = () => {
                                 label="Contraseña"
                                 name="password"
                                 type="password"
+                                error={
+                                    formik.touched.password &&
+                                    formik.errors.password
+                                }
                                 {...formik.getFieldProps("password")}
-                                // onChange={(e) => setPassword(e.target.value)}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            {formik.touched.password &&
+                                                formik.errors.password && (
+                                                    <p
+                                                        className={
+                                                            classes.errorMessage
+                                                        }
+                                                    >
+                                                        Requerido
+                                                    </p>
+                                                )}
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 // onKeyDown={e => {
                                 //     if (e.key === "Enter") props.onPressLogin();
                                 // }}
                             />
-                            <ErrorMessage name="password">
-                                {(errorMessage) => (
-                                    <div className={classes.errorMessage}>
-                                        {errorMessage}
-                                    </div>
-                                )}
-                            </ErrorMessage>
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
-                                // onClick={(e) => handleOnClick(e)}
                             >
                                 Ingresar
                             </Button>
