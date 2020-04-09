@@ -51,7 +51,7 @@ const SignUp = (props) => {
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
-    const [phone, setPhone] = useState(123423);
+    const [phone, setPhone] = useState(0);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isDriver, setIsDriver] = useState(false);
@@ -62,10 +62,10 @@ const SignUp = (props) => {
 
     const toMain = async (e) => {
         let input = {
-            _id: id,
+            _id: parseInt(id),
             name: name,
             surname: surname,
-            phone: phone,
+            phone: parseInt(phone),
             email: email,
             password: password,
         };
