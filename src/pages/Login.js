@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
@@ -8,6 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Link, useHistory } from "react-router-dom";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -43,17 +45,18 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "100px",
         color: "#ccc",
     },
+    errorInput: {
+        border: "1px red solid",
+    },
+    errorMessage: {
+        color: "red",
+        textAlign: "left",
+    },
 }));
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const classes = useStyles();
     let history = useHistory();
-
-    const handleOnClick = () => {
-        history.push("/principal");
-    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -64,62 +67,102 @@ const Login = () => {
                 <Typography component="h1" variant="h5">
                     Bienvenido
                 </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Correo"
-                        autoComplete="email"
-                        autoFocus
-                        onChange={(e) => setEmail(e.target.value)}
-                        // onKeyDown={e => {
-                        //     if (e.key === "Enter") props.onPressLogin();
-                        // }}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        autoComplete="current-password"
-                        label="Contraseña"
-                        type="password"
-                        // autoComplete="current-password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        // onKeyDown={e => {
-                        //     if (e.key === "Enter") props.onPressLogin();
-                        // }}
-                    />
+                <Formik
+                    initialValues={{
+                        email: "",
+                        password: "",
+                    }}
+                    validationSchema={Yup.object({
+                        email: Yup.string()
+                            .email("Email incorrecto")
+                            .required("Requerido"),
+                        password: Yup.string().required("Requerido"),
+                    })}
+                    onSubmit={(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                            alert(JSON.stringify(values, null, 2));
+                            setSubmitting(false);
+                            history.push("/principal");
+                        }, 400);
+                    }}
+                >
+                    {(formik) => (
+                        <Form
+                            className={classes.form}
+                            onSubmit={formik.handleSubmit}
+                            noValidate
+                        >
+                            <TextField
+                                fullWidth
+                                autoFocus
+                                variant="outlined"
+                                margin="normal"
+                                label="Correo"
+                                name="email"
+                                type="email"
+                                {...formik.getFieldProps("email")}
+                                // onChange={(e) => setEmail(e.target.value)}
+                                // onKeyDown={e => {
+                                //     if (e.key === "Enter") props.onPressLogin();
+                                // }}
+                            />
+                            <ErrorMessage name="email">
+                                {(errorMessage) => (
+                                    <div className={classes.errorMessage}>
+                                        {errorMessage}
+                                    </div>
+                                )}
+                            </ErrorMessage>
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                margin="normal"
+                                autoComplete="current-password"
+                                label="Contraseña"
+                                name="password"
+                                type="password"
+                                {...formik.getFieldProps("password")}
+                                // onChange={(e) => setPassword(e.target.value)}
+                                // onKeyDown={e => {
+                                //     if (e.key === "Enter") props.onPressLogin();
+                                // }}
+                            />
+                            <ErrorMessage name="password">
+                                {(errorMessage) => (
+                                    <div className={classes.errorMessage}>
+                                        {errorMessage}
+                                    </div>
+                                )}
+                            </ErrorMessage>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                // onClick={(e) => handleOnClick(e)}
+                            >
+                                Ingresar
+                            </Button>
 
-                    <Button
-                        // type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={handleOnClick}
-                    >
-                        Ingresar
-                    </Button>
-
-                    <Grid container direction="row" justify="center">
-                        <Grid item>
-                            <Typography variant="body1">
-                                No tienes cuenta?{" "}
-                                <Link
-                                    to="/registro"
-                                    style={{
-                                        textDecoration: "none",
-                                    }}
-                                >
-                                    Entra, es gratis!
-                                </Link>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </form>
+                            <Grid container direction="row" justify="center">
+                                <Grid item>
+                                    <Typography variant="body1">
+                                        No tienes cuenta?{" "}
+                                        <Link
+                                            to="/registro"
+                                            style={{
+                                                textDecoration: "none",
+                                            }}
+                                        >
+                                            Entra, es gratis!
+                                        </Link>
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </Container>
     );
