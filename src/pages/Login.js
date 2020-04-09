@@ -7,9 +7,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import LockIcon from "@material-ui/icons/Lock";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import { Link, useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,12 +43,24 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(4, 0, 3),
         width: "100%",
+        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        borderRadius: 9,
+        border: 0,
+        color: "white",
+        height: 48,
+        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     },
     truck: {
         fontSize: "100px",
         color: "#ccc",
     },
     errorMessage: { marginTop: "20px", color: "red" },
+    notchedOutline: {},
+    focused: {
+        "&$focused $notchedOutline": {
+            border: "1px #ccc solid !important",
+        },
+    },
 }));
 
 const Login = () => {
@@ -91,7 +105,8 @@ const Login = () => {
                                 fullWidth
                                 variant="outlined"
                                 margin="normal"
-                                label="Correo"
+                                autoComplete="email"
+                                placeholder="Correo"
                                 name="email"
                                 type="email"
                                 {...formik.getFieldProps("email")}
@@ -99,6 +114,11 @@ const Login = () => {
                                     formik.touched.email && formik.errors.email
                                 }
                                 InputProps={{
+                                    classes: {
+                                        root: classes.cssLabel,
+                                        notchedOutline: classes.notchedOutline,
+                                        focused: classes.focused,
+                                    },
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             {formik.touched.email &&
@@ -113,6 +133,11 @@ const Login = () => {
                                                 )}
                                         </InputAdornment>
                                     ),
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <AccountCircleIcon />
+                                        </InputAdornment>
+                                    ),
                                 }}
                                 // onKeyDown={e => {
                                 //     if (e.key === "Enter") props.onPressLogin();
@@ -123,7 +148,7 @@ const Login = () => {
                                 variant="outlined"
                                 margin="normal"
                                 autoComplete="current-password"
-                                label="Contraseña"
+                                placeholder="Contraseña"
                                 name="password"
                                 type="password"
                                 error={
@@ -132,6 +157,10 @@ const Login = () => {
                                 }
                                 {...formik.getFieldProps("password")}
                                 InputProps={{
+                                    classes: {
+                                        notchedOutline: classes.notchedOutline,
+                                        focused: classes.focused,
+                                    },
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             {formik.touched.password &&
@@ -144,6 +173,11 @@ const Login = () => {
                                                         Requerido
                                                     </p>
                                                 )}
+                                        </InputAdornment>
+                                    ),
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <LockIcon />
                                         </InputAdornment>
                                     ),
                                 }}
