@@ -104,14 +104,19 @@ const VehicleForm = props => {
                             licensePlate: "",
                         }}
                         validationSchema={Yup.object({
+                            licensePlate: Yup.string().required("Requerido")
+                                                      .max(7, 'Placa invalida'),
                             brand: Yup.string().required("Requerido"),
                             model: Yup.string().required("Requerido"),
-                            year: Yup.number().required("Requerido"),
+                            year: Yup.number().required("Requerido")
+                                              .typeError("Ingrese números"),
                             type: Yup.string().required("Requerido"),
-                            height: Yup.number().required("Requerido"),
-                            capacity: Yup.number().required("Requerido"),
-                            extras: Yup.string().required("Requerido"),
-                            licensePlate: Yup.string().required("Requerido"),
+                            height: Yup.number().required("Requerido")
+                                                .typeError("Ingrese números"),
+                            capacity: Yup.number().required("Requerido")
+                                                  .typeError("Ingrese números"),
+                            extras: Yup.string().required("Requerido")
+                                                .max(10, 'Debe ser de 10 caracteres o menos')
                         })}
                         onSubmit={(values) => {
                             alert(JSON.stringify(values, null, 2));
