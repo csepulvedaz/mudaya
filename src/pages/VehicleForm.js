@@ -1,18 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik, Form, ErrorMessage, Field, FormikProps } from "formik";
 import { useMutation } from "@apollo/client";
@@ -22,8 +18,7 @@ import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
 import MessageIcon from "@material-ui/icons/Message";
 
-import AuthContext from "../context/auth-context";
-let history = useHistory();
+//let history = useHistory();
 const useStyles = makeStyles((theme) => ({
   "@global": {
     body: {
@@ -82,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
 
 const VehicleForm = (props) => {
   const classes = useStyles();
-  const context = useContext(AuthContext);
   const [createVehicle] = useMutation(CREATE_VEHICLE);
 
   //   function validateCapacidad(value) {
@@ -94,11 +88,22 @@ const VehicleForm = (props) => {
   //     }
   //     return error;
   //   }
+  
   const toPrincipal = async (values) => {
     alert(JSON.stringify(values, null, 2));
-    history.push("/principal");
+    let input = {
+        _id: values._id,
+        brand: values.brand,
+        model: values.model,
+        year: values.year,
+        type: values.type,
+        dimensions: values.dimensions,
+        capacity: values.capacity,
+        commentary: values.commentary,
+        idDriver: values.idDriver,
+    };
     return await createVehicle({
-      variables: { values },
+      variables: { input },
     });
   };
 
@@ -144,7 +149,7 @@ const VehicleForm = (props) => {
           onSubmit={(values) => {
             values.year = parseInt(values.year);
             values.capacity = parseInt(values.capacity);
-            values.idDriver = 1263468;
+            values.idDriver = 123;
             toPrincipal(values);
           }}
         >
