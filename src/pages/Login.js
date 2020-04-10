@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
@@ -10,9 +10,15 @@ import Grid from "@material-ui/core/Grid";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { Link, useHistory } from "react-router-dom";
+import { Spin, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import { Formik, Form, ErrorMessage } from "formik";
+import { useLazyQuery } from "@apollo/client";
 import * as Yup from "yup";
+
+import AuthContext from "../context/auth-context";
+import { LOGIN } from "../graphql/querys";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -23,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         marginTop: theme.spacing(12),
+        width: "400px",
+        position: "absolute",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -54,6 +62,11 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "100px",
         color: "#ccc",
     },
+    spin: {
+        position: "absolute",
+        top: "50%",
+        left: "40%",
+    },
     errorMessage: { marginTop: "15px", color: "red", fontSize: "12px" },
     notchedOutline: {},
     focused: {
@@ -63,14 +76,42 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
+
 const Login = () => {
     const classes = useStyles();
-    let history = useHistory();
-
+    const context = useContext(AuthContext);
+    const [getDog, { loading }] = useLazyQuery(LOGIN, {
+        onCompleted: (data) => {
+            context.login(
+                data.login.token,
+                data.login.userId,
+                data.login.tokenExpiration
+            );
+        },
+        onError: (error) => {
+            // error.graphQLErrors[0].message
+            errorModal(error.graphQLErrors[0].message);
+        },
+    });
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
+                {loading && (
+                    <Spin
+                        tip="Cargando..."
+                        indicator={
+                            <LoadingOutlined style={{ fontSize: 40 }} spin />
+                        }
+                        className={classes.spin}
+                    />
+                )}
                 <LocalShippingIcon className={classes.truck} />
 
                 <Typography component="h1" variant="h5">
@@ -87,12 +128,16 @@ const Login = () => {
                             .required("Requerido"),
                         password: Yup.string().required("Requerido"),
                     })}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                            history.push("/principal");
-                        }, 400);
+                    onSubmit={(values) => {
+                        // alert(JSON.stringify(values, null, 2));
+                        getDog({
+                            variables: {
+                                email: values.email,
+                                password: values.password,
+                            },
+                        });
+                        values.email = "";
+                        values.password = "";
                     }}
                 >
                     {(formik) => (
@@ -110,9 +155,6 @@ const Login = () => {
                                 name="email"
                                 type="email"
                                 {...formik.getFieldProps("email")}
-                                error={
-                                    formik.touched.email && formik.errors.email
-                                }
                                 InputProps={{
                                     classes: {
                                         notchedOutline: classes.notchedOutline,
@@ -139,9 +181,6 @@ const Login = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                // onKeyDown={e => {
-                                //     if (e.key === "Enter") props.onPressLogin();
-                                // }}
                             />
                             <TextField
                                 fullWidth
@@ -151,10 +190,6 @@ const Login = () => {
                                 placeholder="Contraseña"
                                 name="password"
                                 type="password"
-                                error={
-                                    formik.touched.password &&
-                                    formik.errors.password
-                                }
                                 {...formik.getFieldProps("password")}
                                 InputProps={{
                                     classes: {
@@ -182,9 +217,6 @@ const Login = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                // onKeyDown={e => {
-                                //     if (e.key === "Enter") props.onPressLogin();
-                                // }}
                             />
                             <Button
                                 type="submit"
