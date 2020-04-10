@@ -54,7 +54,9 @@ const useStyles = makeStyles(theme => ({
     unity: {
         marginTop:"20px"
     },
-    errorMessage: { marginTop: "15px", color: "red", fontSize: "12px" },
+    errorMessage: {
+         marginTop: "15px", color: "red", fontSize: "12px" 
+    },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
@@ -67,7 +69,11 @@ const useStyles = makeStyles(theme => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2)
+    },
+    smallPlaceholder: {
+        fontSize: "16px"
     }
+
 }));
 
 const VehicleForm = props => {
@@ -84,343 +90,357 @@ const VehicleForm = props => {
                 <Typography component="h1" variant="h5">
                     Registro Vehiculo
                 </Typography>
-
-                <Formik 
-                    initialValues={{
-                        brand: "",
-                        model: "",
-                        year: "",
-                        type: "",
-                        height: "",
-                        capacity: "",
-                        extras: "",
-                        licensePlate: "",
-                    }}
-                    validationSchema={Yup.object({
-                        brand: Yup.string().required("Requerido"),
-                        model: Yup.string().required("Requerido"),
-                        year: Yup.number().required("Requerido"),
-                        type: Yup.string().required("Requerido"),
-                        height: Yup.number().required("Requerido"),
-                        capacity: Yup.number().required("Requerido"),
-                        extras: Yup.string().required("Requerido"),
-                        licensePlate: Yup.string().required("Requerido"),
-                    })}
-                    onSubmit={(values) => {
-                        alert(JSON.stringify(values, null, 2));
-                    }}
-                >
-                    {(formik) => (
-                        <Form
-                            className={classes.form}
-                            onSubmit={formik.handleSubmit}
-                            noValidate
-                        >
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Placa del Vehículo"
-                                name="licensePlate"
-                                type="text"
-                                {...formik.getFieldProps("licensePlate")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="licensePlate">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <TextField
-                                item xs={12} sm={6}
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Marca"
-                                name="brand"
-                                type="text"
-                                {...formik.getFieldProps("brand")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="brand">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Modelo"
-                                name="model"
-                                type="text"
-                                {...formik.getFieldProps("model")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="model">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Año"
-                                name="year"
-                                type="number"
-                                {...formik.getFieldProps("year")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="year">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <Field
-                                as ="select"
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Tipo de Vehículo"
-                                name="type"
-                                type="text"
-
-                                {...formik.getFieldProps("type")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="type">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            
-                                        </InputAdornment>
-                                    ),
-                                }}
+                
+                
+                    <Formik 
+                        initialValues={{
+                            brand: "",
+                            model: "",
+                            year: "",
+                            type: "",
+                            height: "",
+                            capacity: "",
+                            extras: "",
+                            licensePlate: "",
+                        }}
+                        validationSchema={Yup.object({
+                            brand: Yup.string().required("Requerido"),
+                            model: Yup.string().required("Requerido"),
+                            year: Yup.number().required("Requerido"),
+                            type: Yup.string().required("Requerido"),
+                            height: Yup.number().required("Requerido"),
+                            capacity: Yup.number().required("Requerido"),
+                            extras: Yup.string().required("Requerido"),
+                            licensePlate: Yup.string().required("Requerido"),
+                        })}
+                        onSubmit={(values) => {
+                            alert(JSON.stringify(values, null, 2));
+                        }}
+                    >
+                        
+                        {(formik) => (
+                            <Form
+                                className={classes.form}
+                                onSubmit={formik.handleSubmit}
+                                noValidate
                             >
-                                <option value="Vehículo Trubo">Vehículo Trubo</option>
-                                <option value="Camión Sencillo">Camión Sencillo</option>
-                                <option value="Doble Troque">Doble Troque</option>
-                                <option value="Cuatro Manos">Cuatro Manos</option>
-                                <option value="Minimula">Minimula</option>
-                                <option value="Tractomula 2 Troques">Tractomula 2 Troques</option>
-                                <option value="Tractomula 3 Troques">Tractomula 3 Troques</option>
-                            </Field>
+                            <Grid  container spacing={2}>
+                                <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    placeholder="Placa"
+                                    name="licensePlate"
+                                    type="text"
+                                    {...formik.getFieldProps("licensePlate")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline: classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="licensePlate">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                <TextField
+                                    item xs={12} sm={6}
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    placeholder="Marca"
+                                    name="brand"
+                                    type="text"
+                                    {...formik.getFieldProps("brand")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline: classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="brand">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                </Grid>
+                                
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    placeholder="Modelo"
+                                    name="model"
+                                    type="text"
+                                    {...formik.getFieldProps("model")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline: classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="model">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    placeholder="Año"
+                                    name="year"
+                                    type="number"
+                                    {...formik.getFieldProps("year")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline: classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="year">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <Grid item xs={12} sm={12}>
+                                <Field
+                                    as ="select"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    placeholder="Tipo de Vehículo"
+                                    name="type"
+                                    type="text"
 
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Altura"
-                                name="height"
-                                type="float"
-                                {...formik.getFieldProps("height")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="height">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <HeightIcon/>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Capacidad (m2)"
-                                name="capacity"
-                                type="float"
-                                {...formik.getFieldProps("capacity")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="capacity">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <AspectRatioIcon/>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                placeholder="Extras"
-                                name="extras"
-                                type="text"
-                                {...formik.getFieldProps("extras")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="extras">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <MessageIcon/>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+                                    {...formik.getFieldProps("type")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline: classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="type">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                >
+                                    <option value="Vehículo Trubo">Vehículo Trubo</option>
+                                    <option value="Camión Sencillo">Camión Sencillo</option>
+                                    <option value="Doble Troque">Doble Troque</option>
+                                    <option value="Cuatro Manos">Cuatro Manos</option>
+                                    <option value="Minimula">Minimula</option>
+                                    <option value="Tractomula 2 Troques">Tractomula 2 Troques</option>
+                                    <option value="Tractomula 3 Troques">Tractomula 3 Troques</option>
+                                </Field>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        variant="outlined"
+                                        margin="normal"
+                                        placeholder="Altura"
+                                        name="height"
+                                        type="float"
+                                        {...formik.getFieldProps("height")}
+                                        InputProps={{
+                                            classes: {
+                                                notchedOutline: classes.notchedOutline,
+                                                focused: classes.focused,
+                                            },
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <ErrorMessage name="height">
+                                                        {(msg) => (
+                                                            <p
+                                                                className={
+                                                                    classes.errorMessage
+                                                                }
+                                                            >
+                                                                {msg}
+                                                            </p>
+                                                        )}
+                                                    </ErrorMessage>
+                                                </InputAdornment>
+                                            ),
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <HeightIcon/>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        variant="outlined"
+                                        margin="normal"
+                                        placeholder="Capacidad (m2)"
+                                        name="capacity"
+                                        type="float"
+                                        {...formik.getFieldProps("capacity")}
+                                        InputProps={{
+                                            classes: {
+                                                notchedOutline: classes.notchedOutline,
+                                                focused: classes.focused,
+                                            },
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <ErrorMessage name="capacity">
+                                                        {(msg) => (
+                                                            <p
+                                                                className={
+                                                                    classes.errorMessage
+                                                                }
+                                                            >
+                                                                {msg}
+                                                            </p>
+                                                        )}
+                                                    </ErrorMessage>
+                                                </InputAdornment>
+                                            ),
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <AspectRatioIcon/>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </Grid>
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    placeholder="Extras"
+                                    name="extras"
+                                    type="text"
+                                    {...formik.getFieldProps("extras")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline: classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="extras">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <MessageIcon/>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
 
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                            >
-                                Registrar
-                            </Button>                            
-                        </Form>
-                    )}
-                </Formik>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                >
+                                    Registrar
+                                </Button> 
+                                </Grid>                           
+                            </Form>
+                        )}
+                    </Formik>    
             </div>
         </Container>
     );
