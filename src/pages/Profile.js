@@ -10,6 +10,8 @@ import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { PROFILE } from "../graphql/querys";
+import { useContext } from "react";
+import AuthContext from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -52,10 +54,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
     const classes = useStyles();
+    const context = useContext(AuthContext);
     let history = useHistory();
     //Query
     const {loading,error,data} = useQuery(PROFILE,{
-        variables: {_id:101546},
+        //variables: {_id:101546},
+        variables: {_id:context.userId},
     });
     if (loading) return null;
     if (error) return `Error! ${error}`;
@@ -63,7 +67,7 @@ const Profile = () => {
     const toMain = () => {
         history.push("/principal");
     };
-
+    
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -80,10 +84,11 @@ const Profile = () => {
                 <form className={classes.form}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={12}>
-                            <TextField
+                            <TextField 
                                 variant="outlined"
                                 fullWidth
                                 label="Nombre"
+                                defaultValue={data.profileUser.name}
                                 disabled={true}
                             />
                         </Grid>
@@ -92,6 +97,7 @@ const Profile = () => {
                                 variant="outlined"
                                 fullWidth
                                 label="Apellido"
+                                defaultValue={data.profileUser.surname}
                                 disabled={true}
                             />
                         </Grid>
@@ -100,6 +106,7 @@ const Profile = () => {
                                 variant="outlined"
                                 fullWidth
                                 label="Correo"
+                                defaultValue={data.profileUser.email}
                                 disabled={true}
                             />
                         </Grid>
@@ -109,6 +116,7 @@ const Profile = () => {
                                 fullWidth
                                 label="Identificación"
                                 autoComplete="current-identification"
+                                defaultValue={data.profileUser._id}
                                 disabled={true}
                             />
                         </Grid>
@@ -118,6 +126,7 @@ const Profile = () => {
                                 fullWidth
                                 label="Telefono"
                                 autoComplete="current-cellphone"
+                                defaultValue={data.profileUser.phone}
                                 disabled={true}
                             />
                         </Grid>
