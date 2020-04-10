@@ -8,6 +8,8 @@ import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { PROFILE } from "../graphql/querys";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -51,7 +53,13 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
     const classes = useStyles();
     let history = useHistory();
-
+    //Query
+    const {loading,error,data} = useQuery(PROFILE,{
+        variables: {_id:101546},
+    });
+    if (loading) return null;
+    if (error) return `Error! ${error}`;
+    console.log(data);
     const toMain = () => {
         history.push("/principal");
     };
