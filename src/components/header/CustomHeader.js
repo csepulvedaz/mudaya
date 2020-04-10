@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Layout, Button } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Redirect, useHistory } from "react-router-dom";
+
+import AuthContext from "../../context/auth-context";
 
 const { Header } = Layout;
 
@@ -56,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "10px 20px",
         borderRadius: "9px",
         background: "#FCB625",
-        fontWeight:"600",
+        fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         fontSize: "16px",
@@ -69,11 +71,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomHeader = () => {
     const [navigate, setNavigate] = useState(false);
+    const context = useContext(AuthContext);
     const classes = useStyles();
     let history = useHistory();
 
     const logout = () => {
         localStorage.clear("token");
+        context.logout();
         setNavigate(true);
     };
     const toProfile = () => {
