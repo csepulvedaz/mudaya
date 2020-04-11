@@ -17,8 +17,8 @@ import { CREATE_VEHICLE } from "../graphql/mutations";
 import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
 import MessageIcon from "@material-ui/icons/Message";
+import { findByLabelText } from "@testing-library/react";
 
-//let history = useHistory();
 const useStyles = makeStyles((theme) => ({
   "@global": {
     body: {
@@ -74,34 +74,35 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
   },
 }));
-
+const types = [
+  "",
+  "Vehículo Turbo",
+  "Camión Sencillo",
+  "Doble Troque",
+  "Cuatro Manos",
+  "Minimula",
+  "Tractomula 2 Troques",
+  "Tractomula 3 Troques",
+];
 const VehicleForm = (props) => {
   const classes = useStyles();
   const [createVehicle] = useMutation(CREATE_VEHICLE);
+  let history = useHistory();
 
-  //   function validateCapacidad(value) {
-  //     let error;
-  //     if (!value) {
-  //       error = "Required";
-  //     } else if (/^[0-9]{1,}(\.[0-9]+)?$/i.test(value)) {
-  //       error = "Invalida capacidad";
-  //     }
-  //     return error;
-  //   }
-  
   const toPrincipal = async (values) => {
     alert(JSON.stringify(values, null, 2));
     let input = {
-        _id: values._id,
-        brand: values.brand,
-        model: values.model,
-        year: values.year,
-        type: values.type,
-        dimensions: values.dimensions,
-        capacity: values.capacity,
-        commentary: values.commentary,
-        idDriver: values.idDriver,
+      _id: values._id,
+      brand: values.brand,
+      model: values.model,
+      year: values.year,
+      type: values.type,
+      dimensions: values.dimensions,
+      capacity: values.capacity,
+      commentary: values.commentary,
+      idDriver: values.idDriver,
     };
+    history.push("/principal");
     return await createVehicle({
       variables: { input },
     });
@@ -129,27 +130,36 @@ const VehicleForm = (props) => {
             commentary: "",
           }}
           validationSchema={Yup.object({
-            _id: Yup.string().required("Requerido").max(7, "Placa invalida"),
-            brand: Yup.string().required("Requerido"),
-            model: Yup.string().required("Requerido"),
-            year: Yup.number()
-              .required("Requerido")
-              .typeError("Ingrese números"),
-            type: Yup.string().required("Requerido"),
-            dimensions: Yup.number()
-              .required("Requerido")
-              .typeError("Ingrese números"),
-            capacity: Yup.number()
-              .required("Requerido")
-              .typeError("Solo Números"),
+            _id: Yup.string()
+              .required("!")
+              .max(7, "Invalida")
+              .matches(/^(([a-z]|[A-Z]){3}(\-[0-9]{3}){1})$/, {
+                message: "Mal",
+              }),
+            brand: Yup.string().required("!"),
+            model: Yup.string().required("!"),
+            year: Yup.number().required("!").max(2020, "!").typeError("!"),
+            type: Yup.string().required("!"),
+            dimensions: Yup.string()
+              .required("!")
+              .matches(/^(([0-9]){2}(\x[0-9]{2})(\x[0-9]{2}){1})$/, {
+                message: "Mal",
+              })
+              .typeError("!"),
+            capacity: Yup.string()
+              .required("!")
+              .matches(/^(([0-9]){2}(\x[0-9]{2})(\x[0-9]{2}){1})$/, {
+                message: "Mal",
+              })
+              .typeError("!"),
             commentary: Yup.string()
-              .required("Requerido")
+              .required("!")
               .max(10, "Debe ser de 10 caracteres o menos"),
           })}
           onSubmit={(values) => {
+            values._id = values._id.toLowerCase();
             values.year = parseInt(values.year);
-            values.capacity = parseInt(values.capacity);
-            values.idDriver = 123;
+            values.idDriver = 123; //Esto llegaria por los props
             toPrincipal(values);
           }}
         >
@@ -305,25 +315,17 @@ const VehicleForm = (props) => {
                       ),
                     }}
                   >
-                    <option value="Vehículo Turbo">Vehículo Turbo</option>
-                    <option value="Camión Sencillo">Camión Sencillo</option>
-                    <option value="Doble Troque">Doble Troque</option>
-                    <option value="Cuatro Manos">Cuatro Manos</option>
-                    <option value="Minimula">Minimula</option>
-                    <option value="Tractomula 2 Troques">
-                      Tractomula 2 Troques
-                    </option>
-                    <option value="Tractomula 3 Troques">
-                      Tractomula 3 Troques
-                    </option>
+                    {types.map((something, index) => (
+                      <option value={types[index]}>{types[index]}</option>
+                    ))}
                   </Field>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                   <TextField
                     fullWidth
                     variant="outlined"
                     margin="normal"
-                    placeholder="Altura"
+                    placeholder="Dimensiones"
                     name="dimensions"
                     type="dimensions"
                     {...formik.getFieldProps("dimensions")}
@@ -349,12 +351,12 @@ const VehicleForm = (props) => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                   <TextField
                     fullWidth
                     variant="outlined"
                     margin="normal"
-                    placeholder="Capacidad (m2)"
+                    placeholder="Capacidad (m3)"
                     name="capacity"
                     // validate={validateCapacidad}
                     type="capacity"
