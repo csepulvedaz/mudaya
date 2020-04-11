@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const ALL_USERS = gql`
+/*export const ALL_USERS = gql`
     {
         Users {
             _id
@@ -9,6 +9,18 @@ export const ALL_USERS = gql`
             phone
             email
             password
+        }
+    }
+`;*/
+
+export const PROFILE = gql`
+    query ProfileUser($_id: Int!){
+        profileUser(_id: $_id){
+            name
+            surname
+            email
+            _id
+            phone
         }
     }
 `;
