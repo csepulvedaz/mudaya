@@ -80,9 +80,7 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Capacidad:{" "}
-                    <span className={classes.boldText}>
-                        {props.capacity} tons
-                    </span>
+                    <span className={classes.boldText}>{props.capacity} m</span>
                 </Typography>
                 <Typography
                     variant="body2"

@@ -23,7 +23,3 @@ code {
     background-color: #fff;
     border-color: #fcb625 !important;
 }
-
-.MuiSelect-select:focus {
-    background-color: #ffffff !important;
-}

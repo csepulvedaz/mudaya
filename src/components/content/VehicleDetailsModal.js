@@ -35,10 +35,10 @@ const VehicleDetaisModal = (props) => {
                 Año: <span>{props.value.year}</span>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-                Capacidad: <span>{props.value.capacity} toneladas</span>
+                Capacidad: <span>{props.value.capacity} Metros</span>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-                Dimensiones: <span>{props.value.dimensions}</span>
+                Dimensiones: <span>{props.value.dimensions} Metros</span>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
                 Comentario: <span>{props.value.commentary}</span>

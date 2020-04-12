@@ -8,8 +8,9 @@ import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import Typography from "@material-ui/core/Typography";
 import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
-import Select from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import InputBase from "@material-ui/core/InputBase";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -83,6 +84,22 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+
+const CustomSelect = withStyles((theme) => ({
+    input: {
+        borderRadius: 4,
+        position: "relative",
+        border: "1px solid #ced4da",
+        fontSize: 16,
+        padding: "10px 26px 10px 12px",
+        transition: theme.transitions.create(["border-color", "box-shadow"]),
+        "&:focus": {
+            borderRadius: 4,
+            border: "1px #000 solid",
+            // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+        },
+    },
+}))(InputBase);
 
 const types = [
     { value: "", label: "Seleccione un tipo" },
@@ -225,13 +242,12 @@ const VehicleForm = () => {
                                     sm={12}
                                     className={classes.selectContainer}
                                 >
-                                    <Select
+                                    <NativeSelect
                                         className={classes.select}
-                                        native
                                         fullWidth
                                         variant="outlined"
-                                        margin="dense"
                                         name="type"
+                                        input={<CustomSelect />}
                                         {...formik.getFieldProps("type")}
                                     >
                                         {types.map((element, index) => (
@@ -241,7 +257,7 @@ const VehicleForm = () => {
                                                 label={element.label}
                                             />
                                         ))}
-                                    </Select>
+                                    </NativeSelect>
                                     <ErrorMessage name="type">
                                         {(msg) => (
                                             <p className={classes.helperText}>

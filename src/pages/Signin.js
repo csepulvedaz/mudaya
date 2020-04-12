@@ -8,7 +8,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -74,6 +74,16 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+
+const CustomCheckbox = withStyles({
+    root: {
+        color: "#FF8E53",
+        "&$checked": {
+            color: "#FF8E53",
+        },
+    },
+    checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 function errorModal(msg) {
     Modal.error({
@@ -363,8 +373,7 @@ const SignUp = () => {
                                 <Grid item xs={12}>
                                     <FormControlLabel
                                         control={
-                                            <Checkbox
-                                                color="primary"
+                                            <CustomCheckbox
                                                 checked={!isDriver}
                                                 onChange={handleCheckbox}
                                             />
@@ -373,8 +382,7 @@ const SignUp = () => {
                                     />
                                     <FormControlLabel
                                         control={
-                                            <Checkbox
-                                                color="primary"
+                                            <CustomCheckbox
                                                 checked={isDriver}
                                                 onChange={handleCheckbox}
                                             />
