@@ -1,7 +1,12 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import CardVehicle from "./CardVehicle";
 import img1 from "../../assets/van.png";
+import {ALL_VEHICLES} from "../../graphql/querys";
+import {Carousel} from "antd";
+import {useQuery} from "@apollo/client";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -13,80 +18,77 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: "20px",
     },
     box: {
-        // width: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
+        backdropFilter: "blur(9px) opacity(70%) contrast(30%)",
+        borderRadius: "13px",
         padding: "20px 20px",
     },
     panel: {
-        background: "#f5f5f5",
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
     },
     title: {
         textAlign: "center",
-        color: "#fff",
+        color: "#ffffff",
         fontWeight: "600",
         fontSize: "22px",
+    },
+    button: {
+        borderRadius: "9px",
+        background: "#FCB625",
+        fontWeight: "600",
+        color: "#fff",
+        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+        fontSize: "60px",
+        alignSelf: "center",
+        width: "40px",
+        height: "70px"
     },
 }));
 
 const VehiclesCardPanel = () => {
     const classes = useStyles();
-    const vehicles = [
-        {
-            img: img1,
-            title: "Van",
-            capacity: "10",
-            vehicleHeight: "3",
-            stars: 1,
-        },
-        {
-            img: img1,
-            title: "Camión",
-            capacity: "8",
-            vehicleHeight: "2.5",
-            stars: 4,
-        },
-        {
-            img: img1,
-            title: "Tractomula",
-            capacity: "5",
-            vehicleHeight: "3",
-            stars: 3.5,
-        },
-        {
-            img: img1,
-            title: "Camioneta",
-            capacity: "7",
-            vehicleHeight: "3",
-            stars: 5,
-        },
-        {
-            img: img1,
-            title: "Van",
-            capacity: "4",
-            vehicleHeight: "2",
-            stars: 1.5,
-        },
-    ];
+    const {loading, data} = useQuery(ALL_VEHICLES);
+    const props = {
+        dots: false,
+        infinite: true,
+        // autoplaySpeed: 10000,
+        speed: 1000,
+        slidesToShow: 5,
+        slidesToScroll: 1
+    };
+    if (loading) return null;
     return (
         <div className={classes.content}>
             <div className={classes.box}>
                 <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
                 <div className={classes.panel}>
-                    {vehicles.map((value, index) => (
-                        <CardVehicle
-                            key={index}
-                            image={value.img}
-                            title={value.title}
-                            capacity={value.capacity}
-                            vehicleHeight={value.vehicleHeight}
-                            stars={value.stars}
-                        />
-                    ))}
+                    <NavigateBeforeIcon className={classes.button} />
+                    <Carousel
+                        id="carousel"
+                        // autoplay
+                        {...props}
+                        arrows="true"
+                        style={{
+                            width: "60vw",
+                            alignSelf: "center",
+                        }}
+                    >
+                        {data.Vehicles.map((value, index) => (
+                            <CardVehicle
+                                key={index}
+                                image={img1}
+                                type={value.type}
+                                capacity={value.capacity}
+                                dimensions={value.dimensions}
+                                stars={2}
+                                value={value}
+                            />
+                        ))}
+                    </Carousel>
+                    <NavigateNextIcon className={classes.button} />
                 </div>
             </div>
         </div>

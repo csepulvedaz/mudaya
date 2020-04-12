@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 
 /*export const ALL_USERS = gql`
     {
@@ -31,6 +31,22 @@ export const LOGIN = gql`
             userId
             token
             tokenExpiration
+        }
+    }
+`;
+
+export const ALL_VEHICLES = gql`
+    {
+        Vehicles {
+            _id
+            brand
+            model
+            year
+            type
+            dimensions
+            capacity
+            commentary
+            idDriver
         }
     }
 `;
