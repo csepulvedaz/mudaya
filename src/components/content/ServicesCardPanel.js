@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         // width: "100%",
         display: "flex",
         flexDirection: "column",
-        backdropFilter: "blur(9px) opacity(70%) contrast(30%)",
+        backdropFilter: "blur(9px) contrast(80%)",
         borderRadius: "13px",
         padding: "20px 20px",
     },

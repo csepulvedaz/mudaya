@@ -1,18 +1,20 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { useQuery } from "@apollo/client";
+import { makeStyles } from "@material-ui/core/styles";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import { Carousel, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 import CardVehicle from "./CardVehicle";
 import img1 from "../../assets/van.png";
-import {ALL_VEHICLES} from "../../graphql/querys";
-import {Carousel} from "antd";
-import {useQuery} from "@apollo/client";
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import { ALL_VEHICLES } from "../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
         // background: "#fff",
-        backdropFilter: "opacity(60%) contrast(80%)",
+        backdropFilter: "contrast(80%)",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
@@ -20,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     box: {
         display: "flex",
         flexDirection: "column",
-        backdropFilter: "blur(9px) opacity(70%) contrast(30%)",
         borderRadius: "13px",
         padding: "20px 20px",
     },
@@ -44,22 +45,35 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "60px",
         alignSelf: "center",
         width: "40px",
-        height: "70px"
+        height: "70px",
+    },
+    spin: {
+        position: "absolute",
+        top: "50%",
+        left: "40%",
     },
 }));
 
 const VehiclesCardPanel = () => {
     const classes = useStyles();
-    const {loading, data} = useQuery(ALL_VEHICLES);
+    const { loading, error, data } = useQuery(ALL_VEHICLES);
     const props = {
         dots: false,
         infinite: true,
-        // autoplaySpeed: 10000,
         speed: 1000,
-        slidesToShow: 5,
-        slidesToScroll: 1
+        slidesToShow: 4,
+        slidesToScroll: 4,
     };
-    if (loading) return null;
+    if (loading)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+    if (error) return `Error! ${error}`;
+
     return (
         <div className={classes.content}>
             <div className={classes.box}>
@@ -68,7 +82,6 @@ const VehiclesCardPanel = () => {
                     <NavigateBeforeIcon className={classes.button} />
                     <Carousel
                         id="carousel"
-                        // autoplay
                         {...props}
                         arrows="true"
                         style={{
@@ -76,17 +89,23 @@ const VehiclesCardPanel = () => {
                             alignSelf: "center",
                         }}
                     >
-                        {data.Vehicles.map((value, index) => (
-                            <CardVehicle
-                                key={index}
-                                image={img1}
-                                type={value.type}
-                                capacity={value.capacity}
-                                dimensions={value.dimensions}
-                                stars={2}
-                                value={value}
-                            />
-                        ))}
+                        {data.Vehicles.map((value, index) => {
+                            console.log(value);
+
+                            return (
+                                <div>
+                                    <CardVehicle
+                                        key={index}
+                                        image={img1}
+                                        type={value.type}
+                                        capacity={value.capacity}
+                                        dimensions={value.dimensions}
+                                        stars={2}
+                                        value={value}
+                                    />
+                                </div>
+                            );
+                        })}
                     </Carousel>
                     <NavigateNextIcon className={classes.button} />
                 </div>
