@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,10 +7,12 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { PROFILE } from "../graphql/querys";
-import { useContext } from "react";
+
+import { PROFILE } from "../graphql/queries";
 import AuthContext from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 0),
     },
+    spin: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+    },
 }));
 
 const Profile = () => {
@@ -57,17 +64,24 @@ const Profile = () => {
     const context = useContext(AuthContext);
     let history = useHistory();
     //Query
-    const {loading,error,data} = useQuery(PROFILE,{
-        //variables: {_id:101546},
-        variables: {_id:context.userId},
+    const { loading, error, data } = useQuery(PROFILE, {
+        variables: { _id: context.userId },
     });
-    if (loading) return null;
+
+    if (loading)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
     if (error) return `Error! ${error}`;
-    console.log(data);
+
     const toMain = () => {
         history.push("/principal");
     };
-    
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -84,7 +98,7 @@ const Profile = () => {
                 <form className={classes.form}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={12}>
-                            <TextField 
+                            <TextField
                                 variant="outlined"
                                 fullWidth
                                 label="Nombre"

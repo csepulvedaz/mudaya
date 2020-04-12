@@ -1,8 +1,9 @@
 import { createContext } from "react";
 
 export default createContext({
+    client: null,
     token: null,
     userId: null,
-    login: (token, userId, tokenExpiration) => {},
+    login: (client, token, userId, tokenExpiration) => {},
     logout: () => {},
 });
