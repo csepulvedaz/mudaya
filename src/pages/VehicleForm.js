@@ -185,7 +185,7 @@ const VehicleForm = () => {
                         dimensions: Yup.string()
                             .required("Campo requerido!")
                             .matches(
-                                /^(([0-9]){2}(\x[0-9]{2})(\x[0-9]{2}){1})$/,
+                                /^(([0-9]){1,2}(\x[0-9]{1,2})(\x[0-9]{1,2}){1})$/,
                                 {
                                     message: "Dimensiones incorrectas!",
                                 }

@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     },
     spin: {
         position: "absolute",
+        zIndex: "1",
         top: "50%",
         left: "40%",
     },

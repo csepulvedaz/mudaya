@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        backdropFilter: "opacity(60%) contrast(80%)",
+        backdropFilter: "contrast(80%)",
         padding: "50px 0px",
     },
     box: {

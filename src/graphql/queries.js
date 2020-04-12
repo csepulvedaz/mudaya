@@ -35,3 +35,19 @@ export const LOGIN = gql`
         }
     }
 `;
+
+export const ALL_VEHICLES = gql`
+    {
+        Vehicles {
+            _id
+            brand
+            model
+            year
+            type
+            dimensions
+            capacity
+            commentary
+            idDriver
+        }
+    }
+`;
