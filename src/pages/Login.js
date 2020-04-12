@@ -18,7 +18,7 @@ import { useLazyQuery } from "@apollo/client";
 import * as Yup from "yup";
 
 import AuthContext from "../context/auth-context";
-import { LOGIN } from "../graphql/querys";
+import { LOGIN } from "../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #ccc solid !important",
+            border: "1px #000 solid !important",
         },
     },
 }));
@@ -86,16 +86,16 @@ function errorModal(msg) {
 const Login = () => {
     const classes = useStyles();
     const context = useContext(AuthContext);
-    const [getDog, { loading }] = useLazyQuery(LOGIN, {
+    const [login, { loading }] = useLazyQuery(LOGIN, {
         onCompleted: (data) => {
             context.login(
+                data.login.client,
                 data.login.token,
                 data.login.userId,
                 data.login.tokenExpiration
             );
         },
         onError: (error) => {
-            // error.graphQLErrors[0].message
             errorModal(error.graphQLErrors[0].message);
         },
     });
@@ -130,7 +130,7 @@ const Login = () => {
                     })}
                     onSubmit={(values) => {
                         // alert(JSON.stringify(values, null, 2));
-                        getDog({
+                        login({
                             variables: {
                                 email: values.email,
                                 password: values.password,
