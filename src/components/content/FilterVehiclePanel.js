@@ -1,25 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Col, Row, Select } from "antd";
-
-const capacityOptions = [
-    { value: "4" },
-    { value: "5" },
-    { value: "7" },
-    { value: "8" },
-    { value: "10" },
-];
-const zoneOptions = [
-    { value: "Chico" },
-    { value: "Otro" },
-    { value: "sd" },
-    { value: "8sad" },
-    { value: "sdawe" },
-];
-
-function onChange(value) {
-    console.log(`selected ${value}`);
-}
+import {makeStyles} from "@material-ui/core/styles";
+import {Button, Col, Row, Select} from "antd";
+import {useHistory} from "react-router-dom";
 
 function onBlur() {
     console.log("blur");
@@ -31,6 +13,14 @@ function onFocus() {
 
 function onSearch(val) {
     console.log("search:", val);
+}
+
+function uniqBy(a, key) {
+    var seen = {};
+    return a.filter(function(item) {
+        var k = key(item);
+        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+    })
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -72,8 +62,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FilterVehiclePanel = () => {
+const FilterVehiclePanel = (props) => {
+    const typeOptions = [];
+    {props.Vehicles.map((value) => {typeOptions.push({value : value.type})})}
+    const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify)
+
     const classes = useStyles();
+    let history = useHistory();
+
+    let type = "null";
+    const toSearch = () => {
+        history.push("/busqueda/"+type);
+    };
+
+    function onChange(value) {
+        type = value;
+        if (value===undefined) type="null";
+    }
+
     return (
         <div className={classes.content}>
             <div className={classes.box}>
@@ -90,7 +96,7 @@ const FilterVehiclePanel = () => {
                                 className={classes.select}
                                 size={"large"}
                                 showSearch
-                                placeholder="Busca por zona"
+                                placeholder="Busca por tipo"
                                 optionFilterProp="value"
                                 allowClear
                                 onChange={onChange}
@@ -102,33 +108,13 @@ const FilterVehiclePanel = () => {
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={zoneOptions}
-                            />
-                        </Col>
-                        <Col>
-                            <Select
-                                className={classes.select}
-                                size={"large"}
-                                showSearch
-                                placeholder={"Busca por capacidad"}
-                                optionFilterProp="value"
-                                allowClear
-                                onChange={onChange}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    option.value
-                                        .toLowerCase()
-                                        .indexOf(input.toLowerCase()) >= 0
-                                }
-                                options={capacityOptions}
+                                options={uniqtypeOptions}
                             />
                         </Col>
                         <Col>
                             <Button
                                 className={classes.button}
-                                // onClick={() => alert("Buscar presionado")}
+                                onClick={toSearch}
                             >
                                 BUSCAR
                             </Button>

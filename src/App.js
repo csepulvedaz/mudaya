@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
 import Main from "./pages/Main";
 import VehicleForm from "./pages/VehicleForm";
 import Profile from "./pages/Profile";
+import SearchVehicles from "./pages/SearchVehicles";
 import AuthContext from "./context/auth-context";
 import NotFound404 from "./pages/NotFound404";
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
 
 const App = () => {
     const [client, setClient] = useState(null);
@@ -45,6 +41,7 @@ const App = () => {
                 <Switch>
                     {!token && <Redirect from="/principal" to="/" exact />}
                     {!token && <Redirect from="/perfil" to="/" exact />}
+                    {!token && <Redirect from="/busqueda" to="/" exact />}
                     {token && <Redirect from="/" to="/principal" exact />}
                     {token && client === "user" && (
                         <Redirect from="/registro" to="/principal" exact />
@@ -74,6 +71,9 @@ const App = () => {
                         <Route path="/perfil">
                             <Profile />
                         </Route>
+                    )}
+                    {token && (
+                        <Route path="/busqueda/:tipo" component={SearchVehicles}/>
                     )}
                     <Route path="*" component={NotFound404} />
                 </Switch>

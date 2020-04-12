@@ -1,11 +1,14 @@
 import React from "react";
+import {useQuery} from "@apollo/client";
 import {makeStyles} from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import {Carousel} from "antd";
+import {Carousel, Spin} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
 
-import CardVehicle from "./CardVehicle";
+import SearchVehicleCard from "./SearchVehicleCard";
 import img1 from "../../assets/van.png";
+import {ALL_VEHICLES} from "../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -51,20 +54,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const VehiclesCardPanel = (props) => {
+const SearchVehiclePanel = (props) => {
     const classes = useStyles();
+    const { loading, error, data } = useQuery(ALL_VEHICLES, {variables: { type: props.type !== "null"? props.type : null},});
     const carouselprops = {
         dots: false,
         infinite: true,
         speed: 1000,
-        slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToShow: 5,
+        slidesToScroll: 5,
     };
+    if (loading)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+    if (error) return `Error! ${error}`;
 
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
+                <h3 className={classes.title}>RESULTADOS DE TU BÚSQUEDA</h3>
                 <div className={classes.panel}>
                     <NavigateBeforeIcon className={classes.button} />
                     <Carousel
@@ -72,18 +85,15 @@ const VehiclesCardPanel = (props) => {
                         {...carouselprops}
                         arrows="true"
                         style={{
-                            width: "60vw",
+                            width: "90vw",
                             alignSelf: "center",
                         }}
                     >
-                        {props.Vehicles.map((value, index) => {
+                        {data.Vehicles.map((value, index) => {
                             return (
                                 <div key={index}>
-                                    <CardVehicle
+                                    <SearchVehicleCard
                                         image={img1}
-                                        type={value.type}
-                                        capacity={value.capacity}
-                                        dimensions={value.dimensions}
                                         stars={2}
                                         value={value}
                                     />
@@ -98,4 +108,4 @@ const VehiclesCardPanel = (props) => {
     );
 };
 
-export default VehiclesCardPanel;
+export default SearchVehiclePanel;

@@ -7,17 +7,17 @@ import CardMedia from "@material-ui/core/CardMedia";
 import {CardActionArea} from "@material-ui/core";
 import {Button, Rate} from "antd";
 
-import VehicleDetailsModal from "./VehicleDetailsModal";
+import VehicleDetailsModal from "../content/VehicleDetailsModal";
 
 const useStyles = makeStyles({
     root: {
-        width: "190rx",
-        height: "220px",
+        width: "290rx",
+        height: "380px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
     media: {
-        height: 50,
+        height: 100,
         marginTop: "15px",
     },
     title: { textAlign: "center", color: "#3d3d3d" },
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     },
 });
 
-const CardVehicle = (props) => {
+const SearchVehicleCard = (props) => {
     const classes = useStyles();
     const [visible, setVisible] = useState(false);
     const openModal = (e) => {
@@ -71,27 +71,25 @@ const CardVehicle = (props) => {
                     className={classes.title}
                     gutterBottom={true}
                 >
-                    {props.type}
+                    {props.value.type}
                 </Typography>
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.text}
-                >
-                    Capacidad:{" "}
-                    <span className={classes.boldText}>{props.capacity} m</span>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                    Marca: <span className={classes.boldText}>{props.value.brand}</span>
                 </Typography>
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.text}
-                >
-                    Dimensiones:{" "}
-                    <span className={classes.boldText}>
-                        {props.dimensions} m
-                    </span>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                    Modelo: <span className={classes.boldText}>{props.value.model}</span>
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                    Año: <span className={classes.boldText}>{props.value.year}</span>
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                    Capacidad: <span className={classes.boldText}>{props.value.capacity} Metros</span>
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                    Dimensiones: <span className={classes.boldText}>{props.value.dimensions} Metros</span>
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                    Comentario: <span className={classes.boldText}>{props.value.commentary}</span>
                 </Typography>
                 <div className={classes.footer}>
                     <Rate
@@ -117,4 +115,4 @@ const CardVehicle = (props) => {
     );
 };
 
-export default CardVehicle;
+export default SearchVehicleCard;

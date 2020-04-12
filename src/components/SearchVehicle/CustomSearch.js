@@ -1,14 +1,12 @@
 import React from "react";
-import {useQuery} from "@apollo/client";
 import {Layout, Spin} from "antd";
 import {makeStyles} from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
-import {LoadingOutlined} from "@ant-design/icons";
+import SearchVehiclePanel from "./SearchVehiclePanel";
+import FilterVehiclePanel from "../content/FilterVehiclePanel";
+import {useQuery} from "@apollo/client";
 import {ALL_VEHICLES} from "../../graphql/queries";
-import ServicesCardPanel from "./ServicesCardPanel";
-import VehiclesCardPanel from "./VehiclesCardPanel";
-import FilterVehiclePanel from "./FilterVehiclePanel";
-
+import {LoadingOutlined} from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CustomContent = () => {
+const CustomSearch = (props) => {
     const classes = useStyles();
     const { loading, error, data } = useQuery(ALL_VEHICLES);
     if (loading)
@@ -41,10 +39,9 @@ const CustomContent = () => {
     return (
         <Content className={classes.content}>
             <FilterVehiclePanel Vehicles={data.Vehicles}/>
-            <ServicesCardPanel />
-            <VehiclesCardPanel Vehicles={data.Vehicles}/>
+            <SearchVehiclePanel type={props.type}/>
         </Content>
     );
 };
 
-export default CustomContent;
+export default CustomSearch;
