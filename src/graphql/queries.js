@@ -1,17 +1,4 @@
-import {gql} from "@apollo/client";
-
-/*export const ALL_USERS = gql`
-    {
-        Users {
-            _id
-            name
-            surname
-            phone
-            email
-            password
-        }
-    }
-`;*/
+import { gql } from "@apollo/client";
 
 export const PROFILE = gql`
     query ProfileUser($_id: Int!) {
@@ -38,8 +25,8 @@ export const LOGIN = gql`
 
 export const ALL_VEHICLES = gql`
     query Vehicles($type: String) {
-      Vehicles(type: $type) {
-        _id
+        vehicles(type: $type) {
+            _id
             brand
             model
             year
@@ -48,6 +35,6 @@ export const ALL_VEHICLES = gql`
             capacity
             commentary
             idDriver
-      }
+        }
     }
 `;

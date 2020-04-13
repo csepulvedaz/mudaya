@@ -1,27 +1,6 @@
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Button, Col, Row, Select} from "antd";
-import {useHistory} from "react-router-dom";
-
-function onBlur() {
-    console.log("blur");
-}
-
-function onFocus() {
-    console.log("focus");
-}
-
-function onSearch(val) {
-    console.log("search:", val);
-}
-
-function uniqBy(a, key) {
-    var seen = {};
-    return a.filter(function(item) {
-        var k = key(item);
-        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-    })
-}
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Col, Row, Select } from "antd";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -62,22 +41,38 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function uniqBy(a, key) {
+    var seen = {};
+    return a.filter(function (item) {
+        var k = key(item);
+        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+    });
+}
+
 const FilterVehiclePanel = (props) => {
-    const typeOptions = [];
-    {props.Vehicles.map((value) => {typeOptions.push({value : value.type})})}
-    const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify)
-
     const classes = useStyles();
-    let history = useHistory();
+    const [option, setOption] = useState("");
 
-    let type = "null";
+    const typeOptions = [];
+    props.vehicles.map((value) => {
+        return typeOptions.push({ value: value.type });
+    });
+    const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify);
+
     const toSearch = () => {
-        history.push("/busqueda/"+type);
+        if (props.type === null || option === "") {
+            return props.setType("null");
+        }
+        props.setType(option);
+    };
+
+    const toMain = () => {
+        props.setType(null);
     };
 
     function onChange(value) {
-        type = value;
-        if (value===undefined) type="null";
+        setOption(value);
+        if (value === undefined) setOption("null");
     }
 
     return (
@@ -100,9 +95,6 @@ const FilterVehiclePanel = (props) => {
                                 optionFilterProp="value"
                                 allowClear
                                 onChange={onChange}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                onSearch={onSearch}
                                 filterOption={(input, option) =>
                                     option.value
                                         .toLowerCase()
@@ -119,6 +111,16 @@ const FilterVehiclePanel = (props) => {
                                 BUSCAR
                             </Button>
                         </Col>
+                        {props.type && (
+                            <Col>
+                                <Button
+                                    className={classes.button}
+                                    onClick={toMain}
+                                >
+                                    VOLVER
+                                </Button>
+                            </Col>
+                        )}
                     </Row>
                 </div>
             </div>

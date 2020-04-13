@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {CardActionArea} from "@material-ui/core";
-import {Button, Rate} from "antd";
+import { CardActionArea } from "@material-ui/core";
+import { Button, Rate } from "antd";
 
 import VehicleDetailsModal from "../content/VehicleDetailsModal";
 
 const useStyles = makeStyles({
     root: {
-        width: "290rx",
-        height: "380px",
+        width: "290px",
+        height: "360px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
@@ -73,23 +73,69 @@ const SearchVehicleCard = (props) => {
                 >
                     {props.value.type}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                    Marca: <span className={classes.boldText}>{props.value.brand}</span>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Marca:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.brand}
+                    </span>
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                    Modelo: <span className={classes.boldText}>{props.value.model}</span>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Modelo:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.model}
+                    </span>
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                    Año: <span className={classes.boldText}>{props.value.year}</span>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Año:{" "}
+                    <span className={classes.boldText}>{props.value.year}</span>
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                    Capacidad: <span className={classes.boldText}>{props.value.capacity} Metros</span>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Capacidad:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.capacity} Metros
+                    </span>
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                    Dimensiones: <span className={classes.boldText}>{props.value.dimensions} Metros</span>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Dimensiones:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.dimensions} Metros
+                    </span>
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                    Comentario: <span className={classes.boldText}>{props.value.commentary}</span>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Comentario:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.commentary}
+                    </span>
                 </Typography>
                 <div className={classes.footer}>
                     <Rate

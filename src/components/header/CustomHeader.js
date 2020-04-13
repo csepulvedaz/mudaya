@@ -1,9 +1,9 @@
-import React, {useContext, useState} from "react";
-import {Button, Layout} from "antd";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useContext, useState } from "react";
+import { Button, Layout } from "antd";
+import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import {Redirect, useHistory} from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import AuthContext from "../../context/auth-context";
 
@@ -80,22 +80,20 @@ const CustomHeader = () => {
         context.logout();
         setNavigate(true);
     };
+
     const toProfile = () => {
         history.push("/perfil");
-    };
-    const toMain = () => {
-        history.push("/principal");
     };
 
     if (navigate) return <Redirect to="/" push={true} />;
     return (
         <Header theme="light" className={classes.header}>
             <div className={classes.container}>
-                <Button className={classes.logo} onClick={toMain}>
+                <div className={classes.logo}>
                     <p className={classes.textoLogo}>
                         MUDA <span className={classes.textoLogoBold}>YA</span>
                     </p>
-                </Button>
+                </div>
                 <Button
                     icon={<PersonIcon className={classes.icon} />}
                     className={classes.box}
