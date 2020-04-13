@@ -1,7 +1,7 @@
 import React from "react";
-import {Button, Modal} from "antd";
+import { Button, Modal } from "antd";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
     text: {
@@ -46,31 +46,81 @@ const VehicleDetaisModal = (props) => {
             onOk={handleOk}
             onCancel={handleCancel}
             footer={[
-                <Button key="back" onClick={handleCancel} className={classes.backButton}>
+                <Button
+                    key="back"
+                    onClick={handleCancel}
+                    className={classes.backButton}
+                >
                     Regresar
                 </Button>,
-                <Button key="submit" onClick={handleOk}  className={classes.button}>
+                <Button
+                    key="submit"
+                    onClick={handleOk}
+                    className={classes.button}
+                >
                     Reservar
                 </Button>,
             ]}
         >
-            <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                Marca: <span className={classes.boldText}>{props.value.brand}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Marca:{" "}
+                <span className={classes.boldText}>{props.value.brand}</span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                Modelo: <span className={classes.boldText}>{props.value.model}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Modelo:{" "}
+                <span className={classes.boldText}>{props.value.model}</span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                Año: <span className={classes.boldText}>{props.value.year}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Año:{" "}
+                <span className={classes.boldText}>{props.value.year}</span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                Capacidad: <span className={classes.boldText}>{props.value.capacity} Metros</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Capacidad:{" "}
+                <span className={classes.boldText}>
+                    {props.value.capacity} Metros
+                </span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                Dimensiones: <span className={classes.boldText}>{props.value.dimensions} Metros</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Dimensiones:{" "}
+                <span className={classes.boldText}>
+                    {props.value.dimensions} Metros
+                </span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
-                Comentario: <span className={classes.boldText}>{props.value.commentary}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Comentario:{" "}
+                <span className={classes.boldText}>
+                    {props.value.commentary}
+                </span>
             </Typography>
         </Modal>
     );
