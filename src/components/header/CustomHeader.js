@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Layout, Button } from "antd";
+import React, { useContext, useState } from "react";
+import { Button, Layout } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -80,6 +80,7 @@ const CustomHeader = () => {
         context.logout();
         setNavigate(true);
     };
+
     const toProfile = () => {
         history.push("/perfil");
     };

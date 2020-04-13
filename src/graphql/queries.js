@@ -1,18 +1,5 @@
 import { gql } from "@apollo/client";
 
-/*export const ALL_USERS = gql`
-    {
-        Users {
-            _id
-            name
-            surname
-            phone
-            email
-            password
-        }
-    }
-`;*/
-
 export const PROFILE = gql`
     query ProfileUser($_id: Int!) {
         profileUser(_id: $_id) {
@@ -37,8 +24,8 @@ export const LOGIN = gql`
 `;
 
 export const ALL_VEHICLES = gql`
-    {
-        Vehicles {
+    query Vehicles($type: String) {
+        vehicles(type: $type) {
             _id
             brand
             model

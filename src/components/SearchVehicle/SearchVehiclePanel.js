@@ -1,17 +1,19 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { Carousel } from "antd";
+import { Carousel, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import CardVehicle from "./CardVehicle";
+import SearchVehicleCard from "./SearchVehicleCard";
 import img1 from "../../assets/van.png";
+import { ALL_VEHICLES } from "../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        // background: "#fff",
-        backdropFilter: "contrast(80%)",
+        backdropFilter: "brightness(70%)",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
+        width: "900px",
     },
     title: {
         textAlign: "center",
@@ -46,44 +49,60 @@ const useStyles = makeStyles((theme) => ({
     },
     spin: {
         position: "absolute",
+        zIndex: "1",
         top: "50%",
-        left: "40%",
+        left: "50%",
     },
 }));
 
-const VehiclesCardPanel = (props) => {
+const SearchVehiclePanel = (props) => {
     const classes = useStyles();
+    const { loading, error, data } = useQuery(ALL_VEHICLES, {
+        variables: { type: props.type !== "null" ? props.type : null },
+    });
+    if (loading) {
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+    }
+
+    const size = data.vehicles.length;
+
     const carouselprops = {
         dots: false,
         infinite: true,
         speed: 1000,
-        slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToShow: size > 4 ? 4 : size,
+        slidesToScroll: size > 4 ? 4 : size,
     };
+    if (error) return `Error! ${error}`;
 
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
+                <h3 className={classes.title}>RESULTADOS DE TU BÚSQUEDA</h3>
                 <div className={classes.panel}>
-                    <NavigateBeforeIcon className={classes.button} />
+                    {size > 4 && (
+                        <NavigateBeforeIcon className={classes.button} />
+                    )}
                     <Carousel
                         id="carousel"
                         {...carouselprops}
                         arrows="true"
                         style={{
-                            width: "60vw",
+                            width: `90vw`,
                             alignSelf: "center",
                         }}
                     >
-                        {props.vehicles.map((value, index) => {
+                        {data.vehicles.map((value, index) => {
                             return (
                                 <div key={index}>
-                                    <CardVehicle
+                                    <SearchVehicleCard
                                         image={img1}
-                                        type={value.type}
-                                        capacity={value.capacity}
-                                        dimensions={value.dimensions}
                                         stars={2}
                                         value={value}
                                     />
@@ -91,11 +110,13 @@ const VehiclesCardPanel = (props) => {
                             );
                         })}
                     </Carousel>
-                    <NavigateNextIcon className={classes.button} />
+                    {size > 4 && (
+                        <NavigateNextIcon className={classes.button} />
+                    )}
                 </div>
             </div>
         </div>
     );
 };
 
-export default VehiclesCardPanel;
+export default SearchVehiclePanel;

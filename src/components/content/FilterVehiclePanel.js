@@ -1,37 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Col, Row, Select } from "antd";
-
-const capacityOptions = [
-    { value: "4" },
-    { value: "5" },
-    { value: "7" },
-    { value: "8" },
-    { value: "10" },
-];
-const zoneOptions = [
-    { value: "Chico" },
-    { value: "Otro" },
-    { value: "sd" },
-    { value: "8sad" },
-    { value: "sdawe" },
-];
-
-function onChange(value) {
-    console.log(`selected ${value}`);
-}
-
-function onBlur() {
-    console.log("blur");
-}
-
-function onFocus() {
-    console.log("focus");
-}
-
-function onSearch(val) {
-    console.log("search:", val);
-}
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -72,8 +41,40 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FilterVehiclePanel = () => {
+function uniqBy(a, key) {
+    var seen = {};
+    return a.filter(function (item) {
+        var k = key(item);
+        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+    });
+}
+
+const FilterVehiclePanel = (props) => {
     const classes = useStyles();
+    const [option, setOption] = useState("");
+
+    const typeOptions = [];
+    props.vehicles.map((value) => {
+        return typeOptions.push({ value: value.type });
+    });
+    const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify);
+
+    const toSearch = () => {
+        if (props.type === null || option === "") {
+            return props.setType("null");
+        }
+        props.setType(option);
+    };
+
+    const toMain = () => {
+        props.setType(null);
+    };
+
+    function onChange(value) {
+        setOption(value);
+        if (value === undefined) setOption("null");
+    }
+
     return (
         <div className={classes.content}>
             <div className={classes.box}>
@@ -90,49 +91,36 @@ const FilterVehiclePanel = () => {
                                 className={classes.select}
                                 size={"large"}
                                 showSearch
-                                placeholder="Busca por zona"
+                                placeholder="Busca por tipo"
                                 optionFilterProp="value"
                                 allowClear
                                 onChange={onChange}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                onSearch={onSearch}
                                 filterOption={(input, option) =>
                                     option.value
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={zoneOptions}
-                            />
-                        </Col>
-                        <Col>
-                            <Select
-                                className={classes.select}
-                                size={"large"}
-                                showSearch
-                                placeholder={"Busca por capacidad"}
-                                optionFilterProp="value"
-                                allowClear
-                                onChange={onChange}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    option.value
-                                        .toLowerCase()
-                                        .indexOf(input.toLowerCase()) >= 0
-                                }
-                                options={capacityOptions}
+                                options={uniqtypeOptions}
                             />
                         </Col>
                         <Col>
                             <Button
                                 className={classes.button}
-                                // onClick={() => alert("Buscar presionado")}
+                                onClick={toSearch}
                             >
                                 BUSCAR
                             </Button>
                         </Col>
+                        {props.type && (
+                            <Col>
+                                <Button
+                                    className={classes.button}
+                                    onClick={toMain}
+                                >
+                                    VOLVER
+                                </Button>
+                            </Col>
+                        )}
                     </Row>
                 </div>
             </div>
