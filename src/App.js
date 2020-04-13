@@ -9,9 +9,9 @@ import NotFound404 from "./pages/NotFound404";
 
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
     Redirect,
+    Route,
+    Switch,
 } from "react-router-dom";
 
 const App = () => {
@@ -45,6 +45,7 @@ const App = () => {
                 <Switch>
                     {!token && <Redirect from="/principal" to="/" exact />}
                     {!token && <Redirect from="/perfil" to="/" exact />}
+                    {!token && <Redirect from="/busqueda" to="/" exact />}
                     {token && <Redirect from="/" to="/principal" exact />}
                     {token && client === "user" && (
                         <Redirect from="/registro" to="/principal" exact />

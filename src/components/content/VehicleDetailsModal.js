@@ -1,8 +1,37 @@
 import React from "react";
 import { Button, Modal } from "antd";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    text: {
+        fontSize: "17px",
+        textAlign: "left",
+    },
+    boldText: { fontWeight: "bold" },
+    button: {
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: "#FCB625",
+        color: "#fff",
+        focus: "false",
+        fontWeight: "600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        fontSize: "17px",
+    },
+    backButton: {
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: "#fff",
+        color: "#FCB625",
+        fontWeight: "600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        fontSize: "17px",
+    },
+});
 
 const VehicleDetaisModal = (props) => {
+    const classes = useStyles();
     const handleOk = () => {
         props.setVisible(false);
     };
@@ -17,31 +46,81 @@ const VehicleDetaisModal = (props) => {
             onOk={handleOk}
             onCancel={handleCancel}
             footer={[
-                <Button key="back" onClick={handleCancel}>
+                <Button
+                    key="back"
+                    onClick={handleCancel}
+                    className={classes.backButton}
+                >
                     Regresar
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleOk}>
+                <Button
+                    key="submit"
+                    onClick={handleOk}
+                    className={classes.button}
+                >
                     Reservar
                 </Button>,
             ]}
         >
-            <Typography variant="body2" color="textSecondary" component="p">
-                Marca: <span>{props.value.brand}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Marca:{" "}
+                <span className={classes.boldText}>{props.value.brand}</span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                Modelo: <span>{props.value.model}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Modelo:{" "}
+                <span className={classes.boldText}>{props.value.model}</span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                Año: <span>{props.value.year}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Año:{" "}
+                <span className={classes.boldText}>{props.value.year}</span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                Capacidad: <span>{props.value.capacity} Metros</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Capacidad:{" "}
+                <span className={classes.boldText}>
+                    {props.value.capacity} Metros
+                </span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                Dimensiones: <span>{props.value.dimensions} Metros</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Dimensiones:{" "}
+                <span className={classes.boldText}>
+                    {props.value.dimensions} Metros
+                </span>
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                Comentario: <span>{props.value.commentary}</span>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Comentario:{" "}
+                <span className={classes.boldText}>
+                    {props.value.commentary}
+                </span>
             </Typography>
         </Modal>
     );
