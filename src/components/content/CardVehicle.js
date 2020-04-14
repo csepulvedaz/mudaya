@@ -11,7 +11,7 @@ import VehicleDetailsModal from "./VehicleDetailsModal";
 
 const useStyles = makeStyles({
     root: {
-        width: "190px",
+        width: "190rx",
         height: "220px",
         margin: "20px 25px",
         borderRadius: "9px",

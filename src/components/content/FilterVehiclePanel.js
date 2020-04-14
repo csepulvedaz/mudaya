@@ -60,9 +60,6 @@ const FilterVehiclePanel = (props) => {
     const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify);
 
     const toSearch = () => {
-        if (props.type === null || option === "") {
-            return props.setType("null");
-        }
         props.setType(option);
     };
 

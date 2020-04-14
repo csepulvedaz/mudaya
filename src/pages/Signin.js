@@ -352,7 +352,7 @@ const SignUp = () => {
                                         margin="dense"
                                         placeholder="Contraseña"
                                         name="password"
-                                        // type="password"
+                                        type="password"
                                         {...formik.getFieldProps("password")}
                                         InputProps={{
                                             classes: {
