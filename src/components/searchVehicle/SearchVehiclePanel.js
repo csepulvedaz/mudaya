@@ -1,14 +1,14 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { makeStyles } from "@material-ui/core/styles";
+import {useQuery} from "@apollo/client";
+import {makeStyles} from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { Carousel, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import {Carousel, Spin} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
 
 import SearchVehicleCard from "./SearchVehicleCard";
 import img1 from "../../assets/van.png";
-import { ALL_VEHICLES } from "../../graphql/queries";
+import {ALL_VEHICLES} from "../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 const SearchVehiclePanel = (props) => {
     const classes = useStyles();
     const { loading, error, data } = useQuery(ALL_VEHICLES, {
-        variables: { type: props.type !== "null" ? props.type : null },
+        variables: { type: props.type !== "null" ? props.type : null }, fetchPolicy:"no-cache",
     });
     if (loading) {
         return (
