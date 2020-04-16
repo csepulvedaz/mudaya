@@ -1,15 +1,25 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap");
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.ant-btn {
+    border: none !important;
+}
+
+.ant-btn:hover,
+.ant-btn:focus {
+    color: #fcb625 !important;
+    background-color: #fff;
+    border-color: #fcb625 !important;
 }

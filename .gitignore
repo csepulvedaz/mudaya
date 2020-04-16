@@ -8,6 +8,9 @@
 # ide-related
 /.idea
 
+# api keys
+.env
+
 # testing
 /coverage
 
