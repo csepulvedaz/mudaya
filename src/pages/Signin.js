@@ -197,11 +197,7 @@ const SignUp = () => {
                             .typeError("Solo números!"),
                         name: Yup.string().required("Campo requerido!"),
                         surname: Yup.string().required("Campo requerido!"),
-                        phone: Yup.number()
-                            .typeError("Solo números")
-                            .positive("Teléfono invalido!")
-                            .integer("Teléfono invalido!")
-                            .required("Campo requerido!"),
+                        phone: Yup.string().required("Campo requerido!"),
                         email: Yup.string()
                             .email("Email incorrecto")
                             .required("Campo requerido"),
@@ -209,7 +205,6 @@ const SignUp = () => {
                     })}
                     onSubmit={(values) => {
                         values._id = parseInt(values._id);
-                        values.phone = parseInt(values.phone);
                         toMain(values);
                     }}
                 >

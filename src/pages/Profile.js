@@ -12,7 +12,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { PROFILEUSER,PROFILEDRIVER } from "../graphql/queries";
+import { PROFILEUSER, PROFILEDRIVER } from "../graphql/queries";
 import AuthContext from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
@@ -70,22 +70,23 @@ const Profile = () => {
     const context = useContext(AuthContext);
     let history = useHistory();
     //Query
-    
-    const  { loading, error, data } = useQuery(context.client==="user" ? PROFILEUSER:PROFILEDRIVER, {
-        variables: { _id: context.userId },
-    });
+
+    const { loading, error, data } = useQuery(
+        context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
+        {
+            variables: { _id: context.userId },
+        }
+    );
 
     if (loading)
         return (
             <Spin
                 tip="Cargando..."
-                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                indicator={<LoadingOutlined style={{ fontSFize: 40 }} spin />}
                 className={classes.spin}
             />
         );
     if (error) return `Error! ${error}`;
-
-
 
     const toMain = () => {
         history.push("/principal");
@@ -111,7 +112,11 @@ const Profile = () => {
                                 variant="outlined"
                                 fullWidth
                                 label="Nombre"
-                                defaultValue={context.client==="user"?data.profileUser.name:data.profileDriver.name}
+                                defaultValue={
+                                    context.client === "user"
+                                        ? data.profileUser.name
+                                        : data.profileDriver.name
+                                }
                                 disabled={true}
                             />
                         </Grid>
@@ -120,7 +125,11 @@ const Profile = () => {
                                 variant="outlined"
                                 fullWidth
                                 label="Apellido"
-                                defaultValue={context.client==="user"?data.profileUser.surname:data.profileDriver.surname}
+                                defaultValue={
+                                    context.client === "user"
+                                        ? data.profileUser.surname
+                                        : data.profileDriver.surname
+                                }
                                 disabled={true}
                             />
                         </Grid>
@@ -129,7 +138,11 @@ const Profile = () => {
                                 variant="outlined"
                                 fullWidth
                                 label="Correo"
-                                defaultValue={context.client==="user"?data.profileUser.email:data.profileDriver.email}
+                                defaultValue={
+                                    context.client === "user"
+                                        ? data.profileUser.email
+                                        : data.profileDriver.email
+                                }
                                 disabled={true}
                             />
                         </Grid>
@@ -139,7 +152,11 @@ const Profile = () => {
                                 fullWidth
                                 label="Identificación"
                                 autoComplete="current-identification"
-                                defaultValue={context.client==="user"?data.profileUser._id:data.profileDriver._id}
+                                defaultValue={
+                                    context.client === "user"
+                                        ? data.profileUser._id
+                                        : data.profileDriver._id
+                                }
                                 disabled={true}
                             />
                         </Grid>
@@ -149,7 +166,11 @@ const Profile = () => {
                                 fullWidth
                                 label="Telefono"
                                 autoComplete="current-cellphone"
-                                defaultValue={context.client==="user"?data.profileUser.phone:data.profileDriver.phone}
+                                defaultValue={
+                                    context.client === "user"
+                                        ? data.profileUser.phone
+                                        : data.profileDriver.phone
+                                }
                                 disabled={true}
                             />
                         </Grid>
