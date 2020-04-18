@@ -72,6 +72,7 @@ const Profile = () => {
     //Query
 
     const { loading, error, data } = useQuery(
+        
         context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
         {
             variables: { _id: context.userId },
@@ -90,6 +91,9 @@ const Profile = () => {
 
     const toMain = () => {
         history.push("/principal");
+    };
+    const toEditProfile = () => {
+        history.push("/editarperfil");
     };
 
     return (
@@ -193,6 +197,7 @@ const Profile = () => {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={toEditProfile}
                             >
                                 Editar
                             </Button>

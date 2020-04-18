@@ -41,3 +41,25 @@ export const CREATE_VEHICLE = gql`
         }
     }
 `;
+
+export const UPDATE_USER=gql`
+    mutation UpdateUser($input:updateUserInput!){
+        updateUser( input :$input){
+            name
+            surname
+            _id
+            phone
+        }
+    }
+`;
+
+export const UPDATE_DRIVER=gql`
+    mutation UpdateDriver($input:updateDriverInput!){
+        updateDriver( input :$input){
+            name
+            surname
+            _id
+            phone
+        }
+    }
+`;
