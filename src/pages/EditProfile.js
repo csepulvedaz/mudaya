@@ -11,7 +11,9 @@ import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { useFormik, Formik,Form } from 'formik';
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
 import { PROFILEUSER, PROFILEDRIVER } from "../graphql/queries";
 import { UPDATE_USER, UPDATE_DRIVER } from "../graphql/mutations";
 import AuthContext from "../context/auth-context";
@@ -63,7 +65,13 @@ const useStyles = makeStyles((theme) => ({
     focused: {
         "&$focused $notchedOutline": {
             border: "1px #000 solid !important",
+            color: "#ccc",
         },
+    },
+    helperText: {
+        margin: "0px 0px -17px 10px",
+        color: "red",
+        fontSize: "12px",
     },
     spin: {
         position: "absolute",
@@ -71,7 +79,6 @@ const useStyles = makeStyles((theme) => ({
         left: "50%",
     },
 }));
-
 
 function errorModal(msg) {
     Modal.error({
@@ -84,32 +91,26 @@ const EditProfile = () => {
     const context = useContext(AuthContext);
     let history = useHistory();
 
-
-    //Mutations
-    /*const[updateUser]=useMutation(UPDATE_USER,{
-        onError:(error)=>{
-            //return error;
-            errorModal(error.graphQLErrors[0].message);
-        }
-    });*/
-    const[updateUser]=useMutation(
-        context.client === "user" ? UPDATE_USER:UPDATE_DRIVER,
+    const [updateUser] = useMutation(
+        context.client === "user" ? UPDATE_USER : UPDATE_DRIVER,
         {
-        onCompleted:()=>{
-            history.push("/perfil");
-        },
-        onError:(error)=>{
-            //return error;
-            errorModal(error.graphQLErrors[0].message);
+            onCompleted: () => {
+                history.push("/perfil");
+            },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
         }
-        
-    });
-    
+    );
+
     //Query
-    const { loading, error, data } = useQuery(
+    const { loading, data } = useQuery(
         context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
         {
             variables: { _id: context.userId },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
         }
     );
 
@@ -121,28 +122,18 @@ const EditProfile = () => {
                 className={classes.spin}
             />
         );
-    if (error) return `Error! ${error}`;
-    const toProfile =async(values)=>{
-        
-        /*console.log(context.client);
-        console.log(values.name);
-        console.log(values.surname);
-        console.log(values.phone);
-        console.log(context.userId);*/
-        let input={
-            _id:values._id,
+    const toProfile = async (values) => {
+        let input = {
+            _id: values._id,
             name: values.name,
-            surname:values.surname,
-            phone:values.phone,
+            surname: values.surname,
+            phone: values.phone,
         };
-        
+
         return await updateUser({
-            variables:{input},
-            
+            variables: { input },
         });
-        
-    }
-    
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -159,23 +150,31 @@ const EditProfile = () => {
                 </Box>
                 <Formik
                     initialValues={{
-                        _id:context.userId,
-                        name:context.client === "user"
-                        ? data.profileUser.name
-                        : data.profileDriver.name,
-                        surname:context.client === "user"
-                        ? data.profileUser.surname
-                        : data.profileDriver.surname,
-                        phone:context.client === "user"
-                        ? data.profileUser.phone
-                        : data.profileDriver.phone,
+                        _id: context.userId,
+                        name:
+                            context.client === "user"
+                                ? data.profileUser.name
+                                : data.profileDriver.name,
+                        surname:
+                            context.client === "user"
+                                ? data.profileUser.surname
+                                : data.profileDriver.surname,
+                        phone:
+                            context.client === "user"
+                                ? data.profileUser.phone
+                                : data.profileDriver.phone,
                     }}
-                    onSubmit={(values)=>{
-                        //console.log(values.name);
+                    validationSchema={Yup.object({
+                        name: Yup.string().required("Campo requerido!"),
+                        surname: Yup.string().required("Campo requerido!"),
+                        phone: Yup.string().required("Campo requerido!"),
+                    })}
+                    onSubmit={(values) => {
                         toProfile(values);
-                    }}>
-                    {(formik)=>(
-                        <Form 
+                    }}
+                >
+                    {(formik) => (
+                        <Form
                             className={classes.form}
                             onSubmit={formik.handleSubmit}
                             noValidate
@@ -185,49 +184,57 @@ const EditProfile = () => {
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        margin="dense"
                                         label="Nombre"
                                         name="name"
-                                        /*defaultValue={
-                                            context.client === "user"
-                                                ? data.profileUser.name
-                                                : data.profileDriver.name
-                                        }*/
-                                        //value={formik.values.name}
+                                        type="text"
                                         {...formik.getFieldProps("name")}
                                         InputProps={{
-                                            classes:{
+                                            classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
                                                 focused: classes.focused,
-                                            }
+                                            },
                                         }}
                                     />
+                                    <ErrorMessage name="name">
+                                        {(msg) => (
+                                            <p className={classes.helperText}>
+                                                {msg}
+                                            </p>
+                                        )}
+                                    </ErrorMessage>
                                 </Grid>
                                 <Grid item xs={12} sm={12}>
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        margin="dense"
                                         label="Apellido"
                                         name="surname"
-                                        /*defaultValue={
-                                            context.client === "user"
-                                                ? data.profileUser.surname
-                                                : data.profileDriver.surname
-                                        }*/
+                                        type="text"
                                         {...formik.getFieldProps("surname")}
                                         InputProps={{
-                                            classes:{
+                                            classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
                                                 focused: classes.focused,
-                                            }
+                                            },
                                         }}
                                     />
+                                    <ErrorMessage name="surname">
+                                        {(msg) => (
+                                            <p className={classes.helperText}>
+                                                {msg}
+                                            </p>
+                                        )}
+                                    </ErrorMessage>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        margin="dense"
                                         label="Correo"
                                         defaultValue={
                                             context.client === "user"
@@ -241,6 +248,7 @@ const EditProfile = () => {
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        margin="dense"
                                         label="Identificación"
                                         autoComplete="current-identification"
                                         defaultValue={
@@ -255,26 +263,34 @@ const EditProfile = () => {
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        margin="dense"
                                         label="Telefono"
                                         name="phone"
                                         autoComplete="current-cellphone"
-                                       /* defaultValue={
-                                            context.client === "user"
-                                                ? data.profileUser.phone
-                                                : data.profileDriver.phone
-                                        }*/
+                                        type="text"
                                         {...formik.getFieldProps("phone")}
                                         InputProps={{
-                                            classes:{
+                                            classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
                                                 focused: classes.focused,
-                                            }
+                                            },
                                         }}
                                     />
+                                    <ErrorMessage name="phone">
+                                        {(msg) => (
+                                            <p className={classes.helperText}>
+                                                {msg}
+                                            </p>
+                                        )}
+                                    </ErrorMessage>
                                 </Grid>
                             </Grid>
-                            <Grid container direction="row" justify="space-between">
+                            <Grid
+                                container
+                                direction="row"
+                                justify="space-between"
+                            >
                                 <Grid item xs={12}>
                                     <Button
                                         type="submit"
@@ -283,7 +299,7 @@ const EditProfile = () => {
                                         color="primary"
                                         className={classes.submit}
                                     >
-                                    Finalizar
+                                        Finalizar
                                     </Button>
                                 </Grid>
                             </Grid>

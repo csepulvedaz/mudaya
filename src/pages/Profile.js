@@ -72,7 +72,6 @@ const Profile = () => {
     //Query
 
     const { loading, error, data } = useQuery(
-        
         context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
         {
             variables: { _id: context.userId },
@@ -115,6 +114,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Nombre"
                                 defaultValue={
                                     context.client === "user"
@@ -128,6 +128,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Apellido"
                                 defaultValue={
                                     context.client === "user"
@@ -141,6 +142,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Correo"
                                 defaultValue={
                                     context.client === "user"
@@ -154,6 +156,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Identificación"
                                 autoComplete="current-identification"
                                 defaultValue={
@@ -168,6 +171,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Telefono"
                                 autoComplete="current-cellphone"
                                 defaultValue={
