@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Spin } from "antd";
+import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -65,16 +65,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
+
 const Profile = () => {
     const classes = useStyles();
     const context = useContext(AuthContext);
     let history = useHistory();
     //Query
 
-    const { loading, error, data } = useQuery(
+    const { loading, data } = useQuery(
         context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
         {
             variables: { _id: context.userId },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
         }
     );
 
@@ -86,7 +96,6 @@ const Profile = () => {
                 className={classes.spin}
             />
         );
-    if (error) return `Error! ${error}`;
 
     const toMain = () => {
         history.push("/principal");
