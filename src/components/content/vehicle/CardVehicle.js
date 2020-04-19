@@ -1,18 +1,19 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {CardActionArea} from "@material-ui/core";
-import {Button, Rate} from "antd";
+import { CardActionArea } from "@material-ui/core";
+import { Button, Rate } from "antd";
 
 import VehicleDetailsModal from "./VehicleDetailsModal";
+import CreateServiceModal from "../service/CreateServiceModal";
 
 const useStyles = makeStyles({
     root: {
         width: "190rx",
-        height: "250px",
+        height: "230px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
         fontSize: "14px",
     },
     button: {
-        margin: "5px 0px",
+        margin: "10px 0px",
         borderRadius: "7px",
         background: "#FCB625",
         color: "#fff",
@@ -49,6 +50,7 @@ const useStyles = makeStyles({
 const CardVehicle = (props) => {
     const classes = useStyles();
     const [visible, setVisible] = useState(false);
+    const [visibleService, setVisibleService] = useState(false);
     const openModal = (e) => {
         e.preventDefault();
         setVisible(true);
@@ -110,6 +112,11 @@ const CardVehicle = (props) => {
                         visible={visible}
                         setVisible={setVisible}
                         value={props.value}
+                        setVisibleService={setVisibleService}
+                    />
+                    <CreateServiceModal
+                        visibleService={visibleService}
+                        setVisibleService={setVisibleService}
                     />
                 </div>
             </CardContent>

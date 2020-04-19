@@ -23,3 +23,28 @@ code {
     background-color: #fff;
     border-color: #fcb625 !important;
 }
+
+.ant-steps-vertical {
+    padding-top: 20px !important;
+    padding-left: 15px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 250px;
+    margin: auto !important;
+}
+
+.ant-steps-item-icon:hover {
+    cursor: pointer;
+}
+
+.ant-steps-item-process .ant-steps-item-icon {
+    background: #fcb625 !important;
+    border-color: #ffffff !important;
+}
+
+.ant-steps-vertical
+    > .ant-steps-item
+    > .ant-steps-item-container
+    > .ant-steps-item-tail::after {
+    width: 2px !important;
+}

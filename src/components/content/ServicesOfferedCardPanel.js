@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CardService from "./CardService";
+import CardServicesOffered from "./CardServicesOffered";
 import img1 from "../../assets/ourservices1.jpg";
 import img2 from "../../assets/ourservices2.jpg";
 import img3 from "../../assets/ourservices3.jpg";
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ServicesCardPanel = () => {
+const ServicesOfferedCardPanel = () => {
     const classes = useStyles();
     const services = [
         {
@@ -63,7 +63,7 @@ const ServicesCardPanel = () => {
                 <h3 className={classes.title}>NUESTROS SERVICIOS</h3>
                 <div className={classes.panel}>
                     {services.map((value, index) => (
-                        <CardService
+                        <CardServicesOffered
                             key={index}
                             image={value.img}
                             text={value.text}
@@ -76,4 +76,4 @@ const ServicesCardPanel = () => {
     );
 };
 
-export default ServicesCardPanel;
+export default ServicesOfferedCardPanel;

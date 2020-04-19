@@ -1,15 +1,15 @@
-import React, {useState} from "react";
-import {useQuery} from "@apollo/client";
-import {Layout, Spin} from "antd";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { Layout, Spin } from "antd";
+import { makeStyles } from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
-import {LoadingOutlined} from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import ServicesCardPanel from "./ServicesCardPanel";
-import VehiclesCardPanel from "./VehiclesCardPanel";
-import FilterVehiclePanel from "./FilterVehiclePanel";
-import SearchVehiclePanel from "../searchVehicle/SearchVehiclePanel";
-import {ALL_VEHICLES} from "../../graphql/queries";
+import ServicesOfferedCardPanel from "./ServicesOfferedCardPanel";
+import VehiclesCardPanel from "./vehicle/VehiclesCardPanel";
+import FilterVehiclePanel from "./vehicle/FilterVehiclePanel";
+import SearchVehiclePanel from "./vehicle/SearchVehiclePanel";
+import { ALL_VEHICLES } from "../../graphql/queries";
 
 const { Content } = Layout;
 
@@ -52,7 +52,7 @@ const CustomContent = (props) => {
 
             {!type && (
                 <>
-                    <ServicesCardPanel />
+                    <ServicesOfferedCardPanel />
                     <VehiclesCardPanel vehicles={data.vehicles} />
                 </>
             )}

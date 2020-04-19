@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function CardService(props) {
+export default function CardServicesOffered(props) {
     const classes = useStyles();
 
     return (

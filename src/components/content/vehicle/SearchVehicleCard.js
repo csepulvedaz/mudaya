@@ -1,13 +1,14 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {CardActionArea} from "@material-ui/core";
-import {Button, Rate} from "antd";
+import { CardActionArea } from "@material-ui/core";
+import { Button, Rate } from "antd";
 
-import VehicleDetailsModal from "../content/VehicleDetailsModal";
+import VehicleDetailsModal from "./VehicleDetailsModal";
+import CreateServiceModal from "../service/CreateServiceModal";
 
 const useStyles = makeStyles({
     root: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles({
 const SearchVehicleCard = (props) => {
     const classes = useStyles();
     const [visible, setVisible] = useState(false);
+    const [visibleService, setVisibleService] = useState(false);
     const openModal = (e) => {
         e.preventDefault();
         setVisible(true);
@@ -154,6 +156,11 @@ const SearchVehicleCard = (props) => {
                         visible={visible}
                         setVisible={setVisible}
                         value={props.value}
+                        setVisibleService={setVisibleService}
+                    />
+                    <CreateServiceModal
+                        visibleService={visibleService}
+                        setVisibleService={setVisibleService}
                     />
                 </div>
             </CardContent>
