@@ -9,51 +9,33 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { PROFILEUSER, PROFILEDRIVER } from "../graphql/queries";
-import { UPDATE_USER, UPDATE_DRIVER } from "../graphql/mutations";
-import AuthContext from "../context/auth-context";
+import { PROFILEUSER, PROFILEDRIVER } from "../../graphql/queries";
+import { UPDATE_USER, UPDATE_DRIVER } from "../../graphql/mutations";
+import AuthContext from "../../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
-    "@global": {
-        body: {
-            height: "0px",
-            background: "#fafafa",
-        },
-    },
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(3),
         background: "#fff",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "30px",
-        boxShadow: "1px 1px 10px #ccc",
-        borderRadius: "5px",
     },
     avatar: {
-        margin: theme.spacing(1),
         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
         width: theme.spacing(9),
         height: theme.spacing(9),
-    },
-    back: {
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-        borderRadius: 6,
-        boxShadow: "1px 1px 10px #ccc",
-        height: 100,
-        width: 400,
     },
     form: {
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(3, 0, 0),
+        margin: theme.spacing(4, 0, 0),
         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
         borderRadius: 9,
         border: 0,
@@ -75,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
     spin: {
         position: "absolute",
+        zIndex: "1000",
         top: "50%",
         left: "50%",
     },
@@ -86,16 +69,15 @@ function errorModal(msg) {
         content: msg,
     });
 }
-const EditProfile = () => {
+const EditProfile = (props) => {
     const classes = useStyles();
     const context = useContext(AuthContext);
-    let history = useHistory();
 
     const [updateUser] = useMutation(
         context.client === "user" ? UPDATE_USER : UPDATE_DRIVER,
         {
             onCompleted: () => {
-                history.push("/perfil");
+                props.setVisibleEdit(false);
             },
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
@@ -286,12 +268,8 @@ const EditProfile = () => {
                                     </ErrorMessage>
                                 </Grid>
                             </Grid>
-                            <Grid
-                                container
-                                direction="row"
-                                justify="space-between"
-                            >
-                                <Grid item xs={12}>
+                            <Grid container direction="row" justify="center">
+                                <Grid item xs={4}>
                                     <Button
                                         type="submit"
                                         fullWidth

@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Button, Layout } from "antd";
+import { Button, Layout, Drawer } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import AuthContext from "../../context/auth-context";
+import Profile from "./Profile";
+import EditProfile from "./EditProfile";
 
 const { Header } = Layout;
 
@@ -71,9 +73,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomHeader = () => {
     const [navigate, setNavigate] = useState(false);
+    const [visibleProfile, setVisibleProfile] = useState(false);
+    const [visibleEdit, setVisibleEdit] = useState(false);
     const context = useContext(AuthContext);
     const classes = useStyles();
-    let history = useHistory();
 
     const logout = () => {
         localStorage.clear("token");
@@ -81,39 +84,56 @@ const CustomHeader = () => {
         setNavigate(true);
     };
 
-    const toProfile = () => {
-        history.push("/perfil");
-    };
-
     if (navigate) return <Redirect to="/" push={true} />;
     return (
-        <Header theme="light" className={classes.header}>
-            <div className={classes.container}>
-                <div className={classes.logo}>
-                    <p className={classes.textoLogo}>
-                        MUDA <span className={classes.textoLogoBold}>YA</span>
-                    </p>
+        <>
+            <Header theme="light" className={classes.header}>
+                <div className={classes.container}>
+                    <div className={classes.logo}>
+                        <p className={classes.textoLogo}>
+                            MUDA{" "}
+                            <span className={classes.textoLogoBold}>YA</span>
+                        </p>
+                    </div>
+                    <Button
+                        icon={<PersonIcon className={classes.icon} />}
+                        className={classes.box}
+                        onClick={() => {
+                            setVisibleProfile(true);
+                        }}
+                    />
                 </div>
-                <Button
-                    icon={<PersonIcon className={classes.icon} />}
-                    className={classes.box}
-                    onClick={toProfile}
-                />
-            </div>
-            <div className={classes.container}>
-                <Button
-                    className={classes.button}
-                    // onClick={() => alert("Vehiculo presionado")}
-                >
-                    PUBLICA TU VEHICULO
-                </Button>
-                <Button
-                    icon={<ExitToAppIcon className={classes.icon} />}
-                    className={classes.box}
-                    onClick={logout}
-                />
-            </div>
-        </Header>
+                <div className={classes.container}>
+                    <Button
+                        className={classes.button}
+                        // onClick={() => alert("Vehiculo presionado")}
+                    >
+                        PUBLICA TU VEHICULO
+                    </Button>
+                    <Button
+                        icon={<ExitToAppIcon className={classes.icon} />}
+                        className={classes.box}
+                        onClick={logout}
+                    />
+                </div>
+            </Header>
+            <Drawer
+                // title="Perfil"
+                placement="left"
+                width={500}
+                closable={false}
+                onClose={() => setVisibleProfile(false)}
+                visible={visibleProfile}
+            >
+                {!visibleEdit && (
+                    <Profile
+                        setVisibleProfile={setVisibleProfile}
+                        setVisibleEdit={setVisibleEdit}
+                    />
+                )}
+                {visibleEdit && <EditProfile setVisibleEdit={setVisibleEdit} />}
+            </Drawer>
+        </>
     );
 };
 
