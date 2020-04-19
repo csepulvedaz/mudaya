@@ -94,6 +94,7 @@ function errorModal(msg) {
 
 const SignUp = () => {
     const [isDriver, setIsDriver] = useState(false);
+    const [loginPass, setLoginPass] = useState("");
     const context = useContext(AuthContext);
     const [login, { loading }] = useLazyQuery(LOGIN, {
         onCompleted: (data) => {
@@ -113,7 +114,7 @@ const SignUp = () => {
             login({
                 variables: {
                     email: data.createUser.email,
-                    password: data.createUser.password,
+                    password: loginPass,
                 },
             });
         },
@@ -139,7 +140,8 @@ const SignUp = () => {
     );
     const classes = useStyles();
 
-    const toMain = async (values) => {
+    const create = async (values) => {
+        setLoginPass(values.password);
         let input = {
             _id: values._id,
             name: values.name,
@@ -205,7 +207,7 @@ const SignUp = () => {
                     })}
                     onSubmit={(values) => {
                         values._id = parseInt(values._id);
-                        toMain(values);
+                        create(values);
                     }}
                 >
                     {(formik) => (
