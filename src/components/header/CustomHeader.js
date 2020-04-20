@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Button, Layout, Drawer } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
+import List from '@material-ui/icons/FormatListBulletedRounded';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Redirect } from "react-router-dom";
 
@@ -55,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "40px",
         color: "#42c3cf",
     },
+    icon_list: {
+        fontSize: "40px",
+        color: "#6663ff",
+    },
     button: {
         height: "45px",
         margin: "10px 20px",
@@ -100,6 +105,14 @@ const CustomHeader = () => {
                         className={classes.box}
                         onClick={() => {
                             setVisibleProfile(true);
+                        }}
+                    />
+                    <Button
+                        margin= "0 0 0 30px" 
+                        icon={<List className={classes.icon_list} />}
+                        className={classes.box}
+                        onClick={() => {
+                            //setVisibleServicesDropdown(true);
                         }}
                     />
                 </div>
