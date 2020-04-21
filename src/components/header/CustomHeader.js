@@ -9,6 +9,7 @@ import { Redirect } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
+import ServicesList from "./service/ServicesDropdown";
 
 const { Header } = Layout;
 
@@ -107,14 +108,7 @@ const CustomHeader = () => {
                             setVisibleProfile(true);
                         }}
                     />
-                    <Button
-                        margin= "0 0 0 30px" 
-                        icon={<List className={classes.icon_list} />}
-                        className={classes.box}
-                        onClick={() => {
-                            //setVisibleServicesDropdown(true);
-                        }}
-                    />
+                    <ServicesList/>
                 </div>
                 <div className={classes.container}>
                     <Button
