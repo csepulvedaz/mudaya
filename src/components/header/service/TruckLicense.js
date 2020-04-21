@@ -6,14 +6,14 @@ const useStyles = makeStyles({
   root: {
     width: "84px",
     height: "34px",
-    border: "solid 2px #ffee00",
+    border: "solid 1px #ffee00",
     borderRadius: "6px",
     background: "#ffffc8"
   },
   license: {
     height: "30px",
-    fontSize: "16px",
-    fontWeight: "normal",
+    fontSize: "14px",
+    fontWeight: "500",
     lineHeight: "1.33",
     letterSpacing: "normal",
     textAlign: "center",
@@ -37,7 +37,7 @@ export default function TruckLicense(props) {
   return (
     <div className={classes.root}>
       <Typography className={classes.license}>
-        {/*props.brand*/}ABC{divisor}123 {/*props.model*/}
+        {props.alpha}{divisor}{props.numeric}
       </Typography>
     </div>
   );

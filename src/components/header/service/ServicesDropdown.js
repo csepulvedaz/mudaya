@@ -46,12 +46,26 @@ const { SubMenu } = Menu;
 const menu = (
   <Menu>
     <Menu.Item>
-      <DropListElement />
+        <DropListElement license_alpha="ZZZ" 
+            license_numeric ="999" 
+            brand ="MARCA" 
+            model ="MODELO"
+            addressOrigin ="Calle 86 #95 F - 16 apto 102" 
+            addressTarget ="Kra. 14 # 87 - 78" 
+            date ="jue 24 - Mar - 21"
+        />
     </Menu.Item>
     <Menu.Item>
-      <DropListElement />
+        <DropListElement license_alpha="XXX" 
+            license_numeric ="000" 
+            brand ="MARCA" 
+            model ="MODELO"
+            addressOrigin ="Calle 100 #95 F - 16 apto 102" 
+            addressTarget ="Kra. 40 # 87 - 78" 
+            date ="vie 15 - Mar - 21"
+        />
     </Menu.Item>
-    <SubMenu title="Servicios cancelados" disabled>
+    <SubMenu title ="Servicios cancelados" disabled>
       <Menu.Item>
         <DropListElement />
       </Menu.Item>
