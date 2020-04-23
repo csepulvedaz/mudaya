@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "latest",
     "@apollo/client": "^3.0.0-beta.43",
+    "@date-io/moment": "^1.3.13",
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/pickers": "^3.2.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -14,13 +17,13 @@
     "formik": "^2.1.4",
     "google-maps-react": "^2.0.2",
     "graphql": "^15.0.0",
+    "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-infinite-scroller": "^1.2.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "yup": "^0.28.3",
-    "@ant-design/icons": "latest"
+    "yup": "^0.28.3"
   },
   "scripts": {
     "start": "react-scripts start",

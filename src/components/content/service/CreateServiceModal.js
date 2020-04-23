@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Steps, Modal, Row, Col, Drawer } from "antd";
+import React, {useState} from "react";
+import {Col, Drawer, Modal, Row, Steps} from "antd";
+import StepOne from "./StepOne";
 
 const { Step } = Steps;
 
@@ -50,7 +51,7 @@ const CustomSteps = (props) => {
             >
                 <Col span={20}>
                     {current === 0 ? (
-                        <div>Paso 1</div>
+                        <StepOne setVisible={props.setVisibleService}/>
                     ) : current === 1 ? (
                         <div>Paso 2</div>
                     ) : current === 2 ? (
