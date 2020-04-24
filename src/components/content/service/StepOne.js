@@ -1,12 +1,25 @@
-import React, {useState} from "react";
-import * as Yup from "yup";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import {DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
-import {Button, Col, Layout, Row} from "antd";
-import {ErrorMessage, Form, Formik} from "formik";
+import { Button, Col, Layout, Row } from "antd";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+import { ErrorMessage, Form, Formik } from "formik";
+import * as Yup from "yup";
+import moment from "moment";
+
+moment.lang("es", {
+    months: "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
+        "_"
+    ),
+    monthsShort: "Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.".split(
+        "_"
+    ),
+    weekdays: "Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado".split("_"),
+    weekdaysShort: "Dom._Lun._Mar._Mier._Jue._Vier._Sab.".split("_"),
+    weekdaysMin: "Do_Lu_Ma_Mi_Ju_Vi_Sa".split("_"),
+});
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -59,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     helperText: {
         margin: "0px 0px -20px 10px",
         color: "red",
-        fontSize: "14px",
+        fontSize: "12px",
     },
     selectContainer: {
         marginBottom: "2.5px",
@@ -95,7 +108,7 @@ const StepOne = (props) => {
                 initialValues={{
                     origin: "",
                     destination: "",
-                    commentaryUser: ""
+                    commentaryUser: "",
                 }}
                 validationSchema={Yup.object({
                     origin: Yup.string()
@@ -112,20 +125,19 @@ const StepOne = (props) => {
                 onSubmit={(values) => {
                     values.date = new Date(selectedDate);
                     console.log(values);
-                    props.setVisible(false);
                     document.getElementById("form1").reset();
                 }}
             >
                 {(formik) => (
-                    <Form
-                        id="form1"
-                        className={classes.form}
-                        noValidate
-                    >
+                    <Form id="form1" className={classes.form} noValidate>
                         <Row className={classes.rows}>
-                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <MuiPickersUtilsProvider
+                                libInstance={moment}
+                                utils={MomentUtils}
+                            >
                                 <DateTimePicker
-                                    id="date"
+                                    fullWidth
+                                    inputVariant="outlined"
                                     label="Fecha de reserva"
                                     value={selectedDate}
                                     onChange={handleDateChange}
@@ -136,13 +148,20 @@ const StepOne = (props) => {
                                     minutesStep={5}
                                     ampm={false}
                                     disableToolbar={true}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline:
+                                                classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                    }}
                                 />
                             </MuiPickersUtilsProvider>
                         </Row>
                         <Row className={classes.rows}>
                             <TextField
-                                id="origin"
                                 fullWidth
+                                variant="outlined"
                                 label="Dirección de origen*"
                                 margin="dense"
                                 name="origin"
@@ -150,22 +169,21 @@ const StepOne = (props) => {
                                 {...formik.getFieldProps("origin")}
                                 InputProps={{
                                     classes: {
+                                        notchedOutline: classes.notchedOutline,
                                         focused: classes.focused,
                                     },
                                 }}
                             />
                             <ErrorMessage name="origin">
                                 {(msg) => (
-                                    <p className={classes.helperText}>
-                                        {msg}
-                                    </p>
+                                    <p className={classes.helperText}>{msg}</p>
                                 )}
                             </ErrorMessage>
                         </Row>
                         <Row className={classes.rows}>
                             <TextField
-                                id="destination"
                                 fullWidth
+                                variant="outlined"
                                 label="Dirección de destino*"
                                 margin="dense"
                                 name="destination"
@@ -173,48 +191,45 @@ const StepOne = (props) => {
                                 {...formik.getFieldProps("destination")}
                                 InputProps={{
                                     classes: {
+                                        notchedOutline: classes.notchedOutline,
                                         focused: classes.focused,
                                     },
                                 }}
                             />
                             <ErrorMessage name="destination">
                                 {(msg) => (
-                                    <p className={classes.helperText}>
-                                        {msg}
-                                    </p>
+                                    <p className={classes.helperText}>{msg}</p>
                                 )}
                             </ErrorMessage>
                         </Row>
                         <Row className={classes.rows}>
                             <TextField
-                                id="commentaryUser"
                                 label="Comentario al conductor"
                                 fullWidth
+                                variant="outlined"
                                 margin="dense"
                                 multiline
                                 rows={4}
-                                placeholder="Menciona elementos que consideres de importancia para la mudanza"
+                                placeholder="Menciona elementos que consideres importantes para la mudanza"
                                 name="commentaryUser"
                                 type="text"
                                 {...formik.getFieldProps("commentaryUser")}
                                 InputProps={{
                                     classes: {
+                                        notchedOutline: classes.notchedOutline,
                                         focused: classes.focused,
                                     },
                                 }}
                             />
                             <ErrorMessage name="commentaryUser">
                                 {(msg) => (
-                                    <p className={classes.helperText}>
-                                        {msg}
-                                    </p>
+                                    <p className={classes.helperText}>{msg}</p>
                                 )}
                             </ErrorMessage>
                         </Row>
                         <Row gutter={16} className={classes.buttons}>
                             <Col>
                                 <Button
-                                    key="back"
                                     variant="contained"
                                     onClick={handleCancel}
                                     className={classes.backButton}
@@ -225,7 +240,6 @@ const StepOne = (props) => {
                             <Col>
                                 <Button
                                     type="submit"
-                                    key="submit"
                                     variant="contained"
                                     color="primary"
                                     onClick={formik.handleSubmit}
