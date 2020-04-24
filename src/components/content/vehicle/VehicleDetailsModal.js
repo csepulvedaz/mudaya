@@ -41,6 +41,7 @@ const VehicleDetaisModal = (props) => {
     return (
         <Modal
             visible={props.visible}
+            centered
             title="Detalles del vehículo"
             onOk={handleOk}
             onCancel={handleCancel}

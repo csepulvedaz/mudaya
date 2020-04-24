@@ -1,7 +1,18 @@
 import React, { useState } from "react";
-import { Steps, Modal, Row, Col, Drawer } from "antd";
+import { Col, Drawer, Modal, Row, Steps } from "antd";
+import { makeStyles } from "@material-ui/core/styles";
+import StepOne from "./StepOne";
 
 const { Step } = Steps;
+
+const useStyles = makeStyles({
+    container: {
+        width: "90%",
+    },
+    drawer: {
+        position: "absolute",
+    },
+});
 
 const steps = [
     {
@@ -19,6 +30,7 @@ const steps = [
 ];
 
 const CustomSteps = (props) => {
+    const classes = useStyles();
     const [current, setCurrent] = useState(0);
     const [visibleSteps, setVisibleSteps] = useState(false);
 
@@ -47,10 +59,18 @@ const CustomSteps = (props) => {
                 gutter={[24, 0]}
                 style={{ margin: "20px 0px 10px 10px" }}
                 justify="space-between"
+                align="middle"
             >
-                <Col span={20}>
+                <Col
+                    span={21}
+                    style={{
+                        borderRight: "1px solid #ccc",
+                    }}
+                >
                     {current === 0 ? (
-                        <div>Paso 1</div>
+                        <div className={classes.container}>
+                            <StepOne setVisible={props.setVisibleService} />
+                        </div>
                     ) : current === 1 ? (
                         <div>Paso 2</div>
                     ) : current === 2 ? (
@@ -59,11 +79,7 @@ const CustomSteps = (props) => {
                         <div>Paso 4</div>
                     )}
                 </Col>
-                <Col
-                    span={3}
-                    onClick={onClickSteps}
-                    style={{ borderLeft: "1px solid #ccc" }}
-                >
+                <Col span={3} onClick={onClickSteps}>
                     <Steps direction="vertical" size="small" current={current}>
                         {steps.map((item) => (
                             <Step
@@ -81,7 +97,8 @@ const CustomSteps = (props) => {
                 onClose={() => setVisibleSteps(false)}
                 visible={visibleSteps}
                 getContainer={false}
-                style={{ position: "absolute" }}
+                className={classes.drawer}
+                bodyStyle={{ display: "flex", alignContent: "center" }}
             >
                 <Steps direction="vertical" size="small" current={current}>
                     {steps.map((item) => (
