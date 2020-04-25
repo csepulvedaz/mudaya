@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Col, Drawer, Modal, Row, Steps } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 
 const { Step } = Steps;
@@ -32,7 +33,7 @@ const steps = [
 
 const CustomSteps = (props) => {
     const classes = useStyles();
-    const [current, setCurrent] = useState(2);
+    const [current, setCurrent] = useState(1);
     const [visibleSteps, setVisibleSteps] = useState(false);
 
     const next = () => {
@@ -75,7 +76,9 @@ const CustomSteps = (props) => {
                             <StepOne setVisible={props.setVisibleService} />
                         </div>
                     ) : current === 1 ? (
-                        <div>Paso 2</div>
+                        <div className={classes.container}>
+                            <StepTwo setVisible={props.setVisibleService} />
+                        </div>
                     ) : current === 2 ? (
                         <div className={classes.container}>
                             <StepThree setVisible={props.setVisibleService} />
