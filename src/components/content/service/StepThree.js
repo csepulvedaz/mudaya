@@ -1,154 +1,187 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import DetailsIcon from "@material-ui/icons/Details";
-import Popover from "@material-ui/core/Popover";
-import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
-import {
-  Grid,
-  Box,
-  TextField,
-  Paper,
-  Avatar,
-  Divider,
-  Button
-} from "@material-ui/core";
+import { Button, Col, Layout, Row, Collapse } from "antd";
+import { Grid, TextField, Paper, Avatar } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
-    form: {
-      width: "100%" // Fix IE 11 issue.
-    },
-    data: {
-      backgroundColor: "#C0CFD1",
-      padding: theme.spacing(2)
-    },
+const { Panel } = Collapse;
+
+const useStyles = makeStyles((theme) => ({
     paper: {
-      padding: theme.spacing(2),
-      marginTop: theme.spacing(2),
-      backgroundColor: "#C0CFD1"
-    }
-  }));
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+    },
+    buttons: {
+        marginTop: theme.spacing(2),
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+    },
+    rows: {
+        marginTop: theme.spacing(2),
+    },
+    form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    commentary: {
+        width: "100%",
+        padding: theme.spacing(1),
+        backgroundColor: "#fafafa",
+    },
+    button: {
+        width: "124px",
+        height: "35px",
+        marginTop: theme.spacing(3),
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: "#FCB625",
+        color: "#fff",
+        focus: "false",
+        fontWeight: "600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+    },
+    backButton: {
+        width: "124px",
+        height: "35px",
+        marginTop: theme.spacing(3),
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: "#fff",
+        color: "#FCB625",
+        fontWeight: "600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+    },
+    collapse: { borderRadius: "5px" },
+}));
 
-  const StepThree =()=>{
+const StepThree = () => {
     const classes = useStyles();
     return (
-        <React.Fragment>
-          <CssBaseline />
-          <Container maxWidth="xs">
-            <Typography variant="h4" color="textSecondary">
-              Precio del servicio
-            </Typography>
-            <Paper className={classes.data}>
-              <form className={classes.form}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <PopupState variant="popover" popupId="detalle-vehiculo">
-                      {popupState => (
+        <Layout className={classes.paper}>
+            <Row>
+                <Typography component="h1" variant="h5">
+                    Precio del servicio
+                </Typography>
+            </Row>
+            <form className={classes.form}>
+                <Collapse className={classes.collapse}>
+                    <Panel header="Información del vehiculo" key="1">
                         <div>
-                          <Button
-                            fullWidth
-                            color="primary"
-                            endIcon={<DetailsIcon />}
-                            size="large"
-                            variant="contained"
-                            {...bindTrigger(popupState)}
-                          >
-                            MARCA-MODELO
-                          </Button>
-                          <Popover
-                            {...bindPopover(popupState)}
-                            anchorOrigin={{
-                              vertical: "bottom",
-                              horizontal: "center"
-                            }}
-                            transformOrigin={{
-                              vertical: "top",
-                              horizontal: "center"
-                            }}
-                          >
-                            <Box p={5} >
-                              <ul>
+                            <ul>
                                 <li>Capacidad:0000</li>
                                 <li>Altura:0000</li>
                                 <li>Alcance:0000</li>
                                 <li>ejes:0000</li>
-                              </ul>
-                            </Box>
-                          </Popover>
+                            </ul>
                         </div>
-                      )}
-                    </PopupState>
-                  </Grid>
-                  <Grid item xs={12}>
+                    </Panel>
+                </Collapse>
+                <Row className={classes.rows}>
                     <TextField
-                      variant="outlined"
-                      size="small"
-                      margin="none"
-                      label="Origen"
-                      defaultValue="calle 1 # 00-00"
-                      disabled={true}
-                      fullWidth
+                        variant="outlined"
+                        size="small"
+                        margin="none"
+                        label="Origen"
+                        defaultValue="calle 1 # 00-00"
+                        disabled={true}
+                        fullWidth
                     />
-                  </Grid>
-                  <Grid item xs={12}>
+                </Row>
+                <Row className={classes.rows}>
                     <TextField
-                      variant="outlined"
-                      size="small"
-                      margin="none"
-                      label="Destino"
-                      defaultValue="carrea 1 # 00-00"
-                      disabled={true}
-                      fullWidth
+                        variant="outlined"
+                        size="small"
+                        margin="none"
+                        label="Destino"
+                        defaultValue="carrea 1 # 00-00"
+                        disabled={true}
+                        fullWidth
                     />
-                  </Grid>
-                </Grid>
-                <Paper className={classes.paper} elevation={5}>
-                  <Grid container wrap="nowrap" spacing={2}>
-                    <Grid item>
-                      <Avatar>C</Avatar>
-                    </Grid>
-                    <Grid item xs>
-                      <Typography color="textSecondary">
-                        Comentario del cliente describiendo la situacion del
-                        servicio
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-                <Paper className={classes.paper} elevation={5}>
-                  <Grid container wrap="nowrap" spacing={2}>
-                    <Grid item>
-                      <Avatar>D</Avatar>
-                    </Grid>
-                    <Grid item xs>
-                      <Typography color="textSecondary">
-                        Comentario del conductor describiendo la situacion del
-                        servicio
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-                <Divider variant="middle" />
-                <Paper className={classes.paper} elevation={0}>
-                  <Grid container wrap="nowrap" spacing={2}>
-                    <Grid item>
-                      <Typography variant="h6" color="textSecondary">
-                        Precio:
-                      </Typography>
-                    </Grid>
-                    <Grid item xs>
-                      <Typography variant="h4" color="textSecondary">
-                        00.000 COP
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </form>
-            </Paper>
-          </Container>
-        </React.Fragment>
-      );
-  };
-  export default StepThree;
+                </Row>
+                <Row className={classes.rows}>
+                    <Paper className={classes.commentary} elevation={2}>
+                        <Grid container wrap="nowrap" spacing={2}>
+                            <Grid item>
+                                <Avatar>C</Avatar>
+                            </Grid>
+                            <Grid item xs>
+                                <Typography
+                                    color="textSecondary"
+                                    variant="body2"
+                                >
+                                    Comentario del cliente describiendo la
+                                    situacion del servicio
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Row>
+                <Row className={classes.rows}>
+                    <Paper className={classes.commentary} elevation={2}>
+                        <Grid container wrap="nowrap" spacing={1}>
+                            <Grid item>
+                                <Avatar>D</Avatar>
+                            </Grid>
+                            <Grid item>
+                                <Typography
+                                    color="textSecondary"
+                                    variant="body2"
+                                >
+                                    Comentario del conductor describiendo la
+                                    situacion del servicio
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Row>
+                <Row className={classes.rows}>
+                    <Paper className={classes.commentary} elevation={1}>
+                        <Grid container wrap="nowrap" spacing={1}>
+                            <Grid item>
+                                <Typography variant="h6" color="textSecondary">
+                                    Precio:
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant="h6" color="textSecondary">
+                                    00.000 COP
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Row>
+                <Row gutter={16} className={classes.buttons}>
+                    <Col>
+                        <Button
+                            variant="contained"
+                            // onClick={handleCancel}
+                            className={classes.backButton}
+                        >
+                            Cancelar
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            // onClick={formik.handleSubmit}
+                        >
+                            Enviar
+                        </Button>
+                    </Col>
+                </Row>
+            </form>
+        </Layout>
+    );
+};
+export default StepThree;

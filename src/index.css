@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap");
+
+html {
+    scrollbar-width: none;
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Roboto",
@@ -6,6 +11,12 @@ body {
         "Helvetica Neue", sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 code {
@@ -42,9 +53,25 @@ code {
     border-color: #ffffff !important;
 }
 
+.ant-steps-item-process .ant-steps-item-icon .ant-steps-icon {
+    color: #fff !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon .ant-steps-icon {
+    color: #ccc !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon {
+    border-color: #fcb625 !important;
+}
+
 .ant-steps-vertical
-    > .ant-steps-item
-    > .ant-steps-item-container
-    > .ant-steps-item-tail::after {
-    width: 2px !important;
+    .ant-steps-item
+    .ant-steps-item-container
+    .ant-steps-item-tail::after {
+    width: 1.5px !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-container .ant-steps-item-tail::after {
+    background-color: #ccc !important;
 }

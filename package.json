@@ -17,7 +17,6 @@
         "formik": "^2.1.4",
         "google-maps-react": "^2.0.2",
         "graphql": "^15.0.0",
-        "material-ui-popup-state": "^1.5.4",
         "moment": "^2.24.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",

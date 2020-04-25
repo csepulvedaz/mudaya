@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Col, Drawer, Modal, Row, Steps } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import StepOne from "./StepOne";
+import StepThree from "./StepThree";
 
 const { Step } = Steps;
 
@@ -31,7 +32,7 @@ const steps = [
 
 const CustomSteps = (props) => {
     const classes = useStyles();
-    const [current, setCurrent] = useState(0);
+    const [current, setCurrent] = useState(2);
     const [visibleSteps, setVisibleSteps] = useState(false);
 
     const next = () => {
@@ -53,7 +54,9 @@ const CustomSteps = (props) => {
             visible={props.visibleService}
             onCancel={() => props.setVisibleService(false)}
             footer={null}
-            style={{ overflow: "hidden" }}
+            style={{
+                overflow: "hidden",
+            }}
         >
             <Row
                 gutter={[24, 0]}
@@ -74,7 +77,9 @@ const CustomSteps = (props) => {
                     ) : current === 1 ? (
                         <div>Paso 2</div>
                     ) : current === 2 ? (
-                        <div>Paso 3</div>
+                        <div className={classes.container}>
+                            <StepThree setVisible={props.setVisibleService} />
+                        </div>
                     ) : (
                         <div>Paso 4</div>
                     )}
