@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
+import ServicesDropdown from "./service/ServicesDropdown";
 
 const { Header } = Layout;
 
@@ -54,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         fontSize: "40px",
         color: "#42c3cf",
+    },
+    icon_list: {
+        fontSize: "40px",
+        color: "#6663ff",
     },
     button: {
         height: "45px",
@@ -102,6 +107,7 @@ const CustomHeader = () => {
                             setVisibleProfile(true);
                         }}
                     />
+                    <ServicesDropdown />
                 </div>
                 <div className={classes.container}>
                     <Button
