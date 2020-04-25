@@ -2,14 +2,13 @@ import React, { useContext, useState } from "react";
 import { Button, Layout, Drawer } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
-import List from '@material-ui/icons/FormatListBulletedRounded';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Redirect } from "react-router-dom";
 
 import AuthContext from "../../context/auth-context";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
-import ServicesList from "./service/ServicesDropdown";
+import ServicesDropdown from "./service/ServicesDropdown";
 
 const { Header } = Layout;
 
@@ -108,7 +107,7 @@ const CustomHeader = () => {
                             setVisibleProfile(true);
                         }}
                     />
-                    <ServicesList/>
+                    <ServicesDropdown />
                 </div>
                 <div className={classes.container}>
                     <Button
