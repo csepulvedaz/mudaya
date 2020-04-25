@@ -1,23 +1,24 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {CardActionArea} from "@material-ui/core";
-import {Button, Rate} from "antd";
+import { CardActionArea } from "@material-ui/core";
+import { Button, Rate } from "antd";
 
 import VehicleDetailsModal from "./VehicleDetailsModal";
+import CreateServiceModal from "../service/CreateServiceModal";
 
 const useStyles = makeStyles({
     root: {
-        width: "190rx",
-        height: "250px",
+        width: "290rx",
+        height: "360px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
     media: {
-        height: 50,
+        height: 100,
         marginTop: "15px",
     },
     title: { textAlign: "center", color: "#3d3d3d" },
@@ -46,9 +47,10 @@ const useStyles = makeStyles({
     },
 });
 
-const CardVehicle = (props) => {
+const SearchVehicleCard = (props) => {
     const classes = useStyles();
     const [visible, setVisible] = useState(false);
+    const [visibleService, setVisibleService] = useState(false);
     const openModal = (e) => {
         e.preventDefault();
         setVisible(true);
@@ -71,7 +73,38 @@ const CardVehicle = (props) => {
                     className={classes.title}
                     gutterBottom={true}
                 >
-                    {props.type}
+                    {props.value.type}
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Marca:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.brand}
+                    </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Modelo:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.model}
+                    </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Año:{" "}
+                    <span className={classes.boldText}>{props.value.year}</span>
                 </Typography>
                 <Typography
                     variant="body2"
@@ -80,7 +113,9 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Capacidad:{" "}
-                    <span className={classes.boldText}>{props.capacity} m</span>
+                    <span className={classes.boldText}>
+                        {props.value.capacity} Metros
+                    </span>
                 </Typography>
                 <Typography
                     variant="body2"
@@ -90,7 +125,18 @@ const CardVehicle = (props) => {
                 >
                     Dimensiones:{" "}
                     <span className={classes.boldText}>
-                        {props.dimensions} m
+                        {props.value.dimensions} Metros
+                    </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Comentario:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.commentary}
                     </span>
                 </Typography>
                 <div className={classes.footer}>
@@ -110,6 +156,11 @@ const CardVehicle = (props) => {
                         visible={visible}
                         setVisible={setVisible}
                         value={props.value}
+                        setVisibleService={setVisibleService}
+                    />
+                    <CreateServiceModal
+                        visibleService={visibleService}
+                        setVisibleService={setVisibleService}
                     />
                 </div>
             </CardContent>
@@ -117,4 +168,4 @@ const CardVehicle = (props) => {
     );
 };
 
-export default CardVehicle;
+export default SearchVehicleCard;

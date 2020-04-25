@@ -1,19 +1,17 @@
 import React from "react";
-import {useQuery} from "@apollo/client";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import {Carousel, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import { Carousel } from "antd";
 
-import SearchVehicleCard from "./SearchVehicleCard";
-import img1 from "../../assets/van.png";
-import {ALL_VEHICLES} from "../../graphql/queries";
+import CardVehicle from "./CardVehicle";
+import img1 from "../../../assets/van.png";
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        backdropFilter: "brightness(70%)",
+        // background: "#fff",
+        backdropFilter: "contrast(80%)",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
@@ -28,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
-        width: "900px",
     },
     title: {
         textAlign: "center",
@@ -49,28 +46,15 @@ const useStyles = makeStyles((theme) => ({
     },
     spin: {
         position: "absolute",
-        zIndex: "1",
         top: "50%",
-        left: "50%",
+        left: "40%",
     },
 }));
 
-const SearchVehiclePanel = (props) => {
+const VehiclesCardPanel = (props) => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(ALL_VEHICLES, {
-        variables: { type: props.type !== "null" ? props.type : null }, fetchPolicy:"no-cache",
-    });
-    if (loading) {
-        return (
-            <Spin
-                tip="Cargando..."
-                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
-                className={classes.spin}
-            />
-        );
-    }
 
-    const size = data.vehicles.length;
+    const size = props.vehicles.length;
 
     const carouselprops = {
         dots: false,
@@ -79,12 +63,11 @@ const SearchVehiclePanel = (props) => {
         slidesToShow: size > 4 ? 4 : size,
         slidesToScroll: size > 4 ? 4 : size,
     };
-    if (error) return `Error! ${error}`;
 
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title}>RESULTADOS DE TU BÚSQUEDA</h3>
+                <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
                 <div className={classes.panel}>
                     {size > 4 && (
                         <NavigateBeforeIcon className={classes.button} />
@@ -94,15 +77,18 @@ const SearchVehiclePanel = (props) => {
                         {...carouselprops}
                         arrows="true"
                         style={{
-                            width: `90vw`,
+                            width: "60vw",
                             alignSelf: "center",
                         }}
                     >
-                        {data.vehicles.map((value, index) => {
+                        {props.vehicles.map((value, index) => {
                             return (
                                 <div key={index}>
-                                    <SearchVehicleCard
+                                    <CardVehicle
                                         image={img1}
+                                        type={value.type}
+                                        capacity={value.capacity}
+                                        dimensions={value.dimensions}
                                         stars={2}
                                         value={value}
                                     />
@@ -119,4 +105,4 @@ const SearchVehiclePanel = (props) => {
     );
 };
 
-export default SearchVehiclePanel;
+export default VehiclesCardPanel;

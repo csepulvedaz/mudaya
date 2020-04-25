@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
     text: {
-        fontSize: "17px",
+        fontSize: "15px",
         textAlign: "left",
     },
     boldText: { fontWeight: "bold" },
@@ -17,7 +17,6 @@ const useStyles = makeStyles({
         focus: "false",
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        fontSize: "17px",
     },
     backButton: {
         margin: "5px 0px",
@@ -26,7 +25,6 @@ const useStyles = makeStyles({
         color: "#FCB625",
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        fontSize: "17px",
     },
 });
 
@@ -34,6 +32,7 @@ const VehicleDetaisModal = (props) => {
     const classes = useStyles();
     const handleOk = () => {
         props.setVisible(false);
+        props.setVisibleService(true);
     };
 
     const handleCancel = () => {
@@ -42,6 +41,7 @@ const VehicleDetaisModal = (props) => {
     return (
         <Modal
             visible={props.visible}
+            centered
             title="Detalles del vehículo"
             onOk={handleOk}
             onCancel={handleCancel}
@@ -51,7 +51,7 @@ const VehicleDetaisModal = (props) => {
                     onClick={handleCancel}
                     className={classes.backButton}
                 >
-                    Regresar
+                    Volver
                 </Button>,
                 <Button
                     key="submit"

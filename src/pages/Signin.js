@@ -129,7 +129,7 @@ const SignUp = () => {
                 login({
                     variables: {
                         email: data.createDriver.email,
-                        password: data.createDriver.password,
+                        password: loginPass,
                     },
                 });
             },
