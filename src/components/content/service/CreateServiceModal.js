@@ -33,7 +33,7 @@ const steps = [
 
 const CustomSteps = (props) => {
     const classes = useStyles();
-    const [current, setCurrent] = useState(1);
+    const [current, setCurrent] = useState(0);
     const [visibleSteps, setVisibleSteps] = useState(false);
 
     const next = () => {
@@ -73,15 +73,24 @@ const CustomSteps = (props) => {
                 >
                     {current === 0 ? (
                         <div className={classes.container}>
-                            <StepOne setVisible={props.setVisibleService} />
+                            <StepOne
+                                setVisible={props.setVisibleService}
+                                next={next}
+                            />
                         </div>
                     ) : current === 1 ? (
                         <div className={classes.container}>
-                            <StepTwo setVisible={props.setVisibleService} />
+                            <StepTwo
+                                setVisible={props.setVisibleService}
+                                next={next}
+                            />
                         </div>
                     ) : current === 2 ? (
                         <div className={classes.container}>
-                            <StepThree setVisible={props.setVisibleService} />
+                            <StepThree
+                                setVisible={props.setVisibleService}
+                                next={next}
+                            />
                         </div>
                     ) : (
                         <div>Paso 4</div>

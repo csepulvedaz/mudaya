@@ -62,8 +62,16 @@ const useStyles = makeStyles((theme) => ({
     collapse: { borderRadius: "5px" },
 }));
 
-const StepThree = () => {
+const StepThree = (props) => {
     const classes = useStyles();
+
+    const handleCancel = () => {
+        props.setVisible(false);
+    };
+
+    const handleSubmit = () => {
+        props.next();
+    };
     return (
         <Layout className={classes.paper}>
             <Row>
@@ -162,7 +170,7 @@ const StepThree = () => {
                     <Col>
                         <Button
                             variant="contained"
-                            // onClick={handleCancel}
+                            onClick={handleCancel}
                             className={classes.backButton}
                         >
                             Cancelar
@@ -174,7 +182,7 @@ const StepThree = () => {
                             variant="contained"
                             color="primary"
                             className={classes.button}
-                            // onClick={formik.handleSubmit}
+                            onClick={handleSubmit}
                         >
                             Enviar
                         </Button>

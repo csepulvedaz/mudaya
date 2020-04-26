@@ -9,8 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import InputBase from "@material-ui/core/InputBase";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -21,6 +20,9 @@ import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CREATE_VEHICLE } from "../graphql/mutations";
 import AuthContext from "../context/auth-context";
+import TextMaskCustom from "../components/utils/TextMaskCustom";
+import { types, years } from "../components/utils/selectArrays";
+import CustomSelect from "../components/utils/CustomSelect";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -74,8 +76,8 @@ const useStyles = makeStyles((theme) => ({
     selectContainer: {
         marginBottom: "2.5px",
     },
-    select: {
-        marginBottom: "2.5px",
+    selectYear: {
+        marginTop: "2.5px",
     },
     notchedOutline: {},
     focused: {
@@ -84,33 +86,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-
-const CustomSelect = withStyles((theme) => ({
-    input: {
-        borderRadius: 4,
-        position: "relative",
-        border: "1px solid #ced4da",
-        fontSize: 16,
-        padding: "10px 26px 10px 12px",
-        transition: theme.transitions.create(["border-color", "box-shadow"]),
-        "&:focus": {
-            borderRadius: 4,
-            border: "1px #000 solid",
-            // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-        },
-    },
-}))(InputBase);
-
-const types = [
-    { value: "", label: "Seleccione un tipo" },
-    { value: "Vehículo Turbo", label: "Vehículo Turbo" },
-    { value: "Camión Sencillo", label: "Camión Sencillo" },
-    { value: "Doble Troque", label: "Doble Troque" },
-    { value: "Cuatro Manos", label: "Cuatro Manos" },
-    { value: "Minimula", label: "Minimula" },
-    { value: "Tractomula 2 Troques", label: "Tractomula 2 Troques" },
-    { value: "Tractomula 3 Troques", label: "Tractomula 3 Troques" },
-];
 
 function errorModal(msg) {
     Modal.error({
@@ -186,23 +161,18 @@ const VehicleForm = () => {
                     validationSchema={Yup.object({
                         _id: Yup.string()
                             .required("Campo requerido!")
-                            .max(7, "Placa invalida!")
-                            .matches(/^(([a-z]|[A-Z]){3}(-[0-9]{3}){1})$/, {
+                            .matches(/^(([a-z]|[A-Z]){3}( - [0-9]{3}){1})$/, {
                                 message: "Placa incorrecta!",
                             }),
                         brand: Yup.string().required("Campo requerido!"),
                         model: Yup.string().required("Campo requerido!"),
-                        year: Yup.number()
-                            .positive("Año inválido!")
-                            .integer("Año inválido!")
-                            .required("Campo requerido!")
-                            .max(2020, "Año inválido!")
-                            .typeError("Solo números!"),
+                        year: Yup.string()
+                        .required("Campo requerido!"),
                         type: Yup.string().required("Campo requerido!"),
                         dimensions: Yup.string()
                             .required("Campo requerido!")
                             .matches(
-                                /^(([0-9]){1,2}(\x[0-9]{1,2})(\x[0-9]{1,2}){1})$/,
+                                /^((([0-9]){1}\.([0-9]){1}m x (([0-9]){1}|\s)([0-9]){1}\.([0-9]){1}m x ([0-9]){1,2}\.([0-9]){1}m){1})$/,
                                 {
                                     message: "Dimensiones incorrectas!",
                                 }
@@ -211,12 +181,11 @@ const VehicleForm = () => {
                         capacity: Yup.string()
                             .required("Campo requerido!")
                             .matches(
-                                /^(([0-9]){1,2}(\x[0-9]{1,2})(\x[0-9]{1,2}){1})$/,
+                                /^((([0-9]){1}\.([0-9]){1}m x (([0-9]){1}|\s)([0-9]){1}\.([0-9]){1}m x ([0-9]){1,2}\.([0-9]){1}m){1})$/,
                                 {
                                     message: "Capacidad incorrecta!",
                                 }
-                            )
-                            .typeError("Error!"),
+                            ),
                         commentary: Yup.string().max(
                             100,
                             "Máximo 100 caracteres"
@@ -243,7 +212,6 @@ const VehicleForm = () => {
                                     className={classes.selectContainer}
                                 >
                                     <NativeSelect
-                                        className={classes.select}
                                         fullWidth
                                         variant="outlined"
                                         name="type"
@@ -271,11 +239,26 @@ const VehicleForm = () => {
                                         fullWidth
                                         variant="outlined"
                                         margin="dense"
-                                        placeholder="Placa"
+                                        label="Placa"
+                                        placeholder="abc - 123"
                                         name="_id"
                                         type="text"
                                         {...formik.getFieldProps("_id")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    /([a-z,A-Z])/,
+                                                    /([a-z,A-Z])/,
+                                                    /([a-z,A-Z])/,
+                                                    " ",
+                                                    "-",
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -296,7 +279,8 @@ const VehicleForm = () => {
                                         fullWidth
                                         variant="outlined"
                                         margin="dense"
-                                        placeholder="Marca"
+                                        label="Marca"
+                                        // placeholder="Marca"
                                         name="brand"
                                         type="text"
                                         {...formik.getFieldProps("brand")}
@@ -321,7 +305,8 @@ const VehicleForm = () => {
                                         fullWidth
                                         variant="outlined"
                                         margin="dense"
-                                        placeholder="Modelo"
+                                        label="Modelo"
+                                        // placeholder="Modelo"
                                         name="model"
                                         type="text"
                                         {...formik.getFieldProps("model")}
@@ -341,23 +326,28 @@ const VehicleForm = () => {
                                         )}
                                     </ErrorMessage>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
+                                <Grid
+                                    item
+                                    container
+                                    xs={12}
+                                    sm={6}
+                                    className={classes.selectYear}
+                                >
+                                    <NativeSelect
                                         fullWidth
                                         variant="outlined"
-                                        margin="dense"
-                                        placeholder="Año"
                                         name="year"
-                                        type="text"
+                                        input={<CustomSelect />}
                                         {...formik.getFieldProps("year")}
-                                        InputProps={{
-                                            classes: {
-                                                notchedOutline:
-                                                    classes.notchedOutline,
-                                                focused: classes.focused,
-                                            },
-                                        }}
-                                    />
+                                    >
+                                        {years.map((element, index) => (
+                                            <option
+                                                key={index}
+                                                value={element.value}
+                                                label={element.label}
+                                            />
+                                        ))}
+                                    </NativeSelect>
                                     <ErrorMessage name="year">
                                         {(msg) => (
                                             <p className={classes.helperText}>
@@ -371,18 +361,43 @@ const VehicleForm = () => {
                                         fullWidth
                                         variant="outlined"
                                         margin="dense"
-                                        placeholder="Dimensiones"
+                                        label="Dimensiones"
+                                        placeholder="Alto x Largo x Ancho"
                                         name="dimensions"
                                         type="text"
                                         {...formik.getFieldProps("dimensions")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    /[1-3]/,
+                                                    ".",
+                                                    /\d/,
+                                                    "m",
+                                                    " ",
+                                                    "x",
+                                                    " ",
+                                                    /[0-1]/,
+                                                    /\d/,
+                                                    ".",
+                                                    /\d/,
+                                                    "m",
+                                                    " ",
+                                                    "x",
+                                                    " ",
+                                                    /[1-3]/,
+                                                    ".",
+                                                    /\d/,
+                                                    "m",
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
                                                 focused: classes.focused,
                                             },
-                                            startAdornment: (
-                                                <InputAdornment position="start">
+                                            endAdornment: (
+                                                <InputAdornment position="end">
                                                     <HeightIcon />
                                                 </InputAdornment>
                                             ),
@@ -401,18 +416,43 @@ const VehicleForm = () => {
                                         fullWidth
                                         variant="outlined"
                                         margin="dense"
-                                        placeholder="Capacidad"
+                                        label="Capacidad"
+                                        placeholder="(Alto x Largo x Ancho)"
                                         name="capacity"
                                         type="text"
                                         {...formik.getFieldProps("capacity")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    /[1-3]/,
+                                                    ".",
+                                                    /\d/,
+                                                    "m",
+                                                    " ",
+                                                    "x",
+                                                    " ",
+                                                    /[0-1]/,
+                                                    /\d/,
+                                                    ".",
+                                                    /\d/,
+                                                    "m",
+                                                    " ",
+                                                    "x",
+                                                    " ",
+                                                    /[1-3]/,
+                                                    ".",
+                                                    /\d/,
+                                                    "m",
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
                                                 focused: classes.focused,
                                             },
-                                            startAdornment: (
-                                                <InputAdornment position="start">
+                                            endAdornment: (
+                                                <InputAdornment position="end">
                                                     <AspectRatioIcon />
                                                 </InputAdornment>
                                             ),
@@ -433,7 +473,8 @@ const VehicleForm = () => {
                                         margin="dense"
                                         multiline
                                         rows={4}
-                                        placeholder="Extras"
+                                        label="Extras"
+                                        placeholder="Ingresa información extra acerca de tu vehiculo o tus servicios"
                                         name="commentary"
                                         type="text"
                                         {...formik.getFieldProps("commentary")}

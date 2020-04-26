@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { Button, Col, Layout, Row } from "antd";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import EventAvailableTwoToneIcon from "@material-ui/icons/EventAvailableTwoTone";
 import MomentUtils from "@date-io/moment";
 import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -118,6 +120,7 @@ const StepOne = (props) => {
                     values.date = new Date(selectedDate);
                     console.log(values);
                     document.getElementById("form1").reset();
+                    props.next();
                 }}
             >
                 {(formik) => (
@@ -146,6 +149,11 @@ const StepOne = (props) => {
                                                 classes.notchedOutline,
                                             focused: classes.focused,
                                         },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <EventAvailableTwoToneIcon />
+                                            </InputAdornment>
+                                        ),
                                     }}
                                 />
                             </MuiPickersUtilsProvider>

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     rows: {
         marginTop: theme.spacing(2),
     },
-    Form: {
+    form: {
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
@@ -102,6 +102,7 @@ const StepTwo = (props) => {
                 onSubmit={(values) => {
                     alert(JSON.stringify(values, null, 2));
                     document.getElementById("form2").reset();
+                    props.next();
                     // login({
                     //     variables: {
                     //         email: values.email,

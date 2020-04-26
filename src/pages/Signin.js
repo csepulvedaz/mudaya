@@ -18,6 +18,7 @@ import { Formik, Form, ErrorMessage } from "formik";
 import { CREATE_USER, CREATE_DRIVER } from "../graphql/mutations";
 import { LOGIN } from "../graphql/queries";
 import AuthContext from "../context/auth-context";
+import TextMaskCustom from "../components/utils/TextMaskCustom";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(2, 0, 0),
+        margin: theme.spacing(3, 0, 0),
         width: "100%",
         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
         borderRadius: 9,
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
         color: "red",
         fontSize: "14px",
     },
+    checkbox: { margin: "0px 10px", padding: "0px", marginBottom: "-5px" },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
@@ -192,11 +194,7 @@ const SignUp = () => {
                         password: "",
                     }}
                     validationSchema={Yup.object({
-                        _id: Yup.number()
-                            .positive("Identificación invalida!")
-                            .integer("Identificación invalida!")
-                            .required("Campo requerido!")
-                            .typeError("Solo números!"),
+                        _id: Yup.string().required("Campo requerido!"),
                         name: Yup.string().required("Campo requerido!"),
                         surname: Yup.string().required("Campo requerido!"),
                         phone: Yup.string().required("Campo requerido!"),
@@ -206,7 +204,8 @@ const SignUp = () => {
                         password: Yup.string().required("Campo requerido"),
                     })}
                     onSubmit={(values) => {
-                        values._id = parseInt(values._id);
+                        // alert(JSON.stringify(values, null, 2));
+                        values._id = parseInt(values._id.slice(3));
                         create(values);
                     }}
                 >
@@ -214,6 +213,11 @@ const SignUp = () => {
                         <Form
                             className={classes.form}
                             onSubmit={formik.handleSubmit}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    alert("lol");
+                                }
+                            }}
                             noValidate
                         >
                             <Grid container spacing={2}>
@@ -222,7 +226,7 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Nombre"
+                                        label="Nombre"
                                         name="name"
                                         type="text"
                                         {...formik.getFieldProps("name")}
@@ -247,7 +251,7 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Apellido"
+                                        label="Apellido"
                                         name="surmane"
                                         type="text"
                                         {...formik.getFieldProps("surname")}
@@ -272,11 +276,31 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Número identificación"
+                                        autoComplete="nope"
+                                        value="CC           "
+                                        label="Número identificación"
                                         name="_id"
                                         type="text"
                                         {...formik.getFieldProps("_id")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    "C",
+                                                    "C",
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -297,11 +321,29 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Número celular"
+                                        label="Número celular"
                                         name="phone"
                                         type="text"
                                         {...formik.getFieldProps("phone")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    /3/,
+                                                    /[0-5]/,
+                                                    /\d/,
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -317,12 +359,41 @@ const SignUp = () => {
                                         )}
                                     </ErrorMessage>
                                 </Grid>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    container
+                                    className={classes.checkbox}
+                                >
+                                    <Grid item xs={6}>
+                                        <FormControlLabel
+                                            control={
+                                                <CustomCheckbox
+                                                    checked={!isDriver}
+                                                    onChange={handleCheckbox}
+                                                />
+                                            }
+                                            label="Soy Cliente"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel
+                                            control={
+                                                <CustomCheckbox
+                                                    checked={isDriver}
+                                                    onChange={handleCheckbox}
+                                                />
+                                            }
+                                            label="Soy Conductor"
+                                        />
+                                    </Grid>
+                                </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Correo"
+                                        label="Correo"
                                         name="email"
                                         type="email"
                                         {...formik.getFieldProps("email")}
@@ -347,11 +418,12 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Contraseña"
+                                        label="Contraseña"
                                         name="password"
-                                        type="password"
                                         {...formik.getFieldProps("password")}
                                         InputProps={{
+                                            type: "password",
+                                            autoComplete: "new-password",
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -366,26 +438,6 @@ const SignUp = () => {
                                             </p>
                                         )}
                                     </ErrorMessage>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={
-                                            <CustomCheckbox
-                                                checked={!isDriver}
-                                                onChange={handleCheckbox}
-                                            />
-                                        }
-                                        label="Soy Cliente"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <CustomCheckbox
-                                                checked={isDriver}
-                                                onChange={handleCheckbox}
-                                            />
-                                        }
-                                        label="Soy Conductor"
-                                    />
                                 </Grid>
                             </Grid>
                             <Button
