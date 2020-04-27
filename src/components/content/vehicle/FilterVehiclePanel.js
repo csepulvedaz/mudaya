@@ -47,7 +47,8 @@ const FilterVehiclePanel = (props) => {
     const [option, setOption] = useState("");
 
     const selectType = types;
-    selectType.splice(0, 1); // removes "Seleccione un tipo" option
+    let index = selectType.indexOf(selectType.find(obj => {return obj.value === ""})); // remove "Seleccione un tipo" option
+    if (index !== -1) selectType.splice(index, 1);
 
     const toSearch = () => {
         props.setType(option);
@@ -83,7 +84,7 @@ const FilterVehiclePanel = (props) => {
                                 allowClear
                                 onChange={onChange}
                                 filterOption={(input, option) =>
-                                    option.value
+                                    option.label
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
