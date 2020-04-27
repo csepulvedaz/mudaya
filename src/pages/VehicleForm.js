@@ -166,8 +166,7 @@ const VehicleForm = () => {
                             }),
                         brand: Yup.string().required("Campo requerido!"),
                         model: Yup.string().required("Campo requerido!"),
-                        year: Yup.string()
-                        .required("Campo requerido!"),
+                        year: Yup.string().required("Campo requerido!"),
                         type: Yup.string().required("Campo requerido!"),
                         dimensions: Yup.string()
                             .required("Campo requerido!")
@@ -222,8 +221,9 @@ const VehicleForm = () => {
                                             <option
                                                 key={index}
                                                 value={element.value}
-                                                label={element.label}
-                                            />
+                                            >
+                                                {element.label}
+                                            </option>
                                         ))}
                                     </NativeSelect>
                                     <ErrorMessage name="type">
@@ -344,8 +344,9 @@ const VehicleForm = () => {
                                             <option
                                                 key={index}
                                                 value={element.value}
-                                                label={element.label}
-                                            />
+                                            >
+                                                {element.label}
+                                            </option>
                                         ))}
                                     </NativeSelect>
                                     <ErrorMessage name="year">
