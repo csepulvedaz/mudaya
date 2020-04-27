@@ -199,7 +199,9 @@ const SignUp = () => {
                         surname: Yup.string().required("Campo requerido!"),
                         phone: Yup.string()
                             .required("Campo requerido!")
-                            .length(13, "Ingrese un número válido!"),
+                            .matches(/^[0-9]{3}\s[0-9]{3}(\s[0-9]{2}){2}$/, {
+                                message: "Número incorrecto!",
+                            }),
                         email: Yup.string()
                             .email("Email incorrecto")
                             .required("Campo requerido"),
@@ -274,7 +276,7 @@ const SignUp = () => {
                                         fullWidth
                                         margin="dense"
                                         autoComplete="nope"
-                                        value="CC           "
+                                        // value="CC           "
                                         label="Número identificación"
                                         name="_id"
                                         type="text"
