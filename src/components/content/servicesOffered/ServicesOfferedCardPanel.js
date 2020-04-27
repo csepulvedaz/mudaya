@@ -1,10 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import CardServicesOffered from "./CardServicesOffered";
-import img1 from "../../assets/ourservices1.jpg";
-import img2 from "../../assets/ourservices2.jpg";
-import img3 from "../../assets/ourservices3.jpg";
-import img4 from "../../assets/ourservices4.jpg";
+import img1 from "../../../assets/ourservices1.jpg";
+import img2 from "../../../assets/ourservices2.jpg";
+import img3 from "../../../assets/ourservices3.jpg";
+import img4 from "../../../assets/ourservices4.jpg";
 
 const useStyles = makeStyles((theme) => ({
     content: {

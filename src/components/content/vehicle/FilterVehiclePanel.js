@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Col, Row, Select } from "antd";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Button, Col, Row, Select} from "antd";
+import {types} from "../../utils/selectArrays";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -41,23 +42,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function uniqBy(a, key) {
-    var seen = {};
-    return a.filter(function (item) {
-        var k = key(item);
-        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-    });
-}
-
 const FilterVehiclePanel = (props) => {
     const classes = useStyles();
     const [option, setOption] = useState("");
 
-    const typeOptions = [];
-    props.vehicles.map((value) => {
-        return typeOptions.push({ value: value.type });
-    });
-    const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify);
+    const selectType = types;
+    selectType.splice(0, 1); // removes "Seleccione un tipo" option
 
     const toSearch = () => {
         props.setType(option);
@@ -97,7 +87,7 @@ const FilterVehiclePanel = (props) => {
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={uniqtypeOptions}
+                                options={selectType}
                             />
                         </Col>
                         <Col>
