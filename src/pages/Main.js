@@ -25,7 +25,7 @@ const Main = () => {
         <Layout theme="light" className={classes["@global"]}>
             <CustomHeader />
             {context.client === "user" && <CustomContent />}
-            {context.client !== "user" && <CustomDriverContent />}
+            {context.client === "driver" && <CustomDriverContent />}
             <CustomFooter />
         </Layout>
     );

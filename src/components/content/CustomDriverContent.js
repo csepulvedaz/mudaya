@@ -1,12 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import {useQuery} from "@apollo/client";
 import {Layout, Spin} from "antd";
 import {makeStyles} from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
 import {LoadingOutlined} from "@ant-design/icons";
 
-import ServicesOfferedCardPanel from "./servicesOffered/ServicesOfferedCardPanel";
-import VehiclesCardPanel from "./vehicle/VehiclesCardPanel";
+import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
 import {ALL_VEHICLES} from "../../graphql/queries";
 
 const { Content } = Layout;
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 const CustomDriverContent = (props) => {
     const classes = useStyles();
     const { loading, error, data } = useQuery(ALL_VEHICLES);
-    const [type, setType] = useState(null);
 
     if (loading)
         return (
@@ -39,12 +37,10 @@ const CustomDriverContent = (props) => {
             />
         );
     if (error) return `Error! ${error}`;
+
     return (
         <Content className={classes.content}>
-            <>
-                <ServicesOfferedCardPanel />
-                <VehiclesCardPanel vehicles={data.vehicles} />
-            </>
+            <DriverVehiclePanel vehicles={data.vehicles}/>
         </Content>
     );
 };
