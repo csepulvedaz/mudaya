@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useQuery} from "@apollo/client";
 import {Layout, Spin} from "antd";
 import {makeStyles} from "@material-ui/core/styles";
@@ -6,7 +6,9 @@ import bg from "../../assets/bg.jpg";
 import {LoadingOutlined} from "@ant-design/icons";
 
 import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
-import {ALL_VEHICLES} from "../../graphql/queries";
+import DriverServicesPanel from "./driverContent/DriverServicesPanel";
+import {SERVICES_BY_DRIVER, VEHICLES_BY_DRIVER} from "../../graphql/queries";
+import AuthContext from "../../context/auth-context";
 
 const { Content } = Layout;
 
@@ -26,9 +28,11 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomDriverContent = (props) => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(ALL_VEHICLES);
+    const context = useContext(AuthContext);
+    const { loading, error, data } = useQuery(VEHICLES_BY_DRIVER,{variables: { idDriver: context.userId }});
+    let { loading2, error2, data2 } = useQuery(SERVICES_BY_DRIVER,{variables: { idDriver: context.userId }});
 
-    if (loading)
+    if (loading || loading2)
         return (
             <Spin
                 tip="Cargando..."
@@ -36,11 +40,14 @@ const CustomDriverContent = (props) => {
                 className={classes.spin}
             />
         );
-    if (error) return `Error! ${error}`;
+    if (error || error2) return `Error! ${error}`;
 
+
+    if (data2===undefined) data2={services:undefined};
     return (
         <Content className={classes.content}>
-            <DriverVehiclePanel vehicles={data.vehicles}/>
+            <DriverVehiclePanel vehicles={data.vehiclesByDriver}/>
+            <DriverServicesPanel services={data2.servicesByDriver}/>
         </Content>
     );
 };
