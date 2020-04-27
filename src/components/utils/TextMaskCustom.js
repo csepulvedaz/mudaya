@@ -13,7 +13,7 @@ const TextMaskCustom = (props) => {
             }}
             // placeholderChar={"\u2000"}
             // keepCharPositions
-            guide={true}
+            guide={false}
         />
     );
 };

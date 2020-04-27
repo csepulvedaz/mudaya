@@ -209,7 +209,8 @@ const SignUp = () => {
                     })}
                     onSubmit={(values) => {
                         // alert(JSON.stringify(values, null, 2));
-                        values._id = values._id.slice(3);
+                        values._id = values._id.slice(3).replace(/\s/g, "");
+                        values.phone = values.phone.replace(/\s/g, "");
                         create(values);
                     }}
                 >
