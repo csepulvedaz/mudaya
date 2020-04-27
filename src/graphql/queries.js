@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const PROFILEUSER = gql`
-    query ProfileUser($_id: Int!) {
+    query ProfileUser($_id: String!) {
         profileUser(_id: $_id) {
             name
             surname
@@ -13,7 +13,7 @@ export const PROFILEUSER = gql`
 `;
 
 export const PROFILEDRIVER = gql`
-    query ProfileDriver($_id: Int!) {
+    query ProfileDriver($_id: String!) {
         profileDriver(_id: $_id) {
             name
             surname
