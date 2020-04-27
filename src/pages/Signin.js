@@ -197,7 +197,9 @@ const SignUp = () => {
                         _id: Yup.string().required("Campo requerido!"),
                         name: Yup.string().required("Campo requerido!"),
                         surname: Yup.string().required("Campo requerido!"),
-                        phone: Yup.string().required("Campo requerido!"),
+                        phone: Yup.string()
+                            .required("Campo requerido!")
+                            .length(13, "Ingrese un número válido!"),
                         email: Yup.string()
                             .email("Email incorrecto")
                             .required("Campo requerido"),
@@ -387,6 +389,7 @@ const SignUp = () => {
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        autoComplete="email"
                                         margin="dense"
                                         label="Correo"
                                         name="email"
