@@ -144,7 +144,7 @@ const SignUp = () => {
 
     const create = async (values) => {
         setLoginPass(values.password);
-        let input = {
+        const input = {
             _id: values._id,
             name: values.name,
             surname: values.surname,
@@ -157,7 +157,7 @@ const SignUp = () => {
                 variables: { input },
             });
         } else {
-            await createDriver({
+            return await createDriver({
                 variables: { input },
             });
         }
@@ -213,11 +213,6 @@ const SignUp = () => {
                         <Form
                             className={classes.form}
                             onSubmit={formik.handleSubmit}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    alert("lol");
-                                }
-                            }}
                             noValidate
                         >
                             <Grid container spacing={2}>
