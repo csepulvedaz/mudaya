@@ -205,7 +205,7 @@ const SignUp = () => {
                     })}
                     onSubmit={(values) => {
                         // alert(JSON.stringify(values, null, 2));
-                        values._id = parseInt(values._id.slice(3));
+                        values._id = values._id.slice(3);
                         create(values);
                     }}
                 >
