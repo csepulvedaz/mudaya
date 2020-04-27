@@ -12,7 +12,7 @@ const TextMaskCustom = (props) => {
                 inputRef(ref ? ref.inputElement : null);
             }}
             placeholderChar={"\u2000"}
-            keepCharPositions
+            // keepCharPositions
             guide={true}
         />
     );
