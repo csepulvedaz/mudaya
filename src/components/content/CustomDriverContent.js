@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {useQuery} from "@apollo/client";
 import {Layout, Spin} from "antd";
 import {makeStyles} from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
 import DriverServicesPanel from "./driverContent/DriverServicesPanel";
 import {SERVICES_BY_DRIVER, VEHICLES_BY_DRIVER} from "../../graphql/queries";
 import AuthContext from "../../context/auth-context";
+import DriverLeftSider from "./driverContent/DriverLeftSider";
 
 const { Content } = Layout;
 
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const CustomDriverContent = (props) => {
     const classes = useStyles();
     const context = useContext(AuthContext);
+    const [option, setOption] = useState(1);
     const { loading, error, data } = useQuery(VEHICLES_BY_DRIVER,{variables: { idDriver: context.userId }});
     let { loading2, error2, data2 } = useQuery(SERVICES_BY_DRIVER,{variables: { idDriver: context.userId }});
 
@@ -45,10 +47,14 @@ const CustomDriverContent = (props) => {
 
     if (data2===undefined) data2={services:undefined};
     return (
-        <Content className={classes.content}>
-            <DriverVehiclePanel vehicles={data.vehiclesByDriver}/>
-            <DriverServicesPanel services={data2.servicesByDriver}/>
-        </Content>
+        <Layout>
+            <DriverLeftSider setOption={setOption}/>
+            <Content className={classes.content}>
+
+                {option === 2 && <DriverServicesPanel services={data2.servicesByDriver}/>}
+                {option === 3 && <DriverVehiclePanel vehicles={data.vehiclesByDriver}/>}
+            </Content>
+        </Layout>
     );
 };
 
