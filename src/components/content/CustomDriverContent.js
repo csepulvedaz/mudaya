@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
         backgroundColor: "#fafafa",
+        //test
     },
 }));
 
