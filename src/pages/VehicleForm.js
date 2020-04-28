@@ -191,7 +191,9 @@ const VehicleForm = () => {
                         ),
                     })}
                     onSubmit={(values) => {
-                        values._id = values._id.toLowerCase();
+                        values._id = values._id
+                            .toLowerCase()
+                            .replace(/\s/g, "");
                         values.year = parseInt(values.year);
                         values.idDriver = context.userId;
                         toPrincipal(values);
