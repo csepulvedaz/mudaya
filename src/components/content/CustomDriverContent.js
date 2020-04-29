@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
 import {LoadingOutlined} from "@ant-design/icons";
 
+import DriverCalendar from "./driverContent/DriverCalendar";
 import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
 import DriverServicesPanel from "./driverContent/DriverServicesPanel";
 import {SERVICES_BY_DRIVER, VEHICLES_BY_DRIVER} from "../../graphql/queries";
@@ -24,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
         background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
         backgroundColor: "#fafafa",
-        //test
     },
 }));
 
@@ -51,7 +51,7 @@ const CustomDriverContent = (props) => {
         <Layout>
             <DriverLeftSider setOption={setOption}/>
             <Content className={classes.content}>
-
+                {option === 1 && <DriverCalendar/>}
                 {option === 2 && <DriverServicesPanel services={data2.servicesByDriver}/>}
                 {option === 3 && <DriverVehiclePanel vehicles={data.vehiclesByDriver}/>}
             </Content>
