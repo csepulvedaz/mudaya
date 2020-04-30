@@ -2,10 +2,9 @@ import React, {useContext, useState} from "react";
 import {useQuery} from "@apollo/client";
 import {Layout, Spin} from "antd";
 import {makeStyles} from "@material-ui/core/styles";
-import bg from "../../assets/bg.jpg";
 import {LoadingOutlined} from "@ant-design/icons";
 
-import DriverCalendar from "./driverContent/DriverCalendar";
+import DriverCalendarPanel from "./driverContent/DriverCalendarPanel";
 import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
 import DriverServicesPanel from "./driverContent/DriverServicesPanel";
 import {SERVICES_BY_DRIVER, VEHICLES_BY_DRIVER} from "../../graphql/queries";
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         // justifyContent: "center",
         // alignItems:"flex-end",
-        background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
         backgroundColor: "#fafafa",
     },
@@ -51,7 +49,7 @@ const CustomDriverContent = (props) => {
         <Layout>
             <DriverLeftSider setOption={setOption}/>
             <Content className={classes.content}>
-                {option === 1 && <DriverCalendar/>}
+                {option === 1 && <DriverCalendarPanel/>}
                 {option === 2 && <DriverServicesPanel services={data2.servicesByDriver}/>}
                 {option === 3 && <DriverVehiclePanel vehicles={data.vehiclesByDriver}/>}
             </Content>

@@ -1,35 +1,34 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
 
-import DriverVehicleCard from "./DriverVehicleCard";
-import img1 from "../../../assets/van.png";
-
+import DriverCalendar from "./DriverCalendar";
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
+        // background: "#fff",
         backdropFilter: "contrast(80%)",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
     },
     box: {
+        width:"100%",
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column",        
+        alignItems: "center",
         borderRadius: "13px",
-        padding: "20px 20px",
+        padding: "20px 0px",
     },
     panel: {
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
+        width: "70%",
     },
     title: {
-        textAlign: "center",
-        color: "#ffffff",
-        fontWeight: "600",
-        fontSize: "22px",
+        textAlign: "center", color: "#ffffff", textAlign: "center", fontSize: "24px", fontWeight: "bold",
     },
     button: {
         borderRadius: "9px",
@@ -47,38 +46,35 @@ const useStyles = makeStyles((theme) => ({
         top: "50%",
         left: "40%",
     },
-    list: {
-
-    },
-    listItem: {
-        padding: "10px",
-    },
+    boxTitle: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height:"50px",
+        width:"250px",
+        backgroundColor: "#fcb625",
+        borderRadius: "0px 60px 60px 0px",
+        alignSelf: "stretch",
+    }
 }));
 
-const DriverVehiclePanel = (props) => {
+const DriverCalendarPanel = (props) => {
     const classes = useStyles();
 
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title}>MIS VEHICULOS</h3>
+                <div className={classes.boxTitle}>
+                    <Typography className={classes.title}>
+                        Programación
+                    </Typography>
+                </div>
                 <div className={classes.panel}>
-                    <List className={classes.list}>
-                        {props.vehicles.map((value, index) => {
-                            return (
-                                <div key={index} className={classes.listItem}>
-                                    <DriverVehicleCard
-                                        image={img1}
-                                        value={value}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </List>
+                    <DriverCalendar/>
                 </div>
             </div>
         </div>
     );
 };
 
-export default DriverVehiclePanel;
+export default DriverCalendarPanel;
