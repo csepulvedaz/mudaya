@@ -103,7 +103,7 @@ export default function DropListElement(props) {
           <div className={classes.button_background}>
             
               <Row xs={{ span: 8  }}>
-                <TruckLicense alpha = {props.license_alpha} numeric = {props.license_numeric}/>
+                <TruckLicense vehicleId = {props.vehicleId}/>
               </Row>
               <Row xs={{ span: 8 }}>
                 <Button type="primary" size="small" className={classes.button} >Ver más</Button>

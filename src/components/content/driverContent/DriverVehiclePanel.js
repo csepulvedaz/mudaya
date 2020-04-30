@@ -1,6 +1,7 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
 
 import DriverVehicleCard from "./DriverVehicleCard";
 import img1 from "../../../assets/van.png";
@@ -15,10 +16,12 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: "20px",
     },
     box: {
+        width:"100%",
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         borderRadius: "13px",
-        padding: "20px 20px",
+        padding: "20px 0px",
     },
     panel: {
         borderRadius: "13px",
@@ -26,10 +29,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
     },
     title: {
-        textAlign: "center",
-        color: "#ffffff",
-        fontWeight: "600",
-        fontSize: "22px",
+        textAlign: "center", color: "#ffffff", textAlign: "center", fontSize: "24px", fontWeight: "bold",
     },
     button: {
         borderRadius: "9px",
@@ -53,6 +53,16 @@ const useStyles = makeStyles((theme) => ({
     listItem: {
         padding: "10px",
     },
+    boxTitle: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height:"50px",
+        width:"190px",
+        backgroundColor: "#fcb625",
+        borderRadius: "0px 60px 60px 0px",
+        alignSelf: "stretch",
+    },
 }));
 
 const DriverVehiclePanel = (props) => {
@@ -61,7 +71,11 @@ const DriverVehiclePanel = (props) => {
     return (
         <div className={classes.content}>
             <div className={classes.box}>
-                <h3 className={classes.title}>MIS VEHICULOS</h3>
+                <div className={classes.boxTitle}>
+                    <Typography className={classes.title}>
+                        Vehículos
+                    </Typography>
+                </div>
                 <div className={classes.panel}>
                     <List className={classes.list}>
                         {props.vehicles.map((value, index) => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Chip from '@material-ui/core/Chip';
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
@@ -32,13 +33,7 @@ const useStyles = makeStyles({
 
 export default function TruckLicense(props) {
   const classes = useStyles();
-  const divisor = <span className={classes.divisor}>-</span>;
-
   return (
-    <div className={classes.root}>
-      <Typography className={classes.license}>
-        {props.alpha}{divisor}{props.numeric}
-      </Typography>
-    </div>
+      <Chip label={props.vehicleId} className={classes.root}/>
   );
 }

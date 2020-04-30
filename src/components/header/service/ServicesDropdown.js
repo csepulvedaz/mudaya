@@ -30,8 +30,7 @@ const menu = (
     <Menu>
         <Menu.Item>
             <DropListElement
-                license_alpha="ZZZ"
-                license_numeric="999"
+                vehicleId="ZZZ - 999"
                 brand="MARCA"
                 model="MODELO"
                 addressOrigin="Calle 86 #95 F - 16 apto 102"
@@ -41,8 +40,7 @@ const menu = (
         </Menu.Item>
         <Menu.Item>
             <DropListElement
-                license_alpha="XXX"
-                license_numeric="000"
+                vehicleId="XXX - 000"
                 brand="MARCA"
                 model="MODELO"
                 addressOrigin="Calle 100 #95 F - 16 apto 102"

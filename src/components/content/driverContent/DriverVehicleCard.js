@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import {Col, Row} from "antd";
 
+import TruckLicense from "../../header/service/TruckLicense";
+
 const useStyles = makeStyles({
     root: {
         width: "700px",
@@ -92,7 +94,7 @@ const DriverVehicleCard = (props) => {
                 </Col>
                 <Col span={6} className={classes.col}>
                     <Row className={classes.row}>
-                        <Chip label={props.value._id} className={classes.chip}/>
+                        <TruckLicense vehicleId ={props.value._id}/>
                     </Row>
                     <Row className={classes.row}>
 

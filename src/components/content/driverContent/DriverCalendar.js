@@ -28,15 +28,16 @@ const DriverCalendar = (props) => {
     const classes = useStyles();
     const theme = createMuiTheme({ palette: { type: "light", primary: blue } });
 
+
     return (        
         <MuiThemeProvider theme={theme}>
-            <Paper>
+            <Paper style ={{borderRadius: "4px"}}>
                 <Scheduler  >
                     <ViewState currentDate="2020-04-30" />
                     <WeekView startDayHour={6} endDayHour={18}  cellDuration={60} ></WeekView>
                     <Toolbar/>
                     <DateNavigator/>
-                    <TodayButton/>
+                    <TodayButton />
                     <Appointments />
                 </Scheduler>
             </Paper>
