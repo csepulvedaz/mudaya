@@ -29,7 +29,7 @@ const DriverCalendar = (props) => {
     const classes = useStyles();
     const theme = createMuiTheme({ palette: { type: "light", primary: blue } });
     
-    const [currentDate, setCurrentDate] = useState('2018-06-27');
+    const [currentDate, setCurrentDate] = useState('2020-04-20');
 
     return (        
         <MuiThemeProvider theme={theme}>
