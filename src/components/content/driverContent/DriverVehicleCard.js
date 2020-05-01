@@ -1,9 +1,8 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import Chip from '@material-ui/core/Chip';
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {Col, Row} from "antd";
+import { Col, Row } from "antd";
 
 import TruckLicense from "../../header/service/TruckLicense";
 
@@ -11,7 +10,7 @@ const useStyles = makeStyles({
     root: {
         width: "700px",
         border: "solid 0.5px #707070",
-        background: "#FFFFFF"
+        background: "#FFFFFF",
     },
     media: {
         height: 100,
@@ -19,7 +18,8 @@ const useStyles = makeStyles({
     title: {
         fontSize: "30px",
         textAlign: "center",
-        color: "#3d3d3d" },
+        color: "#3d3d3d",
+    },
     text: {
         fontSize: "15px",
         textAlign: "center",
@@ -73,35 +73,39 @@ const DriverVehicleCard = (props) => {
                     />
                 </Col>
                 <Col span={12} className={classes.col}>
-                    <Row >
+                    <Row>
                         <Typography variant="h4" className={classes.title}>
-                            {props.value.brand +" • "+ props.value.model}
+                            {props.value.brand + " • " + props.value.model}
                         </Typography>
                     </Row>
-                    <Row >
-                        <Typography variant="subtitle1" gutterBottom className={classes.year}>
+                    <Row>
+                        <Typography
+                            variant="subtitle1"
+                            gutterBottom
+                            className={classes.year}
+                        >
                             {props.value.year}
                         </Typography>
                     </Row>
                     <Row className={classes.innerMargins}>
                         <Typography variant="body1" className={classes.text}>
-                            • Capacidad:{" "+props.value.capacity}
+                            • Capacidad:{" " + props.value.capacity}
                         </Typography>
-                        <Typography variant="body1" gutterBottom className={classes.text}>
-                            • Dimensiones:{" "+props.value.dimensions}
+                        <Typography
+                            variant="body1"
+                            gutterBottom
+                            className={classes.text}
+                        >
+                            • Dimensiones:{" " + props.value.dimensions}
                         </Typography>
                     </Row>
                 </Col>
                 <Col span={6} className={classes.col}>
                     <Row className={classes.row}>
-                        <TruckLicense vehicleId ={props.value._id}/>
+                        <TruckLicense vehicleId={props.value._id} />
                     </Row>
-                    <Row className={classes.row}>
-
-                    </Row>
-                    <Row className={classes.row}>
-
-                    </Row>
+                    <Row className={classes.row}></Row>
+                    <Row className={classes.row}></Row>
                 </Col>
             </Row>
         </div>

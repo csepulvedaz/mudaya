@@ -1,18 +1,20 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Layout, Menu} from "antd";
-import {CarOutlined, ReconciliationOutlined, ScheduleOutlined} from '@ant-design/icons';
+import { makeStyles } from "@material-ui/core/styles";
+import { Layout, Menu } from "antd";
+import {
+    CarOutlined,
+    ReconciliationOutlined,
+    ScheduleOutlined,
+} from "@ant-design/icons";
 
-
-const {Sider} = Layout;
+const { Sider } = Layout;
 const useStyles = makeStyles({
-
-    sider:{
-        paddingBlockStart:"5%",
+    sider: {
+        paddingBlockStart: "5%",
         backgroundColor: "#ffffff",
-        width:"250px",
-        minHeight:"800px",
-    }
+        width: "250px",
+        minHeight: "800px",
+    },
 });
 
 const DriverLeftSider = (props) => {
@@ -32,13 +34,21 @@ const DriverLeftSider = (props) => {
         <Sider className={classes.sider}>
             <Menu
                 mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['schedule']}
-                style={{ height: '100%'}}
+                defaultSelectedKeys={["1"]}
+                defaultOpenKeys={["schedule"]}
+                style={{ position: "fixed" }}
             >
-                <Menu.Item key="schedule" onClick={toCalendar}><ScheduleOutlined />Programación</Menu.Item>
-                <Menu.Item key="services" onClick={toServices}><ReconciliationOutlined /> Servicios</Menu.Item>
-                <Menu.Item key="vehicles" onClick={toVehicles}><CarOutlined />Vehículos</Menu.Item>
+                <Menu.Item key="schedule" onClick={toCalendar}>
+                    <ScheduleOutlined />
+                    Programación
+                </Menu.Item>
+                <Menu.Item key="services" onClick={toServices}>
+                    <ReconciliationOutlined /> Servicios
+                </Menu.Item>
+                <Menu.Item key="vehicles" onClick={toVehicles}>
+                    <CarOutlined />
+                    Vehículos
+                </Menu.Item>
             </Menu>
         </Sider>
     );

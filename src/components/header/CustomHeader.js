@@ -107,7 +107,7 @@ const CustomHeader = () => {
                             setVisibleProfile(true);
                         }}
                     />
-                    <ServicesDropdown />
+                    {context.client === "user" && <ServicesDropdown />}
                 </div>
                 <div className={classes.container}>
                     <Button
