@@ -1,10 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 
-import DriverVehicleCard from "./DriverVehicleCard";
-import img1 from "../../../assets/van.png";
+import DriverCalendar from "./DriverCalendar";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -20,21 +18,13 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
+        width: "70%",
     },
     title: {
         textAlign: "center",
         color: "#ffffff",
         fontSize: "24px",
         fontWeight: "bold",
-    },
-    spin: {
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-    },
-    list: {},
-    listItem: {
-        padding: "10px",
     },
     boxTitle: {
         display: "flex",
@@ -49,27 +39,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DriverVehiclePanel = (props) => {
+const DriverCalendarPanel = (props) => {
     const classes = useStyles();
 
     return (
         <div className={classes.content}>
             <div className={classes.boxTitle}>
-                <Typography className={classes.title}>Vehículos</Typography>
+                <Typography className={classes.title}>Programación</Typography>
             </div>
             <div className={classes.panel}>
-                <List className={classes.list}>
-                    {props.vehicles.map((value, index) => {
-                        return (
-                            <div key={index} className={classes.listItem}>
-                                <DriverVehicleCard image={img1} value={value} />
-                            </div>
-                        );
-                    })}
-                </List>
+                <DriverCalendar />
             </div>
         </div>
     );
 };
 
-export default DriverVehiclePanel;
+export default DriverCalendarPanel;

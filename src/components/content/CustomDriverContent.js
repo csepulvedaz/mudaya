@@ -1,36 +1,52 @@
-import React, {useState} from "react";
-import {useQuery} from "@apollo/client";
-import {Layout, Spin} from "antd";
-import {makeStyles} from "@material-ui/core/styles";
-import bg from "../../assets/bg.jpg";
-import {LoadingOutlined} from "@ant-design/icons";
+import React, { useContext, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { Layout, Spin } from "antd";
+import { makeStyles } from "@material-ui/core/styles";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import ServicesOfferedCardPanel from "./servicesOffered/ServicesOfferedCardPanel";
-import VehiclesCardPanel from "./vehicle/VehiclesCardPanel";
-import {ALL_VEHICLES} from "../../graphql/queries";
+import DriverCalendarPanel from "./driverContent/DriverCalendarPanel";
+import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
+import DriverServicesPanel from "./driverContent/DriverServicesPanel";
+import { SERVICES_BY_DRIVER, VEHICLES_BY_DRIVER } from "../../graphql/queries";
+import AuthContext from "../../context/auth-context";
+import DriverLeftSider from "./driverContent/DriverLeftSider";
 
 const { Content } = Layout;
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
+        zIndex: 0,
         paddingBlockStart: "4%",
         display: "flex",
         flexDirection: "column",
         // justifyContent: "center",
         // alignItems:"flex-end",
-        background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
-        backgroundColor: "#fafafa",
+        background: "#fafafa",
     },
 }));
 
 const CustomDriverContent = (props) => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(ALL_VEHICLES);
-    const [type, setType] = useState(null);
+    const context = useContext(AuthContext);
+    const [option, setOption] = useState(1);
+    const {
+        loading: loadingVehicles,
+        error: errorVehicles,
+        data: dataVehicles,
+    } = useQuery(VEHICLES_BY_DRIVER, {
+        variables: { idDriver: context.userId },
+    });
+    const {
+        loading: loadingServices,
+        error: errorServices,
+        data: dataServices,
+    } = useQuery(SERVICES_BY_DRIVER, {
+        variables: { idDriver: context.userId },
+    });
 
-    if (loading)
+    if (loadingVehicles || loadingServices)
         return (
             <Spin
                 tip="Cargando..."
@@ -38,14 +54,26 @@ const CustomDriverContent = (props) => {
                 className={classes.spin}
             />
         );
-    if (error) return `Error! ${error}`;
+    if (errorVehicles || errorServices)
+        return `Error! ${errorVehicles || errorServices}`;
+
     return (
-        <Content className={classes.content}>
-            <>
-                <ServicesOfferedCardPanel />
-                <VehiclesCardPanel vehicles={data.vehicles} />
-            </>
-        </Content>
+        <Layout>
+            <DriverLeftSider setOption={setOption} />
+            <Content className={classes.content}>
+                {option === 1 && <DriverCalendarPanel />}
+                {option === 2 && dataServices && (
+                    <DriverServicesPanel
+                        services={dataServices.servicesByDriver}
+                    />
+                )}
+                {option === 3 && dataVehicles && (
+                    <DriverVehiclePanel
+                        vehicles={dataVehicles.vehiclesByDriver}
+                    />
+                )}
+            </Content>
+        </Layout>
     );
 };
 
