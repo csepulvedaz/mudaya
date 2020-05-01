@@ -1,4 +1,4 @@
-import React from "react";
+import  React ,{useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { ViewState,TimeScaleLayout } from "@devexpress/dx-react-scheduler";
@@ -25,15 +25,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DriverCalendar = (props) => {
+
     const classes = useStyles();
     const theme = createMuiTheme({ palette: { type: "light", primary: blue } });
-
+    
+    const [currentDate, setCurrentDate] = useState('2018-06-27');
 
     return (        
         <MuiThemeProvider theme={theme}>
             <Paper style ={{borderRadius: "4px"}}>
                 <Scheduler  >
-                    <ViewState currentDate="2020-04-30" />
+                    <ViewState currentDate={currentDate} onCurrentDateChange={(currentDate) => setCurrentDate(currentDate)}/>
                     <WeekView startDayHour={6} endDayHour={18}  cellDuration={60} ></WeekView>
                     <Toolbar/>
                     <DateNavigator/>
