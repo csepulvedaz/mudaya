@@ -21,12 +21,18 @@ const DriverCalendar = (props) => {
     const classes = useStyles();
     const theme = createMuiTheme({ palette: { type: "light", primary: blue } });
 
-    const [currentDate, setCurrentDate] = useState("2020-04-20");
+    const today = new Date();
+    const todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    const manualTraduction = {today:"Hoy"};
+
+    const [currentDate, setCurrentDate] = useState(todayDate);
 
     return (
         <MuiThemeProvider theme={theme}>
             <Paper style={{ borderRadius: "4px" }}>
-                <Scheduler>
+                <Scheduler
+                    locale={'es-ES'}
+                >
                     <ViewState
                         currentDate={currentDate}
                         onCurrentDateChange={(currentDate) =>
@@ -40,7 +46,9 @@ const DriverCalendar = (props) => {
                     ></WeekView>
                     <Toolbar />
                     <DateNavigator />
-                    <TodayButton />
+                    <TodayButton 
+                        messages={manualTraduction}
+                    />
                     <Appointments />
                 </Scheduler>
             </Paper>
