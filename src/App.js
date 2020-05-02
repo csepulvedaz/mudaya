@@ -50,6 +50,9 @@ const App = () => {
                     {client === "driver" && (
                         <Redirect from="/registro" to="/vehiculo" exact />
                     )}
+                    {client !== "driver" && (
+                        <Redirect from="/vehiculo" to="/" exact />
+                    )}
                     {!token && (
                         <Route exact path="/">
                             <Login />
@@ -65,9 +68,11 @@ const App = () => {
                             <Signin />
                         </Route>
                     )}
+
                     <Route path="/vehiculo">
                         <VehicleForm />
                     </Route>
+
                     <Route path="*" component={NotFound404} />
                 </Switch>
             </AuthContext.Provider>

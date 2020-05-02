@@ -5,7 +5,8 @@ const yearsArray = () => {
     let startYear = currentYear - 30;
     let result = [{ value: "", label: "Año" }];
     while (startYear <= currentYear) {
-        result.push({ value: `${startYear++}`, label: `${startYear++}` });
+        result.push({ value: `${startYear}`, label: `${startYear}` });
+        startYear++;
     }
     return result;
 };
