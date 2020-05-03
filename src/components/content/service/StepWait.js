@@ -12,7 +12,7 @@ const useStyles = makeStyles({
         height: "320px",
         border: "solid 0.5px #fcb625",
         borderRadius: "4px",
-        boxShadow: "0 6px 6px 0 rgba(0, 0, 0, 0.16)",
+        boxShadow: "inset 4px 4px 6px rgba(0,0,0,0.05),4px 4px 6px rgba(0,0,0,0.05)",
         //opacity:"0",
         backgroundColor: "#ffffff",
         display: "flex",
