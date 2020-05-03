@@ -20,7 +20,7 @@ const CustomFooter = () => {
             <br />
             INGENIERIA DE SOFTWARE II
             <br />
-            MudaYa ©2020 Todos los derechos reservados.
+            PRAVA ©2020 Todos los derechos reservados.
             <br />
         </Footer>
     );
