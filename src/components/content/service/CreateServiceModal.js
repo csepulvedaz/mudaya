@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Col, Drawer, Modal, Row, Steps } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+
+import AuthContext from "../../../context/auth-context";
 
 const { Step } = Steps;
 
@@ -16,35 +18,44 @@ const useStyles = makeStyles({
     },
 });
 
-const steps = [
+const stepsUser = [
     {
         title: "Solicitud del servicio",
-    },
-    {
-        title: "Precio del servicio",
     },
     {
         title: "Confirmación del servicio",
     },
     {
-        title: "Finalización del servicio",
+        title: "Datos del servicio",
+    },
+];
+
+const stepsDriver = [
+    {
+        title: "Recibir servicio",
+    },
+    {
+        title: "Datos del servicio",
     },
 ];
 
 const CustomSteps = (props) => {
     const classes = useStyles();
+    const context = useContext(AuthContext);
     const [current, setCurrent] = useState(0);
     const [visibleSteps, setVisibleSteps] = useState(false);
+
+    const steps = context.client === "user" ? stepsUser : stepsDriver;
 
     const next = () => {
         const nextStep = current + 1;
         setCurrent(nextStep);
     };
 
-    const prev = () => {
-        const prevStep = current - 1;
-        setCurrent(prevStep);
-    };
+    // const prev = () => {
+    //     const prevStep = current - 1;
+    //     setCurrent(prevStep);
+    // };
 
     const onClickSteps = () => {
         setVisibleSteps(true);
