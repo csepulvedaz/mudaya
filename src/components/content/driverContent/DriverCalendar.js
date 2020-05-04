@@ -36,14 +36,21 @@ const DriverCalendar = (props) => {
     const theme = createMuiTheme({
         palette: { type: "light", primary: amber },
     });
-
+    
+    const putAZero = function(dayOrMonth){
+        if(dayOrMonth < 10){
+            return "0"+(dayOrMonth.toString());
+        }
+        return dayOrMonth;
+    };
     const today = new Date();
-    const todayDate =
+    const todayDate = 
         today.getFullYear() +
         "-" +
-        (today.getMonth() + 1) +
+        putAZero(today.getMonth() + 1) +
         "-" +
-        today.getDate();
+        putAZero(today.getDate());
+    
     const manualTraduction = { today: "Hoy" };
 
     const [currentDate, setCurrentDate] = useState(todayDate);
@@ -71,7 +78,6 @@ const DriverCalendar = (props) => {
         }
         return <WeekView.DayScaleCell {...props} />;
     };
-    //const DayScaleCell = withStyles(style, { name: 'DayScaleCell' })(DayScaleCellBase);
 
     return (
         <MuiThemeProvider theme={theme}>
