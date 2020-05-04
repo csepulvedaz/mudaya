@@ -113,9 +113,15 @@ const StepOne = (props) => {
     const [createService, { loading: loadingService }] = useMutation(
         CREATE_SERVICE,
         {
+            onCompleted: () => {
+                document.getElementById("form1").reset();
+                props.setVisible(false);
+                success();
+            },
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
             },
+            refetchQueries: ["ServicesByUser"],
         }
     );
 
@@ -177,9 +183,6 @@ const StepOne = (props) => {
                 onSubmit={(values) => {
                     values.date = new Date(selectedDate);
                     create(values);
-                    document.getElementById("form1").reset();
-                    props.setVisible(false);
-                    success();
                 }}
             >
                 {(formik) => (

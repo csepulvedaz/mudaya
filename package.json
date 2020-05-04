@@ -29,6 +29,7 @@
         "react-scripts": "3.4.1",
         "react-text-mask": "^5.4.3",
         "subscriptions-transport-ws": "^0.9.16",
+        "text-mask-addons": "^3.8.0",
         "yup": "^0.28.3"
     },
     "scripts": {

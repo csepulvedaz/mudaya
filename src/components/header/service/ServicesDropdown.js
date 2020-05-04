@@ -1,11 +1,16 @@
 import React, { useState, useContext } from "react";
-import { useSubscription } from "@apollo/client";
-import { Menu, Dropdown, Button, Badge } from "antd";
+import { useSubscription, useQuery } from "@apollo/client";
+import { Menu, Dropdown, Button, Badge, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/icons/FormatListBulletedRounded";
+import ListIcon from "@material-ui/icons/FormatListBulletedRounded";
+
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 
 import DropListElement from "./DropListElement";
 import { SERVICE_ADDED } from "../../../graphql/subscriptions";
+import { SERVICES_BY_USER } from "../../../graphql/queries";
 import AuthContext from "../../../context/auth-context";
 
 const useStyles = makeStyles({
@@ -24,44 +29,27 @@ const useStyles = makeStyles({
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         backgroundColor: " #ffffff",
     },
+    menu: {
+        position: "fixed",
+        background: "#fafafa",
+        borderRadius: "7px",
+        overflow: "auto",
+        maxHeight: 500,
+    },
 });
-
-const { SubMenu } = Menu;
-
-const menu = (
-    <Menu>
-        <Menu.Item>
-            <DropListElement
-                vehicleId="ZZZ - 999"
-                brand="MARCA"
-                model="MODELO"
-                addressOrigin="Calle 86 #95 F - 16 apto 102"
-                addressTarget="Kra. 14 # 87 - 78"
-                date="jue 24 - Mar - 21"
-            />
-        </Menu.Item>
-        <Menu.Item>
-            <DropListElement
-                vehicleId="XXX - 000"
-                brand="MARCA"
-                model="MODELO"
-                addressOrigin="Calle 100 #95 F - 16 apto 102"
-                addressTarget="Kra. 40 # 87 - 78"
-                date="vie 15 - Mar - 21"
-            />
-        </Menu.Item>
-        <SubMenu title="Servicios cancelados" disabled>
-            <Menu.Item>
-                <DropListElement />
-            </Menu.Item>
-        </SubMenu>
-    </Menu>
-);
 
 export default function ServicesList(props) {
     const classes = useStyles();
     const [dataArray, setDataArray] = useState([]);
     const { userId } = useContext(AuthContext);
+    const {
+        loading: loadingServices,
+        error: errorServices,
+        data: dataServices,
+    } = useQuery(SERVICES_BY_USER, {
+        variables: { idUser: userId },
+        fetchPolicy: "no-cache",
+    });
     const { data } = useSubscription(SERVICE_ADDED, {
         variables: { _id: userId },
         onSubscriptionData: ({ subscriptionData }) => {
@@ -69,12 +57,34 @@ export default function ServicesList(props) {
         },
     });
 
+    if (loadingServices)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+    if (errorServices) return `Error! ${errorServices}`;
+
+    const menu = (
+        <List className={classes.menu}>
+            {dataServices.servicesByUser.map((value, index) => {
+                return (
+                    <ListItem key={index}>
+                        <DropListElement value={value} />
+                    </ListItem>
+                );
+            })}
+        </List>
+    );
+
     return (
         <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
             <Button
                 icon={
                     <Badge count={dataArray.length}>
-                        <List className={classes.icon} />
+                        <ListIcon className={classes.icon} />
                     </Badge>
                 }
             />

@@ -162,7 +162,6 @@ const CustomHeader = () => {
                 </div>
             </Header>
             <Drawer
-                // title="Perfil"
                 placement="left"
                 width={500}
                 closable={false}

@@ -48,14 +48,8 @@ const CustomSteps = (props) => {
     const steps = client === "user" ? stepsUser : stepsDriver;
 
     const next = () => {
-        const nextStep = current + 1;
-        setCurrent(nextStep);
+        setCurrent(current + 1);
     };
-
-    // const prev = () => {
-    //     const prevStep = current - 1;
-    //     setCurrent(prevStep);
-    // };
 
     const onClickSteps = () => {
         setVisibleSteps(true);
@@ -93,30 +87,32 @@ const CustomSteps = (props) => {
                                 idDriver={props.idDriver}
                                 setVisible={props.setVisibleService}
                             />
-                        ) : current === 0 && client === "driver" ? (
+                        ) : current === 0 &&
+                          client === "driver" &&
+                          props.value.state === "started" ? (
                             <StepTwo
+                                value={props.value}
                                 setVisible={props.setVisibleService}
                                 next={next}
                             />
-                        ) : current === 1 && client === "user" && true ? (
+                        ) : client === "user" &&
+                          props.value.state === "started" ? (
                             <StepWait
                                 subject="Conductor"
                                 setVisible={props.setVisibleService}
-                                next={next}
                             />
-                        ) : current === 1 && client === "user" && false ? (
+                        ) : client === "driver" &&
+                          props.value.state === "onHold" ? (
+                            <StepWait
+                                subject="Usuario"
+                                setVisible={props.setVisibleService}
+                            />
+                        ) : client === "user" &&
+                          props.value.state === "onHold" ? (
                             <StepThree
                                 setVisible={props.setVisibleService}
                                 next={next}
                             />
-                        ) : current === 1 && client === "driver" && true ? (
-                            <StepWait
-                                subject="Usuario"
-                                setVisible={props.setVisibleService}
-                                next={next}
-                            />
-                        ) : current === 1 && client === "driver" && false ? (
-                            <div>Paso 4</div>
                         ) : (
                             <div>Paso 4</div>
                         )}

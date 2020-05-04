@@ -78,3 +78,14 @@ export const CREATE_SERVICE = gql`
         }
     }
 `;
+
+export const UPDATE_SERVICE = gql`
+    mutation updateService($_id: ID!, $input: serviceDriverResponseInput!) {
+        updateService(_id: $_id, input: $input) {
+            origin
+            destination
+            commentaryUser
+            state
+        }
+    }
+`;

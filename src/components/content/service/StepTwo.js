@@ -1,10 +1,21 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Col, Layout, Row } from "antd";
+import { Button, Col, Layout, Row, Modal, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Grid, TextField, Paper, Avatar } from "@material-ui/core";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
+
+import TextMaskCustom from "../../../components/utils/TextMaskCustom";
+import { UPDATE_SERVICE } from "../../../graphql/mutations";
+
+const numberMask = createNumberMask({
+    prefix: "$",
+    suffix: "",
+});
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -59,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
     },
+    spin: {
+        position: "absolute",
+        zIndex: "1",
+        top: "50%",
+        left: "40%",
+    },
     helperText: {
         margin: "0px 0px -20px 10px",
         color: "red",
@@ -72,16 +89,63 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function success() {
+    Modal.success({
+        content: `Proceso exitoso. Podrás revisar el estado en la barra de servicios.`,
+    });
+}
+
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
+
 const StepTwo = (props) => {
     const classes = useStyles();
+    const [updateService, { loading }] = useMutation(UPDATE_SERVICE, {
+        onCompleted: () => {
+            document.getElementById("form2").reset();
+            props.setVisible(false);
+            success();
+        },
+        onError: (error) => {
+            errorModal(error.graphQLErrors[0].message);
+        },
+        refetchQueries: ["ServicesByDriver"],
+    });
+
+    const { _id, destination, origin, commentaryUser } = props.value;
 
     const handleCancel = () => {
         props.setVisible(false);
-        document.getElementById("form1").reset();
+        document.getElementById("form2").reset();
+    };
+
+    const update = async (values) => {
+        const input = {
+            commentaryDriver: values.commentaryDriver,
+            state: "onHold",
+            price: values.price,
+        };
+
+        return await updateService({
+            variables: { _id: _id, input },
+        });
     };
 
     return (
         <Layout className={classes.paper}>
+            {loading && (
+                <Spin
+                    tip="Cargando..."
+                    indicator={
+                        <LoadingOutlined style={{ fontSize: 40 }} spin />
+                    }
+                    className={classes.spin}
+                />
+            )}
             <Row>
                 <Typography component="h1" variant="h5">
                     Precio del servicio
@@ -100,15 +164,7 @@ const StepTwo = (props) => {
                     ),
                 })}
                 onSubmit={(values) => {
-                    alert(JSON.stringify(values, null, 2));
-                    document.getElementById("form2").reset();
-                    props.next();
-                    // login({
-                    //     variables: {
-                    //         email: values.email,
-                    //         password: values.password,
-                    //     },
-                    // });
+                    update(values);
                 }}
             >
                 {(formik) => (
@@ -124,7 +180,7 @@ const StepTwo = (props) => {
                                 size="small"
                                 margin="none"
                                 label="Origen"
-                                defaultValue="calle 1 # 00-00"
+                                defaultValue={origin}
                                 disabled={true}
                                 fullWidth
                             />
@@ -135,7 +191,7 @@ const StepTwo = (props) => {
                                 size="small"
                                 margin="none"
                                 label="Destino"
-                                defaultValue="carrea 1 # 00-00"
+                                defaultValue={destination}
                                 disabled={true}
                                 fullWidth
                             />
@@ -151,8 +207,8 @@ const StepTwo = (props) => {
                                             color="textSecondary"
                                             variant="body2"
                                         >
-                                            Comentario del cliente describiendo
-                                            la situacion del servicio
+                                            Comentario del cliente:
+                                            {" " + commentaryUser}
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -169,6 +225,10 @@ const StepTwo = (props) => {
                                 type="text"
                                 {...formik.getFieldProps("price")}
                                 InputProps={{
+                                    inputComponent: TextMaskCustom,
+                                    inputProps: {
+                                        mask: numberMask,
+                                    },
                                     classes: {
                                         notchedOutline: classes.notchedOutline,
                                         focused: classes.focused,
@@ -224,7 +284,7 @@ const StepTwo = (props) => {
                                     onClick={formik.handleSubmit}
                                     className={classes.button}
                                 >
-                                    Enviar
+                                    Aceptar
                                 </Button>
                             </Col>
                         </Row>

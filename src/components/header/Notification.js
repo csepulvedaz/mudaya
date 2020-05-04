@@ -28,19 +28,22 @@ const useStyles = makeStyles({
 export default function Notification() {
     const classes = useStyles();
     const [dataArray, setDataArray] = useState([]);
+    const [textItem, setTextItem] = useState([]);
     const { userId } = useContext(AuthContext);
-    const { data } = useSubscription(SERVICE_ADDED, {
+    const { loading } = useSubscription(SERVICE_ADDED, {
         variables: { _id: userId },
         onSubscriptionData: ({ subscriptionData }) => {
-            setDataArray([...dataArray, subscriptionData]);
+            setDataArray([...dataArray, subscriptionData.data.serviceAdded]);
+            setTextItem([...textItem, "Nuevo servicio solicitado"]);
         },
     });
 
     const menu = (
         <Menu>
-            <Menu.Item>
-                {/* New comment: {!loading && serviceAdded.content} */}
-            </Menu.Item>
+            {!loading &&
+                textItem.map((value, index) => (
+                    <Menu.Item key={index}>{value}</Menu.Item>
+                ))}
         </Menu>
     );
 

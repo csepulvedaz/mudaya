@@ -1,117 +1,178 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Row, Col } from "antd";
-import { Button } from 'antd';
+import { Row, Col, Descriptions, Tag, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { useQuery } from "@apollo/client";
 
-import TruckLicense from "./TruckLicense";
+import { VEHICLE } from "../../../graphql/queries";
+import CreateServiceModal from "../../content/service/CreateServiceModal";
+// import TruckLicense from "./TruckLicense";
 
 const useStyles = makeStyles({
-  root: {
-    width: "500px",
-    height: "130px",
-    margin: "-1px 25px",
-    borderTop: "1px solid  #D0D0D0",
-    borderBottom: "1px solid  #D0D0D0",
-    background: "#FFFFFF"
-  },
-  image_box: {
-    width: "90px",
-    height: "90px",
-    margin: "20px 15px 20px 15px",
-    borderRadius: "4px",
-    background: "#EEEEEE" // para el skeleton
-  },
-  content: {
-    margin: "20px 0px 20px 15px",
-    height: "90px"
-  },
-  vehicleName: {
-    padding: "2px 5px",
-    height: "25px",
-    fontSize: "14px",
-    fontWeight: "600",
-    textAlign: "left",
-    color: "#3d3d3d",
-    borderRadius: "4px",
-    //background: "#DDDDDD" // para el skeleton o ejemplo
-  },
-  bullet: {
-    fontSize: "16px",
-    display: "inline-block",
-    margin: "0 3px 0px 2px",
-    transform: "scale(0.8)",
-    lineHeight: "1.33",
-    color: "#828282"
-  },
-  info: {
-    height: "60px",
-    fontSize: "13px",
-    lineHeight: "1.35",
-    letterSpacing: "normal",
-    textAlign: "left",
-    top: "50%",
-    left: "50%",
-    color: "#8b8b8b",
-    borderRadius: "4px",
-    margin: "5px 0px 0px 0px",
-    //background: "#EEEEEE" //// para el skeleton
-  },
-  button_background: {
-    width: "84px",
-    height: "90px",
-    margin: "20px 10px"
-  },
-  button:{
-    height:"30px",
-    margin:"25px 0 0 8px",
-    color:"#FFFFFF",
-    background: "#B9B9B9",
-    borderRadius:"14px",
-    border:"0",
-  }
+    root: {
+        width: "550px",
+        padding: "25px 0px",
+        border: "solid 0.5px #ccc",
+        background: "#FFFFFF",
+        boxShadow: "1px 1px 10px #ccc",
+        borderRadius: "5px",
+    },
+    image_box: {
+        width: "90px",
+        height: "90px",
+        margin: "20px 15px 20px 15px",
+        borderRadius: "4px",
+        background: "#EEEEEE", // para el skeleton
+    },
+
+    title: {
+        fontSize: "15px",
+        textAlign: "center",
+        color: "#3d3d3d",
+    },
+    text: {
+        fontSize: "14px",
+        textAlign: "center",
+    },
+    year: {
+        marginBottom: "10px",
+        fontSize: "15px",
+        textAlign: "left",
+        color: "#acacac",
+    },
+    button: {
+        borderRadius: "7px",
+        background: "#FCB625",
+        color: "#fff",
+        fontWeight: "600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        fontSize: "13px",
+    },
+    col: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+    },
+    colState: {
+        paddingTop: "10px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    tag: {
+        padding: "5px",
+        fontSize: "13px",
+    },
 });
 
 export default function DropListElement(props) {
-  const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+    const classes = useStyles();
+    const [visibleService, setVisibleService] = useState(false);
 
-  return (
-    <div className={classes.root}>
-      <Row>
-        <Col xs={{ span: 5 }}>
-          <div className={classes.image_box}></div>
-        </Col>
+    const { loading, error, data } = useQuery(VEHICLE, {
+        variables: { _id: props.value.idVehicle },
+        fetchPolicy: "no-cache",
+    });
 
-        <Col xs={{ span: 14 }}>
-          <div className={classes.content}>
-            <Typography className={classes.vehicleName}>
-              {props.brand}{bull}{props.model}
-            </Typography>
+    const openModal = (e) => {
+        e.preventDefault();
+        setVisibleService(true);
+    };
 
-            <Typography className={classes.info}>
-              <ul>
-                <li>Origen: {props.addressOrigin}</li>
-                <li>Destino: {props.addressTarget}</li>
-                <li>Fecha: {props.date}</li>
-              </ul>
-            </Typography>
-          </div>
-        </Col>
+    // const { loading: loadingSubscription } = useSubscription(SERVICE_UPDATED, {
+    //     variables: { _id: props.value._id },
+    //     onSubscriptionData: ({ subscriptionData }) => {
+    //         console.log(subscriptionData);
+    //     },
+    // });
 
-        <Col xs={{ span: 1 }}>
-          <div className={classes.button_background}>
-            
-              <Row xs={{ span: 8  }}>
-                <TruckLicense vehicleId = {props.vehicleId}/>
-              </Row>
-              <Row xs={{ span: 8 }}>
-                <Button type="primary" size="small" className={classes.button} >Ver más</Button>
-              </Row>
-            
-          </div>
-        </Col>
-      </Row>
-    </div>
-  );
+    if (loading)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+
+    const { vehicle } = data;
+    const { origin, destination, commentaryUser, date } = props.value;
+    if (error) return `Error! ${error}`;
+
+    return (
+        <Row className={classes.root}>
+            <Col span={6}>
+                <div className={classes.image_box}></div>
+            </Col>
+            <Col span={12} className={classes.col}>
+                <Row>
+                    <Typography variant="h4" className={classes.title}>
+                        {vehicle.brand + " • " + vehicle.model}
+                    </Typography>
+                </Row>
+                <Row>
+                    <Typography
+                        variant="subtitle1"
+                        gutterBottom
+                        className={classes.year}
+                    >
+                        {vehicle._id} - {vehicle.year}
+                    </Typography>
+                </Row>
+                <Row>
+                    <Descriptions column={1} size="small">
+                        <Descriptions.Item label="Origen">
+                            <Typography
+                                variant="body1"
+                                className={classes.text}
+                            >
+                                {origin}
+                            </Typography>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Destino">
+                            <Typography
+                                variant="body1"
+                                className={classes.text}
+                            >
+                                {destination}
+                            </Typography>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Comentarios">
+                            <Typography
+                                variant="body1"
+                                className={classes.text}
+                            >
+                                {commentaryUser}
+                            </Typography>
+                        </Descriptions.Item>
+                    </Descriptions>
+                </Row>
+            </Col>
+            <Col span={6} className={classes.colState}>
+                <Typography variant="body1" className={classes.text}>
+                    {date}
+                </Typography>
+
+                <Tag color="success" className={classes.tag}>
+                    Aceptado
+                </Tag>
+
+                <Button
+                    className={classes.button}
+                    onClick={(e) => openModal(e)}
+                >
+                    Ver más...
+                </Button>
+                <CreateServiceModal
+                    value={props.value}
+                    visibleService={visibleService}
+                    setVisibleService={setVisibleService}
+                />
+            </Col>
+        </Row>
+    );
 }

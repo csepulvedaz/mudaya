@@ -1,57 +1,48 @@
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import Chip from '@material-ui/core/Chip';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {Col, Row, Spin} from "antd";
-import {useQuery} from "@apollo/client";
-import {VEHICLE} from "../../../graphql/queries";
-import {LoadingOutlined} from "@ant-design/icons";
+import { Col, Row, Spin, Descriptions, Button, Tag } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useQuery } from "@apollo/client";
+
+import { VEHICLE } from "../../../graphql/queries";
+import CreateServiceModal from "../service/CreateServiceModal";
 
 const useStyles = makeStyles({
     root: {
-        width: "700px",
-        border: "solid 0.5px #707070",
-        background: "#FFFFFF"
+        width: "720px",
+        padding: "30px 0px",
+        border: "solid 0.5px #ccc",
+        background: "#FFFFFF",
+        boxShadow: "1px 1px 10px #ccc",
+        borderRadius: "5px",
     },
     media: {
-        height: 100,
+        height: "100px",
     },
     title: {
         fontSize: "30px",
         textAlign: "center",
-        color: "#3d3d3d" },
+        color: "#3d3d3d",
+    },
     text: {
         fontSize: "15px",
         textAlign: "center",
     },
     year: {
+        marginBottom: "10px",
         fontSize: "15px",
-        fontWeight: "normal",
-        fontStretch: "normal",
-        fontStyle: "normal",
-        letterSpacing: "normal",
         textAlign: "left",
         color: "#acacac",
     },
-    chip: {
-        width: "108px",
-        height: "40px",
-        border: "solid 2px #ffee00",
-        backgroundColor: "#ffffc8",
-        fontWeight: "bold",
-    },
-    dateChip: {
-        width: "108px",
-        height: "40px",
-        border: "solid 2px #ffee00",
-        backgroundColor: "#ffffc8",
-        fontWeight: "bold",
-    },
-    row: {
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
+    button: {
+        borderRadius: "7px",
+        background: "#FCB625",
+        color: "#fff",
+        fontWeight: "600",
+        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        fontSize: "13px",
     },
     col: {
         width: "100%",
@@ -59,17 +50,29 @@ const useStyles = makeStyles({
         flexDirection: "column",
         justifyContent: "center",
     },
-    margins: {
-        padding: "10px",
+    colState: {
+        paddingTop: "10px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
-    innerMargins: {
-        paddingInline: "30px",
+    tag: {
+        padding: "5px",
+        fontSize: "13px",
     },
 });
 
 const DriverServiceCard = (props) => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(VEHICLE,{variables: { _id: props.value.idVehicle }});
+    const [visibleService, setVisibleService] = useState(false);
+    const openModal = (e) => {
+        e.preventDefault();
+        setVisibleService(true);
+    };
+    const { loading, error, data } = useQuery(VEHICLE, {
+        variables: { _id: props.value.idVehicle },
+    });
     if (loading)
         return (
             <Spin
@@ -78,54 +81,87 @@ const DriverServiceCard = (props) => {
                 className={classes.spin}
             />
         );
+
+    const { vehicle } = data;
+    const { origin, destination, commentaryUser, date } = props.value;
     if (error) return `Error! ${error}`;
+    console.log(props.value);
 
     return (
-        <div className={classes.root}>
-            <Row className={classes.margins}>
-                <Col span={6} className={classes.col}>
-                    <CardMedia
-                        className={classes.media}
-                        image={props.image}
-                        title="img"
-                    />
-                </Col>
-                <Col span={12} className={classes.col}>
-                    <Row >
-                        <Typography variant="h4" className={classes.title}>
-                            {data.vehicle.brand +" • "+ data.vehicle.model}
-                        </Typography>
-                    </Row>
-                    <Row >
-                        <Typography variant="subtitle1" gutterBottom className={classes.year}>
-                            {data.vehicle.year}
-                        </Typography>
-                    </Row>
-                    <Row className={classes.innerMargins}>
-                        <Typography variant="body1" className={classes.text}>
-                            • Origen:{" "+props.value.origin}
-                        </Typography>
-                        <Typography variant="body1" gutterBottom className={classes.text}>
-                            • Destino:{" "+props.value.destination}
-                        </Typography>
-                        <Typography variant="body1" gutterBottom className={classes.text}>
-                            • Comentarios:{" "+props.value.commentaryUser}
-                        </Typography>
-                    </Row>
-                </Col>
-                <Col span={6} className={classes.col}>
-                    <Row className={classes.row}>
-                        <Chip label={props.value.date} className={classes.dateChip}/>
-                    </Row>
-                    <Row className={classes.row}>
-                        <Chip label={data.vehicle._id} className={classes.chip}/>
-                    </Row>
-                    <Row className={classes.row}>
+        <Row className={classes.root}>
+            <Col span={6} className={classes.col}>
+                <CardMedia
+                    className={classes.media}
+                    image={props.image}
+                    title="img"
+                />
+            </Col>
+            <Col span={12} className={classes.col}>
+                <Row>
+                    <Typography variant="h4" className={classes.title}>
+                        {vehicle.brand + " • " + vehicle.model}
+                    </Typography>
+                </Row>
+                <Row>
+                    <Typography
+                        variant="subtitle1"
+                        gutterBottom
+                        className={classes.year}
+                    >
+                        {vehicle._id} - {vehicle.year}
+                    </Typography>
+                </Row>
+                <Row>
+                    <Descriptions column={1} size="small">
+                        <Descriptions.Item label="Origen">
+                            <Typography
+                                variant="body1"
+                                className={classes.text}
+                            >
+                                {origin}
+                            </Typography>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Destino">
+                            <Typography
+                                variant="body1"
+                                className={classes.text}
+                            >
+                                {destination}
+                            </Typography>
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Comentarios">
+                            <Typography
+                                variant="body1"
+                                className={classes.text}
+                            >
+                                {commentaryUser}
+                            </Typography>
+                        </Descriptions.Item>
+                    </Descriptions>
+                </Row>
+            </Col>
+            <Col span={6} className={classes.colState}>
+                <Typography variant="body1" className={classes.text}>
+                    {date}
+                </Typography>
 
-                    </Row>
-                </Col>
-            </Row>
-        </div>
+                <Tag color="success" className={classes.tag}>
+                    Aceptado
+                </Tag>
+
+                <Button
+                    className={classes.button}
+                    onClick={(e) => openModal(e)}
+                >
+                    Ver más...
+                </Button>
+                <CreateServiceModal
+                    value={props.value}
+                    visibleService={visibleService}
+                    setVisibleService={setVisibleService}
+                />
+            </Col>
+        </Row>
     );
 };
 

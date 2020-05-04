@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export const PROFILEUSER = gql`
     query ProfileUser($_id: String!) {
@@ -86,6 +86,25 @@ export const ALL_VEHICLES = gql`
 export const SERVICES_BY_DRIVER = gql`
     query ServicesByDriver($idDriver: String!) {
         servicesByDriver(idDriver: $idDriver) {
+            _id
+            date
+            origin
+            destination
+            commentaryUser
+            commentaryDriver
+            state
+            price
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;
+
+export const SERVICES_BY_USER = gql`
+    query ServicesByUser($idUser: String!) {
+        servicesByUser(idUser: $idUser) {
+            _id
             date
             origin
             destination
