@@ -13,7 +13,7 @@ import CreateServiceModal from "../service/CreateServiceModal";
 const useStyles = makeStyles({
     root: {
         width: "290rx",
-        height: "360px",
+        height: "380px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
         fontSize: "14px",
     },
     button: {
-        margin: "5px 0px",
+        margin: "10px 0px",
         borderRadius: "7px",
         background: "#FCB625",
         color: "#fff",

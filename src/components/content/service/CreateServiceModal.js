@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import StepWait from "./StepWait";
 
 import AuthContext from "../../../context/auth-context";
 
@@ -41,11 +42,10 @@ const stepsDriver = [
 
 const CustomSteps = (props) => {
     const classes = useStyles();
-    const context = useContext(AuthContext);
+    const { client } = useContext(AuthContext);
     const [current, setCurrent] = useState(0);
     const [visibleSteps, setVisibleSteps] = useState(false);
-
-    const steps = context.client === "user" ? stepsUser : stepsDriver;
+    const steps = client === "user" ? stepsUser : stepsDriver;
 
     const next = () => {
         const nextStep = current + 1;
@@ -61,10 +61,14 @@ const CustomSteps = (props) => {
         setVisibleSteps(true);
     };
 
+    const onCancel = () => {
+        props.setVisibleService(false);
+    };
+
     return (
         <Modal
             visible={props.visibleService}
-            onCancel={() => props.setVisibleService(false)}
+            onCancel={onCancel}
             footer={null}
             style={{
                 overflow: "hidden",
@@ -82,30 +86,41 @@ const CustomSteps = (props) => {
                         borderRight: "1px solid #ccc",
                     }}
                 >
-                    {current === 0 ? (
-                        <div className={classes.container}>
+                    <div className={classes.container}>
+                        {current === 0 && client === "user" ? (
                             <StepOne
+                                idVehicle={props.idVehicle}
+                                idDriver={props.idDriver}
                                 setVisible={props.setVisibleService}
-                                next={next}
                             />
-                        </div>
-                    ) : current === 1 ? (
-                        <div className={classes.container}>
+                        ) : current === 0 && client === "driver" ? (
                             <StepTwo
                                 setVisible={props.setVisibleService}
                                 next={next}
                             />
-                        </div>
-                    ) : current === 2 ? (
-                        <div className={classes.container}>
+                        ) : current === 1 && client === "user" && true ? (
+                            <StepWait
+                                subject="Conductor"
+                                setVisible={props.setVisibleService}
+                                next={next}
+                            />
+                        ) : current === 1 && client === "user" && false ? (
                             <StepThree
                                 setVisible={props.setVisibleService}
                                 next={next}
                             />
-                        </div>
-                    ) : (
-                        <div>Paso 4</div>
-                    )}
+                        ) : current === 1 && client === "driver" && true ? (
+                            <StepWait
+                                subject="Usuario"
+                                setVisible={props.setVisibleService}
+                                next={next}
+                            />
+                        ) : current === 1 && client === "driver" && false ? (
+                            <div>Paso 4</div>
+                        ) : (
+                            <div>Paso 4</div>
+                        )}
+                    </div>
                 </Col>
                 <Col span={3} onClick={onClickSteps}>
                     <Steps direction="vertical" size="small" current={current}>

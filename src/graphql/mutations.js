@@ -42,9 +42,9 @@ export const CREATE_VEHICLE = gql`
     }
 `;
 
-export const UPDATE_USER=gql`
-    mutation UpdateUser($input:updateUserInput!){
-        updateUser( input :$input){
+export const UPDATE_USER = gql`
+    mutation UpdateUser($input: updateUserInput!) {
+        updateUser(input: $input) {
             name
             surname
             _id
@@ -53,13 +53,28 @@ export const UPDATE_USER=gql`
     }
 `;
 
-export const UPDATE_DRIVER=gql`
-    mutation UpdateDriver($input:updateDriverInput!){
-        updateDriver( input :$input){
+export const UPDATE_DRIVER = gql`
+    mutation UpdateDriver($input: updateDriverInput!) {
+        updateDriver(input: $input) {
             name
             surname
             _id
             phone
+        }
+    }
+`;
+
+export const CREATE_SERVICE = gql`
+    mutation CreateService($input: serviceInput!) {
+        createService(input: $input) {
+            date
+            origin
+            destination
+            commentaryUser
+            state
+            idUser
+            idDriver
+            idVehicle
         }
     }
 `;

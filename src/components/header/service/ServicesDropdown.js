@@ -1,10 +1,12 @@
-import React from "react";
-import "antd/dist/antd.css";
-import { Menu, Dropdown, Button } from "antd";
+import React, { useState, useContext } from "react";
+import { useSubscription } from "@apollo/client";
+import { Menu, Dropdown, Button, Badge } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/icons/FormatListBulletedRounded";
 
 import DropListElement from "./DropListElement";
+import { SERVICE_ADDED } from "../../../graphql/subscriptions";
+import AuthContext from "../../../context/auth-context";
 
 const useStyles = makeStyles({
     icon: {
@@ -58,10 +60,24 @@ const menu = (
 
 export default function ServicesList(props) {
     const classes = useStyles();
+    const [dataArray, setDataArray] = useState([]);
+    const { userId } = useContext(AuthContext);
+    const { data } = useSubscription(SERVICE_ADDED, {
+        variables: { _id: userId },
+        onSubscriptionData: ({ subscriptionData }) => {
+            setDataArray([...dataArray, subscriptionData]);
+        },
+    });
 
     return (
         <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
-            <Button icon={<List className={classes.icon} />} />
+            <Button
+                icon={
+                    <Badge count={dataArray.length}>
+                        <List className={classes.icon} />
+                    </Badge>
+                }
+            />
         </Dropdown>
     );
 }

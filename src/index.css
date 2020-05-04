@@ -40,7 +40,8 @@ code {
     padding-left: 17px !important;
     display: flex !important;
     flex-direction: column !important;
-    height: 150px;
+    /* height: 150px !important; */
+    min-height: 200px !important;
     margin: auto !important;
 }
 

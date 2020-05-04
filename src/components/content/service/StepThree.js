@@ -184,7 +184,7 @@ const StepThree = (props) => {
                             className={classes.button}
                             onClick={handleSubmit}
                         >
-                            Enviar
+                            Confirmar
                         </Button>
                     </Col>
                 </Row>

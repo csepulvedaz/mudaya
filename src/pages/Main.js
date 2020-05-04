@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = () => {
     const classes = useStyles();
-    const context = useContext(AuthContext);
-    console.log(context.client);
+    const { client } = useContext(AuthContext);
+    console.log(client);
 
     return (
         <Layout theme="light" className={classes["@global"]}>
             <CustomHeader />
-            {context.client === "user" && <CustomContent />}
-            {context.client === "driver" && <CustomDriverContent />}
+            {client === "user" && <CustomContent />}
+            {client === "driver" && <CustomDriverContent />}
             <CustomFooter />
         </Layout>
     );

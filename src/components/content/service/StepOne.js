@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { Button, Col, Layout, Row } from "antd";
+import { Button, Col, Layout, Row, Modal, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import EventAvailableTwoToneIcon from "@material-ui/icons/EventAvailableTwoTone";
@@ -12,6 +14,8 @@ import * as Yup from "yup";
 import moment from "moment";
 
 import spanishConfig from "../../utils/spanishConfig";
+import { CREATE_SERVICE } from "../../../graphql/mutations";
+import AuthContext from "../../../context/auth-context";
 
 moment.updateLocale("es", spanishConfig);
 
@@ -71,6 +75,12 @@ const useStyles = makeStyles((theme) => ({
     selectContainer: {
         marginBottom: "2.5px",
     },
+    spin: {
+        position: "absolute",
+        zIndex: "1",
+        top: "50%",
+        left: "40%",
+    },
     select: {
         marginBottom: "2.5px",
     },
@@ -82,9 +92,48 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function success() {
+    Modal.success({
+        content:
+            "Servicio creado con éxito. Podrás revisar su estado en la barra de servicios.",
+    });
+}
+
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
+
 const StepOne = (props) => {
-    const [selectedDate, handleDateChange] = useState(new Date());
     const classes = useStyles();
+    const [selectedDate, handleDateChange] = useState(new Date());
+    const { userId } = useContext(AuthContext);
+    const [createService, { loading: loadingService }] = useMutation(
+        CREATE_SERVICE,
+        {
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
+        }
+    );
+
+    const create = async (values) => {
+        const input = {
+            date: selectedDate,
+            origin: values.origin,
+            destination: values.destination,
+            commentaryUser: values.commentaryUser,
+            state: "started",
+            idUser: userId,
+            idDriver: props.idDriver,
+            idVehicle: props.idVehicle,
+        };
+        return await createService({
+            variables: { input },
+        });
+    };
 
     const handleCancel = () => {
         props.setVisible(false);
@@ -93,6 +142,15 @@ const StepOne = (props) => {
 
     return (
         <Layout className={classes.paper}>
+            {loadingService && (
+                <Spin
+                    tip="Cargando..."
+                    indicator={
+                        <LoadingOutlined style={{ fontSize: 40 }} spin />
+                    }
+                    className={classes.spin}
+                />
+            )}
             <Row>
                 <Typography component="h1" variant="h5">
                     Solicitud del servicio
@@ -118,9 +176,10 @@ const StepOne = (props) => {
                 })}
                 onSubmit={(values) => {
                     values.date = new Date(selectedDate);
-                    console.log(values);
+                    create(values);
                     document.getElementById("form1").reset();
-                    props.next();
+                    props.setVisible(false);
+                    success();
                 }}
             >
                 {(formik) => (

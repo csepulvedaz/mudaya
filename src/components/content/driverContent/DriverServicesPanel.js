@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useQuery } from "@apollo/client";
+import { Spin } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
+import { LoadingOutlined } from "@ant-design/icons";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 
 import DriverServiceCard from "./DriverServiceCard";
 import img1 from "../../../assets/van.png";
+import { SERVICES_BY_DRIVER } from "../../../graphql/queries";
+import AuthContext from "../../../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -30,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     spin: {
         position: "absolute",
         top: "50%",
-        left: "40%",
+        left: "55%",
     },
     list: {},
     listItem: {
@@ -51,6 +56,27 @@ const useStyles = makeStyles((theme) => ({
 
 const DriverServicesPanel = (props) => {
     const classes = useStyles();
+    const context = useContext(AuthContext);
+    const {
+        loading: loadingServices,
+        error: errorServices,
+        data: dataServices,
+    } = useQuery(SERVICES_BY_DRIVER, {
+        variables: { idDriver: context.userId },
+        fetchPolicy: "no-cache",
+    });
+
+    if (loadingServices)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+    if (errorServices) return `Error! ${errorServices}`;
+
+    const services = dataServices.servicesByDriver;
 
     return (
         <div className={classes.content}>
@@ -59,8 +85,8 @@ const DriverServicesPanel = (props) => {
             </div>
             <div className={classes.panel}>
                 <List className={classes.list}>
-                    {!(props.services === undefined) &&
-                        props.services.map((value, index) => {
+                    {services &&
+                        services.map((value, index) => {
                             return (
                                 <div key={index} className={classes.listItem}>
                                     <DriverServiceCard

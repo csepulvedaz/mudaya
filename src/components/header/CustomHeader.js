@@ -10,6 +10,7 @@ import AuthContext from "../../context/auth-context";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import ServicesDropdown from "./service/ServicesDropdown";
+import Notification from "./Notification";
 
 const { Header } = Layout;
 
@@ -32,23 +33,23 @@ const useStyles = makeStyles((theme) => ({
         //boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.15)",
         backgroundColor: "#ffffff",
         margin: "10px 50px 10px 0px",
-        paddingLeft:"35px",
-        paddingTop:"10px",
+        paddingLeft: "35px",
+        paddingTop: "10px",
     },
-    prava:{
+    prava: {
         fontSize: "26px",
         fontWeight: "bold",
         lineHeight: "0.5",
         textAlign: "left",
         color: "#fcb625",
     },
-    conductores:{
+    conductores: {
         fontSize: "11px",
         fontWeight: "100",
         lineHeight: "1",
         textAlign: "left",
         color: "#b9b9b9",
-        letterSpacing:"2px",
+        letterSpacing: "2px",
     },
     box: {
         width: "45px",
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "10px 0px",
         borderRadius: "9px",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
-        backgroundColor: " #ffffff",  
+        backgroundColor: " #ffffff",
     },
     icon: {
         fontSize: "40px",
@@ -82,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
         justifyContent: "space-between",
-        
     },
 }));
 
@@ -90,12 +90,12 @@ const CustomHeader = () => {
     const [navigate, setNavigate] = useState(false);
     const [visibleProfile, setVisibleProfile] = useState(false);
     const [visibleEdit, setVisibleEdit] = useState(false);
-    const context = useContext(AuthContext);
+    const { logout, client } = useContext(AuthContext);
     const classes = useStyles();
 
-    const logout = () => {
+    const handleLogout = () => {
         localStorage.clear("token");
-        context.logout();
+        logout();
         setNavigate(true);
     };
 
@@ -104,7 +104,7 @@ const CustomHeader = () => {
         <>
             <Header theme="light" className={classes.header}>
                 <div className={classes.container}>
-                    <div className={classes.logo}>                        
+                    <div className={classes.logo}>
                         <Typography
                             variant="subtitle2"
                             color="textPrimary"
@@ -114,7 +114,7 @@ const CustomHeader = () => {
                         >
                             PRAVA
                         </Typography>
-                        {context.client === "driver" && 
+                        {client === "driver" && (
                             <Typography
                                 variant="body2"
                                 color="textPrimary"
@@ -124,8 +124,8 @@ const CustomHeader = () => {
                             >
                                 CONDUCTORES
                             </Typography>
-                        }
-                        {context.client === "user" && 
+                        )}
+                        {client === "user" && (
                             <Typography
                                 variant="body2"
                                 color="textPrimary"
@@ -135,7 +135,7 @@ const CustomHeader = () => {
                             >
                                 ACARREOS
                             </Typography>
-                        }
+                        )}
                     </div>
                     <Button
                         icon={<PersonIcon className={classes.icon} />}
@@ -144,9 +144,10 @@ const CustomHeader = () => {
                             setVisibleProfile(true);
                         }}
                     />
-                    {context.client === "user" && <ServicesDropdown />}
+                    {client === "user" && <ServicesDropdown />}
                 </div>
                 <div className={classes.container}>
+                    {client === "driver" && <Notification />}
                     <Button
                         className={classes.button}
                         // onClick={() => alert("Vehiculo presionado")}
@@ -156,7 +157,7 @@ const CustomHeader = () => {
                     <Button
                         icon={<ExitToAppIcon className={classes.icon} />}
                         className={classes.box}
-                        onClick={logout}
+                        onClick={handleLogout}
                     />
                 </div>
             </Header>
