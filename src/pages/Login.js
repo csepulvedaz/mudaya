@@ -19,6 +19,7 @@ import * as Yup from "yup";
 
 import AuthContext from "../context/auth-context";
 import { LOGIN } from "../graphql/queries";
+import logo from "../assets/logo.png"
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 10px #ccc",
+        boxShadow: "1px 1px 5px #8FD1D9",
         borderRadius: "5px",
     },
     form: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(4, 0, 3),
         width: "100%",
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: "#4e9fbf",
         borderRadius: 9,
         border: 0,
         color: "white",
@@ -75,6 +76,9 @@ const useStyles = makeStyles((theme) => ({
             border: "1px #000 solid !important",
         },
     },
+    logo:{
+        padding:"20px",
+    }
 }));
 
 function errorModal(msg) {
@@ -113,7 +117,8 @@ const Login = () => {
                         className={classes.spin}
                     />
                 )}
-                <LocalShippingIcon className={classes.truck} />
+                
+                <img src={logo} width="150px" className={classes.logo} alt="Prava Logo" />
 
                 <Typography component="h1" variant="h5">
                     Bienvenido
