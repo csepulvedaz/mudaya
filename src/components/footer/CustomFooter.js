@@ -8,9 +8,10 @@ const useStyles = makeStyles((theme) => {
     console.log(theme.palette.primary);
   return {
     footer: {
+      border: "solid 0.5px #c2c2c2",
       textAlign: "center",
-      background: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
+      background: "#fff",
+      color: theme.palette.text.secondary,
     },
   };
 });
