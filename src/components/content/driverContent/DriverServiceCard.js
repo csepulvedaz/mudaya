@@ -83,7 +83,7 @@ const DriverServiceCard = (props) => {
         );
 
     const { vehicle } = data;
-    const { origin, destination, commentaryUser, date } = props.value;
+    const { origin, destination, commentaryUser, date, state } = props.value;
     if (error) return `Error! ${error}`;
     console.log(props.value);
 
@@ -145,9 +145,26 @@ const DriverServiceCard = (props) => {
                     {date}
                 </Typography>
 
-                <Tag color="success" className={classes.tag}>
-                    Aceptado
-                </Tag>
+                {state === "accepted" && (
+                    <Tag color="success" className={classes.tag}>
+                        Aceptado
+                    </Tag>
+                )}
+                {state === "cancelled" && (
+                    <Tag color="red" className={classes.tag}>
+                        Cancelado
+                    </Tag>
+                )}
+                {state === "onHold" && (
+                    <Tag color="blue" className={classes.tag}>
+                        En espera
+                    </Tag>
+                )}
+                {state === "started" && (
+                    <Tag color="cyan" className={classes.tag}>
+                        En solicitud
+                    </Tag>
+                )}
 
                 <Button
                     className={classes.button}

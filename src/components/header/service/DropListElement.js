@@ -8,6 +8,7 @@ import { useQuery } from "@apollo/client";
 
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
+import ModalStepThree from "../../content/service/ModalStepThree";
 // import TruckLicense from "./TruckLicense";
 
 const useStyles = makeStyles({
@@ -100,7 +101,7 @@ export default function DropListElement(props) {
         );
 
     const { vehicle } = data;
-    const { origin, destination, commentaryUser, date } = props.value;
+    const { origin, destination, commentaryUser, date, state } = props.value;
     if (error) return `Error! ${error}`;
 
     return (
@@ -157,17 +158,37 @@ export default function DropListElement(props) {
                     {date}
                 </Typography>
 
-                <Tag color="success" className={classes.tag}>
-                    Aceptado
-                </Tag>
+                {state === "accepted" && (
+                    <Tag color="success" className={classes.tag}>
+                        Aceptado
+                    </Tag>
+                )}
+                {state === "cancelled" && (
+                    <Tag color="red" className={classes.tag}>
+                        Cancelado
+                    </Tag>
+                )}
+                {state === "onHold" && (
+                    <Tag color="blue" className={classes.tag}>
+                        En espera
+                    </Tag>
+                )}
+                {state === "started" && (
+                    <Tag color="cyan" className={classes.tag}>
+                        En solicitud
+                    </Tag>
+                )}
 
-                <Button
-                    className={classes.button}
-                    onClick={(e) => openModal(e)}
-                >
-                    Ver más...
-                </Button>
-                <CreateServiceModal
+                {(props.value.state === "onHold" ||
+                    props.value.state === "accepted") && (
+                    <Button
+                        className={classes.button}
+                        onClick={(e) => openModal(e)}
+                    >
+                        Ver más...
+                    </Button>
+                )}
+                <ModalStepThree
                     value={props.value}
                     visibleService={visibleService}
                     setVisibleService={setVisibleService}

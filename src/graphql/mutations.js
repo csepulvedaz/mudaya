@@ -89,3 +89,33 @@ export const UPDATE_SERVICE = gql`
         }
     }
 `;
+
+export const ACCEPT_SERVICE = gql`
+    mutation AcceptService($_id: ID!) {
+        acceptService(_id: $_id) {
+            date
+            origin
+            destination
+            commentaryUser
+            state
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;
+
+export const CANCEL_SERVICE = gql`
+    mutation CancelService($_id: ID!) {
+        cancelService(_id: $_id) {
+            date
+            origin
+            destination
+            commentaryUser
+            state
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;

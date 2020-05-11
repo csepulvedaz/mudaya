@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 import TextMaskCustom from "../../../components/utils/TextMaskCustom";
-import { UPDATE_SERVICE } from "../../../graphql/mutations";
+import { UPDATE_SERVICE, CANCEL_SERVICE } from "../../../graphql/mutations";
 
 const numberMask = createNumberMask({
     prefix: "$",
@@ -116,11 +116,27 @@ const StepTwo = (props) => {
         refetchQueries: ["ServicesByDriver"],
     });
 
+    const [cancelService, { loading: loadingCancelService }] = useMutation(
+        CANCEL_SERVICE,
+        {
+            onCompleted: () => {
+                props.setVisible(false);
+                document.getElementById("form2").reset();
+                success();
+            },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
+            refetchQueries: ["ServicesByUser"],
+        }
+    );
+
     const { _id, destination, origin, commentaryUser } = props.value;
 
-    const handleCancel = () => {
-        props.setVisible(false);
-        document.getElementById("form2").reset();
+    const handleCancel = async () => {
+        return await cancelService({
+            variables: { _id: _id },
+        });
     };
 
     const update = async (values) => {

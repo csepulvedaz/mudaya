@@ -40,16 +40,12 @@ const stepsDriver = [
     },
 ];
 
-const CustomSteps = (props) => {
+const ModalStepThree = (props) => {
     const classes = useStyles();
     const { client } = useContext(AuthContext);
     const [current, setCurrent] = useState(0);
     const [visibleSteps, setVisibleSteps] = useState(false);
     const steps = client === "user" ? stepsUser : stepsDriver;
-
-    const next = () => {
-        setCurrent(current + 1);
-    };
 
     const onClickSteps = () => {
         setVisibleSteps(true);
@@ -81,45 +77,14 @@ const CustomSteps = (props) => {
                     }}
                 >
                     <div className={classes.container}>
-                        {current === 0 && client === "user" ? (
-                            <StepOne
-                                idVehicle={props.idVehicle}
-                                idDriver={props.idDriver}
-                                setVisible={props.setVisibleService}
-                            />
-                        ) : current === 0 &&
-                          client === "driver" &&
-                          props.value.state === "started" ? (
-                            <StepTwo
-                                value={props.value}
-                                setVisible={props.setVisibleService}
-                            />
-                        ) : client === "user" &&
-                          props.value.state === "started" ? (
-                            <StepWait
-                                subject="Conductor"
-                                setVisible={props.setVisibleService}
-                            />
-                        ) : client === "driver" &&
-                          props.value.state === "onHold" ? (
-                            <StepWait
-                                subject="Usuario"
-                                setVisible={props.setVisibleService}
-                            />
-                        ) : current === 1 &&
-                          client === "user" &&
-                          props.value.state === "onHold" ? (
-                            <StepThree
-                                setVisible={props.setVisibleService}
-                                next={next}
-                            />
-                        ) : (
-                            <div>Paso 4</div>
-                        )}
+                        <StepThree
+                            setVisible={props.setVisibleService}
+                            value={props.value}
+                        />
                     </div>
                 </Col>
                 <Col span={3} onClick={onClickSteps}>
-                    <Steps direction="vertical" size="small" current={current}>
+                    <Steps direction="vertical" size="small" current={1}>
                         {steps.map((item) => (
                             <Step
                                 key={item.title}
@@ -139,7 +104,7 @@ const CustomSteps = (props) => {
                 className={classes.drawer}
                 bodyStyle={{ display: "flex", alignContent: "center" }}
             >
-                <Steps direction="vertical" size="small" current={current}>
+                <Steps direction="vertical" size="small" current={1}>
                     {steps.map((item) => (
                         <Step key={item.title} title={item.title} />
                     ))}
@@ -149,4 +114,4 @@ const CustomSteps = (props) => {
     );
 };
 
-export default CustomSteps;
+export default ModalStepThree;

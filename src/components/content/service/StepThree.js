@@ -1,8 +1,12 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Col, Layout, Row, Collapse } from "antd";
+import { Button, Col, Layout, Row, Collapse, Spin, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Grid, TextField, Paper, Avatar } from "@material-ui/core";
+
+import { ACCEPT_SERVICE, CANCEL_SERVICE } from "../../../graphql/mutations";
 
 const { Panel } = Collapse;
 
@@ -60,20 +64,90 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
     },
     collapse: { borderRadius: "5px" },
+    spin: {
+        position: "absolute",
+        zIndex: "1",
+        top: "50%",
+        left: "40%",
+    },
 }));
+
+function success() {
+    Modal.success({
+        content:
+            "Servicio creado con éxito. Podrás revisar su estado en la barra de servicios.",
+    });
+}
+
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
 
 const StepThree = (props) => {
     const classes = useStyles();
+    const [acceptService, { loading: loadingService }] = useMutation(
+        ACCEPT_SERVICE,
+        {
+            onCompleted: () => {
+                props.setVisible(false);
+                success();
+            },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
+            refetchQueries: ["ServicesByUser"],
+        }
+    );
 
-    const handleCancel = () => {
-        props.setVisible(false);
+    const [cancelService, { loading: loadingCancelService }] = useMutation(
+        CANCEL_SERVICE,
+        {
+            onCompleted: () => {
+                props.setVisible(false);
+                success();
+            },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
+            refetchQueries: ["ServicesByUser"],
+        }
+    );
+
+    const {
+        _id,
+        origin,
+        destination,
+        commentaryUser,
+        commentaryDriver,
+        price,
+    } = props.value;
+
+    const handleSubmit = async () => {
+        return await acceptService({
+            variables: { _id: _id },
+        });
     };
 
-    const handleSubmit = () => {
-        props.next();
+    const handleCancel = async () => {
+        return await cancelService({
+            variables: { _id: _id },
+        });
     };
+
     return (
         <Layout className={classes.paper}>
+            {loadingService && (
+                <Spin
+                    tip="Cargando..."
+                    indicator={
+                        <LoadingOutlined style={{ fontSize: 40 }} spin />
+                    }
+                    className={classes.spin}
+                />
+            )}
             <Row>
                 <Typography component="h1" variant="h5">
                     Precio del servicio
@@ -98,7 +172,7 @@ const StepThree = (props) => {
                         size="small"
                         margin="none"
                         label="Origen"
-                        defaultValue="calle 1 # 00-00"
+                        defaultValue={origin}
                         disabled={true}
                         fullWidth
                     />
@@ -109,7 +183,7 @@ const StepThree = (props) => {
                         size="small"
                         margin="none"
                         label="Destino"
-                        defaultValue="carrea 1 # 00-00"
+                        defaultValue={destination}
                         disabled={true}
                         fullWidth
                     />
@@ -125,8 +199,7 @@ const StepThree = (props) => {
                                     color="textSecondary"
                                     variant="body2"
                                 >
-                                    Comentario del cliente describiendo la
-                                    situacion del servicio
+                                    {commentaryUser}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -143,8 +216,7 @@ const StepThree = (props) => {
                                     color="textSecondary"
                                     variant="body2"
                                 >
-                                    Comentario del conductor describiendo la
-                                    situacion del servicio
+                                    {commentaryDriver}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -160,34 +232,36 @@ const StepThree = (props) => {
                             </Grid>
                             <Grid item>
                                 <Typography variant="h6" color="textSecondary">
-                                    00.000 COP
+                                    {price}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Paper>
                 </Row>
-                <Row gutter={16} className={classes.buttons}>
-                    <Col>
-                        <Button
-                            variant="contained"
-                            onClick={handleCancel}
-                            className={classes.backButton}
-                        >
-                            Cancelar
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                            onClick={handleSubmit}
-                        >
-                            Confirmar
-                        </Button>
-                    </Col>
-                </Row>
+                {props.value.state === "onHold" && (
+                    <Row gutter={16} className={classes.buttons}>
+                        <Col>
+                            <Button
+                                variant="contained"
+                                onClick={handleCancel}
+                                className={classes.backButton}
+                            >
+                                Cancelar
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                onClick={handleSubmit}
+                            >
+                                Confirmar
+                            </Button>
+                        </Col>
+                    </Row>
+                )}
             </form>
         </Layout>
     );
