@@ -52,12 +52,16 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 0),
         width: "100%",
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: theme.palette.primary.main,
         borderRadius: 9,
         border: 0,
         color: "white",
         height: 48,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+        boxShadow: theme.shadows[2],
+        '&:hover': {
+            background: theme.palette.primary.light,
+            boxShadow: theme.shadows[4],
+        }
     },
     truck: {
         fontSize: "50px",
@@ -70,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
     },
     helperText: {
         margin: "0px 0px -20px 10px",
-        color: "red",
-        fontSize: "14px",
+        color: theme.palette.error.main,
+        fontSize: "12px",
     },
     selectContainer: {
         marginBottom: "2.5px",
@@ -82,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #000 solid !important",
+            border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
 }));
