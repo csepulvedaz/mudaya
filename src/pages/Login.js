@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import AuthContext from "../context/auth-context";
 import { LOGIN } from "../graphql/queries";
 import logo from "../assets/logo.png"
+import theme from "../components/utils/AppTheme";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 5px #8FD1D9",
+        boxShadow: theme.shadows[25] ,
         borderRadius: "5px",
     },
     form: {
@@ -52,12 +53,16 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(4, 0, 3),
         width: "100%",
-        background: "#4e9fbf",
+        background: theme.palette.primary.main,
         borderRadius: 9,
         border: 0,
         color: "white",
         height: 48,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+        boxShadow: theme.shadows[2],
+        '&:hover': {
+            background: theme.palette.primary.light,
+            boxShadow: theme.shadows[4],
+        }
     },
     truck: {
         fontSize: "100px",
@@ -69,11 +74,11 @@ const useStyles = makeStyles((theme) => ({
         top: "50%",
         left: "40%",
     },
-    errorMessage: { marginTop: "15px", color: "red", fontSize: "12px" },
+    errorMessage: { marginTop: "15px", color: theme.palette.error.main, fontSize: "12px" },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #000 solid !important",
+            border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
     logo:{
@@ -242,6 +247,7 @@ const Login = () => {
                                             to="/registro"
                                             style={{
                                                 textDecoration: "none",
+                                                color:theme.palette.primary.main
                                             }}
                                         >
                                             Entra, es gratis!
