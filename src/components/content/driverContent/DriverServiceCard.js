@@ -9,14 +9,13 @@ import { useQuery } from "@apollo/client";
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../service/CreateServiceModal";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
         width: "720px",
         padding: "30px 0px",
-        border: "solid 0.5px #ccc",
-        background: "#FFFFFF",
-        boxShadow: "1px 1px 10px #ccc",
-        borderRadius: "5px",
+        background: "#fff",
+        borderRadius: "8px",
+        boxShadow: theme.shadows[4],
     },
     media: {
         height: "100px",
@@ -38,7 +37,7 @@ const useStyles = makeStyles({
     },
     button: {
         borderRadius: "7px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         color: "#fff",
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
@@ -61,7 +60,7 @@ const useStyles = makeStyles({
         padding: "5px",
         fontSize: "13px",
     },
-});
+}));
 
 const DriverServiceCard = (props) => {
     const classes = useStyles();
