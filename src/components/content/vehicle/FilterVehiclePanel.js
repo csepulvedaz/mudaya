@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#ffffff",
+        color: "#fff",
         fontWeight: "600",
         fontSize: "22px",
         marginBottom: "30px",
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     button: {
         height: "45px",
         borderRadius: "9px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",

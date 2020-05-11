@@ -10,7 +10,7 @@ import { Button, Rate } from "antd";
 import VehicleDetailsModal from "./VehicleDetailsModal";
 import CreateServiceModal from "../service/CreateServiceModal";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
         width: "290rx",
         height: "380px",
@@ -39,13 +39,13 @@ const useStyles = makeStyles({
     button: {
         margin: "10px 0px",
         borderRadius: "7px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         color: "#fff",
         fontWeight: "600",
-        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        boxShadow: theme.shadows[3],
         fontSize: "13px",
     },
-});
+}));
 
 const SearchVehicleCard = (props) => {
     const classes = useStyles();

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         // alignItems:"flex-end",
         background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#fafaf8",
     },
 }));
 
