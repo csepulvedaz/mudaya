@@ -3,7 +3,7 @@ import { Button, Modal } from "antd";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     text: {
         fontSize: "15px",
         textAlign: "left",
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     button: {
         margin: "5px 0px",
         borderRadius: "7px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         color: "#fff",
         focus: "false",
         fontWeight: "600",
@@ -22,11 +22,11 @@ const useStyles = makeStyles({
         margin: "5px 0px",
         borderRadius: "7px",
         background: "#fff",
-        color: "#FCB625",
+        color: theme.palette.primary.main,
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
     },
-});
+}));
 
 const VehicleDetaisModal = (props) => {
     const classes = useStyles();

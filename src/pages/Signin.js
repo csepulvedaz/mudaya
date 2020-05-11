@@ -47,12 +47,17 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 0),
         width: "100%",
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: "#fff",
         borderRadius: 9,
-        border: 0,
-        color: "white",
+        border: `solid 0.5px ${theme.palette.primary.light}`,
+        color: theme.palette.primary.main,
         height: 48,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+        boxShadow: theme.shadows[2],
+        '&:hover': {
+            background: theme.palette.primary.light,
+            color: "white",
+            boxShadow: theme.shadows[4],
+        }
     },
     truck: {
         fontSize: "50px",
@@ -65,27 +70,27 @@ const useStyles = makeStyles((theme) => ({
     },
     helperText: {
         margin: "0px 0px -20px 10px",
-        color: "red",
-        fontSize: "14px",
+        color: theme.palette.error.main,
+        fontSize: "12px",
     },
     checkbox: { margin: "0px 10px", padding: "0px", marginBottom: "-5px" },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #000 solid !important",
+            border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
 }));
 
-const CustomCheckbox = withStyles({
+const CustomCheckbox = withStyles((theme)=>({
     root: {
-        color: "#FF8E53",
+        color: theme.palette.primary.main,
         "&$checked": {
-            color: "#FF8E53",
+            color: theme.palette.primary.main,
         },
     },
     checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+}))((props) => <Checkbox color="default" {...props} />);
 
 function errorModal(msg) {
     Modal.error({

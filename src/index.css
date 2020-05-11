@@ -30,9 +30,9 @@ code {
 
 .ant-btn:hover,
 .ant-btn:focus {
-    color: #fcb625 !important;
+    color: #63b6bf !important;
     background-color: #fff;
-    border-color: #fcb625 !important;
+    border-color: #63b6bf !important;
 }
 
 .ant-steps-vertical {
@@ -50,7 +50,7 @@ code {
 }
 
 .ant-steps-item-process .ant-steps-item-icon {
-    background: #fcb625 !important;
+    background: #63b6bf !important;
     border-color: #ffffff !important;
 }
 
@@ -63,7 +63,7 @@ code {
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
-    border-color: #fcb625 !important;
+    border-color: #63b6bf !important;
 }
 
 .ant-steps-vertical

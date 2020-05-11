@@ -12,11 +12,12 @@ import DropListElement from "./DropListElement";
 import { SERVICE_ADDED } from "../../../graphql/subscriptions";
 import { SERVICES_BY_USER } from "../../../graphql/queries";
 import AuthContext from "../../../context/auth-context";
+import theme from "../../utils/AppTheme";
 
 const useStyles = makeStyles({
     icon: {
         fontSize: "40px",
-        color: "#6663ff",
+        color: theme.palette.primary.main,
     },
     box: {
         margin: "10px 20px",
