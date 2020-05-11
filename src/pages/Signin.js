@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 10px #ccc",
+        // boxShadow: "1px 1px 10px #ccc",
         borderRadius: "5px",
     },
     form: {
@@ -47,17 +47,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 0),
         width: "100%",
-        background: "#fff",
+        background: theme.palette.primary.main,
         borderRadius: 9,
-        border: `solid 0.5px ${theme.palette.primary.light}`,
-        color: theme.palette.primary.main,
+        border: "#ffffff",
+        color: "#ffffff",
         height: 48,
         boxShadow: theme.shadows[2],
-        '&:hover': {
+        "&:hover": {
             background: theme.palette.primary.light,
-            color: "white",
+            border: `solid 0.5px ${theme.palette.primary.light}`,
+            color: "#ffffff",
             boxShadow: theme.shadows[4],
-        }
+        },
     },
     truck: {
         fontSize: "50px",
@@ -82,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CustomCheckbox = withStyles((theme)=>({
+const CustomCheckbox = withStyles((theme) => ({
     root: {
         color: theme.palette.primary.main,
         "&$checked": {

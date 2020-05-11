@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: "1px 1px 10px #ccc",
+        // boxShadow: "1px 1px 10px #ccc",
         borderRadius: "5px",
         marginBottom: "10px",
     },
@@ -58,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         height: 48,
         boxShadow: theme.shadows[2],
-        '&:hover': {
+        "&:hover": {
             background: theme.palette.primary.light,
             boxShadow: theme.shadows[4],
-        }
+        },
     },
     truck: {
         fontSize: "50px",

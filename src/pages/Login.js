@@ -19,7 +19,7 @@ import * as Yup from "yup";
 
 import AuthContext from "../context/auth-context";
 import { LOGIN } from "../graphql/queries";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 import theme from "../components/utils/AppTheme";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        boxShadow: theme.shadows[25] ,
+        // boxShadow: theme.shadows[25],
         borderRadius: "5px",
     },
     form: {
@@ -59,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         height: 48,
         boxShadow: theme.shadows[2],
-        '&:hover': {
+        "&:hover": {
             background: theme.palette.primary.light,
             boxShadow: theme.shadows[4],
-        }
+        },
     },
     truck: {
         fontSize: "100px",
@@ -74,16 +74,20 @@ const useStyles = makeStyles((theme) => ({
         top: "50%",
         left: "40%",
     },
-    errorMessage: { marginTop: "15px", color: theme.palette.error.main, fontSize: "12px" },
+    errorMessage: {
+        marginTop: "15px",
+        color: theme.palette.error.main,
+        fontSize: "12px",
+    },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
             border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
-    logo:{
-        padding:"20px",
-    }
+    logo: {
+        marginBottom: "20px",
+    },
 }));
 
 function errorModal(msg) {
@@ -122,12 +126,18 @@ const Login = () => {
                         className={classes.spin}
                     />
                 )}
-                
-                <img src={logo} width="150px" className={classes.logo} alt="Prava Logo" />
 
-                <Typography component="h1" variant="h5">
+                <img
+                    src={logo}
+                    width="220px"
+                    height="150px"
+                    className={classes.logo}
+                    alt="Prava Logo"
+                />
+
+                {/* <Typography component="h1" variant="h5">
                     Bienvenido
-                </Typography>
+                </Typography> */}
                 <Formik
                     initialValues={{
                         email: "",
@@ -247,7 +257,8 @@ const Login = () => {
                                             to="/registro"
                                             style={{
                                                 textDecoration: "none",
-                                                color:theme.palette.primary.main
+                                                color:
+                                                    theme.palette.primary.main,
                                             }}
                                         >
                                             Entra, es gratis!
