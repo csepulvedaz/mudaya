@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap");
+
+html {
+    scrollbar-width: none;
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Roboto",
@@ -6,6 +11,12 @@ body {
         "Helvetica Neue", sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 code {
@@ -19,7 +30,49 @@ code {
 
 .ant-btn:hover,
 .ant-btn:focus {
-    color: #fcb625 !important;
+    color: #63b6bf !important;
     background-color: #fff;
-    border-color: #fcb625 !important;
+    border-color: #63b6bf !important;
+}
+
+.ant-steps-vertical {
+    padding-top: 10px !important;
+    padding-left: 17px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    /* height: 150px !important; */
+    min-height: 200px !important;
+    margin: auto !important;
+}
+
+.ant-steps-item-icon:hover {
+    cursor: pointer;
+}
+
+.ant-steps-item-process .ant-steps-item-icon {
+    background: #63b6bf !important;
+    border-color: #ffffff !important;
+}
+
+.ant-steps-item-process .ant-steps-item-icon .ant-steps-icon {
+    color: #fff !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon .ant-steps-icon {
+    color: #ccc !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon {
+    border-color: #63b6bf !important;
+}
+
+.ant-steps-vertical
+    .ant-steps-item
+    .ant-steps-item-container
+    .ant-steps-item-tail::after {
+    width: 1.5px !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-container .ant-steps-item-tail::after {
+    background-color: #ccc !important;
 }

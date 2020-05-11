@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Col, Row, Select } from "antd";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Button, Col, Row, Select} from "antd";
+import {types} from "../../utils/selectArrays";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#ffffff",
+        color: "#fff",
         fontWeight: "600",
         fontSize: "22px",
         marginBottom: "30px",
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     button: {
         height: "45px",
         borderRadius: "9px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
@@ -41,23 +42,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function uniqBy(a, key) {
-    var seen = {};
-    return a.filter(function (item) {
-        var k = key(item);
-        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-    });
-}
-
 const FilterVehiclePanel = (props) => {
     const classes = useStyles();
     const [option, setOption] = useState("");
 
-    const typeOptions = [];
-    props.vehicles.map((value) => {
-        return typeOptions.push({ value: value.type });
-    });
-    const uniqtypeOptions = uniqBy(typeOptions, JSON.stringify);
+    const selectType = types;
+    let index = selectType.indexOf(selectType.find(obj => {return obj.value === ""})); // remove "Seleccione un tipo" option
+    if (index !== -1) selectType.splice(index, 1);
 
     const toSearch = () => {
         props.setType(option);
@@ -93,11 +84,11 @@ const FilterVehiclePanel = (props) => {
                                 allowClear
                                 onChange={onChange}
                                 filterOption={(input, option) =>
-                                    option.value
+                                    option.label
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={uniqtypeOptions}
+                                options={selectType}
                             />
                         </Col>
                         <Col>

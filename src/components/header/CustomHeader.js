@@ -1,11 +1,16 @@
 import React, { useContext, useState } from "react";
-import { Button, Layout } from "antd";
+import { Button, Layout, Drawer } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
 
 import AuthContext from "../../context/auth-context";
+import Profile from "./Profile";
+import EditProfile from "./EditProfile";
+import ServicesDropdown from "./service/ServicesDropdown";
+import Notification from "./Notification";
 
 const { Header } = Layout;
 
@@ -19,24 +24,31 @@ const useStyles = makeStyles((theme) => ({
         height: "auto",
         zIndex: "1",
         padding: "0px 20px",
+        border: "solid 0.5px #c2c2c2",
     },
     logo: {
         width: "150px",
         height: "45px",
         borderRadius: "25px",
-        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.15)",
         backgroundColor: "#ffffff",
-        margin: "10px 20px 10px 0px",
+        margin: "10px 50px 10px 0px",
+        paddingLeft: "35px",
+        paddingTop: "10px",
     },
-    textoLogo: {
-        fontSize: "22px",
-        fontWeight: "light",
-        lineHeight: "2",
-        textAlign: "center",
-        color: "#8a8a8a",
-    },
-    textoLogoBold: {
+    prava: {
+        fontSize: "26px",
         fontWeight: "bold",
+        lineHeight: "0.5",
+        textAlign: "left",
+        color: theme.palette.primary.main,
+    },
+    conductores: {
+        fontSize: "11px",
+        fontWeight: "100",
+        lineHeight: "1",
+        textAlign: "left",
+        color: "#b9b9b9",
+        letterSpacing: "2px",
     },
     box: {
         width: "45px",
@@ -51,13 +63,17 @@ const useStyles = makeStyles((theme) => ({
     },
     icon: {
         fontSize: "40px",
-        color: "#42c3cf",
+        color: theme.palette.primary.main,
+    },
+    icon_list: {
+        fontSize: "40px",
+        color: theme.palette.primary.main,
     },
     button: {
         height: "45px",
         margin: "10px 20px",
         borderRadius: "9px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
@@ -71,49 +87,95 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomHeader = () => {
     const [navigate, setNavigate] = useState(false);
-    const context = useContext(AuthContext);
+    const [visibleProfile, setVisibleProfile] = useState(false);
+    const [visibleEdit, setVisibleEdit] = useState(false);
+    const { logout, client } = useContext(AuthContext);
     const classes = useStyles();
-    let history = useHistory();
 
-    const logout = () => {
+    const handleLogout = () => {
         localStorage.clear("token");
-        context.logout();
+        logout();
         setNavigate(true);
-    };
-
-    const toProfile = () => {
-        history.push("/perfil");
     };
 
     if (navigate) return <Redirect to="/" push={true} />;
     return (
-        <Header theme="light" className={classes.header}>
-            <div className={classes.container}>
-                <div className={classes.logo}>
-                    <p className={classes.textoLogo}>
-                        MUDA <span className={classes.textoLogoBold}>YA</span>
-                    </p>
+        <>
+            <Header theme="light" className={classes.header}>
+                <div className={classes.container}>
+                    <div className={classes.logo}>
+                        <Typography
+                            variant="subtitle2"
+                            color="textPrimary"
+                            component="p"
+                            className={classes.prava}
+                            gutterBottom={true}
+                        >
+                            PRAVA
+                        </Typography>
+                        {client === "driver" && (
+                            <Typography
+                                variant="body2"
+                                color="textPrimary"
+                                component="p"
+                                className={classes.conductores}
+                                gutterBottom={true}
+                            >
+                                CONDUCTORES
+                            </Typography>
+                        )}
+                        {client === "user" && (
+                            <Typography
+                                variant="body2"
+                                color="textPrimary"
+                                component="p"
+                                className={classes.conductores}
+                                gutterBottom={true}
+                            >
+                                ACARREOS
+                            </Typography>
+                        )}
+                    </div>
+                    <Button
+                        icon={<PersonIcon className={classes.icon} />}
+                        className={classes.box}
+                        onClick={() => {
+                            setVisibleProfile(true);
+                        }}
+                    />
+                    {client === "user" && <ServicesDropdown />}
                 </div>
-                <Button
-                    icon={<PersonIcon className={classes.icon} />}
-                    className={classes.box}
-                    onClick={toProfile}
-                />
-            </div>
-            <div className={classes.container}>
-                <Button
-                    className={classes.button}
-                    // onClick={() => alert("Vehiculo presionado")}
-                >
-                    PUBLICA TU VEHICULO
-                </Button>
-                <Button
-                    icon={<ExitToAppIcon className={classes.icon} />}
-                    className={classes.box}
-                    onClick={logout}
-                />
-            </div>
-        </Header>
+                <div className={classes.container}>
+                    {client === "driver" && <Notification />}
+                    <Button
+                        className={classes.button}
+                        // onClick={() => alert("Vehiculo presionado")}
+                    >
+                        PUBLICA TU VEHICULO
+                    </Button>
+                    <Button
+                        icon={<ExitToAppIcon className={classes.icon} />}
+                        className={classes.box}
+                        onClick={handleLogout}
+                    />
+                </div>
+            </Header>
+            <Drawer
+                placement="left"
+                width={500}
+                closable={false}
+                onClose={() => setVisibleProfile(false)}
+                visible={visibleProfile}
+            >
+                {!visibleEdit && (
+                    <Profile
+                        setVisibleProfile={setVisibleProfile}
+                        setVisibleEdit={setVisibleEdit}
+                    />
+                )}
+                {visibleEdit && <EditProfile setVisibleEdit={setVisibleEdit} />}
+            </Drawer>
+        </>
     );
 };
 

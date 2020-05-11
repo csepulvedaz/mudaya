@@ -5,7 +5,7 @@ import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { Carousel } from "antd";
 
 import CardVehicle from "./CardVehicle";
-import img1 from "../../assets/van.png";
+import img1 from "../../../assets/van.png";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#ffffff",
+        color: "#fff",
         fontWeight: "600",
         fontSize: "22px",
     },
     button: {
         borderRadius: "9px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
@@ -53,12 +53,15 @@ const useStyles = makeStyles((theme) => ({
 
 const VehiclesCardPanel = (props) => {
     const classes = useStyles();
+
+    const size = props.vehicles.length;
+
     const carouselprops = {
         dots: false,
         infinite: true,
         speed: 1000,
-        slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToShow: size > 4 ? 4 : size,
+        slidesToScroll: size > 4 ? 4 : size,
     };
 
     return (
@@ -66,7 +69,9 @@ const VehiclesCardPanel = (props) => {
             <div className={classes.box}>
                 <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
                 <div className={classes.panel}>
-                    <NavigateBeforeIcon className={classes.button} />
+                    {size > 4 && (
+                        <NavigateBeforeIcon className={classes.button} />
+                    )}
                     <Carousel
                         id="carousel"
                         {...carouselprops}
@@ -91,7 +96,9 @@ const VehiclesCardPanel = (props) => {
                             );
                         })}
                     </Carousel>
-                    <NavigateNextIcon className={classes.button} />
+                    {size > 4 && (
+                        <NavigateNextIcon className={classes.button} />
+                    )}
                 </div>
             </div>
         </div>

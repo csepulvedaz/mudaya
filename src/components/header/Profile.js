@@ -7,50 +7,32 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Spin } from "antd";
+import { Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { PROFILEUSER, PROFILEDRIVER } from "../graphql/queries";
-import AuthContext from "../context/auth-context";
+import { PROFILEUSER, PROFILEDRIVER } from "../../graphql/queries";
+import AuthContext from "../../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
-    "@global": {
-        body: {
-            height: "0px",
-            background: "#fafafa",
-        },
-    },
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(3),
         background: "#fff",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "30px",
-        boxShadow: "1px 1px 10px #ccc",
-        borderRadius: "5px",
     },
     avatar: {
-        margin: theme.spacing(1),
         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
         width: theme.spacing(9),
         height: theme.spacing(9),
-    },
-    back: {
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-        borderRadius: 6,
-        boxShadow: "1px 1px 10px #ccc",
-        height: 100,
-        width: 400,
     },
     form: {
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(3, 0, 0),
+        margin: theme.spacing(4, 0, 0),
         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
         borderRadius: 9,
         border: 0,
@@ -60,21 +42,30 @@ const useStyles = makeStyles((theme) => ({
     },
     spin: {
         position: "absolute",
+        zIndex: "1000",
         top: "50%",
-        left: "50%",
+        left: "40%",
     },
 }));
 
-const Profile = () => {
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
+
+const Profile = (props) => {
     const classes = useStyles();
     const context = useContext(AuthContext);
-    let history = useHistory();
     //Query
-
-    const { loading, error, data } = useQuery(
+    const { loading, data } = useQuery(
         context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
         {
             variables: { _id: context.userId },
+            onError: (error) => {
+                errorModal(error.graphQLErrors[0].message);
+            },
         }
     );
 
@@ -86,22 +77,18 @@ const Profile = () => {
                 className={classes.spin}
             />
         );
-    if (error) return `Error! ${error}`;
 
     const toMain = () => {
-        history.push("/principal");
+        props.setVisibleProfile(false);
+    };
+    const toEditProfile = () => {
+        props.setVisibleEdit(true);
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Box
-                    className={classes.back}
-                    zIndex="modal"
-                    position="absolute"
-                    top={50}
-                />
                 <Box zIndex="tooltip">
                     <Avatar className={classes.avatar} />
                 </Box>
@@ -111,6 +98,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Nombre"
                                 defaultValue={
                                     context.client === "user"
@@ -124,6 +112,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Apellido"
                                 defaultValue={
                                     context.client === "user"
@@ -137,6 +126,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Correo"
                                 defaultValue={
                                     context.client === "user"
@@ -150,6 +140,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Identificación"
                                 autoComplete="current-identification"
                                 defaultValue={
@@ -164,6 +155,7 @@ const Profile = () => {
                             <TextField
                                 variant="outlined"
                                 fullWidth
+                                margin="dense"
                                 label="Telefono"
                                 autoComplete="current-cellphone"
                                 defaultValue={
@@ -175,8 +167,8 @@ const Profile = () => {
                             />
                         </Grid>
                     </Grid>
-                    <Grid container direction="row" justify="space-between">
-                        <Grid item xs={5}>
+                    <Grid container direction="row" justify="center">
+                        <Grid item xs={4}>
                             <Button
                                 fullWidth
                                 variant="contained"
@@ -187,12 +179,13 @@ const Profile = () => {
                                 Regresar
                             </Button>
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs={4} style={{ marginLeft: "20px" }}>
                             <Button
                                 fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={toEditProfile}
                             >
                                 Editar
                             </Button>

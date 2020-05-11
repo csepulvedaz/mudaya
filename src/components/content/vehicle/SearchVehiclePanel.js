@@ -1,14 +1,14 @@
 import React from "react";
-import {useQuery} from "@apollo/client";
-import {makeStyles} from "@material-ui/core/styles";
+import { useQuery } from "@apollo/client";
+import { makeStyles } from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import {Carousel, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import { Carousel, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import SearchVehicleCard from "./SearchVehicleCard";
-import img1 from "../../assets/van.png";
-import {ALL_VEHICLES} from "../../graphql/queries";
+import img1 from "../../../assets/van.png";
+import { ALL_VEHICLES } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -32,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#ffffff",
+        color: "#fff",
         fontWeight: "600",
         fontSize: "22px",
     },
     button: {
         borderRadius: "9px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
@@ -58,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
 const SearchVehiclePanel = (props) => {
     const classes = useStyles();
     const { loading, error, data } = useQuery(ALL_VEHICLES, {
-        variables: { type: props.type !== "null" ? props.type : null }, fetchPolicy:"no-cache",
+        variables: { type: props.type !== "null" ? props.type : null },
+        fetchPolicy: "no-cache",
     });
     if (loading) {
         return (

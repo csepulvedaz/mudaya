@@ -3,37 +3,36 @@ import { Button, Modal } from "antd";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     text: {
-        fontSize: "17px",
+        fontSize: "15px",
         textAlign: "left",
     },
     boldText: { fontWeight: "bold" },
     button: {
         margin: "5px 0px",
         borderRadius: "7px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         color: "#fff",
         focus: "false",
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        fontSize: "17px",
     },
     backButton: {
         margin: "5px 0px",
         borderRadius: "7px",
         background: "#fff",
-        color: "#FCB625",
+        color: theme.palette.primary.main,
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        fontSize: "17px",
     },
-});
+}));
 
 const VehicleDetaisModal = (props) => {
     const classes = useStyles();
     const handleOk = () => {
         props.setVisible(false);
+        props.setVisibleService(true);
     };
 
     const handleCancel = () => {
@@ -42,6 +41,7 @@ const VehicleDetaisModal = (props) => {
     return (
         <Modal
             visible={props.visible}
+            centered
             title="Detalles del vehículo"
             onOk={handleOk}
             onCancel={handleCancel}
@@ -51,7 +51,7 @@ const VehicleDetaisModal = (props) => {
                     onClick={handleCancel}
                     className={classes.backButton}
                 >
-                    Regresar
+                    Volver
                 </Button>,
                 <Button
                     key="submit"

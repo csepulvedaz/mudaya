@@ -18,6 +18,7 @@ import { Formik, Form, ErrorMessage } from "formik";
 import { CREATE_USER, CREATE_DRIVER } from "../graphql/mutations";
 import { LOGIN } from "../graphql/queries";
 import AuthContext from "../context/auth-context";
+import TextMaskCustom from "../components/utils/TextMaskCustom";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
@@ -44,14 +45,19 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(2, 0, 0),
+        margin: theme.spacing(3, 0, 0),
         width: "100%",
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: "#fff",
         borderRadius: 9,
-        border: 0,
-        color: "white",
+        border: `solid 0.5px ${theme.palette.primary.light}`,
+        color: theme.palette.primary.main,
         height: 48,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+        boxShadow: theme.shadows[2],
+        '&:hover': {
+            background: theme.palette.primary.light,
+            color: "white",
+            boxShadow: theme.shadows[4],
+        }
     },
     truck: {
         fontSize: "50px",
@@ -64,26 +70,27 @@ const useStyles = makeStyles((theme) => ({
     },
     helperText: {
         margin: "0px 0px -20px 10px",
-        color: "red",
-        fontSize: "14px",
+        color: theme.palette.error.main,
+        fontSize: "12px",
     },
+    checkbox: { margin: "0px 10px", padding: "0px", marginBottom: "-5px" },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #000 solid !important",
+            border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
 }));
 
-const CustomCheckbox = withStyles({
+const CustomCheckbox = withStyles((theme)=>({
     root: {
-        color: "#FF8E53",
+        color: theme.palette.primary.main,
         "&$checked": {
-            color: "#FF8E53",
+            color: theme.palette.primary.main,
         },
     },
     checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+}))((props) => <Checkbox color="default" {...props} />);
 
 function errorModal(msg) {
     Modal.error({
@@ -94,6 +101,7 @@ function errorModal(msg) {
 
 const SignUp = () => {
     const [isDriver, setIsDriver] = useState(false);
+    const [loginPass, setLoginPass] = useState("");
     const context = useContext(AuthContext);
     const [login, { loading }] = useLazyQuery(LOGIN, {
         onCompleted: (data) => {
@@ -113,7 +121,7 @@ const SignUp = () => {
             login({
                 variables: {
                     email: data.createUser.email,
-                    password: data.createUser.password,
+                    password: loginPass,
                 },
             });
         },
@@ -128,7 +136,7 @@ const SignUp = () => {
                 login({
                     variables: {
                         email: data.createDriver.email,
-                        password: data.createDriver.password,
+                        password: loginPass,
                     },
                 });
             },
@@ -139,8 +147,9 @@ const SignUp = () => {
     );
     const classes = useStyles();
 
-    const toMain = async (values) => {
-        let input = {
+    const create = async (values) => {
+        setLoginPass(values.password);
+        const input = {
             _id: values._id,
             name: values.name,
             surname: values.surname,
@@ -153,7 +162,7 @@ const SignUp = () => {
                 variables: { input },
             });
         } else {
-            await createDriver({
+            return await createDriver({
                 variables: { input },
             });
         }
@@ -190,22 +199,24 @@ const SignUp = () => {
                         password: "",
                     }}
                     validationSchema={Yup.object({
-                        _id: Yup.number()
-                            .positive("Identificación invalida!")
-                            .integer("Identificación invalida!")
-                            .required("Campo requerido!")
-                            .typeError("Solo números!"),
+                        _id: Yup.string().required("Campo requerido!"),
                         name: Yup.string().required("Campo requerido!"),
                         surname: Yup.string().required("Campo requerido!"),
-                        phone: Yup.string().required("Campo requerido!"),
+                        phone: Yup.string()
+                            .required("Campo requerido!")
+                            .matches(/^[0-9]{3}\s[0-9]{3}(\s[0-9]{2}){2}$/, {
+                                message: "Número incorrecto!",
+                            }),
                         email: Yup.string()
                             .email("Email incorrecto")
                             .required("Campo requerido"),
                         password: Yup.string().required("Campo requerido"),
                     })}
                     onSubmit={(values) => {
-                        values._id = parseInt(values._id);
-                        toMain(values);
+                        // alert(JSON.stringify(values, null, 2));
+                        values._id = values._id.slice(3).replace(/\s/g, "");
+                        values.phone = values.phone.replace(/\s/g, "");
+                        create(values);
                     }}
                 >
                     {(formik) => (
@@ -220,7 +231,7 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Nombre"
+                                        label="Nombre"
                                         name="name"
                                         type="text"
                                         {...formik.getFieldProps("name")}
@@ -245,7 +256,7 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Apellido"
+                                        label="Apellido"
                                         name="surmane"
                                         type="text"
                                         {...formik.getFieldProps("surname")}
@@ -270,11 +281,31 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Número identificación"
+                                        autoComplete="nope"
+                                        // value="CC           "
+                                        label="Número identificación"
                                         name="_id"
                                         type="text"
                                         {...formik.getFieldProps("_id")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    "C",
+                                                    "C",
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -295,11 +326,29 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Número celular"
+                                        label="Número celular"
                                         name="phone"
                                         type="text"
                                         {...formik.getFieldProps("phone")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    /3/,
+                                                    /[0-5]/,
+                                                    /\d/,
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                    " ",
+                                                    /\d/,
+                                                    /\d/,
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -315,12 +364,42 @@ const SignUp = () => {
                                         )}
                                     </ErrorMessage>
                                 </Grid>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    container
+                                    className={classes.checkbox}
+                                >
+                                    <Grid item xs={6}>
+                                        <FormControlLabel
+                                            control={
+                                                <CustomCheckbox
+                                                    checked={!isDriver}
+                                                    onChange={handleCheckbox}
+                                                />
+                                            }
+                                            label="Soy Cliente"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel
+                                            control={
+                                                <CustomCheckbox
+                                                    checked={isDriver}
+                                                    onChange={handleCheckbox}
+                                                />
+                                            }
+                                            label="Soy Conductor"
+                                        />
+                                    </Grid>
+                                </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
                                         fullWidth
+                                        autoComplete="email"
                                         margin="dense"
-                                        placeholder="Correo"
+                                        label="Correo"
                                         name="email"
                                         type="email"
                                         {...formik.getFieldProps("email")}
@@ -345,11 +424,12 @@ const SignUp = () => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        placeholder="Contraseña"
+                                        label="Contraseña"
                                         name="password"
-                                        type="password"
                                         {...formik.getFieldProps("password")}
                                         InputProps={{
+                                            type: "password",
+                                            autoComplete: "new-password",
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
@@ -364,26 +444,6 @@ const SignUp = () => {
                                             </p>
                                         )}
                                     </ErrorMessage>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={
-                                            <CustomCheckbox
-                                                checked={!isDriver}
-                                                onChange={handleCheckbox}
-                                            />
-                                        }
-                                        label="Soy Cliente"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <CustomCheckbox
-                                                checked={isDriver}
-                                                onChange={handleCheckbox}
-                                            />
-                                        }
-                                        label="Soy Conductor"
-                                    />
                                 </Grid>
                             </Grid>
                             <Button

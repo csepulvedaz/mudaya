@@ -1,15 +1,15 @@
-import React, {useState} from "react";
-import {useQuery} from "@apollo/client";
-import {Layout, Spin} from "antd";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { Layout, Spin } from "antd";
+import { makeStyles } from "@material-ui/core/styles";
 import bg from "../../assets/bg.jpg";
-import {LoadingOutlined} from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import ServicesCardPanel from "./ServicesCardPanel";
-import VehiclesCardPanel from "./VehiclesCardPanel";
-import FilterVehiclePanel from "./FilterVehiclePanel";
-import SearchVehiclePanel from "../searchVehicle/SearchVehiclePanel";
-import {ALL_VEHICLES} from "../../graphql/queries";
+import ServicesOfferedCardPanel from "./servicesOffered/ServicesOfferedCardPanel";
+import VehiclesCardPanel from "./vehicle/VehiclesCardPanel";
+import FilterVehiclePanel from "./vehicle/FilterVehiclePanel";
+import SearchVehiclePanel from "./vehicle/SearchVehiclePanel";
+import { ALL_VEHICLES } from "../../graphql/queries";
 
 const { Content } = Layout;
 
@@ -23,13 +23,15 @@ const useStyles = makeStyles((theme) => ({
         // alignItems:"flex-end",
         background: `url(${bg}) no-repeat 50% 100% `,
         backgroundSize: "cover",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#fafaf8",
     },
 }));
 
 const CustomContent = (props) => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(ALL_VEHICLES);
+    const { loading, error, data } = useQuery(ALL_VEHICLES, {
+        fetchPolicy: "no-cache",
+    });
     const [type, setType] = useState(null);
 
     if (loading)
@@ -43,16 +45,12 @@ const CustomContent = (props) => {
     if (error) return `Error! ${error}`;
     return (
         <Content className={classes.content}>
-            <FilterVehiclePanel
-                vehicles={data.vehicles}
-                type={type}
-                setType={setType}
-            />
+            <FilterVehiclePanel type={type} setType={setType} />
             {type && <SearchVehiclePanel type={type} />}
 
             {!type && (
                 <>
-                    <ServicesCardPanel />
+                    <ServicesOfferedCardPanel />
                     <VehiclesCardPanel vehicles={data.vehicles} />
                 </>
             )}

@@ -7,17 +7,18 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { CardActionArea } from "@material-ui/core";
 import { Button, Rate } from "antd";
 
-import VehicleDetailsModal from "../content/VehicleDetailsModal";
+import VehicleDetailsModal from "./VehicleDetailsModal";
+import CreateServiceModal from "../service/CreateServiceModal";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
-        width: "290rx",
-        height: "360px",
+        width: "190rx",
+        height: "270px",
         margin: "20px 25px",
-        borderRadius: "9px",
+        borderRadius: "8px",
     },
     media: {
-        height: 100,
+        height: 50,
         marginTop: "15px",
     },
     title: { textAlign: "center", color: "#3d3d3d" },
@@ -36,19 +37,20 @@ const useStyles = makeStyles({
         fontSize: "14px",
     },
     button: {
-        margin: "5px 0px",
-        borderRadius: "7px",
-        background: "#FCB625",
+        margin: "10px 0px",
+        borderRadius: "8px",
+        background: theme.palette.primary.main,
         color: "#fff",
         fontWeight: "600",
-        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        boxShadow: theme.shadows[3],
         fontSize: "13px",
     },
-});
+}));
 
-const SearchVehicleCard = (props) => {
+const CardVehicle = (props) => {
     const classes = useStyles();
     const [visible, setVisible] = useState(false);
+    const [visibleService, setVisibleService] = useState(false);
     const openModal = (e) => {
         e.preventDefault();
         setVisible(true);
@@ -71,38 +73,7 @@ const SearchVehicleCard = (props) => {
                     className={classes.title}
                     gutterBottom={true}
                 >
-                    {props.value.type}
-                </Typography>
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.text}
-                >
-                    Marca:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.brand}
-                    </span>
-                </Typography>
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.text}
-                >
-                    Modelo:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.model}
-                    </span>
-                </Typography>
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.text}
-                >
-                    Año:{" "}
-                    <span className={classes.boldText}>{props.value.year}</span>
+                    {props.type}
                 </Typography>
                 <Typography
                     variant="body2"
@@ -111,9 +82,7 @@ const SearchVehicleCard = (props) => {
                     className={classes.text}
                 >
                     Capacidad:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.capacity} Metros
-                    </span>
+                    <span className={classes.boldText}>{props.capacity} m</span>
                 </Typography>
                 <Typography
                     variant="body2"
@@ -123,18 +92,7 @@ const SearchVehicleCard = (props) => {
                 >
                     Dimensiones:{" "}
                     <span className={classes.boldText}>
-                        {props.value.dimensions} Metros
-                    </span>
-                </Typography>
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.text}
-                >
-                    Comentario:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.commentary}
+                        {props.dimensions} m
                     </span>
                 </Typography>
                 <div className={classes.footer}>
@@ -154,6 +112,13 @@ const SearchVehicleCard = (props) => {
                         visible={visible}
                         setVisible={setVisible}
                         value={props.value}
+                        setVisibleService={setVisibleService}
+                    />
+                    <CreateServiceModal
+                        idVehicle={props.value._id}
+                        idDriver={props.value.idDriver}
+                        visibleService={visibleService}
+                        setVisibleService={setVisibleService}
                     />
                 </div>
             </CardContent>
@@ -161,4 +126,4 @@ const SearchVehicleCard = (props) => {
     );
 };
 
-export default SearchVehicleCard;
+export default CardVehicle;
