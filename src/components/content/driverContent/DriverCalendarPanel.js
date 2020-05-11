@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         height: "50px",
         width: "250px",
-        backgroundColor: "#fcb625",
+        backgroundColor: theme.palette.primary.main,
         borderRadius: "0px 60px 60px 0px",
         alignSelf: "stretch",
         marginBottom: "20px",

@@ -18,24 +18,24 @@ import {
 const useStyles = makeStyles((theme) => ({
     content: {},
     todayCell: {
-        backgroundColor: fade("#FCB625", 0.1),
+        backgroundColor: fade(theme.palette.primary.main, 0.1),
         "&:hover": {
-            backgroundColor: fade("#FCB625", 0.14),
+            backgroundColor: fade(theme.palette.primary.main, 0.14),
         },
         "&:focus": {
-            backgroundColor: fade("#FCB625", 0.16),
+            backgroundColor: fade(theme.palette.primary.main, 0.16),
         },
     },
     today: {
-        backgroundColor: fade("#FCB625", 0.16),
+        backgroundColor: fade(theme.palette.primary.main, 0.16),
     },
 }));
 
 const DriverCalendar = (props) => {
     const classes = useStyles();
-    const theme = createMuiTheme({
-        palette: { type: "light", primary: amber },
-    });
+   /*  const theme = createMuiTheme({
+        palette: { type: "light", primary: theme.palette.primary.main },
+    });*/
     
     const putAZero = function(dayOrMonth){
         if(dayOrMonth < 10){
@@ -80,7 +80,7 @@ const DriverCalendar = (props) => {
     };
 
     return (
-        <MuiThemeProvider theme={theme}>
+        
             <Paper style={{ borderRadius: "4px" }}>
                 <Scheduler locale={"es-ES"}>
                     <ViewState
@@ -102,7 +102,7 @@ const DriverCalendar = (props) => {
                     <Appointments />
                 </Scheduler>
             </Paper>
-        </MuiThemeProvider>
+        
     );
 };
 

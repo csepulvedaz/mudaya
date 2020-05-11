@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
         width: "150px",
         height: "45px",
         borderRadius: "25px",
-        //boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.15)",
         backgroundColor: "#ffffff",
         margin: "10px 50px 10px 0px",
         paddingLeft: "35px",
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         lineHeight: "0.5",
         textAlign: "left",
-        color: "#fcb625",
+        color: theme.palette.primary.main,
     },
     conductores: {
         fontSize: "11px",
@@ -64,17 +63,17 @@ const useStyles = makeStyles((theme) => ({
     },
     icon: {
         fontSize: "40px",
-        color: "#42c3cf",
+        color: theme.palette.primary.main,
     },
     icon_list: {
         fontSize: "40px",
-        color: "#6663ff",
+        color: theme.palette.primary.main,
     },
     button: {
         height: "45px",
         margin: "10px 20px",
         borderRadius: "9px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
