@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     avatar: {
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: theme.palette.primary.main,
         width: theme.spacing(9),
         height: theme.spacing(9),
     },
@@ -36,23 +36,23 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(4, 0, 0),
-        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: theme.palette.primary.main,
         borderRadius: 9,
         border: 0,
         color: "white",
         height: 40,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+        boxShadow: theme.shadows[26],
     },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #000 solid !important",
+            border: `1px ${theme.palette.primary.light} solid !important`,
             color: "#ccc",
         },
     },
     helperText: {
         margin: "0px 0px -17px 10px",
-        color: "red",
+        color: theme.palette.error.main,
         fontSize: "12px",
     },
     spin: {
