@@ -7,6 +7,7 @@ const blueOne = "#63b6bf";
 const c = "#8fd1d9";
 const d = "#f2cf8d";
 const yellowOne = "#f2bc79";
+const orangeOne= "#ffc914"; //https://coolors.co/63b6bf-e4572e-ffc914-2e282a-76b041
 
 
 const theme = createMuiTheme({
@@ -17,6 +18,9 @@ const theme = createMuiTheme({
     secondary: {
         main: yellowOne,
     },
+    warning:{
+      main:orangeOne,
+    }
   },
 }); 
 theme.shadows[25] ="0px 3px 3px -2px #8FD1D9,0px 3px 4px 0px #8FD1D9,0px 1px 8px 0px #8FD1D9";
