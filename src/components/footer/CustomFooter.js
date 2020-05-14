@@ -5,13 +5,13 @@ import { makeStyles } from "@material-ui/core/styles";
 const { Footer } = Layout;
 
 const useStyles = makeStyles((theme) => {
-    console.log(theme.palette.primary);
   return {
     footer: {
       border: "solid 0.5px #c2c2c2",
       textAlign: "center",
       background: "#fff",
       color: theme.palette.text.secondary,
+      zIndex: "1",
     },
   };
 });

@@ -9,19 +9,68 @@ const d = "#f2cf8d";
 const yellowOne = "#f2bc79";
 const orangeOne= "#ffc914"; //https://coolors.co/63b6bf-e4572e-ffc914-2e282a-76b041 paleta tentativa de colores
 
-
-const theme = createMuiTheme({
-  palette: {
+const prava0 = {
+  primary:{
+    main: blueOne,
+ },
+ secondary: {
+     main: yellowOne,
+ },
+ warning:{
+   main:orangeOne,
+ },
+}
+const prava1 = {
     primary:{
-       main: blueOne,
+      main:blueOne,
     },
-    secondary: {
-        main: yellowOne,
+    secondary:{
+      main:yellowOne,
+    },
+    tertiary:{
+      main:"#662E9B",
+    },
+    error:{
+      main:"#EA3546",
     },
     warning:{
-      main:orangeOne,
-    }
+      main:"#F86624",
+    },
+}
+const prava2 = {
+  primary:{
+    main:blueOne,
   },
+  secondary:{
+    main:yellowOne,
+  },  
+  tertiary:{
+    main:"#29335C",
+  },
+  error:{
+    main:"#DB2B39",
+  },
+  warning:{
+    main:"#F3A712",
+  },
+}
+const prava3 = {
+  primary:{
+    main:blueOne,
+  },
+  secondary:{
+    main:yellowOne,
+  },  
+  tertiary:{
+    main:"#3D405B",
+  },
+  error:{
+    main:"#E07A5F",
+  },
+}
+
+const theme = createMuiTheme({
+  palette: prava0
 }); 
 theme.shadows[25] ="0px 3px 3px -2px #8FD1D9,0px 3px 4px 0px #8FD1D9,0px 1px 8px 0px #8FD1D9";
 
