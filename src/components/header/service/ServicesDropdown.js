@@ -15,80 +15,85 @@ import AuthContext from "../../../context/auth-context";
 import theme from "../../utils/AppTheme";
 
 const useStyles = makeStyles({
-    icon: {
-        fontSize: "40px",
-        color: theme.palette.primary.main,
+  icon: {
+    fontSize: "35px",
+    color: theme.palette.primary.main,
+  },
+  box: {
+    width: "45px",
+    height: "45px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "10px 20px",
+    borderRadius: "8px",
+    backgroundColor: " #fff",
+    border: "2px #cecece solid !important",
+    "&:hover": {
+      border: `2px ${theme.palette.primary.light} solid !important`,
+      boxShadow: theme.shadows[2],
     },
-    box: {
-        margin: "10px 20px",
-        width: "45px",
-        height: "45px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "9px",
-        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
-        backgroundColor: " #ffffff",
-    },
-    menu: {
-        position: "fixed",
-        background: "#fafafa",
-        borderRadius: "7px",
-        overflow: "auto",
-        maxHeight: 500,
-    },
+  },
+  menu: {
+    position: "fixed",
+    background: "#fafafa",
+    borderRadius: "7px",
+    overflow: "auto",
+    maxHeight: 500,
+    boxShadow: "0 3px 8px rgba(0, 0, 0, .25)",
+  },
 });
 
 export default function ServicesList(props) {
-    const classes = useStyles();
-    const [dataArray, setDataArray] = useState([]);
-    const { userId } = useContext(AuthContext);
-    const {
-        loading: loadingServices,
-        error: errorServices,
-        data: dataServices,
-    } = useQuery(SERVICES_BY_USER, {
-        variables: { idUser: userId },
-        fetchPolicy: "no-cache",
-    });
-    const { data } = useSubscription(SERVICE_ADDED, {
-        variables: { _id: userId },
-        onSubscriptionData: ({ subscriptionData }) => {
-            setDataArray([...dataArray, subscriptionData]);
-        },
-    });
+  const classes = useStyles();
+  const [dataArray, setDataArray] = useState([]);
+  const { userId } = useContext(AuthContext);
+  const {
+    loading: loadingServices,
+    error: errorServices,
+    data: dataServices,
+  } = useQuery(SERVICES_BY_USER, {
+    variables: { idUser: userId },
+    fetchPolicy: "no-cache",
+  });
+  const { data } = useSubscription(SERVICE_ADDED, {
+    variables: { _id: userId },
+    onSubscriptionData: ({ subscriptionData }) => {
+      setDataArray([...dataArray, subscriptionData]);
+    },
+  });
 
-    if (loadingServices)
-        return (
-            <Spin
-                tip="Cargando..."
-                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
-                className={classes.spin}
-            />
-        );
-    if (errorServices) return `Error! ${errorServices}`;
-
-    const menu = (
-        <List className={classes.menu}>
-            {dataServices.servicesByUser.map((value, index) => {
-                return (
-                    <ListItem key={index}>
-                        <DropListElement value={value} />
-                    </ListItem>
-                );
-            })}
-        </List>
-    );
-
+  if (loadingServices)
     return (
-        <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
-            <Button
-                icon={
-                    <Badge count={dataArray.length}>
-                        <ListIcon className={classes.icon} />
-                    </Badge>
-                }
-            />
-        </Dropdown>
+      <Spin
+        tip="Cargando..."
+        indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+        className={classes.spin}
+      />
     );
+  if (errorServices) return `Error! ${errorServices}`;
+
+  const menu = (
+    <List className={classes.menu}>
+      {dataServices.servicesByUser.map((value, index) => {
+        return (
+          <ListItem key={index}>
+            <DropListElement value={value} />
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+
+  return (
+    <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
+      <Button
+        icon={
+          <Badge count={dataArray.length}>
+            <ListIcon className={classes.icon} />
+          </Badge>
+        }
+      />
+    </Dropdown>
+  );
 }

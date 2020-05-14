@@ -7,23 +7,27 @@ import NotificationsNoneTwoToneIcon from "@material-ui/icons/NotificationsNoneTw
 import { SERVICE_ADDED } from "../../graphql/subscriptions";
 import AuthContext from "../../context/auth-context";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     icon: {
-        fontSize: "40px",
-        color: "#fcb625",
+        fontSize: "32px",
+        color: theme.palette.warning.main,
     },
     box: {
-        margin: "10px 0px",
         width: "45px",
         height: "45px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: "9px",
-        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
-        backgroundColor: " #ffffff",
+        margin: "10px 0px",
+        borderRadius: "8px",
+        backgroundColor: " #fff",
+        border: "2px #cecece solid !important",
+        "&:hover": {
+            border: `2px ${theme.palette.primary.light} solid !important`,
+            boxShadow: theme.shadows[2],
+        },
     },
-});
+}));
 
 export default function Notification() {
     const classes = useStyles();

@@ -5,15 +5,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import waitImage from "../../../assets/waiting-steps.png";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
         width: "330px",
         height: "auto",
-        border: "solid 0.5px #fcb625",
+        border: `solid 0.5px ${theme.palette.primary.main}`,
         borderRadius: "4px",
         boxShadow:
             "inset 4px 4px 6px rgba(0,0,0,0.05), 4px 4px 6px rgba(0,0,0,0.05)",
-        //opacity:"0",
         backgroundColor: "#ffffff",
         display: "flex",
         flexDirection: "column",
@@ -27,7 +26,7 @@ const useStyles = makeStyles({
     },
     title: {
         textAlign: "left",
-        color: "#fcb625",
+        color: theme.palette.primary.main,
         fontWeight: "600",
         fontSize: "30px",
         margin: "40px 0px 0px 30px",
@@ -41,7 +40,7 @@ const useStyles = makeStyles({
         margin: "5px 0px 0px 30px",
         alignSelf: "stretch",
     },
-});
+}));
 
 const StepWait = (props) => {
     const classes = useStyles();
