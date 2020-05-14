@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     avatar: {
-        background: theme.palette.primary.main,
+        background: theme.palette.secondary.main,
         width: theme.spacing(9),
         height: theme.spacing(9),
     },
@@ -36,21 +36,21 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(4, 0, 0),
-        background: theme.palette.primary.main,
+        background: theme.palette.secondary.main,
         borderRadius: 9,
         border: 0,
         color: "white",
         height: 40,
         boxShadow: theme.shadows[0],
         "&:hover": {            
-            background: theme.palette.primary.main,
-            boxShadow: theme.shadows[26],
+            background: theme.palette.secondary.main,
+            boxShadow: theme.shadows[2],
         },
     },
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: `1px ${theme.palette.primary.light} solid !important`,
+            border: `1px ${theme.palette.secondary.light} solid !important`,
             color: "#ccc",
         },
     },

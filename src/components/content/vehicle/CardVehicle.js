@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme)=>({
         height: "270px",
         margin: "20px 25px",
         borderRadius: "8px",
+        boxShadow:theme.shadows[29],
     },
     media: {
         height: 50,

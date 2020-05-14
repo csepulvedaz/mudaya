@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     zIndex: "1",
     padding: "0px 20px",
-    border: `1px ${theme.palette.borderGrey.main} solid !important`,
+    border: `1px ${theme.palette.colorGrey.border} solid !important`,
   },
   logo: {
     width: "150px",
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px 0px",
     borderRadius: "8px",
     backgroundColor: "#fff",
-    border: `1px ${theme.palette.borderGrey.main} solid !important`,
+    border: `1px ${theme.palette.colorGrey.border} solid !important`,
     "&:hover": {
       border: `1px ${theme.palette.primary.light} solid !important`,
       boxShadow: theme.shadows[2],

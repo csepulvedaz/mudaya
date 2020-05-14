@@ -14,11 +14,12 @@ const useStyles = makeStyles((theme) => ({
         margin: "50px 0px",
     },
     box: {
-        // width: "100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
-        backdropFilter: "blur(9px) contrast(80%)",
-        borderRadius: "13px",
+        //backdropFilter: "blur(9px) contrast(80%)",
+        background:theme.palette.secondary.light,
+        //borderRadius: "13px",
         padding: "20px 20px",
     },
     panel: {

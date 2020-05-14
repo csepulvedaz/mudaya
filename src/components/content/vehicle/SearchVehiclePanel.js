@@ -13,7 +13,8 @@ import { ALL_VEHICLES } from "../../../graphql/queries";
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        backdropFilter: "brightness(70%)",
+        //backdropFilter: "brightness(70%)",
+        background:theme.palette.primary.main,
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
@@ -38,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         borderRadius: "9px",
-        background: theme.palette.primary.main,
+        background: "#fff",
         fontWeight: "600",
-        color: "#fff",
+        color: theme.palette.primary.main,
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         fontSize: "60px",
         alignSelf: "center",

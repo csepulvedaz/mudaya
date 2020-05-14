@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        backdropFilter: "contrast(80%)",
+        //backdropFilter: "contrast(80%)",
+        background:"#fff",
         padding: "50px 0px",
     },
     box: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#fff",
+        color: theme.palette.primary.main,
         fontWeight: "600",
         fontSize: "22px",
         marginBottom: "30px",
