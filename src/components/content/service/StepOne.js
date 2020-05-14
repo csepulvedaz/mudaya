@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
         margin: "5px 0px",
         borderRadius: "7px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         color: "#fff",
         focus: "false",
         fontWeight: "600",
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "5px 0px",
         borderRadius: "7px",
         background: "#fff",
-        color: "#FCB625",
+        color: theme.palette.primary.main,
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
     },
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
     notchedOutline: {},
     focused: {
         "&$focused $notchedOutline": {
-            border: "1px #000 solid !important",
+            border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
 }));

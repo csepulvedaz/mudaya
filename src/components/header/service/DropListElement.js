@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
 import ModalStepThree from "../../content/service/ModalStepThree";
+import theme from "../../utils/AppTheme";
 // import TruckLicense from "./TruckLicense";
 
 const useStyles = makeStyles({
@@ -16,8 +17,7 @@ const useStyles = makeStyles({
         width: "550px",
         padding: "25px 0px",
         border: "solid 0.5px #ccc",
-        background: "#FFFFFF",
-        boxShadow: "1px 1px 10px #ccc",
+        background: "#FFFFFF",        
         borderRadius: "5px",
     },
     image_box: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     },
     button: {
         borderRadius: "7px",
-        background: "#FCB625",
+        background: theme.palette.primary.main,
         color: "#fff",
         fontWeight: "600",
         boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",

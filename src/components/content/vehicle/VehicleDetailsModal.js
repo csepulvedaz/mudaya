@@ -16,7 +16,11 @@ const useStyles = makeStyles((theme)=>({
         color: "#fff",
         focus: "false",
         fontWeight: "600",
-        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        "&:hover": {
+            background: theme.palette.primary.main,
+            color: "#fff !important",
+            boxShadow: theme.shadows[26],
+        },
     },
     backButton: {
         margin: "5px 0px",
@@ -24,7 +28,9 @@ const useStyles = makeStyles((theme)=>({
         background: "#fff",
         color: theme.palette.primary.main,
         fontWeight: "600",
-        boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        "&:hover":{
+            boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        }
     },
 }));
 
