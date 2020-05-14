@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     zIndex: "1",
     padding: "0px 20px",
-    border: "solid 1px #dfdfdf",
+    border: `1px ${theme.palette.borderGrey.main} solid !important`,
   },
   logo: {
     width: "150px",
@@ -59,21 +59,27 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px 0px",
     borderRadius: "8px",
     backgroundColor: "#fff",
-    border: "1px #cecece solid !important",
+    border: `1px ${theme.palette.borderGrey.main} solid !important`,
     "&:hover": {
       border: `1px ${theme.palette.primary.light} solid !important`,
       boxShadow: theme.shadows[2],
     },
   },
-  icon: {
+  icon_profile: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.grey[700],
+    },
   },
-  icon_list: {
+  icon_exit: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.grey[700],
+    },
   },
-  button: {
+  button_publish: {
     height: "45px",
     margin: "10px 20px",
     borderRadius: "9px",
@@ -141,7 +147,7 @@ const CustomHeader = () => {
             )}
           </div>
           <Button
-            icon={<PersonIcon className={classes.icon} />}
+            icon={<PersonIcon className={classes.icon_profile} />}
             className={classes.box}
             onClick={() => {
               setVisibleProfile(true);
@@ -152,7 +158,7 @@ const CustomHeader = () => {
         <div className={classes.container}>
           {client === "driver" && <Notification />}
           <Button
-            className={classes.button}
+            className={classes.button_publish}
             // onClick={() => alert("Vehiculo presionado")}
           >
             PUBLICA TU VEHICULO
@@ -160,7 +166,7 @@ const CustomHeader = () => {
           <Button
             icon={
               <ExitToAppIcon
-                className={classes.icon}
+                className={classes.icon_exit}
                 style={{ fontSize: "30px" }}
               />
             }

@@ -15,9 +15,12 @@ import AuthContext from "../../../context/auth-context";
 import theme from "../../utils/AppTheme";
 
 const useStyles = makeStyles({
-  icon: {
+  listIcon: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.grey[100],
+    },
   },
   box: {
     width: "45px",
@@ -28,7 +31,7 @@ const useStyles = makeStyles({
     margin: "10px 20px",
     borderRadius: "8px",
     backgroundColor: " #fff",
-    border: "1px #cecece solid !important",
+    border: "1px #e5edef solid !important",
     "&:hover": {
       border: `1px ${theme.palette.primary.light} solid !important`,
       boxShadow: theme.shadows[2],
@@ -90,7 +93,7 @@ export default function ServicesList(props) {
       <Button
         icon={
           <Badge count={dataArray.length}>
-            <ListIcon className={classes.icon} />
+            <ListIcon className={classes.listIcon} />
           </Badge>
         }
       />

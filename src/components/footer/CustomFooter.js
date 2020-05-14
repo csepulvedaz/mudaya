@@ -7,7 +7,7 @@ const { Footer } = Layout;
 const useStyles = makeStyles((theme) => {
   return {
     footer: {
-      border: "solid 0.5px #c2c2c2",
+      border: `1px ${theme.palette.borderGrey.main} solid !important`,
       textAlign: "center",
       background: "#fff",
       color: theme.palette.text.secondary,

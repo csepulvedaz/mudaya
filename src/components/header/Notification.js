@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme)=>({
         margin: "10px 0px",
         borderRadius: "8px",
         backgroundColor: " #fff",
-        border: "1px #cecece solid !important",
+        border: "1px #e5edef solid !important",
         "&:hover": {
             border: `1px ${theme.palette.primary.light} solid !important`,
             boxShadow: theme.shadows[2],
