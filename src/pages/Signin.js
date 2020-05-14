@@ -49,8 +49,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         background: theme.palette.primary.main,
         borderRadius: 9,
-        border: "#ffffff",
-        color: "#ffffff",
+        color: "#fff",
         height: 48,
         boxShadow: theme.shadows[2],
         "&:hover": {

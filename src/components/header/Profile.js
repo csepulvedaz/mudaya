@@ -31,14 +31,33 @@ const useStyles = makeStyles((theme) => ({
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
-    submit: {
-        margin: theme.spacing(4, 0, 0),
-        background: theme.palette.primary.light,
+    button_solid: {
+        color: "#fff",
+        background: theme.palette.primary.main,
         borderRadius: 9,
         border: 0,
-        color: "white",
         height: 40,
-        boxShadow: theme.shadows[26],
+        margin: theme.spacing(4, 0, 0),
+        boxShadow:"none",
+        "&:hover": {            
+            background: theme.palette.primary.main,
+            boxShadow: theme.shadows[26],
+          },
+    },
+    button_inverse: {
+        color: theme.palette.primary.main,
+        background: "#fff",
+        border: `2px ${theme.palette.primary.main} solid !important`,
+        borderRadius: 9,
+        height: 40,
+        margin: theme.spacing(4, 0, 0),
+        boxShadow:"none",
+        "&:hover": {      
+            color: theme.palette.primary.main,      
+            border: `2px ${theme.palette.primary.main} solid !important`,
+            background: "#fff",
+            boxShadow: theme.shadows[26],
+          },
     },
     spin: {
         position: "absolute",
@@ -173,7 +192,7 @@ const Profile = (props) => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                className={classes.submit}
+                                className={classes.button_inverse}
                                 onClick={toMain}
                             >
                                 Regresar
@@ -184,7 +203,7 @@ const Profile = (props) => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                className={classes.submit}
+                                className={classes.button_solid}
                                 onClick={toEditProfile}
                             >
                                 Editar

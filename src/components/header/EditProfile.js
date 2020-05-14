@@ -41,7 +41,11 @@ const useStyles = makeStyles((theme) => ({
         border: 0,
         color: "white",
         height: 40,
-        boxShadow: theme.shadows[26],
+        boxShadow: theme.shadows[0],
+        "&:hover": {            
+            background: theme.palette.primary.main,
+            boxShadow: theme.shadows[26],
+        },
     },
     notchedOutline: {},
     focused: {
