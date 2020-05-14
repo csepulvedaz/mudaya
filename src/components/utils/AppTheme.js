@@ -7,7 +7,7 @@ const blueOne = "#63b6bf";
 const c = "#8fd1d9";
 const d = "#f2cf8d";
 const yellowOne = "#f2bc79";
-const orangeOne= "#ffc914"; //https://coolors.co/63b6bf-e4572e-ffc914-2e282a-76b041
+const orangeOne= "#ffc914"; //https://coolors.co/63b6bf-e4572e-ffc914-2e282a-76b041 paleta tentativa de colores
 
 
 const theme = createMuiTheme({
