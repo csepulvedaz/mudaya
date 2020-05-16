@@ -7,7 +7,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new WebSocketLink({
-    uri: `wss://mudaya.herokuapp.com/`,
+    uri: `wss://mudaya.herokuapp.com/graphql`,
     options: {
         reconnect: true,
     },
