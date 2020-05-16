@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import ServicesDropdown from "./service/ServicesDropdown";
 import Notification from "./Notification";
+import logo from "../../assets/logo-header.png";
 
 const { Header } = Layout;
 
@@ -26,21 +27,21 @@ const useStyles = makeStyles((theme) => ({
     padding: "0px 20px",
     border: `1px ${theme.palette.colorGrey.border} solid !important`,
   },
-  logo: {
+  logo_box: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft:"36px",
     width: "150px",
     height: "45px",
-    borderRadius: "25px",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     margin: "10px 50px 10px 0px",
-    paddingLeft: "35px",
-    paddingTop: "10px",
+    //paddingLeft: "35px",
+    //paddingTop: "10px",
   },
-  prava: {
-    fontSize: "26px",
-    fontWeight: "bold",
-    lineHeight: "0.5",
-    textAlign: "left",
-    color: theme.palette.primary.main,
+  logo: {
+    width:"77.5px",
+    height:"18px",
+    marginTop:"8px",
   },
   conductores: {
     fontSize: "11px",
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "#b9b9b9",
     letterSpacing: "2px",
+    marginTop:"5px",
   },
   box: {
     width: "45px",
@@ -76,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "35px",
     color: theme.palette.grey[500],
     "&:hover": {
-      color: theme.palette.grey[700],
+      color: theme.palette.error.main,
     },
   },
   button_publish: {
@@ -113,16 +115,13 @@ const CustomHeader = () => {
     <>
       <Header theme="light" className={classes.header}>
         <div className={classes.container}>
-          <div className={classes.logo}>
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-              component="p"
-              className={classes.prava}
-              gutterBottom={true}
-            >
-              PRAVA
-            </Typography>
+          
+          <div className={classes.logo_box}>
+            <img
+              src={logo}
+              className={classes.logo}
+              alt="Prava Logo"
+            />
             {client === "driver" && (
               <Typography
                 variant="body2"

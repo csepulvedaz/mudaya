@@ -13,7 +13,7 @@ import { ALL_VEHICLES } from "../../../graphql/queries";
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        //backdropFilter: "brightness(70%)",
+        //backdropFilter: "contrast(40%)",
         background:theme.palette.primary.main,
         display: "flex",
         justifyContent: "center",
