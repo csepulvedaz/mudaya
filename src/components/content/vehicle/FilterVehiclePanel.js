@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        //backdropFilter: "contrast(80%)",
         background:`url(${bg}) no-repeat 50% 100%`,
         backgroundSize:"cover",
         backgroundPositionY:"55%",
