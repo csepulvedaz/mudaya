@@ -42,8 +42,12 @@ const useStyles = makeStyles((theme)=>({
         background: theme.palette.primary.main,
         color: "#fff",
         fontWeight: "600",
-        boxShadow: theme.shadows[3],
         fontSize: "13px",
+        "&:hover": {
+            background: theme.palette.primary.main,
+            color: "#fff !important",
+            boxShadow: theme.shadows[3],
+        },
     },
 }));
 

@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
             height: "0px",
-            background: "#fafafa",
+            background: "#e8e8e8",
         },
     },
     paper: {
-        marginTop: theme.spacing(12),
+        marginTop: "50px",
         width: "400px",
         position: "absolute",
         display: "flex",
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        // boxShadow: theme.shadows[25],
+        boxShadow: theme.shadows[14],
         borderRadius: "5px",
     },
     form: {
