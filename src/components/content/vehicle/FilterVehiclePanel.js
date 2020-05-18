@@ -3,14 +3,18 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Button, Col, Row, Select} from "antd";
 import {types} from "../../utils/selectArrays";
 
+import bg from "../../../assets/filter-bg.jpg";
+
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
         display: "flex",
         justifyContent: "center",
         //backdropFilter: "contrast(80%)",
-        background:"#fff",
-        padding: "50px 0px",
+        background:`url(${bg}) no-repeat 50% 100%`,
+        backgroundSize:"cover",
+        backgroundPositionY:"55%",
+        padding: "100px 0px",
     },
     box: {
         width: "100%",
@@ -23,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: theme.palette.primary.main,
+        color: "#fff",
         fontWeight: "600",
         fontSize: "22px",
         marginBottom: "30px",
