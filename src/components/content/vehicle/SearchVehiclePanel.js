@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
         //backdropFilter: "contrast(40%)",
-        background:theme.palette.primary.main,
+        background:"#fdfdff",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#fff",
+        color: theme.palette.primary.main,
         fontWeight: "600",
         fontSize: "22px",
     },
