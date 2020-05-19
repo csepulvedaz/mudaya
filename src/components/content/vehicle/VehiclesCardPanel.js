@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         background: "#fff",
         //backdropFilter: "contrast(80%)",
+        borderTop: `1px ${theme.palette.colorGrey.border} solid !important`,
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
