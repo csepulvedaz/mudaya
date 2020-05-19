@@ -1,5 +1,5 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CardServicesOffered from "./CardServicesOffered";
 import img1 from "../../../assets/ourservices1.jpg";
 import img2 from "../../../assets/ourservices2.jpg";
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         //backdropFilter: "blur(9px) contrast(80%)",
-        background:theme.palette.secondary.light,
+        // background:theme.palette.secondary.light,
         //borderRadius: "13px",
         padding: "20px 20px",
     },
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#ffffff",
+        color: theme.palette.colorGrey.text,
         fontWeight: "600",
         fontSize: "22px",
     },
