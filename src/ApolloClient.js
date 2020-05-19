@@ -3,11 +3,11 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { WebSocketLink } from "@apollo/link-ws";
 
 const httpLink = new HttpLink({
-    uri: "http://localhost:4000/",
+    uri: "https://mudaya.herokuapp.com/",
 });
 
 const wsLink = new WebSocketLink({
-    uri: `ws://localhost:4000/graphql`,
+    uri: `wss://mudaya.herokuapp.com/graphql`,
     options: {
         reconnect: true,
     },
