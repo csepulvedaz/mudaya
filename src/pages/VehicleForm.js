@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
             height: "0px",
-            backgroundColor: "#fafafa",
+            backgroundColor: "#e8e8e8",
         },
     },
     paper: {
-        marginTop: theme.spacing(5),
+        marginTop: "10px",
         width: "400px",
         position: "absolute",
         display: "flex",
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
         padding: "30px",
-        // boxShadow: "1px 1px 10px #ccc",
+        boxShadow: theme.shadows[14],
         borderRadius: "5px",
         marginBottom: "10px",
     },

@@ -15,6 +15,7 @@ import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import ServicesDropdown from "./service/ServicesDropdown";
 import Notification from "./Notification";
+import logo from "../../assets/logo-header.png";
 
 const { Header } = Layout;
 
@@ -28,23 +29,23 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     zIndex: "1",
     padding: "0px 20px",
-    border: "solid 0.5px #c2c2c2",
+    border: `1px ${theme.palette.colorGrey.border} solid !important`,
   },
-  logo: {
+  logo_box: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft:"36px",
     width: "150px",
     height: "45px",
-    borderRadius: "25px",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     margin: "10px 50px 10px 0px",
-    paddingLeft: "35px",
-    paddingTop: "10px",
+    //paddingLeft: "35px",
+    //paddingTop: "10px",
   },
-  prava: {
-    fontSize: "26px",
-    fontWeight: "bold",
-    lineHeight: "0.5",
-    textAlign: "left",
-    color: theme.palette.primary.main,
+  logo: {
+    width:"77.5px",
+    height:"18px",
+    marginTop:"8px",
   },
   conductores: {
     fontSize: "11px",
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "#b9b9b9",
     letterSpacing: "2px",
+    marginTop:"5px",
   },
   box: {
     width: "45px",
@@ -62,22 +64,28 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "10px 0px",
     borderRadius: "8px",
-    backgroundColor: " #fff",
-    border: "2px #cecece solid !important",
+    backgroundColor: "#fff",
+    border: `1px ${theme.palette.colorGrey.border} solid !important`,
     "&:hover": {
-      border: `2px ${theme.palette.primary.light} solid !important`,
+      border: `1px ${theme.palette.primary.light} solid !important`,
       boxShadow: theme.shadows[2],
     },
   },
-  icon: {
+  icon_profile: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.grey[700],
+    },
   },
-  icon_list: {
+  icon_exit: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.error.main,
+    },
   },
-  button: {
+  button_publish: {
     height: "45px",
     margin: "10px 20px",
     borderRadius: "9px",
@@ -177,16 +185,13 @@ const CustomHeader = () => {
     <>
       <Header theme="light" className={classes.header}>
         <div className={classes.container}>
-          <div className={classes.logo}>
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-              component="p"
-              className={classes.prava}
-              gutterBottom={true}
-            >
-              PRAVA
-            </Typography>
+          
+          <div className={classes.logo_box}>
+            <img
+              src={logo}
+              className={classes.logo}
+              alt="Prava Logo"
+            />
             {client === "driver" && (
               <Typography
                 variant="body2"
@@ -211,7 +216,7 @@ const CustomHeader = () => {
             )}
           </div>
           <Button
-            icon={<PersonIcon className={classes.icon} />}
+            icon={<PersonIcon className={classes.icon_profile} />}
             className={classes.box}
             onClick={() => {
               setVisibleProfile(true);
@@ -225,7 +230,7 @@ const CustomHeader = () => {
             serviceUpdate={servicesUpdated}  
           />}
           <Button
-            className={classes.button}
+            className={classes.button_publish}
             // onClick={() => alert("Vehiculo presionado")}
           >
             PUBLICA TU VEHICULO
@@ -233,7 +238,7 @@ const CustomHeader = () => {
           <Button
             icon={
               <ExitToAppIcon
-                className={classes.icon}
+                className={classes.icon_exit}
                 style={{ fontSize: "30px" }}
               />
             }
