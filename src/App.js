@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ThemeProvider } from '@material-ui/core/styles';
+import React, {useState} from "react";
+import {ThemeProvider} from '@material-ui/core/styles';
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
 import Main from "./pages/Main";
@@ -8,17 +8,19 @@ import AuthContext from "./context/auth-context";
 import NotFound404 from "./pages/NotFound404";
 import Theme from "../src/components/utils/AppTheme";
 
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch,
-} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
 
 const App = () => {
     const [client, setClient] = useState(null);
     const [token, setToken] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [thirdPartyInfo, setThirdPartyInfo] = useState({
+        email: null,
+        password: null,
+        first_name: null,
+        last_name: null
+    });
+    const [thirdPartyRegister, setThirdPartyRegister] = useState(false);
 
     const login = (client, token, userId, tokenExpiration) => {
         setClient(client);
@@ -56,9 +58,12 @@ const App = () => {
                     {client !== "driver" && (
                         <Redirect from="/vehiculo" to="/" exact />
                     )}
+                    {thirdPartyRegister  && (
+                        <Redirect from="/" to="/registro" exact />
+                    )}
                     {!token && (
                         <Route exact path="/">
-                            <Login />
+                            <Login setThirdPartyInfo={setThirdPartyInfo} setThirdPartyRegister={setThirdPartyRegister}/>
                         </Route>
                     )}
                     {token && (
@@ -68,7 +73,7 @@ const App = () => {
                     )}
                     {!token && (
                         <Route path="/registro">
-                            <Signin />
+                            <Signin thirdPartyInfo={thirdPartyInfo} setThirdPartyRegister={setThirdPartyRegister}/>
                         </Route>
                     )}
 

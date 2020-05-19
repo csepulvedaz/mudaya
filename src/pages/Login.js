@@ -1,24 +1,25 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { Spin, Modal } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { Formik, Form, ErrorMessage } from "formik";
-import { useLazyQuery } from "@apollo/client";
+import {Modal, Spin} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
+import {ErrorMessage, Form, Formik} from "formik";
+import {useLazyQuery} from "@apollo/client";
 import * as Yup from "yup";
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 import AuthContext from "../context/auth-context";
-import { LOGIN } from "../graphql/queries";
+import {LOGIN} from "../graphql/queries";
 import logo from "../assets/logo.png";
 import theme from "../components/utils/AppTheme";
 
@@ -64,6 +65,15 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: theme.shadows[4],
         },
     },
+    thirdParty: {
+        margin: theme.spacing(3, 0, 3),
+        width: "288px",
+        height: "70px",
+        borderRadius: 9,
+        border: 0,
+        justifyContent: "center",
+        alignItems: "center",
+    },
     truck: {
         fontSize: "100px",
         color: "#ccc",
@@ -97,7 +107,7 @@ function errorModal(msg) {
     });
 }
 
-const Login = () => {
+const Login = (props) => {
     const classes = useStyles();
     const context = useContext(AuthContext);
     const [login, { loading }] = useLazyQuery(LOGIN, {
@@ -113,11 +123,81 @@ const Login = () => {
             errorModal(error.graphQLErrors[0].message);
         },
     });
+
+    const [loginThirdParty, { loadingThirdParty }] = useLazyQuery(LOGIN, {
+        onCompleted: (data) => {
+            props.setThirdPartyInfo( {
+                    email: null,
+                    password: null,
+                    first_name: null,
+                    last_name: null
+                }
+            );
+            context.login(
+                data.login.client,
+                data.login.token,
+                data.login.userId,
+                data.login.tokenExpiration
+            );
+        },
+        onError: (error) => {
+            props.setThirdPartyRegister(true);
+        },
+    });
+
+    const responseFacebook = (response) => {
+        props.setThirdPartyInfo( {
+                email: response.email,
+                password: response.id,
+                first_name: response.first_name,
+                last_name: response.last_name
+            }
+        );
+        loginThirdParty({
+            variables: {
+                email: response.email,
+                password: response.id,
+                first_name: response.first_name,
+                last_name: response.last_name,
+            },
+        });
+        response.email = "";
+        response.id = "";
+        response.first_name = "";
+        response.last_name = "";
+    };
+
+    const responseGoogle = (response) => {
+        props.setThirdPartyInfo( {
+                email: response.profileObj.email,
+                password: response.profileObj.googleId,
+                first_name: response.profileObj.givenName,
+                last_name: response.profileObj.familyName
+            }
+        );
+        loginThirdParty({
+            variables: {
+                email: response.profileObj.email,
+                password: response.profileObj.googleId,
+                first_name: response.profileObj.givenName,
+                last_name: response.profileObj.familyName,
+            },
+        });
+        response.profileObj.email = "";
+        response.profileObj.googleId = "";
+        response.profileObj.givenName = "";
+        response.profileObj.familyName = "";
+    };
+
+    const responseGoogleFail = (response) => {
+        console.log(response);
+    };
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                {loading && (
+                {(loading||loadingThirdParty) && (
                     <Spin
                         tip="Cargando..."
                         indicator={
@@ -248,6 +328,26 @@ const Login = () => {
                             >
                                 Ingresar
                             </Button>
+
+                            <Grid container direction="row" justify="center">
+                                <Grid item>
+                                    <FacebookLogin className={classes.thirdParty}
+                                        appId= "262085324993789"
+                                        textButton={"INGRESA CON FACEBOOK"}
+                                        fields="email,first_name,last_name"
+                                        callback={responseFacebook}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <GoogleLogin className={classes.thirdParty}
+                                        clientId="515176564508-1fvr1sv7kghek5p23fffgv0f177sucon.apps.googleusercontent.com"
+                                        buttonText="INGRESA CON GOOGLE"
+                                        onSuccess={responseGoogle}
+                                        onFailure={responseGoogleFail}
+                                    />
+                                </Grid>
+
+                            </Grid>
 
                             <Grid container direction="row" justify="center">
                                 <Grid item>
