@@ -124,6 +124,7 @@ const CustomHeader = () => {
     SERVICES_BY_DATE_CREATED,
     {
       variables:{_id:context.userId},
+      fetchPolicy: "no-cache",
       skip: context.client==="user",
       onError: (error) =>{
         errorModal(error.graphQLErrors[0].message);
@@ -140,6 +141,7 @@ const CustomHeader = () => {
     SERVICES_BY_DATE_UPDATED,
     {
       variables:{_id:context.userId,client:context.client},
+      fetchPolicy: "no-cache",
       onError: (error) =>{
         errorModal(error.graphQLErrors[0].message);
       },
