@@ -10,8 +10,8 @@ import img1 from "../../../assets/van.png";
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
-        // background: "#fff",
-        backdropFilter: "contrast(80%)",
+        background: "#fff",
+        //backdropFilter: "contrast(80%)",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        color: "#fff",
+        color: theme.palette.colorGrey.text,
         fontWeight: "600",
         fontSize: "22px",
     },
@@ -77,7 +77,7 @@ const VehiclesCardPanel = (props) => {
                         {...carouselprops}
                         arrows="true"
                         style={{
-                            width: "60vw",
+                            width: "70vw",
                             alignSelf: "center",
                         }}
                     >

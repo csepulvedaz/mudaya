@@ -119,3 +119,21 @@ export const CANCEL_SERVICE = gql`
         }
     }
 `;
+
+export const UPDATE_LOGOUT_TIME_DRIVER = gql`
+    mutation UpdateLogoutTimeDriver($_id: String!){
+        updateLogoutTimeDriver(_id: $_id){
+            _id
+            name 
+        }
+    }
+`;
+
+export const UPDATE_LOGOUT_TIME_USER = gql`
+    mutation UpdateLogoutTimeUser($_id: String!){
+        updateLogoutTimeUser(_id: $_id){
+            _id
+            name
+        }
+    }
+`;

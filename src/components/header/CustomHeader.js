@@ -5,12 +5,17 @@ import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-
+import { useMutation, useQuery } from "@apollo/client";
+import { UPDATE_LOGOUT_TIME_DRIVER, UPDATE_LOGOUT_TIME_USER} from "../../graphql/mutations";
+import { SERVICES_BY_DATE_UPDATED, SERVICES_BY_DATE_CREATED } from "../../graphql/queries";
+import { LoadingOutlined } from "@ant-design/icons";
 import AuthContext from "../../context/auth-context";
+import { Spin,Modal } from "antd";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import ServicesDropdown from "./service/ServicesDropdown";
 import Notification from "./Notification";
+import logo from "../../assets/logo-header.png";
 
 const { Header } = Layout;
 
@@ -24,23 +29,23 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     zIndex: "1",
     padding: "0px 20px",
-    border: "solid 0.5px #c2c2c2",
+    border: `1px ${theme.palette.colorGrey.border} solid !important`,
   },
-  logo: {
+  logo_box: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft:"36px",
     width: "150px",
     height: "45px",
-    borderRadius: "25px",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     margin: "10px 50px 10px 0px",
-    paddingLeft: "35px",
-    paddingTop: "10px",
+    //paddingLeft: "35px",
+    //paddingTop: "10px",
   },
-  prava: {
-    fontSize: "26px",
-    fontWeight: "bold",
-    lineHeight: "0.5",
-    textAlign: "left",
-    color: theme.palette.primary.main,
+  logo: {
+    width:"77.5px",
+    height:"18px",
+    marginTop:"8px",
   },
   conductores: {
     fontSize: "11px",
@@ -49,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "#b9b9b9",
     letterSpacing: "2px",
+    marginTop:"5px",
   },
   box: {
     width: "45px",
@@ -58,22 +64,28 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "10px 0px",
     borderRadius: "8px",
-    backgroundColor: " #fff",
-    border: "2px #cecece solid !important",
+    backgroundColor: "#fff",
+    border: `1px ${theme.palette.colorGrey.border} solid !important`,
     "&:hover": {
-      border: `2px ${theme.palette.primary.light} solid !important`,
+      border: `1px ${theme.palette.primary.light} solid !important`,
       boxShadow: theme.shadows[2],
     },
   },
-  icon: {
+  icon_profile: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.grey[700],
+    },
   },
-  icon_list: {
+  icon_exit: {
     fontSize: "35px",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[500],
+    "&:hover": {
+      color: theme.palette.error.main,
+    },
   },
-  button: {
+  button_publish: {
     height: "45px",
     margin: "10px 20px",
     borderRadius: "9px",
@@ -88,15 +100,83 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
 }));
+function errorModal(msg) {
+  Modal.error({
+      title: "Error",
+      content: msg,
+  });
+}
 
 const CustomHeader = () => {
+  const context = useContext(AuthContext);
   const [navigate, setNavigate] = useState(false);
   const [visibleProfile, setVisibleProfile] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const { logout, client } = useContext(AuthContext);
   const classes = useStyles();
 
+  const [updateLastLogout] = useMutation(
+    context.client==="user" ? UPDATE_LOGOUT_TIME_USER : UPDATE_LOGOUT_TIME_DRIVER,
+
+  );
+  let dataServicesCreated=0;
+  const {loading:loadCreate, data} = useQuery(
+    SERVICES_BY_DATE_CREATED,
+    {
+      variables:{_id:context.userId},
+      fetchPolicy: "no-cache",
+      skip: context.client==="user",
+      onError: (error) =>{
+        errorModal(error.graphQLErrors[0].message);
+      },
+    },
+  );
+  if(context.client==="driver"){
+    dataServicesCreated=data;
+  }
+  
+
+  
+  const {loading:loadUpdate,data:dataServicesUpdated} = useQuery(
+    SERVICES_BY_DATE_UPDATED,
+    {
+      variables:{_id:context.userId,client:context.client},
+      fetchPolicy: "no-cache",
+      onError: (error) =>{
+        errorModal(error.graphQLErrors[0].message);
+      },
+    },
+  );
+  if (loadUpdate)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSFize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+        
+  if (loadCreate)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSFize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+  const servicesUpdated = dataServicesUpdated.servicesByDateUpdated;
+  const servicesCreated = dataServicesCreated.servicesByDateCreated;
+  //console.log(servicesUpdated.length)
+  //console.log(servicesCreated)
+  
+  
+  
+          
   const handleLogout = () => {
+    const _id = context.userId
+    updateLastLogout({
+      variables:{_id:_id},
+    })
     localStorage.clear("token");
     logout();
     setNavigate(true);
@@ -107,16 +187,13 @@ const CustomHeader = () => {
     <>
       <Header theme="light" className={classes.header}>
         <div className={classes.container}>
-          <div className={classes.logo}>
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-              component="p"
-              className={classes.prava}
-              gutterBottom={true}
-            >
-              PRAVA
-            </Typography>
+          
+          <div className={classes.logo_box}>
+            <img
+              src={logo}
+              className={classes.logo}
+              alt="Prava Logo"
+            />
             {client === "driver" && (
               <Typography
                 variant="body2"
@@ -141,7 +218,7 @@ const CustomHeader = () => {
             )}
           </div>
           <Button
-            icon={<PersonIcon className={classes.icon} />}
+            icon={<PersonIcon className={classes.icon_profile} />}
             className={classes.box}
             onClick={() => {
               setVisibleProfile(true);
@@ -150,9 +227,12 @@ const CustomHeader = () => {
           {client === "user" && <ServicesDropdown />}
         </div>
         <div className={classes.container}>
-          {client === "driver" && <Notification />}
+          {client === "driver" && <Notification
+            serviceCreate={servicesCreated}
+            serviceUpdate={servicesUpdated}  
+          />}
           <Button
-            className={classes.button}
+            className={classes.button_publish}
             // onClick={() => alert("Vehiculo presionado")}
           >
             PUBLICA TU VEHICULO
@@ -160,7 +240,7 @@ const CustomHeader = () => {
           <Button
             icon={
               <ExitToAppIcon
-                className={classes.icon}
+                className={classes.icon_exit}
                 style={{ fontSize: "30px" }}
               />
             }

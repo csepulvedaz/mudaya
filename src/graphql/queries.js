@@ -118,3 +118,39 @@ export const SERVICES_BY_USER = gql`
         }
     }
 `;
+
+export const SERVICES_BY_DATE_UPDATED =gql`
+    query ServicesByDateUpdated($_id: String!, $client: String){
+        servicesByDateUpdated(_id:$_id,client:$client){
+            _id
+            date
+            origin
+            destination
+            commentaryUser
+            commentaryDriver
+            state
+            price
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;
+
+export const SERVICES_BY_DATE_CREATED =gql`
+    query ServicesByDateCreated($_id:String!){
+        servicesByDateCreated(_id:$_id){
+            _id
+            date
+            origin
+            destination
+            commentaryUser
+            commentaryDriver
+            state
+            price
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;

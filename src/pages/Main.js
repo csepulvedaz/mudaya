@@ -12,7 +12,7 @@ import AuthContext from "../context/auth-context";
 const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
-            background: "#fafafa",
+            background: "#fff",
         },
     },
 }));

@@ -21,15 +21,15 @@ const useStyles = makeStyles((theme)=>({
         margin: "10px 0px",
         borderRadius: "8px",
         backgroundColor: " #fff",
-        border: "2px #cecece solid !important",
+        border: `1px ${theme.palette.colorGrey.border} solid !important`,
         "&:hover": {
-            border: `2px ${theme.palette.primary.light} solid !important`,
+            border: `1px ${theme.palette.primary.light} solid !important`,
             boxShadow: theme.shadows[2],
         },
     },
 }));
 
-export default function Notification() {
+export default function Notification(props) {
     const classes = useStyles();
     const [dataArray, setDataArray] = useState([]);
     const [textItem, setTextItem] = useState([]);
@@ -41,7 +41,8 @@ export default function Notification() {
             setTextItem([...textItem, "Nuevo servicio solicitado"]);
         },
     });
-
+    var notif=props.serviceCreate.length+props.serviceUpdate.length
+    console.log(notif)
     const menu = (
         <Menu>
             {!loading &&
@@ -55,7 +56,7 @@ export default function Notification() {
         <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
             <Button
                 icon={
-                    <Badge count={dataArray.length}>
+                    <Badge count={notif}>
                         <NotificationsNoneTwoToneIcon
                             className={classes.icon}
                         />
