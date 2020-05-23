@@ -17,6 +17,7 @@ import {useLazyQuery} from "@apollo/client";
 import * as Yup from "yup";
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 import AuthContext from "../context/auth-context";
 import {LOGIN} from "../graphql/queries";
@@ -65,14 +66,30 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: theme.shadows[4],
         },
     },
-    thirdParty: {
-        margin: theme.spacing(3, 0, 3),
-        width: "288px",
-        height: "70px",
-        borderRadius: 9,
+    thirdPartyFacebook: {
+        //margin: theme.spacing(3, 0, 3),
+         display: "flex",
+        width: "204px",
+        height: "50px",
+        borderRadius: "3px",
         border: 0,
         justifyContent: "center",
         alignItems: "center",
+        background: "#1877F2",
+        color: "#fff",
+        textAlign: "center",
+        textTransform:"none",
+        boxShadow:"rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
+    },
+    thirdPartyGoogle: {
+        margin: theme.spacing(3, 0, 3),
+        width: "200px",
+        height: "50px",
+        borderRadius: "8px",
+        border: 0,
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f00ebb",
     },
     truck: {
         fontSize: "100px",
@@ -98,6 +115,9 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         marginBottom: "20px",
     },
+    fbButton:{
+        margin:"10px 10px 10px 5px",
+    }
 }));
 
 function errorModal(msg) {
@@ -331,17 +351,18 @@ const Login = (props) => {
 
                             <Grid container direction="row" justify="center">
                                 <Grid item>
-                                    <FacebookLogin className={classes.thirdParty}
+                                    <FacebookLogin cssClass={classes.thirdPartyFacebook}
                                         appId= "262085324993789"
-                                        textButton={"INGRESA CON FACEBOOK"}
+                                        textButton={"Ingresa con Facebook"}
                                         fields="email,first_name,last_name"
                                         callback={responseFacebook}
+                                        icon={<FacebookIcon className={classes.fbButton}/>}
                                     />
                                 </Grid>
                                 <Grid item>
-                                    <GoogleLogin className={classes.thirdParty}
+                                    <GoogleLogin className={classes.thirdPartyGoogle}
                                         clientId="515176564508-1fvr1sv7kghek5p23fffgv0f177sucon.apps.googleusercontent.com"
-                                        buttonText="INGRESA CON GOOGLE"
+                                        buttonText="Ingresa con Google"
                                         onSuccess={responseGoogle}
                                         onFailure={responseGoogleFail}
                                     />
