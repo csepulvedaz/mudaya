@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme)=>({
         //boxShadow:theme.shadows[0],
     },
     media: {
-        height: 50,
+        height: "90px",
         marginTop: "15px",
     },
     title: { textAlign: "center", color: "#3d3d3d" },

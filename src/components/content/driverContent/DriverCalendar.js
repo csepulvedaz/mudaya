@@ -4,7 +4,6 @@ import Paper from "@material-ui/core/Paper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { amber } from "@material-ui/core/colors";
 import moment from "moment";
 
 import {
@@ -14,6 +13,7 @@ import {
   Toolbar,
   DateNavigator,
   TodayButton,
+  Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
 import { SERVICES_BY_DRIVER } from "../../../graphql/queries";
@@ -53,6 +53,8 @@ const appointmentColors = [ ["#ED6A5A",white],
                             ["#8D3B72",white],
                             ["#FED766",black],
                             ["#BDE4A8",black]];
+
+
 const DriverCalendar = (props) => {
   const classes = useStyles();
   /*  const theme = createMuiTheme({
@@ -104,7 +106,8 @@ const DriverCalendar = (props) => {
     finaldate.add(2, "h");
     dataServ.startDate = serv.date;
     dataServ.endDate = finaldate.format().slice(0, -9);
-    dataServ.title = "Trasteo loco";
+    dataServ.title = serv.destination;
+    dataServ.state = serv.state;
     schedulerData.push(dataServ);
     console.log(dataServ);
   });
@@ -119,7 +122,6 @@ const DriverCalendar = (props) => {
     }
     return <WeekView.TimeTableCell {...props} />;
   };
-
   const DayScaleCell = (props) => {
     const { today } = props;
     if (today) {
@@ -131,7 +133,15 @@ const DriverCalendar = (props) => {
     let number = Math.floor((Math.random() * 7));
     return <Appointments.Appointment {...props} className={classes.appointment} />;
   };
-
+  const mainResourceName= "state";
+  const resources = [
+    {fieldName: "state",
+    title: "Estado",
+    instances: [
+      { id: "started", text: "started" },
+      { id: "onHold", text: "onHold" },
+      { id: "accepted", text: "accepted" },
+    ]}];
   return (
     <Paper style={{ borderRadius: "4px" }}>
       <Scheduler locale={"es-ES"} data={schedulerData}>
@@ -149,7 +159,8 @@ const DriverCalendar = (props) => {
         <Toolbar />
         <DateNavigator />
         <TodayButton messages={manualTraduction} />
-        <Appointments appointmentComponent={Appointment} />
+        <Appointments/>
+        <Resources mainResourceName={mainResourceName} data={resources}/>
       </Scheduler>
     </Paper>
   );
