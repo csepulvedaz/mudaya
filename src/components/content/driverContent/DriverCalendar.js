@@ -4,6 +4,9 @@ import Paper from "@material-ui/core/Paper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Grid from '@material-ui/core/Grid';
+import PlaceIcon from '@material-ui/icons/Place';
+import OriginIcon from '@material-ui/icons/NearMe';
 import moment from "moment";
 
 import {
@@ -14,6 +17,8 @@ import {
   DateNavigator,
   TodayButton,
   Resources,
+  AppointmentForm,
+  AppointmentTooltip,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
 import { SERVICES_BY_DRIVER } from "../../../graphql/queries";
@@ -36,24 +41,50 @@ const useStyles = makeStyles((theme) => ({
   today: {
     backgroundColor: fade(theme.palette.primary.main, 0.16),
   },
-  appointment:{
+  appointment: {
     background: theme.palette.secondary.light,
     color: theme.palette.secondary.contrastText,
     "&:hover": {
       background: theme.palette.secondary.main,
     },
-  }
+  },
+  iconOrigin: {
+    color: theme.palette.primary.main,
+  },
+  iconDestination:{
+    color: theme.palette.secondary.main,
+  },
+  textCenter: {
+    textAlign: 'center',
+  },
 }));
 const white = "#FFFFFF";
 const black = "#000000";
-const appointmentColors = [ ["#ED6A5A",white],
-                            ["#F4F1BB",black],
-                            ["#80ED99",black],
-                            ["#EF7B45",white],
-                            ["#8D3B72",white],
-                            ["#FED766",black],
-                            ["#BDE4A8",black]];
+const appointmentColors = [
+  ["#ED6A5A", white],
+  ["#F4F1BB", black],
+  ["#80ED99", black],
+  ["#EF7B45", white],
+  ["#8D3B72", white],
+  ["#FED766", black],
+  ["#BDE4A8", black],
+];
 
+const started = "Solicitado";
+const onHold = "En espera";
+const accepted = "Aceptado";
+
+function stateToSpanish(shit) {
+  if (shit === "started") {
+    return started;
+  } else if (shit === "onHold") {
+    return onHold;
+  } else if (shit === "accepted") {
+    return accepted;
+  } else {
+    return shit;
+  }
+}
 
 const DriverCalendar = (props) => {
   const classes = useStyles();
@@ -76,6 +107,7 @@ const DriverCalendar = (props) => {
     }
     return dayOrMonth;
   };
+
   const today = new Date();
   const todayDate =
     today.getFullYear() +
@@ -107,9 +139,10 @@ const DriverCalendar = (props) => {
     dataServ.startDate = serv.date;
     dataServ.endDate = finaldate.format().slice(0, -9);
     dataServ.title = serv.destination;
-    dataServ.state = serv.state;
+    dataServ.origin = serv.origin;
+    dataServ.destination = serv.destination;
+    dataServ.state = stateToSpanish(serv.state);
     schedulerData.push(dataServ);
-    console.log(dataServ);
   });
 
   const TimeTableCell = (props) => {
@@ -129,19 +162,42 @@ const DriverCalendar = (props) => {
     }
     return <WeekView.DayScaleCell {...props} />;
   };
-  const Appointment = (props) => {
-    let number = Math.floor((Math.random() * 7));
-    return <Appointments.Appointment {...props} className={classes.appointment} />;
+  const Content = ({appointmentData, ...props}) => {
+    return (
+      <AppointmentTooltip.Content
+        {...props} appointmentData={appointmentData}
+      >
+        <Grid container alignItems="center">
+          <Grid item xs={2} className={classes.textCenter}>
+            <OriginIcon className={classes.iconOrigin}/>
+          </Grid>
+          <Grid item xs={10}>
+            <span>{appointmentData.destination}</span>
+          </Grid>
+        </Grid>
+        <Grid container alignItems="center">
+          <Grid item xs={2} className={classes.textCenter}>
+            <PlaceIcon className={classes.iconDestination}/>
+          </Grid>
+          <Grid item xs={10}>
+            <span>{appointmentData.origin}</span>
+          </Grid>
+        </Grid>
+      </AppointmentTooltip.Content>
+    );
   };
-  const mainResourceName= "state";
+  const mainResourceName = "state";
   const resources = [
-    {fieldName: "state",
-    title: "Estado",
-    instances: [
-      { id: "started", text: "started" },
-      { id: "onHold", text: "onHold" },
-      { id: "accepted", text: "accepted" },
-    ]}];
+    {
+      fieldName: mainResourceName,
+      title: "Estado",
+      instances: [
+        { id: started, text: started },
+        { id: onHold, text: onHold },
+        { id: accepted, text: accepted },
+      ],
+    },
+  ];
   return (
     <Paper style={{ borderRadius: "4px" }}>
       <Scheduler locale={"es-ES"} data={schedulerData}>
@@ -159,8 +215,14 @@ const DriverCalendar = (props) => {
         <Toolbar />
         <DateNavigator />
         <TodayButton messages={manualTraduction} />
-        <Appointments/>
-        <Resources mainResourceName={mainResourceName} data={resources}/>
+        <Appointments />
+        <AppointmentTooltip
+          showCloseButton
+          showOpenButton
+          contentComponent={Content}
+        />
+        <AppointmentForm readOnly />
+        <Resources mainResourceName={mainResourceName} data={resources} />
       </Scheduler>
     </Paper>
   );
