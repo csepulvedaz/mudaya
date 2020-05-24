@@ -7,7 +7,7 @@ import NotificationsNoneTwoToneIcon from "@material-ui/icons/NotificationsNoneTw
 import { SERVICE_ADDED } from "../../graphql/subscriptions";
 import AuthContext from "../../context/auth-context";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     icon: {
         fontSize: "32px",
         color: theme.palette.warning.main,
@@ -41,8 +41,7 @@ export default function Notification(props) {
             setTextItem([...textItem, "Nuevo servicio solicitado"]);
         },
     });
-    var notif=props.serviceCreate.length+props.serviceUpdate.length
-    console.log(notif)
+    var notification = props.serviceCreate.length + props.serviceUpdate.length;
     const menu = (
         <Menu>
             {!loading &&
@@ -56,7 +55,7 @@ export default function Notification(props) {
         <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
             <Button
                 icon={
-                    <Badge count={notif}>
+                    <Badge count={notification}>
                         <NotificationsNoneTwoToneIcon
                             className={classes.icon}
                         />

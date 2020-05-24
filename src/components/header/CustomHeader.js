@@ -16,6 +16,7 @@ import EditProfile from "./EditProfile";
 import ServicesDropdown from "./service/ServicesDropdown";
 import Notification from "./Notification";
 import logo from "../../assets/logo-header.png";
+import CreateVehicleModal from "../content/driverContent/CreateVehicleModal"
 
 const { Header } = Layout;
 
@@ -107,9 +108,10 @@ function errorModal(msg) {
   });
 }
 
-const CustomHeader = () => {
+const CustomHeader = (props) => {
   const context = useContext(AuthContext);
   const [navigate, setNavigate] = useState(false);
+  const [visibleAddCar, setVisibleAddCar] = useState(false);
   const [visibleProfile, setVisibleProfile] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const { logout, client } = useContext(AuthContext);
@@ -166,8 +168,11 @@ const CustomHeader = () => {
         );
   const servicesUpdated = dataServicesUpdated.servicesByDateUpdated;
   const servicesCreated = dataServicesCreated.servicesByDateCreated;
-  //console.log(servicesUpdated.length)
-  //console.log(servicesCreated)
+
+  const openModal = (e) =>{
+    e.preventDefault();
+    setVisibleAddCar(true);
+  }
   
   
   
@@ -233,10 +238,15 @@ const CustomHeader = () => {
           />}
           <Button
             className={classes.button_publish}
-            // onClick={() => alert("Vehiculo presionado")}
+            onClick={(e) => openModal(e)}
           >
             PUBLICA TU VEHICULO
           </Button>
+          <CreateVehicleModal
+            visible={visibleAddCar}
+            setVisible={setVisibleAddCar}
+            value={props.value}
+          />
           <Button
             icon={
               <ExitToAppIcon
