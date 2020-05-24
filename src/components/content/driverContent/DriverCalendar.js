@@ -36,8 +36,23 @@ const useStyles = makeStyles((theme) => ({
   today: {
     backgroundColor: fade(theme.palette.primary.main, 0.16),
   },
+  appointment:{
+    background: theme.palette.secondary.light,
+    color: theme.palette.secondary.contrastText,
+    "&:hover": {
+      background: theme.palette.secondary.main,
+    },
+  }
 }));
-
+const white = "#FFFFFF";
+const black = "#000000";
+const appointmentColors = [ ["#ED6A5A",white],
+                            ["#F4F1BB",black],
+                            ["#80ED99",black],
+                            ["#EF7B45",white],
+                            ["#8D3B72",white],
+                            ["#FED766",black],
+                            ["#BDE4A8",black]];
 const DriverCalendar = (props) => {
   const classes = useStyles();
   /*  const theme = createMuiTheme({
@@ -91,6 +106,7 @@ const DriverCalendar = (props) => {
     dataServ.endDate = finaldate.format().slice(0, -9);
     dataServ.title = "Trasteo loco";
     schedulerData.push(dataServ);
+    console.log(dataServ);
   });
 
   const TimeTableCell = (props) => {
@@ -111,6 +127,10 @@ const DriverCalendar = (props) => {
     }
     return <WeekView.DayScaleCell {...props} />;
   };
+  const Appointment = (props) => {
+    let number = Math.floor((Math.random() * 7));
+    return <Appointments.Appointment {...props} className={classes.appointment} />;
+  };
 
   return (
     <Paper style={{ borderRadius: "4px" }}>
@@ -129,7 +149,7 @@ const DriverCalendar = (props) => {
         <Toolbar />
         <DateNavigator />
         <TodayButton messages={manualTraduction} />
-        <Appointments />
+        <Appointments appointmentComponent={Appointment} />
       </Scheduler>
     </Paper>
   );
