@@ -105,7 +105,7 @@ const VehicleForm = () => {
     const [createVehicle, { loading: loadingVehicle }] = useMutation(
         CREATE_VEHICLE,
         {
-            onCompleted: (data) => {
+            onCompleted: () => {
                 history.push("/principal");
             },
             onError: (error) => {
@@ -125,7 +125,7 @@ const VehicleForm = () => {
             dimensions: values.dimensions,
             capacity: values.capacity,
             commentary: values.commentary,
-            idDriver: values.idDriver,
+            idDriver: context.userId,
         };
         return await createVehicle({
             variables: { input },
@@ -199,7 +199,6 @@ const VehicleForm = () => {
                             .toLowerCase()
                             .replace(/\s/g, "");
                         values.year = parseInt(values.year);
-                        values.idDriver = context.userId;
                         toPrincipal(values);
                     }}
                 >

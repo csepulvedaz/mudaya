@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Spin,Button, Modal, Typography, Layout, Row } from "antd";
+import { Spin, Button, Modal, Layout, Row } from "antd";
 import { ErrorMessage, Form, Formik } from "formik";
 import TextField from "@material-ui/core/TextField";
 import NativeSelect from "@material-ui/core/NativeSelect";
@@ -10,13 +10,13 @@ import TextMaskCustom from "../../utils/TextMaskCustom";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
+import { Grid } from "@material-ui/core";
 import { LoadingOutlined } from "@ant-design/icons";
 import * as Yup from "yup";
-import { CREATE_VEHICLE } from "../../../graphql/mutations";
-import { Grid } from "@material-ui/core";
-import AuthContext from "../../../context/auth-context";
 import { useMutation } from "@apollo/client";
 
+import AuthContext from "../../../context/auth-context";
+import { CREATE_VEHICLE } from "../../../graphql/mutations";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
     },
     rows: {
         marginTop: theme.spacing(2),
@@ -66,19 +65,15 @@ const useStyles = makeStyles((theme) => ({
         background: "#fff",
         color: theme.palette.primary.main,
         fontWeight: "600",
-        "&:hover":{
+        "&:hover": {
             boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        }
+        },
     },
-    
-    
-
 }));
 
 function success() {
     Modal.success({
-        content:
-            "Camino añadido con exito",
+        content: "Vehiculo añadido con exito",
     });
 }
 function errorModal(msg) {
@@ -88,14 +83,14 @@ function errorModal(msg) {
     });
 }
 
-const CreateVehicleModal = (props) =>{
+const CreateVehicleModal = (props) => {
     const context = useContext(AuthContext);
     const classes = useStyles();
 
-    const [newVehicle,{loading: loadingVehicle}] = useMutation(
+    const [newVehicle, { loading: loadingVehicle }] = useMutation(
         CREATE_VEHICLE,
         {
-            onCompleted: () =>{
+            onCompleted: () => {
                 document.getElementById("form1").reset();
                 props.setVisible(false);
                 success();
@@ -103,10 +98,10 @@ const CreateVehicleModal = (props) =>{
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
             },
-        }  
+        }
     );
 
-    const addVehicle = async(values)=>{
+    const addVehicle = async (values) => {
         let input = {
             _id: values._id,
             brand: values.brand,
@@ -116,29 +111,26 @@ const CreateVehicleModal = (props) =>{
             dimensions: values.dimensions,
             capacity: values.capacity,
             commentary: values.commentary,
-            idDriver: values.idDriver,
+            idDriver: context.userId,
         };
         return await newVehicle({
-            variables:(input),
-        })
-    }
+            variables: { input },
+        });
+    };
 
     const handleCancel = () => {
-        props.setVisible(false);
-    };
-    const handleOk= (values) => {
+        document.getElementById("form1").reset();
         props.setVisible(false);
     };
 
-    return(
+    return (
         <Modal
-        visible={props.visible}
-        centered
-        title="Agregar vehiculo"
-        onCancel={handleCancel}
-        onOk={handleOk}
-        footer={[
-        ]}>
+            visible={props.visible}
+            centered
+            title="Agregar vehiculo"
+            onCancel={handleCancel}
+            footer={[]}
+        >
             <Layout className={classes.paper}>
                 {loadingVehicle && (
                     <Spin
@@ -151,13 +143,13 @@ const CreateVehicleModal = (props) =>{
                 )}
                 <Formik
                     initialValues={{
+                        _id: "",
+                        brand: "",
+                        model: "",
+                        year: "",
                         type: "",
-                        _id:"",
-                        brand:"",
-                        model:"",
-                        year:"",
-                        dimensions:"",
-                        capacity:"",
+                        dimensions: "",
+                        capacity: "",
                         commentary: "",
                     }}
                     validationSchema={Yup.object({
@@ -194,18 +186,19 @@ const CreateVehicleModal = (props) =>{
                     })}
                     onSubmit={(values) => {
                         values._id = values._id
-                        .toLowerCase()
-                        .replace(/\s/g, "");
+                            .toLowerCase()
+                            .replace(/\s/g, "");
                         values.year = parseInt(values.year);
-                        values.idDriver = context.userId;
-                        console.log(values.idDriver);
-                        props.setVisible(false);
                         addVehicle(values);
-                        //console.log("ingresar carro")
                     }}
                 >
-                    {(formik) =>(
-                        <Form id="form1" className={classes.form} onSubmit={formik.handleSubmit} noValidate>
+                    {(formik) => (
+                        <Form
+                            id="form1"
+                            className={classes.form}
+                            onSubmit={formik.handleSubmit}
+                            noValidate
+                        >
                             <Row className={classes.rows}>
                                 <NativeSelect
                                     fullWidth
@@ -214,7 +207,7 @@ const CreateVehicleModal = (props) =>{
                                     input={<CustomSelect />}
                                     {...formik.getFieldProps("type")}
                                 >
-                                    {types.map((element, index)=>(
+                                    {types.map((element, index) => (
                                         <option
                                             key={index}
                                             value={element.value}
@@ -224,7 +217,7 @@ const CreateVehicleModal = (props) =>{
                                     ))}
                                 </NativeSelect>
                                 <ErrorMessage name="type">
-                                    {(msg)=>(
+                                    {(msg) => (
                                         <p className={classes.helperText}>
                                             {msg}
                                         </p>
@@ -267,7 +260,11 @@ const CreateVehicleModal = (props) =>{
                                         />
                                         <ErrorMessage name="_id">
                                             {(msg) => (
-                                                <p className={classes.helperText}>
+                                                <p
+                                                    className={
+                                                        classes.helperText
+                                                    }
+                                                >
                                                     {msg}
                                                 </p>
                                             )}
@@ -293,7 +290,11 @@ const CreateVehicleModal = (props) =>{
                                         />
                                         <ErrorMessage name="brand">
                                             {(msg) => (
-                                                <p className={classes.helperText}>
+                                                <p
+                                                    className={
+                                                        classes.helperText
+                                                    }
+                                                >
                                                     {msg}
                                                 </p>
                                             )}
@@ -323,13 +324,22 @@ const CreateVehicleModal = (props) =>{
                                         />
                                         <ErrorMessage name="model">
                                             {(msg) => (
-                                                <p className={classes.helperText}>
+                                                <p
+                                                    className={
+                                                        classes.helperText
+                                                    }
+                                                >
                                                     {msg}
                                                 </p>
                                             )}
                                         </ErrorMessage>
                                     </Grid>
-                                    <Grid item xs={12} sm={6} className={classes.selectYear}>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        className={classes.selectYear}
+                                    >
                                         <NativeSelect
                                             fullWidth
                                             variant="outlined"
@@ -348,7 +358,11 @@ const CreateVehicleModal = (props) =>{
                                         </NativeSelect>
                                         <ErrorMessage name="year">
                                             {(msg) => (
-                                                <p className={classes.helperText}>
+                                                <p
+                                                    className={
+                                                        classes.helperText
+                                                    }
+                                                >
                                                     {msg}
                                                 </p>
                                             )}
@@ -356,7 +370,7 @@ const CreateVehicleModal = (props) =>{
                                     </Grid>
                                 </Grid>
                             </Row>
-                            <Row  className={classes.rows}>
+                            <Row className={classes.rows}>
                                 <TextField
                                     fullWidth
                                     variant="outlined"
@@ -522,10 +536,8 @@ const CreateVehicleModal = (props) =>{
                     )}
                 </Formik>
             </Layout>
-            
-
         </Modal>
-    )
+    );
 };
 
 export default CreateVehicleModal;
