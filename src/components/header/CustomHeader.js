@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useBeforeunload } from "react-beforeunload";
 import { Button, Layout, Drawer } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
@@ -6,6 +7,16 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { useMutation, useQuery } from "@apollo/client";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+
+import AuthContext from "../../context/auth-context";
+import Profile from "./Profile";
+import EditProfile from "./EditProfile";
+import ServicesDropdown from "./service/ServicesDropdown";
+import Notification from "./Notification";
+import logo from "../../assets/logo-header.png";
+import CreateVehicleModal from "../content/driverContent/CreateVehicleModal";
 import {
     UPDATE_LOGOUT_TIME_DRIVER,
     UPDATE_LOGOUT_TIME_USER,
@@ -14,15 +25,6 @@ import {
     SERVICES_BY_DATE_UPDATED,
     SERVICES_BY_DATE_CREATED,
 } from "../../graphql/queries";
-import { LoadingOutlined } from "@ant-design/icons";
-import AuthContext from "../../context/auth-context";
-import { Spin, Modal } from "antd";
-import Profile from "./Profile";
-import EditProfile from "./EditProfile";
-import ServicesDropdown from "./service/ServicesDropdown";
-import Notification from "./Notification";
-import logo from "../../assets/logo-header.png";
-import CreateVehicleModal from "../content/driverContent/CreateVehicleModal";
 
 const { Header } = Layout;
 
@@ -107,12 +109,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
     },
 }));
-function errorModal(msg) {
-    Modal.error({
-        title: "Error",
-        content: msg,
-    });
-}
 
 const CustomHeader = (props) => {
     const [navigate, setNavigate] = useState(false);
@@ -125,30 +121,34 @@ const CustomHeader = (props) => {
     const [updateLastLogout] = useMutation(
         client === "user" ? UPDATE_LOGOUT_TIME_USER : UPDATE_LOGOUT_TIME_DRIVER
     );
-    let dataServicesCreated = 0;
-    const { loading: loadCreate, data } = useQuery(SERVICES_BY_DATE_CREATED, {
-        variables: { _id: userId },
-        fetchPolicy: "no-cache",
-        skip: client === "user",
-        onError: (error) => {
-            errorModal(error.graphQLErrors[0].message);
-        },
+    useBeforeunload((event) => {
+        event.preventDefault();
+        const _id = userId;
+        updateLastLogout({
+            variables: { _id: _id },
+        });
     });
+    let dataServicesCreated = 0;
+    const { loading: loadingCreate, data } = useQuery(
+        SERVICES_BY_DATE_CREATED,
+        {
+            variables: { _id: userId },
+            fetchPolicy: "no-cache",
+            skip: client === "user",
+        }
+    );
     if (client === "driver") {
         dataServicesCreated = data;
     }
 
-    const { loading: loadUpdate, data: dataServicesUpdated } = useQuery(
+    const { loading: loadingUpdate, data: dataServicesUpdated } = useQuery(
         SERVICES_BY_DATE_UPDATED,
         {
             variables: { _id: userId, client: client },
             fetchPolicy: "no-cache",
-            onError: (error) => {
-                errorModal(error.graphQLErrors[0].message);
-            },
         }
     );
-    if (loadUpdate)
+    if (loadingUpdate || loadingCreate)
         return (
             <Spin
                 tip="Cargando..."
@@ -157,14 +157,6 @@ const CustomHeader = (props) => {
             />
         );
 
-    if (loadCreate)
-        return (
-            <Spin
-                tip="Cargando..."
-                indicator={<LoadingOutlined style={{ fontSFize: 40 }} spin />}
-                className={classes.spin}
-            />
-        );
     const servicesUpdated = dataServicesUpdated.servicesByDateUpdated;
     const servicesCreated = dataServicesCreated.servicesByDateCreated;
 
@@ -224,7 +216,9 @@ const CustomHeader = (props) => {
                             setVisibleProfile(true);
                         }}
                     />
-                    {client === "user" && <ServicesDropdown />}
+                    {client === "user" && (
+                        <ServicesDropdown serviceUpdate={servicesUpdated} />
+                    )}
                 </div>
                 <div className={classes.container}>
                     {client === "driver" && (

@@ -4,7 +4,7 @@ import { Menu, Dropdown, Button, Badge } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import NotificationsNoneTwoToneIcon from "@material-ui/icons/NotificationsNoneTwoTone";
 
-import { SERVICE_ADDED } from "../../graphql/subscriptions";
+import { SERVICE_ADDED, SERVICE_UPDATED } from "../../graphql/subscriptions";
 import AuthContext from "../../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,20 +31,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Notification(props) {
     const classes = useStyles();
-    const [dataArray, setDataArray] = useState([]);
     const [textItem, setTextItem] = useState([]);
+    const [count, setCount] = useState(
+        props.serviceCreate.length + props.serviceUpdate.length
+    );
     const { userId } = useContext(AuthContext);
-    const { loading } = useSubscription(SERVICE_ADDED, {
+    const { loading: loadingCreated } = useSubscription(SERVICE_ADDED, {
         variables: { _id: userId },
         onSubscriptionData: ({ subscriptionData }) => {
-            setDataArray([...dataArray, subscriptionData.data.serviceAdded]);
+            // console.log(subscriptionData.data.serviceAdded);
+            setCount(count + 1);
             setTextItem([...textItem, "Nuevo servicio solicitado"]);
         },
     });
-    var notification = props.serviceCreate.length + props.serviceUpdate.length;
+    const { loading: loadingUpdated } = useSubscription(SERVICE_UPDATED, {
+        variables: { _id: userId },
+        onSubscriptionData: ({ subscriptionData }) => {
+            // console.log(subscriptionData.data.serviceUpdate);
+            setCount(count + 1);
+            setTextItem([...textItem, "Servicio Actualizado"]);
+        },
+    });
+
     const menu = (
         <Menu>
-            {!loading &&
+            {!loadingCreated &&
+                !loadingUpdated &&
                 textItem.map((value, index) => (
                     <Menu.Item key={index}>{value}</Menu.Item>
                 ))}
@@ -52,10 +64,15 @@ export default function Notification(props) {
     );
 
     return (
-        <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
+        <Dropdown
+            className={classes.box}
+            overlay={menu}
+            trigger={["click"]}
+            onClick={() => setCount(0)}
+        >
             <Button
                 icon={
-                    <Badge count={notification}>
+                    <Badge count={count}>
                         <NotificationsNoneTwoToneIcon
                             className={classes.icon}
                         />
