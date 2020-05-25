@@ -100,7 +100,7 @@ function errorModal(msg) {
 }
 
 const SignUp = (props) => {
-    const { isLocked } = useState(props.thirdPartyRegister);
+    const [isLocked] = useState(props.thirdPartyRegister);
     const [isDriver, setIsDriver] = useState(false);
     const [loginPass, setLoginPass] = useState("");
     const context = useContext(AuthContext);
