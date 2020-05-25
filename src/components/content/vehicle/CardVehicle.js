@@ -12,9 +12,8 @@ import CreateServiceModal from "../service/CreateServiceModal";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        //width: "190rx",
         width: "190rx",
-        height: "270px",
+        height: "300px",
         margin: "20px 25px",
         borderRadius: "8px",
         //boxShadow:theme.shadows[0],

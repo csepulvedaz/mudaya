@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
             height: "0px",
-            backgroundColor: "#e8e8e8",
+            backgroundColor: "#fafafa",
         },
     },
     paper: {
