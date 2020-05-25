@@ -136,6 +136,7 @@ const StepOne = (props) => {
             idDriver: props.idDriver,
             idVehicle: props.idVehicle,
         };
+        console.log("create input",input);
         return await createService({
             variables: { input },
         });

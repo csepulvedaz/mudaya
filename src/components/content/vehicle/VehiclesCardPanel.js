@@ -34,8 +34,19 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "600",
         fontSize: "22px",
     },
-    button: {
-        borderRadius: "9px",
+    button_r: {
+        borderRadius: "0px 8px 8px 0px",
+        background: theme.palette.primary.main,
+        fontWeight: "600",
+        color: "#fff",
+        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+        fontSize: "60px",
+        alignSelf: "center",
+        width: "40px",
+        height: "70px",
+    },
+    button_l: {
+        borderRadius: "8px 0px 0px 8px",
         background: theme.palette.primary.main,
         fontWeight: "600",
         color: "#fff",
@@ -49,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: "50%",
         left: "40%",
+    },
+    carousel_box:{
+        boxShadow:"inset 15px -15px 30px #f2f2f2,inset -15px 15px 30px #f2f2f2",
+        borderRadius:"16px",
     },
 }));
 
@@ -71,9 +86,10 @@ const VehiclesCardPanel = (props) => {
                 <h3 className={classes.title}>VEHICULOS DISPONIBLES</h3>
                 <div className={classes.panel}>
                     {size > 4 && (
-                        <NavigateBeforeIcon className={classes.button} />
+                        <NavigateBeforeIcon className={classes.button_l} />
                     )}
                     <Carousel
+                        className={classes.carousel_box}
                         id="carousel"
                         {...carouselprops}
                         arrows="true"
@@ -98,7 +114,7 @@ const VehiclesCardPanel = (props) => {
                         })}
                     </Carousel>
                     {size > 4 && (
-                        <NavigateNextIcon className={classes.button} />
+                        <NavigateNextIcon className={classes.button_r} />
                     )}
                 </div>
             </div>

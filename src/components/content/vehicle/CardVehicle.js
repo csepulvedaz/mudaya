@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
         height: "270px",
         margin: "20px 25px",
         borderRadius: "8px",
-        boxShadow: theme.shadows[29],
+        //boxShadow:theme.shadows[0],
     },
     media: {
-        height: 50,
+        height: "90px",
         marginTop: "15px",
     },
     title: { textAlign: "center", color: "#3d3d3d" },
