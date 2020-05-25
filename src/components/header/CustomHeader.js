@@ -115,36 +115,33 @@ function errorModal(msg) {
 }
 
 const CustomHeader = (props) => {
-    const context = useContext(AuthContext);
     const [navigate, setNavigate] = useState(false);
     const [visibleAddCar, setVisibleAddCar] = useState(false);
     const [visibleProfile, setVisibleProfile] = useState(false);
     const [visibleEdit, setVisibleEdit] = useState(false);
-    const { logout, client } = useContext(AuthContext);
+    const { logout, client, userId } = useContext(AuthContext);
     const classes = useStyles();
 
     const [updateLastLogout] = useMutation(
-        context.client === "user"
-            ? UPDATE_LOGOUT_TIME_USER
-            : UPDATE_LOGOUT_TIME_DRIVER
+        client === "user" ? UPDATE_LOGOUT_TIME_USER : UPDATE_LOGOUT_TIME_DRIVER
     );
     let dataServicesCreated = 0;
     const { loading: loadCreate, data } = useQuery(SERVICES_BY_DATE_CREATED, {
-        variables: { _id: context.userId },
+        variables: { _id: userId },
         fetchPolicy: "no-cache",
-        skip: context.client === "user",
+        skip: client === "user",
         onError: (error) => {
             errorModal(error.graphQLErrors[0].message);
         },
     });
-    if (context.client === "driver") {
+    if (client === "driver") {
         dataServicesCreated = data;
     }
 
     const { loading: loadUpdate, data: dataServicesUpdated } = useQuery(
         SERVICES_BY_DATE_UPDATED,
         {
-            variables: { _id: context.userId, client: context.client },
+            variables: { _id: userId, client: client },
             fetchPolicy: "no-cache",
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
@@ -177,7 +174,7 @@ const CustomHeader = (props) => {
     };
 
     const handleLogout = () => {
-        const _id = context.userId;
+        const _id = userId;
         updateLastLogout({
             variables: { _id: _id },
         });
@@ -236,12 +233,14 @@ const CustomHeader = (props) => {
                             serviceUpdate={servicesUpdated}
                         />
                     )}
-                    <Button
-                        className={classes.button_publish}
-                        onClick={(e) => openModal(e)}
-                    >
-                        PUBLICA TU VEHICULO
-                    </Button>
+                    {client === "driver" && (
+                        <Button
+                            className={classes.button_publish}
+                            onClick={(e) => openModal(e)}
+                        >
+                            PUBLICA TU VEHICULO
+                        </Button>
+                    )}
                     <CreateVehicleModal
                         visible={visibleAddCar}
                         setVisible={setVisibleAddCar}
