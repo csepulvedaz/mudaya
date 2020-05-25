@@ -10,7 +10,7 @@ import { Button, Rate } from "antd";
 import VehicleDetailsModal from "./VehicleDetailsModal";
 import CreateServiceModal from "../service/CreateServiceModal";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     root: {
         //width: "190rx",
         width: "190rx",
@@ -124,6 +124,7 @@ const CardVehicle = (props) => {
                     <CreateServiceModal
                         idVehicle={props.value._id}
                         idDriver={props.value.idDriver}
+                        step={0}
                         visibleService={visibleService}
                         setVisibleService={setVisibleService}
                     />

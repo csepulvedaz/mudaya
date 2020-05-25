@@ -89,9 +89,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function success() {
+function success(msg) {
     Modal.success({
-        content: `Proceso exitoso. Podrás revisar el estado en la barra de servicios.`,
+        content: `Servicio ${msg} con éxito. Podrás revisar su estado en la barra de servicios.`,
     });
 }
 
@@ -108,7 +108,7 @@ const StepTwo = (props) => {
         onCompleted: () => {
             document.getElementById("form2").reset();
             props.setVisible(false);
-            success();
+            success("actualizado");
         },
         onError: (error) => {
             errorModal(error.graphQLErrors[0].message);
@@ -122,7 +122,7 @@ const StepTwo = (props) => {
             onCompleted: () => {
                 props.setVisible(false);
                 document.getElementById("form2").reset();
-                success();
+                success("cancelado");
             },
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
@@ -153,7 +153,7 @@ const StepTwo = (props) => {
 
     return (
         <Layout className={classes.paper}>
-            {loading && (
+            {(loading || loadingCancelService) && (
                 <Spin
                     tip="Cargando..."
                     indicator={
