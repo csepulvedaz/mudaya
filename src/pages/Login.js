@@ -1,26 +1,26 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {Modal, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
-import {Link} from "react-router-dom";
-import {ErrorMessage, Form, Formik} from "formik";
-import {useLazyQuery} from "@apollo/client";
+import { Modal, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { ErrorMessage, Form, Formik } from "formik";
+import { useLazyQuery } from "@apollo/client";
 import * as Yup from "yup";
-import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
+import FacebookIcon from "@material-ui/icons/Facebook";
 
 import AuthContext from "../context/auth-context";
-import {LOGIN} from "../graphql/queries";
+import { LOGIN } from "../graphql/queries";
 import logo from "../assets/logo.png";
 import theme from "../components/utils/AppTheme";
 
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     },
     thirdPartyFacebook: {
         //margin: theme.spacing(3, 0, 3),
-         display: "flex",
+        display: "flex",
         width: "204px",
         height: "50px",
         borderRadius: "3px",
@@ -78,8 +78,9 @@ const useStyles = makeStyles((theme) => ({
         background: "#1877F2",
         color: "#fff",
         textAlign: "center",
-        textTransform:"none",
-        boxShadow:"rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
+        textTransform: "none",
+        boxShadow:
+            "rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
     },
     thirdPartyGoogle: {
         margin: theme.spacing(3, 0, 3),
@@ -115,9 +116,9 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         marginBottom: "20px",
     },
-    fbButton:{
-        margin:"10px 10px 10px 5px",
-    }
+    fbButton: {
+        margin: "10px 10px 10px 5px",
+    },
 }));
 
 function errorModal(msg) {
@@ -146,13 +147,6 @@ const Login = (props) => {
 
     const [loginThirdParty, { loadingThirdParty }] = useLazyQuery(LOGIN, {
         onCompleted: (data) => {
-            props.setThirdPartyInfo( {
-                    email: null,
-                    password: null,
-                    first_name: null,
-                    last_name: null
-                }
-            );
             context.login(
                 data.login.client,
                 data.login.token,
@@ -160,41 +154,38 @@ const Login = (props) => {
                 data.login.tokenExpiration
             );
         },
-        onError: (error) => {
+        onError: () => {
             props.setThirdPartyRegister(true);
         },
     });
 
     const responseFacebook = (response) => {
-        props.setThirdPartyInfo( {
-                email: response.email,
-                password: response.id,
-                first_name: response.first_name,
-                last_name: response.last_name
-            }
-        );
-        loginThirdParty({
-            variables: {
-                email: response.email,
-                password: response.id,
-                first_name: response.first_name,
-                last_name: response.last_name,
-            },
+        props.setThirdPartyInfo({
+            email: response.email,
+            password: response.id,
+            first_name: response.first_name,
+            last_name: response.last_name,
         });
-        response.email = "";
-        response.id = "";
-        response.first_name = "";
-        response.last_name = "";
+
+        if (response.status !== "unknown") {
+            loginThirdParty({
+                variables: {
+                    email: response.email,
+                    password: response.id,
+                    first_name: response.first_name,
+                    last_name: response.last_name,
+                },
+            });
+        }
     };
 
     const responseGoogle = (response) => {
-        props.setThirdPartyInfo( {
-                email: response.profileObj.email,
-                password: response.profileObj.googleId,
-                first_name: response.profileObj.givenName,
-                last_name: response.profileObj.familyName
-            }
-        );
+        props.setThirdPartyInfo({
+            email: response.profileObj.email,
+            password: response.profileObj.googleId,
+            first_name: response.profileObj.givenName,
+            last_name: response.profileObj.familyName,
+        });
         loginThirdParty({
             variables: {
                 email: response.profileObj.email,
@@ -203,10 +194,6 @@ const Login = (props) => {
                 last_name: response.profileObj.familyName,
             },
         });
-        response.profileObj.email = "";
-        response.profileObj.googleId = "";
-        response.profileObj.givenName = "";
-        response.profileObj.familyName = "";
     };
 
     const responseGoogleFail = (response) => {
@@ -217,7 +204,7 @@ const Login = (props) => {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                {(loading||loadingThirdParty) && (
+                {(loading || loadingThirdParty) && (
                     <Spin
                         tip="Cargando..."
                         indicator={
@@ -351,23 +338,29 @@ const Login = (props) => {
 
                             <Grid container direction="row" justify="center">
                                 <Grid item>
-                                    <FacebookLogin cssClass={classes.thirdPartyFacebook}
-                                        appId= "262085324993789"
+                                    <FacebookLogin
+                                        cssClass={classes.thirdPartyFacebook}
+                                        appId="262085324993789"
                                         textButton={"Ingresa con Facebook"}
                                         fields="email,first_name,last_name"
                                         callback={responseFacebook}
-                                        icon={<FacebookIcon className={classes.fbButton}/>}
+                                        language="es_ES"
+                                        icon={
+                                            <FacebookIcon
+                                                className={classes.fbButton}
+                                            />
+                                        }
                                     />
                                 </Grid>
                                 <Grid item>
-                                    <GoogleLogin className={classes.thirdPartyGoogle}
+                                    <GoogleLogin
+                                        className={classes.thirdPartyGoogle}
                                         clientId="515176564508-1fvr1sv7kghek5p23fffgv0f177sucon.apps.googleusercontent.com"
                                         buttonText="Ingresa con Google"
                                         onSuccess={responseGoogle}
                                         onFailure={responseGoogleFail}
                                     />
                                 </Grid>
-
                             </Grid>
 
                             <Grid container direction="row" justify="center">

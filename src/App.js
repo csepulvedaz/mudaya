@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {ThemeProvider} from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { ThemeProvider } from "@material-ui/core/styles";
 import Login from "./pages/Login";
 import Signin from "./pages/Signin";
 import Main from "./pages/Main";
@@ -8,17 +8,22 @@ import AuthContext from "./context/auth-context";
 import NotFound404 from "./pages/NotFound404";
 import Theme from "../src/components/utils/AppTheme";
 
-import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Redirect,
+    Route,
+    Switch,
+} from "react-router-dom";
 
 const App = () => {
     const [client, setClient] = useState(null);
     const [token, setToken] = useState(null);
     const [userId, setUserId] = useState(null);
     const [thirdPartyInfo, setThirdPartyInfo] = useState({
-        email: null,
-        password: null,
-        first_name: null,
-        last_name: null
+        email: "",
+        password: "",
+        first_name: "",
+        last_name: "",
     });
     const [thirdPartyRegister, setThirdPartyRegister] = useState(false);
 
@@ -46,43 +51,54 @@ const App = () => {
                 }}
             >
                 <ThemeProvider theme={Theme}>
-                <Switch>
-                    {!token && <Redirect from="/principal" to="/" exact />}
-                    {token && <Redirect from="/" to="/principal" exact />}
-                    {token && client === "user" && (
-                        <Redirect from="/registro" to="/principal" exact />
-                    )}
-                    {client === "driver" && (
-                        <Redirect from="/registro" to="/vehiculo" exact />
-                    )}
-                    {client !== "driver" && (
-                        <Redirect from="/vehiculo" to="/" exact />
-                    )}
-                    {thirdPartyRegister  && (
-                        <Redirect from="/" to="/registro" exact />
-                    )}
-                    {!token && (
-                        <Route exact path="/">
-                            <Login setThirdPartyInfo={setThirdPartyInfo} setThirdPartyRegister={setThirdPartyRegister}/>
-                        </Route>
-                    )}
-                    {token && (
-                        <Route path="/principal">
-                            <Main />
-                        </Route>
-                    )}
-                    {!token && (
-                        <Route path="/registro">
-                            <Signin thirdPartyInfo={thirdPartyInfo} setThirdPartyRegister={setThirdPartyRegister}/>
-                        </Route>
-                    )}
+                    <Switch>
+                        {!token && <Redirect from="/principal" to="/" exact />}
+                        {token && <Redirect from="/" to="/principal" exact />}
+                        {token && client === "user" && (
+                            <Redirect from="/registro" to="/principal" exact />
+                        )}
+                        {client === "driver" && (
+                            <Redirect from="/registro" to="/vehiculo" exact />
+                        )}
+                        {client !== "driver" && (
+                            <Redirect from="/vehiculo" to="/" exact />
+                        )}
+                        {thirdPartyRegister && (
+                            <Redirect from="/" to="/registro" exact />
+                        )}
+                        {!token && (
+                            <Route exact path="/">
+                                <Login
+                                    setThirdPartyInfo={setThirdPartyInfo}
+                                    setThirdPartyRegister={
+                                        setThirdPartyRegister
+                                    }
+                                />
+                            </Route>
+                        )}
+                        {token && (
+                            <Route path="/principal">
+                                <Main />
+                            </Route>
+                        )}
+                        {!token && (
+                            <Route path="/registro">
+                                <Signin
+                                    thirdPartyInfo={thirdPartyInfo}
+                                    thirdPartyRegister={thirdPartyRegister}
+                                    setThirdPartyRegister={
+                                        setThirdPartyRegister
+                                    }
+                                />
+                            </Route>
+                        )}
 
-                    <Route path="/vehiculo">
-                        <VehicleForm />
-                    </Route>
+                        <Route path="/vehiculo">
+                            <VehicleForm />
+                        </Route>
 
-                    <Route path="*" component={NotFound404} />
-                </Switch>
+                        <Route path="*" component={NotFound404} />
+                    </Switch>
                 </ThemeProvider>
             </AuthContext.Provider>
         </Router>

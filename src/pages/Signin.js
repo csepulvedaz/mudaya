@@ -1,5 +1,5 @@
-import React, {useContext, useState} from "react";
-import {useLazyQuery, useMutation} from "@apollo/client";
+import React, { useContext, useState } from "react";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -8,15 +8,15 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles, withStyles} from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {Modal, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import { Modal, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import * as Yup from "yup";
-import {ErrorMessage, Form, Formik} from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 
-import {CREATE_DRIVER, CREATE_USER} from "../graphql/mutations";
-import {LOGIN} from "../graphql/queries";
+import { CREATE_DRIVER, CREATE_USER } from "../graphql/mutations";
+import { LOGIN } from "../graphql/queries";
 import AuthContext from "../context/auth-context";
 import TextMaskCustom from "../components/utils/TextMaskCustom";
 
@@ -100,11 +100,7 @@ function errorModal(msg) {
 }
 
 const SignUp = (props) => {
-    console.log(props.thirdPartyInfo);
-    let locked = false;
-    if (props.thirdPartyInfo.password!==null){
-        locked=true;
-    }
+    const { isLocked } = useState(props.thirdPartyRegister);
     const [isDriver, setIsDriver] = useState(false);
     const [loginPass, setLoginPass] = useState("");
     const context = useContext(AuthContext);
@@ -240,8 +236,7 @@ const SignUp = (props) => {
                                         label="Nombre"
                                         name="name"
                                         type="text"
-                                        defaultValue={props.thirdPartyInfo.first_name}
-                                        disabled={locked}
+                                        disabled={isLocked}
                                         {...formik.getFieldProps("name")}
                                         InputProps={{
                                             classes: {
@@ -267,8 +262,7 @@ const SignUp = (props) => {
                                         label="Apellido"
                                         name="surmane"
                                         type="text"
-                                        defaultValue={props.thirdPartyInfo.last_name}
-                                        disabled={locked}
+                                        disabled={isLocked}
                                         {...formik.getFieldProps("surname")}
                                         InputProps={{
                                             classes: {
@@ -291,8 +285,6 @@ const SignUp = (props) => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        autoComplete="nope"
-                                        // value="CC           "
                                         label="Número identificación"
                                         name="_id"
                                         type="text"
@@ -412,8 +404,7 @@ const SignUp = (props) => {
                                         label="Correo"
                                         name="email"
                                         type="email"
-                                        defaultValue={props.thirdPartyInfo.email}
-                                        disabled={locked}
+                                        disabled={isLocked}
                                         {...formik.getFieldProps("email")}
                                         InputProps={{
                                             classes: {
@@ -438,8 +429,7 @@ const SignUp = (props) => {
                                         margin="dense"
                                         label="Contraseña"
                                         name="password"
-                                        defaultValue={props.thirdPartyInfo.password}
-                                        disabled={locked}
+                                        disabled={isLocked}
                                         {...formik.getFieldProps("password")}
                                         InputProps={{
                                             type: "password",

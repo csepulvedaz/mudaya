@@ -5,29 +5,28 @@ import { makeStyles } from "@material-ui/core/styles";
 const { Footer } = Layout;
 
 const useStyles = makeStyles((theme) => {
-    console.log(theme.palette.primary);
-  return {
-    footer: {
-      border: "solid 0.5px #c2c2c2",
-      textAlign: "center",
-      background: "#fff",
-      color: theme.palette.text.secondary,
-    },
-  };
+    return {
+        footer: {
+            border: "solid 0.5px #c2c2c2",
+            textAlign: "center",
+            background: "#fff",
+            color: theme.palette.text.secondary,
+        },
+    };
 });
 
 const CustomFooter = () => {
-  const classes = useStyles();
-  return (
-    <Footer className={classes.footer}>
-      UNIVERSIDAD NACIONAL DE COLOMBIA
-      <br />
-      INGENIERIA DE SOFTWARE II
-      <br />
-      PRAVA ©2020 Todos los derechos reservados.
-      <br />
-    </Footer>
-  );
+    const classes = useStyles();
+    return (
+        <Footer className={classes.footer}>
+            UNIVERSIDAD NACIONAL DE COLOMBIA
+            <br />
+            INGENIERIA DE SOFTWARE II
+            <br />
+            PRAVA ©2020 Todos los derechos reservados.
+            <br />
+        </Footer>
+    );
 };
 
 export default CustomFooter;
