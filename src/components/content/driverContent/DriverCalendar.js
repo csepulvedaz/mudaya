@@ -3,12 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { ViewState } from "@devexpress/dx-react-scheduler";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
-import PlaceIcon from '@material-ui/icons/Place';
-import OriginIcon from '@material-ui/icons/NearMe';
+import PlaceIcon from '@material-ui/icons/RoomRounded';
+import OriginIcon from '@material-ui/icons/NearMeRounded';
+import CommentaryL from '@material-ui/icons/ChatBubbleRounded';
+import CommentaryR from '@material-ui/icons/ModeCommentRounded';
 import moment from "moment";
-
 import {
   Scheduler,
   WeekView,
@@ -54,21 +54,22 @@ const useStyles = makeStyles((theme) => ({
   iconDestination:{
     color: theme.palette.secondary.main,
   },
+  iconCommentary:{
+    fontSize:"20px",
+    color: theme.palette.grey[500],
+  },
   textCenter: {
     textAlign: 'center',
   },
+  commentaryUser:{
+    fontStyle:"italic",
+    color:theme.palette.grey[500],
+  },
+  commentaryDriver:{
+    fontStyle:"italic",
+    color:theme.palette.grey[700],
+  }
 }));
-const white = "#FFFFFF";
-const black = "#000000";
-const appointmentColors = [
-  ["#ED6A5A", white],
-  ["#F4F1BB", black],
-  ["#80ED99", black],
-  ["#EF7B45", white],
-  ["#8D3B72", white],
-  ["#FED766", black],
-  ["#BDE4A8", black],
-];
 
 const started = "Solicitado";
 const onHold = "En espera";
@@ -88,9 +89,7 @@ function stateToSpanish(shit) {
 
 const DriverCalendar = (props) => {
   const classes = useStyles();
-  /*  const theme = createMuiTheme({
-        palette: { type: "light", primary: theme.palette.primary.main },
-    });*/
+
   const context = useContext(AuthContext);
   const {
     loading: loadingServices,
@@ -142,6 +141,8 @@ const DriverCalendar = (props) => {
     dataServ.origin = serv.origin;
     dataServ.destination = serv.destination;
     dataServ.state = stateToSpanish(serv.state);
+    dataServ.commentaryUser = serv.commentaryUser;
+    dataServ.commentaryDriver = serv.commentaryDriver;
     schedulerData.push(dataServ);
   });
 
@@ -183,6 +184,22 @@ const DriverCalendar = (props) => {
             <span>{appointmentData.origin}</span>
           </Grid>
         </Grid>
+        <Grid container alignItems="center">
+          <Grid item xs={2} className={classes.textCenter}>
+            <CommentaryL className={classes.iconCommentary}/>
+          </Grid>
+          <Grid item xs={10}>
+            <span className={classes.commentaryUser}> {appointmentData.commentaryUser} </span>
+          </Grid>
+        </Grid>
+        <Grid container alignItems="center">
+          <Grid item xs={2} className={classes.textCenter}>
+            <CommentaryR className={classes.iconCommentary}/>
+          </Grid>
+          <Grid item xs={10}>
+            <span className={classes.commentaryDriver}> {appointmentData.commentaryDriver} </span>
+          </Grid>
+        </Grid>
       </AppointmentTooltip.Content>
     );
   };
@@ -192,12 +209,13 @@ const DriverCalendar = (props) => {
       fieldName: mainResourceName,
       title: "Estado",
       instances: [
-        { id: started, text: started },
-        { id: onHold, text: onHold },
-        { id: accepted, text: accepted },
+        { id: started, text: started, color: "#FF5E5B" },
+        { id: onHold, text: onHold, color: "#F9C22E" },
+        { id: accepted, text: accepted, color: "#80ED99" },
       ],
     },
   ];
+  //FE4A49 canceled color
   return (
     <Paper style={{ borderRadius: "4px" }}>
       <Scheduler locale={"es-ES"} data={schedulerData}>
@@ -222,7 +240,7 @@ const DriverCalendar = (props) => {
           contentComponent={Content}
         />
         <AppointmentForm readOnly />
-        <Resources mainResourceName={mainResourceName} data={resources} />
+        <Resources mainResourceName={mainResourceName} data={resources}/>
       </Scheduler>
     </Paper>
   );
