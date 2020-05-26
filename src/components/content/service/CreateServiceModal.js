@@ -43,13 +43,9 @@ const stepsDriver = [
 const CustomSteps = (props) => {
     const classes = useStyles();
     const { client } = useContext(AuthContext);
-    const [current, setCurrent] = useState(0);
+    const [current] = useState(props.step);
     const [visibleSteps, setVisibleSteps] = useState(false);
     const steps = client === "user" ? stepsUser : stepsDriver;
-
-    const next = () => {
-        setCurrent(current + 1);
-    };
 
     const onClickSteps = () => {
         setVisibleSteps(true);
@@ -110,21 +106,21 @@ const CustomSteps = (props) => {
                           client === "user" &&
                           props.value.state === "onHold" ? (
                             <StepThree
+                                value={props.value}
                                 setVisible={props.setVisibleService}
-                                next={next}
                             />
                         ) : (
-                            <div>Paso 4</div>
+                            <StepThree
+                                value={props.value}
+                                setVisible={props.setVisibleService}
+                            />
                         )}
                     </div>
                 </Col>
                 <Col span={3} onClick={onClickSteps}>
                     <Steps direction="vertical" size="small" current={current}>
                         {steps.map((item) => (
-                            <Step
-                                key={item.title}
-                                //  title={item.title}
-                            />
+                            <Step key={item.title} />
                         ))}
                     </Steps>
                 </Col>

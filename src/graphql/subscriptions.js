@@ -16,7 +16,7 @@ export const SERVICE_ADDED = gql`
 `;
 
 export const SERVICE_UPDATED = gql`
-    subscription ServiceUpdated($_id: ID!) {
+    subscription ServiceUpdated($_id: String!) {
         serviceUpdated(_id: $_id) {
             date
             origin

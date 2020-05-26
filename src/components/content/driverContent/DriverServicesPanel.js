@@ -64,6 +64,7 @@ const DriverServicesPanel = (props) => {
     } = useQuery(SERVICES_BY_DRIVER, {
         variables: { idDriver: context.userId },
         fetchPolicy: "no-cache",
+        pollInterval: 500,
     });
 
     if (loadingServices)
@@ -76,7 +77,7 @@ const DriverServicesPanel = (props) => {
         );
     if (errorServices) return `Error! ${errorServices}`;
 
-    const services = dataServices.servicesByDriver;
+    const services = [...dataServices.servicesByDriver].reverse();
 
     return (
         <div className={classes.content}>

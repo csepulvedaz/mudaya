@@ -8,7 +8,6 @@ import { useQuery } from "@apollo/client";
 
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
-import ModalStepThree from "../../content/service/ModalStepThree";
 import theme from "../../utils/AppTheme";
 // import TruckLicense from "./TruckLicense";
 
@@ -17,7 +16,7 @@ const useStyles = makeStyles({
         width: "550px",
         padding: "25px 0px",
         border: "solid 0.5px #ccc",
-        background: "#FFFFFF",        
+        background: "#FFFFFF",
         borderRadius: "5px",
     },
     image_box: {
@@ -83,13 +82,6 @@ export default function DropListElement(props) {
         e.preventDefault();
         setVisibleService(true);
     };
-
-    // const { loading: loadingSubscription } = useSubscription(SERVICE_UPDATED, {
-    //     variables: { _id: props.value._id },
-    //     onSubscriptionData: ({ subscriptionData }) => {
-    //         console.log(subscriptionData);
-    //     },
-    // });
 
     if (loading)
         return (
@@ -179,8 +171,9 @@ export default function DropListElement(props) {
                     </Tag>
                 )}
 
-                {(props.value.state === "onHold" ||
-                    props.value.state === "accepted") && (
+                {(state === "onHold" ||
+                    state === "accepted" ||
+                    state === "started") && (
                     <Button
                         className={classes.button}
                         onClick={(e) => openModal(e)}
@@ -188,7 +181,8 @@ export default function DropListElement(props) {
                         Ver más...
                     </Button>
                 )}
-                <ModalStepThree
+                <CreateServiceModal
+                    step={1}
                     value={props.value}
                     visibleService={visibleService}
                     setVisibleService={setVisibleService}

@@ -108,7 +108,7 @@ function errorModal(msg) {
 
 const StepOne = (props) => {
     const classes = useStyles();
-    const [selectedDate, handleDateChange] = useState(new Date());
+    const [selectedDate, setDate] = useState(new Date());
     const { userId } = useContext(AuthContext);
     const [createService, { loading: loadingService }] = useMutation(
         CREATE_SERVICE,
@@ -126,8 +126,9 @@ const StepOne = (props) => {
     );
 
     const create = async (values) => {
+        let date = moment(selectedDate).format();
         const input = {
-            date: selectedDate,
+            date: date,
             origin: values.origin,
             destination: values.destination,
             commentaryUser: values.commentaryUser,
@@ -181,7 +182,6 @@ const StepOne = (props) => {
                     ),
                 })}
                 onSubmit={(values) => {
-                    values.date = new Date(selectedDate);
                     create(values);
                 }}
             >
@@ -197,7 +197,7 @@ const StepOne = (props) => {
                                     inputVariant="outlined"
                                     label="Fecha de reserva"
                                     value={selectedDate}
-                                    onChange={handleDateChange}
+                                    onChange={setDate}
                                     disablePast={true}
                                     autoOk={true}
                                     minDate={new Date("2020-02-01")}

@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../service/CreateServiceModal";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: "720px",
         padding: "30px 0px",
@@ -84,7 +84,6 @@ const DriverServiceCard = (props) => {
     const { vehicle } = data;
     const { origin, destination, commentaryUser, date, state } = props.value;
     if (error) return `Error! ${error}`;
-    console.log(props.value);
 
     return (
         <Row className={classes.root}>
@@ -173,6 +172,7 @@ const DriverServiceCard = (props) => {
                 </Button>
                 <CreateServiceModal
                     value={props.value}
+                    step={0}
                     visibleService={visibleService}
                     setVisibleService={setVisibleService}
                 />

@@ -4,10 +4,10 @@ import { Menu, Dropdown, Button, Badge } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import NotificationsNoneTwoToneIcon from "@material-ui/icons/NotificationsNoneTwoTone";
 
-import { SERVICE_ADDED } from "../../graphql/subscriptions";
+import { SERVICE_ADDED, SERVICE_UPDATED } from "../../graphql/subscriptions";
 import AuthContext from "../../context/auth-context";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     icon: {
         fontSize: "32px",
         color: theme.palette.warning.main,
@@ -31,32 +31,64 @@ const useStyles = makeStyles((theme)=>({
 
 export default function Notification(props) {
     const classes = useStyles();
-    const [dataArray, setDataArray] = useState([]);
     const [textItem, setTextItem] = useState([]);
+    const [count, setCount] = useState(
+        props.serviceCreate.length + props.serviceUpdate.length
+    );
     const { userId } = useContext(AuthContext);
-    const { loading } = useSubscription(SERVICE_ADDED, {
+    useSubscription(SERVICE_ADDED, {
         variables: { _id: userId },
         onSubscriptionData: ({ subscriptionData }) => {
-            setDataArray([...dataArray, subscriptionData.data.serviceAdded]);
+            // console.log(subscriptionData.data.serviceAdded);
+            setCount(count + 1);
             setTextItem([...textItem, "Nuevo servicio solicitado"]);
         },
     });
-    var notif=props.serviceCreate.length+props.serviceUpdate.length
-    console.log(notif)
+    useSubscription(SERVICE_UPDATED, {
+        variables: { _id: userId },
+        onSubscriptionData: ({ subscriptionData }) => {
+            // console.log(subscriptionData.data.serviceUpdate);
+            setCount(count + 1);
+            setTextItem([...textItem, "Servicio Actualizado"]);
+        },
+    });
+
+    const createdArray = props.serviceCreate.map(() => {
+        let arr = [];
+        arr.push("Nuevo servicio solicitado");
+        return arr;
+    });
+    const updatedArray = props.serviceUpdate.map(() => {
+        let arr = [];
+        arr.push("Servicio actualizado");
+        return arr;
+    });
+
+    let text = createdArray.concat(updatedArray).concat(textItem).reverse();
+
     const menu = (
         <Menu>
-            {!loading &&
-                textItem.map((value, index) => (
-                    <Menu.Item key={index}>{value}</Menu.Item>
-                ))}
+            {text.map((value, index) => (
+                <Menu.Item key={index}>{value}</Menu.Item>
+            ))}
         </Menu>
     );
 
     return (
-        <Dropdown className={classes.box} overlay={menu} trigger={["click"]}>
+        <Dropdown
+            className={classes.box}
+            overlay={menu}
+            trigger={["click"]}
+            onClick={() => setCount(0)}
+            // onVisibleChange={(state) => {
+            //     if (!state) {
+            //         setTextItem("");
+            //     }
+            // }}
+        >
             <Button
                 icon={
-                    <Badge count={notif}>
+                    <Badge count={count}>
                         <NotificationsNoneTwoToneIcon
                             className={classes.icon}
                         />

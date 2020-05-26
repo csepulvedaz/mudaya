@@ -72,10 +72,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function success() {
+function success(msg) {
     Modal.success({
-        content:
-            "Servicio creado con éxito. Podrás revisar su estado en la barra de servicios.",
+        content: `Servicio ${msg} con éxito. Podrás revisar su estado en la barra de servicios.`,
     });
 }
 
@@ -93,7 +92,7 @@ const StepThree = (props) => {
         {
             onCompleted: () => {
                 props.setVisible(false);
-                success();
+                success("aceptado");
             },
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
@@ -107,7 +106,7 @@ const StepThree = (props) => {
         {
             onCompleted: () => {
                 props.setVisible(false);
-                success();
+                success("cancelado");
             },
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
@@ -139,7 +138,7 @@ const StepThree = (props) => {
 
     return (
         <Layout className={classes.paper}>
-            {loadingService && (
+            {(loadingService || loadingCancelService) && (
                 <Spin
                     tip="Cargando..."
                     indicator={

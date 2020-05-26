@@ -5,6 +5,7 @@ import img1 from "../../../assets/ourservices1.jpg";
 import img2 from "../../../assets/ourservices2.jpg";
 import img3 from "../../../assets/ourservices3.jpg";
 import img4 from "../../../assets/ourservices4.jpg";
+import waves from "../../../assets/waves-bg.png";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -12,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         margin: "50px 0px",
+        background: `url(${waves}) no-repeat 50% 100%`,
+        backgroundSize: "1400px 250px",
+        backgroundPositionY: "90%",
     },
     box: {
         width: "100%",

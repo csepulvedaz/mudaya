@@ -16,6 +16,7 @@ import * as Yup from "yup";
 import { PROFILEUSER, PROFILEDRIVER } from "../../graphql/queries";
 import { UPDATE_USER, UPDATE_DRIVER } from "../../graphql/mutations";
 import AuthContext from "../../context/auth-context";
+import TextMaskCustom from "../utils/TextMaskCustom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         height: 40,
         boxShadow: theme.shadows[0],
-        "&:hover": {            
+        "&:hover": {
             background: theme.palette.secondary.main,
             boxShadow: theme.shadows[2],
         },
@@ -153,9 +154,12 @@ const EditProfile = (props) => {
                     validationSchema={Yup.object({
                         name: Yup.string().required("Campo requerido!"),
                         surname: Yup.string().required("Campo requerido!"),
-                        phone: Yup.string().required("Campo requerido!"),
+                        phone: Yup.string()
+                            .required("Campo requerido!")
+                            .length(10, "Número incorrecto!"),
                     })}
                     onSubmit={(values) => {
+                        values.phone = values.phone.replace(/\s/g, "");
                         toProfile(values);
                     }}
                 >
@@ -250,12 +254,26 @@ const EditProfile = (props) => {
                                         variant="outlined"
                                         fullWidth
                                         margin="dense"
-                                        label="Telefono"
+                                        label="Número celular"
                                         name="phone"
-                                        autoComplete="current-cellphone"
                                         type="text"
                                         {...formik.getFieldProps("phone")}
                                         InputProps={{
+                                            inputComponent: TextMaskCustom,
+                                            inputProps: {
+                                                mask: [
+                                                    /3/,
+                                                    /[0-5]/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                    /\d/,
+                                                ],
+                                            },
                                             classes: {
                                                 notchedOutline:
                                                     classes.notchedOutline,
