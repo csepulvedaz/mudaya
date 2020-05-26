@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Layout, Spin } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
-import bg from "../../assets/bg.jpg";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import ServicesOfferedCardPanel from "./servicesOffered/ServicesOfferedCardPanel";

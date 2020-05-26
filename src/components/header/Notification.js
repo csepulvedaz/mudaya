@@ -36,7 +36,7 @@ export default function Notification(props) {
         props.serviceCreate.length + props.serviceUpdate.length
     );
     const { userId } = useContext(AuthContext);
-    const { loading: loadingCreated } = useSubscription(SERVICE_ADDED, {
+    useSubscription(SERVICE_ADDED, {
         variables: { _id: userId },
         onSubscriptionData: ({ subscriptionData }) => {
             // console.log(subscriptionData.data.serviceAdded);
@@ -44,7 +44,7 @@ export default function Notification(props) {
             setTextItem([...textItem, "Nuevo servicio solicitado"]);
         },
     });
-    const { loading: loadingUpdated } = useSubscription(SERVICE_UPDATED, {
+    useSubscription(SERVICE_UPDATED, {
         variables: { _id: userId },
         onSubscriptionData: ({ subscriptionData }) => {
             // console.log(subscriptionData.data.serviceUpdate);
@@ -53,13 +53,24 @@ export default function Notification(props) {
         },
     });
 
+    const createdArray = props.serviceCreate.map(() => {
+        let arr = [];
+        arr.push("Nuevo servicio solicitado");
+        return arr;
+    });
+    const updatedArray = props.serviceUpdate.map(() => {
+        let arr = [];
+        arr.push("Servicio actualizado");
+        return arr;
+    });
+
+    let text = createdArray.concat(updatedArray).concat(textItem).reverse();
+
     const menu = (
         <Menu>
-            {!loadingCreated &&
-                !loadingUpdated &&
-                textItem.map((value, index) => (
-                    <Menu.Item key={index}>{value}</Menu.Item>
-                ))}
+            {text.map((value, index) => (
+                <Menu.Item key={index}>{value}</Menu.Item>
+            ))}
         </Menu>
     );
 
@@ -69,6 +80,11 @@ export default function Notification(props) {
             overlay={menu}
             trigger={["click"]}
             onClick={() => setCount(0)}
+            // onVisibleChange={(state) => {
+            //     if (!state) {
+            //         setTextItem("");
+            //     }
+            // }}
         >
             <Button
                 icon={
