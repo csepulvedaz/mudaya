@@ -1,21 +1,24 @@
 version: 0.1
+env:
+    variables:
+        CI: true
 frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: build
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
+    phases:
+        preBuild:
+            commands:
+                - npm ci
+        build:
+            commands:
+                - npm run build
+    artifacts:
+        baseDirectory: build
+        files:
+            - "**/*"
+    cache:
+        paths:
+            - node_modules/**/*
 test:
-  phases:
-    test:
-      commands:
-        - npm run test
+    phases:
+        test:
+            commands:
+                - npm run test
