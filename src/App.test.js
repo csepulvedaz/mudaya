@@ -1,16 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
+// import { createMemoryHistory } from "history";
+// import { Router } from "react-router";
 
 import App from "./App";
 import AuthContext from "./context/auth-context";
 
-it("renders without crashing", () => {
-    const div = document.createElement("div");
-    render(<App />, div);
-});
+// it("renders without crashing", () => {
+//     const div = document.createElement("div");
+//     render(<App />, div);
+// });
 
 test("AutContext provider pass client, token and userId", () => {
     const tree = (
@@ -38,12 +38,12 @@ test("AutContext provider pass client, token and userId", () => {
     );
 });
 
-test("Redirects to login page", () => {
-    const history = createMemoryHistory();
-    render(
-        <Router history={history}>
-            <App />
-        </Router>
-    );
-    expect(history.location.pathname).toBe("/");
-});
+// test("Redirects to login page", () => {
+//     const history = createMemoryHistory();
+//     render(
+//         <Router history={history}>
+//             <App />
+//         </Router>
+//     );
+//     expect(history.location.pathname).toBe("/");
+// });
