@@ -27,7 +27,7 @@ jobs:
             - run:
                   name: "Checkout Amplify prod Environment"
                   command: |
-                      amplify init --amplify "{\"envName\":\"env\"}" --providers "{\"awscloudformation\":{\"useProfile\":true,\"profileName\":\"default\"}}" --yes
+                      amplify init --amplify "{\"envName\":\"dev\"}" --providers "{\"awscloudformation\":{\"useProfile\":true,\"profileName\":\"default\"}}" --yes
             - run:
                   name: "Deploy to prod"
                   command: |
