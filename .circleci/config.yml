@@ -22,7 +22,6 @@ jobs:
             - run:
                   name: "Show AWS CLI and Amplify Versions"
                   command: |
-                      aws --version
                       amplify --version
             - run:
                   name: "Checkout Amplify prod Environment"
