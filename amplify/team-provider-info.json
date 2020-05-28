@@ -1,23 +1,15 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-mudaya-dev-151623-authRole",
-            "UnauthRoleArn": "arn:aws:iam::860633336021:role/amplify-mudaya-dev-151623-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::860633336021:role/amplify-mudaya-dev-151623-authRole",
+            "AuthRoleName": "amplify-mudaya-dev-171428-authRole",
+            "UnauthRoleArn": "arn:aws:iam::860633336021:role/amplify-mudaya-dev-171428-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::860633336021:role/amplify-mudaya-dev-171428-authRole",
             "Region": "us-east-2",
-            "DeploymentBucketName": "amplify-mudaya-dev-151623-deployment",
-            "UnauthRoleName": "amplify-mudaya-dev-151623-unauthRole",
-            "StackName": "amplify-mudaya-dev-151623",
-            "StackId": "arn:aws:cloudformation:us-east-2:860633336021:stack/amplify-mudaya-dev-151623/1badc5a0-a120-11ea-9a02-0a569e9f7d94",
-            "AmplifyAppId": "d3ddfpwzbvsbzq"
-        },
-        "categories": {
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d3ddfpwzbvsbzq",
-                    "type": "manual"
-                }
-            }
+            "DeploymentBucketName": "amplify-mudaya-dev-171428-deployment",
+            "UnauthRoleName": "amplify-mudaya-dev-171428-unauthRole",
+            "StackName": "amplify-mudaya-dev-171428",
+            "StackId": "arn:aws:cloudformation:us-east-2:860633336021:stack/amplify-mudaya-dev-171428/9b6dd4f0-a130-11ea-a7c9-0a76b6c12f42",
+            "AmplifyAppId": "d21wyhyy7ve22z"
         }
     }
 }
