@@ -16,7 +16,7 @@ jobs:
                       - run: npm test
     deploy:
         executor: aws-cli/default
-        working_directory: ~/repo
+        working_directory: /
         steps:
             - checkout
             - aws-cli/setup
