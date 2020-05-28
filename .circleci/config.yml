@@ -29,6 +29,7 @@ jobs:
                       amplify --version
             - run:
                   name: "Checkout Amplify prod Environment"
+                  working_directory: ~/repo
                   command: |
                       amplify env list
                       amplify init --amplify "{\"envName\":\"prod\"}" --providers "{\"awscloudformation\":{\"useProfile\":true,\"profileName\":\"default\"}}" --yes
