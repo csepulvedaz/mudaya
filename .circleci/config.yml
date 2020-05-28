@@ -16,6 +16,7 @@ jobs:
                       - run: npm test
     deploy:
         executor: aws-cli/default
+        working_directory: ~/repo
         steps:
             - checkout
             - aws-cli/setup
@@ -24,23 +25,19 @@ jobs:
                   command: |
                       sudo npm install -g @aws-amplify/cli
             - run:
-                  name: "Show AWS CLI and Amplify Versions"
-                  command: |
-                      amplify --version
-            - run:
                   name: "Checkout Amplify prod Environment"
-                  working_directory: /
                   command: |
-                      amplify env list
-            - run: chmod 777 .circleci/headless-amplify-configure.sh && .circleci/headless-amplify-configure.sh
+                      amplify init --amplify "{\"envName\":\"prod\"}" --providers "{\"awscloudformation\":{\"useProfile\":true,\"profileName\":\"default\"}}" --yes
             - run:
                   name: "Deploy to prod"
                   command: |
-                      amplify publish --invalidateCloudFront --codegen "{\"generateCode\":false}" -- yes
+                      amplify publish --invalidateCloudFront --yes
 workflows:
     build-and-test:
         jobs:
             - build-and-test
     deploy:
+        requires:
+            - build-and-test
         jobs:
             - deploy
