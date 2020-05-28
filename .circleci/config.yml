@@ -31,7 +31,7 @@ jobs:
             - run:
                   name: "Deploy to prod"
                   command: |
-                      amplify publish --invalidateCloudFront --yes
+                      amplify publish -c
 workflows:
     build-and-test:
         jobs:
