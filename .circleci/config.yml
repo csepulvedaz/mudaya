@@ -15,16 +15,10 @@ jobs:
                       - run: npm run build
                       - run: npm test
     deploy:
-        executor:
-            name: node/default
+        executor: aws-cli/default
         steps:
-            - run: npm install
-            - aws-cli/install
-            - aws-cli/configure
-            - run:
-                  name: "Install aws-amplify CLI"
-                  command: |
-                      sudo npm install -g @aws-amplify/cli
+            - checkout
+            - aws-cli/setup
             - run:
                   name: "Show AWS CLI and Amplify Versions"
                   command: |
