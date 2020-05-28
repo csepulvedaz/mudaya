@@ -32,7 +32,7 @@ jobs:
                   working_directory: /
                   command: |
                       amplify env list
-                      amplify init --amplify "{\"envName\":\"prod\"}" --providers "{\"awscloudformation\":{\"useProfile\":true,\"profileName\":\"default\"}}" --yes
+            - run: chmod 777 .circleci/headless-amplify-configure.sh && .circleci/headless-amplify-configure.sh
             - run:
                   name: "Deploy to prod"
                   command: |
