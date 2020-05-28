@@ -20,6 +20,10 @@ jobs:
             - checkout
             - aws-cli/setup
             - run:
+                  name: "Install aws-amplify CLI"
+                  command: |
+                      sudo npm install -g @aws-amplify/cli
+            - run:
                   name: "Show AWS CLI and Amplify Versions"
                   command: |
                       amplify --version
