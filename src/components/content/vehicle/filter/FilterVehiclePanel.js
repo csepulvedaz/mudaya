@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Button, Col, Row, Select} from "antd";
-import {types} from "../../utils/selectArrays";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Col, Row, Select } from "antd";
 
-import bg from "../../../assets/filter-bg.jpg";
+import { types } from "../../../utils/selectArrays";
+import bg from "../../../../assets/filter-bg.jpg";
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        background:`url(${bg}) no-repeat 50% 100%`,
-        backgroundSize:"cover",
-        backgroundPositionY:"55%",
+        background: `url(${bg}) no-repeat 50% 100%`,
+        backgroundSize: "cover",
+        backgroundPositionY: "55%",
         padding: "100px 0px",
     },
     box: {
@@ -51,7 +51,11 @@ const FilterVehiclePanel = (props) => {
     const [option, setOption] = useState("");
 
     const selectType = types;
-    let index = selectType.indexOf(selectType.find(obj => {return obj.value === ""})); // remove "Seleccione un tipo" option
+    let index = selectType.indexOf(
+        selectType.find((obj) => {
+            return obj.value === "";
+        })
+    ); // remove "Seleccione un tipo" option
     if (index !== -1) selectType.splice(index, 1);
 
     const toSearch = () => {

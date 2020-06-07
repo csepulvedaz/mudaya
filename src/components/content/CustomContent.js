@@ -6,8 +6,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import ServicesOfferedCardPanel from "./servicesOffered/ServicesOfferedCardPanel";
 import VehiclesCardPanel from "./vehicle/VehiclesCardPanel";
-import FilterVehiclePanel from "./vehicle/FilterVehiclePanel";
-import SearchVehiclePanel from "./vehicle/SearchVehiclePanel";
+import FilterVehiclePanel from "./vehicle/filter/FilterVehiclePanel";
+import SearchVehiclePanel from "./vehicle/filter/SearchVehiclePanel";
 import { ALL_VEHICLES } from "../../graphql/queries";
 
 const { Content } = Layout;

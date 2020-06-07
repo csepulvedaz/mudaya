@@ -7,10 +7,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { CardActionArea } from "@material-ui/core";
 import { Button, Rate } from "antd";
 
-import VehicleDetailsModal from "./VehicleDetailsModal";
-import CreateServiceModal from "../service/CreateServiceModal";
+import VehicleDetailsModal from "../VehicleDetailsModal";
+import CreateServiceModal from "../../service/CreateServiceModal";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: "290rx",
         height: "380px",
@@ -163,6 +163,9 @@ const SearchVehicleCard = (props) => {
                         setVisibleService={setVisibleService}
                     />
                     <CreateServiceModal
+                        idVehicle={props.value._id}
+                        idDriver={props.value.idDriver}
+                        step={0}
                         visibleService={visibleService}
                         setVisibleService={setVisibleService}
                     />
