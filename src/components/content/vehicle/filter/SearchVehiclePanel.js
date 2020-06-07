@@ -7,14 +7,14 @@ import { Carousel, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import SearchVehicleCard from "./SearchVehicleCard";
-import img1 from "../../../assets/van.png";
-import { ALL_VEHICLES } from "../../../graphql/queries";
+import img1 from "../../../../assets/van.png";
+import { ALL_VEHICLES } from "../../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
         width: "100%",
         //backdropFilter: "contrast(40%)",
-        background:"#fdfdff",
+        background: "#fdfdff",
         display: "flex",
         justifyContent: "center",
         paddingBottom: "20px",
