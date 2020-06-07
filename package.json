@@ -30,7 +30,9 @@
         "react-google-login": "^5.1.20",
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.4.1",
+        "react-simple-chatbot": "^0.6.1",
         "react-text-mask": "^5.4.3",
+        "styled-components": "^5.1.1",
         "subscriptions-transport-ws": "^0.9.16",
         "text-mask-addons": "^3.8.0",
         "yup": "^0.28.3"
