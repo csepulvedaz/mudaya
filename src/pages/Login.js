@@ -194,7 +194,7 @@ const Login = (props) => {
                     />
                 </div>
 
-                <div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: "center", width: "290px" }}>
                     <Typography component="h1" variant="h5">
                         Bienvenido
                     </Typography>
