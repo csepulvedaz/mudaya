@@ -15,38 +15,42 @@ import { Link } from "react-router-dom";
 import { ErrorMessage, Form, Formik } from "formik";
 import { useLazyQuery } from "@apollo/client";
 import * as Yup from "yup";
-import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import { GoogleOutlined } from "@ant-design/icons";
+import IconButton from "@material-ui/core/IconButton";
 
 import AuthContext from "../context/auth-context";
 import { LOGIN } from "../graphql/queries";
-import logo from "../assets/logo.png";
+// import logo from "../assets/logo.png";
+import truck from "../assets/truck.png";
 import theme from "../components/utils/AppTheme";
 
 const useStyles = makeStyles((theme) => ({
     "@global": {
         body: {
             height: "0px",
+            width: "100%",
             background: "#fafafa",
         },
     },
     paper: {
-        marginTop: "50px",
-        width: "400px",
-        position: "absolute",
+        margin: "auto",
+        marginTop: "100px",
+        width: "730px",
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: "#fff",
-        padding: "30px",
+        padding: "50px",
         boxShadow: theme.shadows[14],
         borderRadius: "5px",
     },
     form: {
         width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(3),
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -54,47 +58,18 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(4, 0, 3),
-        width: "100%",
+        width: "60%",
         background: theme.palette.primary.main,
-        borderRadius: 9,
-        border: 0,
+        borderRadius: "20px",
         color: "white",
         height: 48,
         boxShadow: theme.shadows[2],
+        textTransform: "none",
+        fontSize: "16px",
         "&:hover": {
             background: theme.palette.primary.light,
             boxShadow: theme.shadows[4],
         },
-    },
-    thirdPartyFacebook: {
-        //margin: theme.spacing(3, 0, 3),
-        display: "flex",
-        width: "204px",
-        height: "50px",
-        borderRadius: "3px",
-        border: 0,
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#1877F2",
-        color: "#fff",
-        textAlign: "center",
-        textTransform: "none",
-        boxShadow:
-            "rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
-    },
-    thirdPartyGoogle: {
-        margin: theme.spacing(3, 0, 3),
-        width: "200px",
-        height: "50px",
-        borderRadius: "8px",
-        border: 0,
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f00ebb",
-    },
-    truck: {
-        fontSize: "100px",
-        color: "#ccc",
     },
     spin: {
         position: "absolute",
@@ -113,12 +88,8 @@ const useStyles = makeStyles((theme) => ({
             border: `1px ${theme.palette.primary.light} solid !important`,
         },
     },
-    logo: {
-        marginBottom: "20px",
-    },
-    fbButton: {
-        margin: "10px 10px 10px 5px",
-    },
+    fb: { fontSize: "40px", color: "#1877F2" },
+    google: { fontSize: "30px", color: "#DB4437", padding: "5px" },
 }));
 
 function errorModal(msg) {
@@ -201,7 +172,7 @@ const Login = (props) => {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main">
             <CssBaseline />
             <div className={classes.paper}>
                 {(loading || loadingThirdParty) && (
@@ -214,175 +185,216 @@ const Login = (props) => {
                     />
                 )}
 
-                <img
-                    src={logo}
-                    width="220px"
-                    height="150px"
-                    className={classes.logo}
-                    alt="Prava Logo"
-                />
+                <div>
+                    <img
+                        src={truck}
+                        width="300px"
+                        height="168px"
+                        alt="Prava Logo"
+                    />
+                </div>
 
-                {/* <Typography component="h1" variant="h5">
-                    Bienvenido
-                </Typography> */}
-                <Formik
-                    initialValues={{
-                        email: "",
-                        password: "",
-                    }}
-                    validationSchema={Yup.object({
-                        email: Yup.string()
-                            .email("Email incorrecto")
-                            .required("Requerido"),
-                        password: Yup.string().required("Requerido"),
-                    })}
-                    onSubmit={(values) => {
-                        // alert(JSON.stringify(values, null, 2));
-                        login({
-                            variables: {
-                                email: values.email,
-                                password: values.password,
-                            },
-                        });
-                        values.email = "";
-                        values.password = "";
-                    }}
-                >
-                    {(formik) => (
-                        <Form
-                            className={classes.form}
-                            onSubmit={formik.handleSubmit}
-                            noValidate
-                        >
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                autoComplete="email"
-                                placeholder="Correo"
-                                name="email"
-                                type="email"
-                                {...formik.getFieldProps("email")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="email">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <AccountCircleIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                margin="normal"
-                                autoComplete="current-password"
-                                placeholder="Contraseña"
-                                name="password"
-                                type="password"
-                                {...formik.getFieldProps("password")}
-                                InputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline,
-                                        focused: classes.focused,
-                                    },
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ErrorMessage name="password">
-                                                {(msg) => (
-                                                    <p
-                                                        className={
-                                                            classes.errorMessage
-                                                        }
-                                                    >
-                                                        {msg}
-                                                    </p>
-                                                )}
-                                            </ErrorMessage>
-                                        </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <LockIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
+                <div style={{ textAlign: "center" }}>
+                    <Typography component="h1" variant="h5">
+                        Bienvenido
+                    </Typography>
+                    <Formik
+                        initialValues={{
+                            email: "",
+                            password: "",
+                        }}
+                        validationSchema={Yup.object({
+                            email: Yup.string()
+                                .email("Email incorrecto")
+                                .required("Requerido"),
+                            password: Yup.string().required("Requerido"),
+                        })}
+                        onSubmit={(values) => {
+                            // alert(JSON.stringify(values, null, 2));
+                            login({
+                                variables: {
+                                    email: values.email,
+                                    password: values.password,
+                                },
+                            });
+                            values.email = "";
+                            values.password = "";
+                        }}
+                    >
+                        {(formik) => (
+                            <Form
+                                className={classes.form}
+                                onSubmit={formik.handleSubmit}
+                                noValidate
                             >
-                                Ingresar
-                            </Button>
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    autoComplete="email"
+                                    placeholder="Correo"
+                                    name="email"
+                                    type="email"
+                                    {...formik.getFieldProps("email")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline:
+                                                classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="email">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <AccountCircleIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    autoComplete="current-password"
+                                    placeholder="Contraseña"
+                                    name="password"
+                                    type="password"
+                                    {...formik.getFieldProps("password")}
+                                    InputProps={{
+                                        classes: {
+                                            notchedOutline:
+                                                classes.notchedOutline,
+                                            focused: classes.focused,
+                                        },
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ErrorMessage name="password">
+                                                    {(msg) => (
+                                                        <p
+                                                            className={
+                                                                classes.errorMessage
+                                                            }
+                                                        >
+                                                            {msg}
+                                                        </p>
+                                                    )}
+                                                </ErrorMessage>
+                                            </InputAdornment>
+                                        ),
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <LockIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                >
+                                    Ingresar
+                                </Button>
 
-                            <Grid container direction="row" justify="center">
-                                <Grid item>
-                                    <FacebookLogin
-                                        cssClass={classes.thirdPartyFacebook}
-                                        appId="262085324993789"
-                                        textButton={"Ingresa con Facebook"}
-                                        fields="email,first_name,last_name"
-                                        callback={responseFacebook}
-                                        language="es_ES"
-                                        icon={
-                                            <FacebookIcon
-                                                className={classes.fbButton}
-                                            />
-                                        }
-                                    />
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                >
+                                    <Grid item>
+                                        <Typography variant="body1">
+                                            No tienes cuenta?{" "}
+                                            <Link
+                                                to="/registro"
+                                                style={{
+                                                    textDecoration: "none",
+                                                    color:
+                                                        theme.palette.primary
+                                                            .main,
+                                                }}
+                                            >
+                                                Entra, es gratis!
+                                            </Link>
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <GoogleLogin
-                                        className={classes.thirdPartyGoogle}
-                                        clientId="515176564508-1fvr1sv7kghek5p23fffgv0f177sucon.apps.googleusercontent.com"
-                                        buttonText="Ingresa con Google"
-                                        onSuccess={responseGoogle}
-                                        onFailure={responseGoogleFail}
-                                    />
-                                </Grid>
-                            </Grid>
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                >
+                                    <Grid item>
+                                        <FacebookLogin
+                                            appId="262085324993789"
+                                            fields="email,first_name,last_name"
+                                            callback={responseFacebook}
+                                            language="es_ES"
+                                            render={(renderProps) => {
+                                                console.log(renderProps);
 
-                            <Grid container direction="row" justify="center">
-                                <Grid item>
-                                    <Typography variant="body1">
-                                        No tienes cuenta?{" "}
-                                        <Link
-                                            to="/registro"
-                                            style={{
-                                                textDecoration: "none",
-                                                color:
-                                                    theme.palette.primary.main,
+                                                return (
+                                                    <IconButton
+                                                        onClick={
+                                                            renderProps.onClick
+                                                        }
+                                                        disabled={
+                                                            renderProps.isDisabled
+                                                        }
+                                                    >
+                                                        <FacebookIcon
+                                                            className={
+                                                                classes.fb
+                                                            }
+                                                        />
+                                                    </IconButton>
+                                                );
                                             }}
-                                        >
-                                            Entra, es gratis!
-                                        </Link>
-                                    </Typography>
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <GoogleLogin
+                                            render={(renderProps) => (
+                                                <IconButton
+                                                    onClick={
+                                                        renderProps.onClick
+                                                    }
+                                                    disabled={
+                                                        renderProps.disabled
+                                                    }
+                                                >
+                                                    <GoogleOutlined
+                                                        className={
+                                                            classes.google
+                                                        }
+                                                    />
+                                                </IconButton>
+                                            )}
+                                            clientId="515176564508-1fvr1sv7kghek5p23fffgv0f177sucon.apps.googleusercontent.com"
+                                            buttonText="Ingresa con Google"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogleFail}
+                                        />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Form>
-                    )}
-                </Formik>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
             </div>
         </Container>
     );
