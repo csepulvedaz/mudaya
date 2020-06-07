@@ -17,6 +17,7 @@ import ServicesDropdown from "./service/ServicesDropdown";
 import Notification from "./Notification";
 import logo from "../../assets/logo-header.png";
 import CreateVehicleModal from "../content/driverContent/CreateVehicleModal";
+import ComplainModal from "./ComplainModal";
 import {
     UPDATE_LOGOUT_TIME_DRIVER,
     UPDATE_LOGOUT_TIME_USER,
@@ -96,7 +97,17 @@ const useStyles = makeStyles((theme) => ({
     },
     button_publish: {
         height: "45px",
-        margin: "10px 20px",
+        margin: "10px 10px",
+        borderRadius: "9px",
+        background: theme.palette.primary.main,
+        fontWeight: "600",
+        color: "#fff",
+        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+        fontSize: "16px",
+    },
+    button_complain: {
+        height: "45px",
+        margin: "10px 10px",
         borderRadius: "9px",
         background: theme.palette.primary.main,
         fontWeight: "600",
@@ -114,6 +125,7 @@ const CustomHeader = (props) => {
     const [navigate, setNavigate] = useState(false);
     const [visibleAddCar, setVisibleAddCar] = useState(false);
     const [visibleProfile, setVisibleProfile] = useState(false);
+    const [visibleComplain, setVisibleComplain] = useState(false);
     const [visibleEdit, setVisibleEdit] = useState(false);
     const { logout, client, userId } = useContext(AuthContext);
     const classes = useStyles();
@@ -164,6 +176,11 @@ const CustomHeader = (props) => {
         e.preventDefault();
         setVisibleAddCar(true);
     };
+
+    const openModalComplain = (e) =>{
+        e.preventDefault();
+        setVisibleComplain(true);
+    }
 
     const handleLogout = () => {
         const _id = userId;
@@ -240,6 +257,18 @@ const CustomHeader = (props) => {
                         setVisible={setVisibleAddCar}
                         value={props.value}
                     />
+                    <Button
+                        className={classes.button_complain}
+                        onClick={(e)=>openModalComplain(e)}
+                    >
+                        QUEJAS
+                    </Button>
+                    <ComplainModal
+                        visible={visibleComplain}
+                        setVisible={setVisibleComplain}
+                        value={props.value}
+                    />
+                    
                     <Button
                         icon={
                             <ExitToAppIcon
