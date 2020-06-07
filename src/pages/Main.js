@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = () => {
   const classes = useStyles();
-  const { client, userId } = useContext(AuthContext);
+  const { client } = useContext(AuthContext);
   console.log(client);
 
   return (

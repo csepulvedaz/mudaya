@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import Bot from "react-simple-chatbot";
-import AuthContext from "../../context/auth-context";
+
 const config = {
   width: "400px",
   height: "500px",
   headerFontSize: "10px",
   floating: true,
 };
+// import AuthContext from "../../context/auth-context";
 //   const context = useContext(AuthContext);
 //   const { loading: loading1, error: error1, data: data1 } = useQuery(
 //     context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
@@ -18,35 +19,35 @@ const config = {
 //     }
 //   );
 
-const User = (props) => {
-  const { steps } = props;
-  console.log(steps);
-  const origen = steps[6].value;
-  const destino = steps[8].value;
-  const comentario = steps[10].value;
+// const User = (props) => {
+//   const { steps } = props;
+//   console.log(steps);
+//   const origen = steps[6].value;
+//   const destino = steps[8].value;
+//   const comentario = steps[10].value;
 
-  return (
-    <div style={{ width: "100%" }}>
-      <h3>Servicio</h3>
-      <table>
-        <tbody>
-          <tr>
-            <td>Origen</td>
-            <td>{origen}</td>
-          </tr>
-          <tr>
-            <td>Destino</td>
-            <td>{destino}</td>
-          </tr>
-          <tr>
-            <td>Comentario</td>
-            <td>{comentario}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-};
+//   return (
+//     <div style={{ width: "100%" }}>
+//       <h3>Servicio</h3>
+//       <table>
+//         <tbody>
+//           <tr>
+//             <td>Origen</td>
+//             <td>{origen}</td>
+//           </tr>
+//           <tr>
+//             <td>Destino</td>
+//             <td>{destino}</td>
+//           </tr>
+//           <tr>
+//             <td>Comentario</td>
+//             <td>{comentario}</td>
+//           </tr>
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
 const ChatBot = (props) => {
   return (
     <Bot
