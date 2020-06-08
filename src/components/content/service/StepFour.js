@@ -1,12 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import {useMutation} from "@apollo/client";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Col, Collapse, Layout, Modal, Row, Spin} from "antd";
+import {Button, Col, Collapse, Layout, Modal, Rate, Row, Spin} from "antd";
 import {LoadingOutlined} from "@ant-design/icons";
 import {Avatar, Grid, Paper, TextField} from "@material-ui/core";
 
-import {ACCEPT_SERVICE, CANCEL_SERVICE, FINISH_SERVICE} from "../../../graphql/mutations";
+import {CREATE_RATING, RATE_SERVICE} from "../../../graphql/mutations";
 
 const { Panel } = Collapse;
 
@@ -70,6 +70,16 @@ const useStyles = makeStyles((theme) => ({
         top: "50%",
         left: "40%",
     },
+    rate: {
+        margin: "5px 0px",
+        fontSize: "25px",
+    },
+    notchedOutline: {},
+    focused: {
+        "&$focused $notchedOutline": {
+            border: `1px ${theme.palette.primary.light} solid !important`,
+        },
+    },
 }));
 
 function success(msg) {
@@ -85,14 +95,16 @@ function errorModal(msg) {
     });
 }
 
-const StepThree = (props) => {
+const StepFour = (props) => {
     const classes = useStyles();
-    const [acceptService, { loading: loadingService }] = useMutation(
-        ACCEPT_SERVICE,
+    const [rating,setRating] = useState(5.0);
+    const [commentary,setCommentary] = useState("");
+    const [rateService, { loading: loadingService }] = useMutation(
+        RATE_SERVICE,
         {
             onCompleted: () => {
                 props.setVisible(false);
-                success("aceptado");
+                success("calificado");
             },
             onError: (error) => {
                 errorModal(error.graphQLErrors[0].message);
@@ -100,35 +112,14 @@ const StepThree = (props) => {
             refetchQueries: ["ServicesByUser"],
         }
     );
+    const [createRating, { loading: loadingRating }] = useMutation(CREATE_RATING, {
+        onCompleted: (data) => {
 
-    const [cancelService, { loading: loadingCancelService }] = useMutation(
-        CANCEL_SERVICE,
-        {
-            onCompleted: () => {
-                props.setVisible(false);
-                success("cancelado");
-            },
-            onError: (error) => {
-                errorModal(error.graphQLErrors[0].message);
-            },
-            refetchQueries: ["ServicesByUser"],
-        }
-    );
-
-    const [finishService, { loading: loadingFinishService }] = useMutation(
-        FINISH_SERVICE,
-        {
-            onCompleted: () => {
-                props.setVisible(false);
-                success("terminado");
-            },
-            onError: (error) => {
-                errorModal(error.graphQLErrors[0].message);
-            },
-            refetchQueries: ["ServicesByUser"],
-        }
-    );
-
+        },
+        onError: (error) => {
+            errorModal(error.graphQLErrors[0].message);
+        },
+    });
     const {
         _id,
         origin,
@@ -138,27 +129,34 @@ const StepThree = (props) => {
         price,
     } = props.value;
 
+    const handleOnChange = event => {
+        setCommentary(event.target.value);
+    };
+
     const handleSubmit = async () => {
-        return await acceptService({
-            variables: { _id: _id },
-        });
-    };
+        console.log({value: rating,
+            commentary: commentary,
+            idDriver: props.value.idDriver,
+            idVehicle: props.value.idVehicle,
+            idService: _id});
+        let input = {
+            value: rating,
+            commentary: commentary,
+            idDriver: props.value.idDriver,
+            idVehicle: props.value.idVehicle,
+            idService: _id,
+        };
 
-    const handleSubmitFinish = async () => {
-        return await finishService({
-            variables: { _id: _id },
+        await createRating({ variables: { input }
         });
-    };
-
-    const handleCancel = async () => {
-        return await cancelService({
+        return await rateService({
             variables: { _id: _id },
         });
     };
 
     return (
         <Layout className={classes.paper}>
-            {(loadingService || loadingCancelService || loadingFinishService) && (
+            {(loadingService || loadingRating) && (
                 <Spin
                     tip="Cargando..."
                     indicator={
@@ -257,47 +255,55 @@ const StepThree = (props) => {
                         </Grid>
                     </Paper>
                 </Row>
-                {props.value.state === "onHold" && (
-                    <Row gutter={16} className={classes.buttons}>
-                        <Col>
-                            <Button
-                                variant="contained"
-                                onClick={handleCancel}
-                                className={classes.backButton}
-                            >
-                                Cancelar
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={handleSubmit}
-                            >
-                                Confirmar
-                            </Button>
-                        </Col>
-                    </Row>
-                )}
-                {props.value.state === "accepted" && (
-                    <Row gutter={16} className={classes.buttons}>
-                        <Col>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={handleSubmitFinish}
-                            >
-                                Finalizar
-                            </Button>
-                        </Col>
-                    </Row>
-                )}
+                <Row  className={classes.buttons}>
+                    <Typography component="h1" variant="h5">
+                        Califica el servicio
+                    </Typography>
+                </Row>
+                <Row className={classes.buttons}>
+                    <Rate
+                        allowHalf
+                        defaultValue={rating}
+                        allowClear={false}
+                        className={classes.rate}
+                        onChange={setRating}
+                    />
+                </Row>
+                <Row className={classes.buttons}>
+                    <TextField
+                        label="Comentarios sobre el servicio"
+                        fullWidth
+                        variant="outlined"
+                        margin="dense"
+                        multiline
+                        rows={4}
+                        placeholder="Menciona elementos que consideres importantes sobre el servicio recibido"
+                        name="commentaryService"
+                        type="text"
+                        InputProps={{
+                            classes: {
+                                notchedOutline: classes.notchedOutline,
+                                focused: classes.focused,
+                            },
+                        }}
+                        onChange={handleOnChange}
+                    />
+                </Row>
+                <Row gutter={16} className={classes.buttons}>
+                    <Col>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            onClick={handleSubmit}
+                        >
+                            Calificar
+                        </Button>
+                    </Col>
+                </Row>
             </form>
         </Layout>
     );
 };
-export default StepThree;
+export default StepFour;

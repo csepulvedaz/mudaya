@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
-import { Col, Drawer, Modal, Row, Steps } from "antd";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useContext, useState} from "react";
+import {Col, Drawer, Modal, Row, Steps} from "antd";
+import {makeStyles} from "@material-ui/core/styles";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import StepFour from "./StepFour";
+import StepFive from "./StepFive";
 import StepWait from "./StepWait";
 
 import AuthContext from "../../../context/auth-context";
@@ -19,7 +21,7 @@ const useStyles = makeStyles({
     },
 });
 
-const stepsUser = [
+const steps = [
     {
         title: "Solicitud del servicio",
     },
@@ -27,25 +29,24 @@ const stepsUser = [
         title: "Confirmación del servicio",
     },
     {
-        title: "Datos del servicio",
+        title: "Realización del servicio",
+    },
+    {
+        title: "Calificación del servicio",
     },
 ];
 
-const stepsDriver = [
-    {
-        title: "Recibir servicio",
-    },
-    {
-        title: "Datos del servicio",
-    },
-];
-
-const CustomSteps = (props) => {
+const CreateServiceModal = (props) => {
     const classes = useStyles();
     const { client } = useContext(AuthContext);
-    const [current] = useState(props.step);
+    let current=0;
+    if (props.value){props.value.state === "onHold"? current = 1
+        : props.value.state === "started"? current = 1
+        : props.value.state === "accepted"? current = 2
+        : props.value.state === "canceled"||props.value.state === "finished"?current = 3
+        : props.value.state === "rated"? current = 4
+        : current = 0;}
     const [visibleSteps, setVisibleSteps] = useState(false);
-    const steps = client === "user" ? stepsUser : stepsDriver;
 
     const onClickSteps = () => {
         setVisibleSteps(true);
@@ -83,7 +84,7 @@ const CustomSteps = (props) => {
                                 idDriver={props.idDriver}
                                 setVisible={props.setVisibleService}
                             />
-                        ) : current === 0 &&
+                        ) : current === 1 &&
                           client === "driver" &&
                           props.value.state === "started" ? (
                             <StepTwo
@@ -109,12 +110,30 @@ const CustomSteps = (props) => {
                                 value={props.value}
                                 setVisible={props.setVisibleService}
                             />
+                        ) : client === "user" &&
+                        props.value.state === "finished" ? (
+                            <StepFour
+                                value={props.value}
+                                setVisible={props.setVisibleService}
+                            />
+                        ) : client === "driver" &&
+                        props.value.state === "finished" ? (
+                            <StepWait
+                                subject="Usuario"
+                                setVisible={props.setVisibleService}
+                            />
+                        ) : props.value.state === "rated" ? (
+                            <StepFive
+                                value={props.value}
+                                setVisible={props.setVisibleService}
+                            />
                         ) : (
                             <StepThree
                                 value={props.value}
                                 setVisible={props.setVisibleService}
                             />
-                        )}
+                        )
+                        }
                     </div>
                 </Col>
                 <Col span={3} onClick={onClickSteps}>
@@ -145,4 +164,4 @@ const CustomSteps = (props) => {
     );
 };
 
-export default CustomSteps;
+export default CreateServiceModal;

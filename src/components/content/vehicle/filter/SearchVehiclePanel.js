@@ -1,14 +1,14 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { makeStyles } from "@material-ui/core/styles";
+import {useQuery} from "@apollo/client";
+import {makeStyles} from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { Carousel, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import {Carousel, Spin} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
 
 import SearchVehicleCard from "./SearchVehicleCard";
 import img1 from "../../../../assets/van.png";
-import { ALL_VEHICLES } from "../../../../graphql/queries";
+import {ALL_VEHICLES} from "../../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -105,7 +105,6 @@ const SearchVehiclePanel = (props) => {
                                 <div key={index}>
                                     <SearchVehicleCard
                                         image={img1}
-                                        stars={2}
                                         value={value}
                                     />
                                 </div>

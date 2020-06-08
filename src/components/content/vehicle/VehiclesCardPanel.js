@@ -1,8 +1,8 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { Carousel } from "antd";
+import {Carousel} from "antd";
 
 import CardVehicle from "./CardVehicle";
 import img1 from "../../../assets/van.png";
@@ -106,7 +106,6 @@ const VehiclesCardPanel = (props) => {
                                         type={value.type}
                                         capacity={value.capacity}
                                         dimensions={value.dimensions}
-                                        stars={2}
                                         value={value}
                                     />
                                 </div>

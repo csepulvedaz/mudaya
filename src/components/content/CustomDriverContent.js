@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Layout } from "antd";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useState} from "react";
+import {Layout} from "antd";
+import {makeStyles} from "@material-ui/core/styles";
 
 import DriverCalendarPanel from "./driverContent/DriverCalendarPanel";
 import DriverVehiclePanel from "./driverContent/DriverVehiclePanel";
 import DriverServicesPanel from "./driverContent/DriverServicesPanel";
+import DriverRatingPanel from "./driverContent/DriverRatingPanel";
 import DriverLeftSider from "./driverContent/DriverLeftSider";
 
 const { Content } = Layout;
@@ -34,6 +35,7 @@ const CustomDriverContent = () => {
                 {option === 1 && <DriverCalendarPanel />}
                 {option === 2 && <DriverServicesPanel />}
                 {option === 3 && <DriverVehiclePanel />}
+                {option === 4 && <DriverRatingPanel />}
             </Content>
         </Layout>
     );

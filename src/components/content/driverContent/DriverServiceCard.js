@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import { Col, Row, Spin, Descriptions, Button, Tag } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { useQuery } from "@apollo/client";
+import {Button, Col, Descriptions, Row, Spin, Tag} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
+import {useQuery} from "@apollo/client";
 
-import { VEHICLE } from "../../../graphql/queries";
+import {VEHICLE} from "../../../graphql/queries";
 import CreateServiceModal from "../service/CreateServiceModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -163,6 +163,16 @@ const DriverServiceCard = (props) => {
                         En solicitud
                     </Tag>
                 )}
+                {state === "finished" && (
+                    <Tag color="gold" className={classes.tag}>
+                        Finalizado
+                    </Tag>
+                )}
+                {state === "rated" && (
+                    <Tag color="gold" className={classes.tag}>
+                        Calificado
+                    </Tag>
+                )}
 
                 <Button
                     className={classes.button}
@@ -172,7 +182,6 @@ const DriverServiceCard = (props) => {
                 </Button>
                 <CreateServiceModal
                     value={props.value}
-                    step={0}
                     visibleService={visibleService}
                     setVisibleService={setVisibleService}
                 />

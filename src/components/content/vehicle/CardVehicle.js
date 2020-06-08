@@ -1,14 +1,18 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import { CardActionArea } from "@material-ui/core";
-import { Button, Rate } from "antd";
+import {CardActionArea} from "@material-ui/core";
+import {Button, Rate, Spin} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
 
 import VehicleDetailsModal from "./VehicleDetailsModal";
 import CreateServiceModal from "../service/CreateServiceModal";
+import {useQuery} from "@apollo/client";
+import {RANK_BY_VEHICLE} from "../../../graphql/queries";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -62,6 +66,26 @@ const CardVehicle = (props) => {
         setVisible(true);
     };
 
+    const {
+        loading: loadingRank,
+        error: errorRank,
+        data: dataRank,
+    } = useQuery(RANK_BY_VEHICLE, {
+        variables: { idVehicle: props.value._id },
+        fetchPolicy: "no-cache",
+    });
+
+    if (loadingRank)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+
+    if (errorRank) return `Error! ${errorRank}`;
+
     return (
         <Card className={classes.root} elevation={4}>
             <CardActionArea>
@@ -105,9 +129,12 @@ const CardVehicle = (props) => {
                     <Rate
                         disabled
                         allowHalf
-                        defaultValue={props.stars}
+                        defaultValue={dataRank.rankByVehicle? dataRank.rankByVehicle.value : 5}
                         className={classes.rate}
                     />
+                    <span className={classes.boldText}>
+                        ({dataRank.rankByVehicle? dataRank.rankByVehicle.totalRatings : 0})
+                    </span>
                     <Button
                         className={classes.button}
                         onClick={(e) => openModal(e)}
@@ -123,7 +150,6 @@ const CardVehicle = (props) => {
                     <CreateServiceModal
                         idVehicle={props.value._id}
                         idDriver={props.value.idDriver}
-                        step={0}
                         visibleService={visibleService}
                         setVisibleService={setVisibleService}
                     />

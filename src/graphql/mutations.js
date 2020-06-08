@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 
 export const CREATE_USER = gql`
     mutation CreateUser($input: userInput!) {
@@ -120,6 +120,36 @@ export const CANCEL_SERVICE = gql`
     }
 `;
 
+export const FINISH_SERVICE = gql`
+    mutation FinishService($_id: ID!) {
+        finishService(_id: $_id) {
+            date
+            origin
+            destination
+            commentaryUser
+            state
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;
+
+export const RATE_SERVICE = gql`
+    mutation RateService($_id: ID!) {
+        rateService(_id: $_id) {
+            date
+            origin
+            destination
+            commentaryUser
+            state
+            idUser
+            idDriver
+            idVehicle
+        }
+    }
+`;
+
 export const UPDATE_LOGOUT_TIME_DRIVER = gql`
     mutation UpdateLogoutTimeDriver($_id: String!){
         updateLogoutTimeDriver(_id: $_id){
@@ -134,6 +164,18 @@ export const UPDATE_LOGOUT_TIME_USER = gql`
         updateLogoutTimeUser(_id: $_id){
             _id
             name
+        }
+    }
+`;
+
+export const CREATE_RATING = gql`
+    mutation CreateRating($input: ratingInput!) {
+        createRating(input: $input) {
+            value
+            commentary
+            idDriver
+            idVehicle
+            idService
         }
     }
 `;

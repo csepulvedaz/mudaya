@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Row, Col, Descriptions, Tag, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import { useQuery } from "@apollo/client";
+import {Button, Col, Descriptions, Row, Spin, Tag} from "antd";
+import {LoadingOutlined} from "@ant-design/icons";
+import {useQuery} from "@apollo/client";
 
-import { VEHICLE } from "../../../graphql/queries";
+import {VEHICLE} from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
 import theme from "../../utils/AppTheme";
 // import TruckLicense from "./TruckLicense";
@@ -69,6 +68,11 @@ const useStyles = makeStyles({
     },
 });
 
+/**
+ * @return {string}
+ * @return {string}
+ */
+
 export default function DropListElement(props) {
     const classes = useStyles();
     const [visibleService, setVisibleService] = useState(false);
@@ -99,7 +103,7 @@ export default function DropListElement(props) {
     return (
         <Row className={classes.root}>
             <Col span={6}>
-                <div className={classes.image_box}></div>
+                <div className={classes.image_box}/>
             </Col>
             <Col span={12} className={classes.col}>
                 <Row>
@@ -170,10 +174,22 @@ export default function DropListElement(props) {
                         En solicitud
                     </Tag>
                 )}
+                {state === "finished" && (
+                    <Tag color="gold" className={classes.tag}>
+                        Finalizado
+                    </Tag>
+                )}
+                {state === "rated" && (
+                    <Tag color="gold" className={classes.tag}>
+                        Calificado
+                    </Tag>
+                )}
 
                 {(state === "onHold" ||
                     state === "accepted" ||
-                    state === "started") && (
+                    state === "started" ||
+                    state === "finished" ||
+                    state === "rated") && (
                     <Button
                         className={classes.button}
                         onClick={(e) => openModal(e)}
@@ -182,7 +198,6 @@ export default function DropListElement(props) {
                     </Button>
                 )}
                 <CreateServiceModal
-                    step={1}
                     value={props.value}
                     visibleService={visibleService}
                     setVisibleService={setVisibleService}

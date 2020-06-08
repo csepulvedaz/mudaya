@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 
 export const PROFILEUSER = gql`
     query ProfileUser($_id: String!) {
@@ -150,6 +150,56 @@ export const SERVICES_BY_DATE_CREATED =gql`
             price
             idUser
             idDriver
+            idVehicle
+        }
+    }
+`;
+
+export const RATINGS_BY_DRIVER = gql`
+    query RatingsByDriver($idDriver: String!) {
+        ratingsByDriver(idDriver: $idDriver) {
+            _id
+            value
+            commentary
+            idDriver
+            idVehicle
+            idService
+        }
+    }
+`;
+
+export const RATINGS_BY_VEHICLE = gql`
+    query RatingsByVehicle($idVehicle: String!) {
+        ratingsByVehicle(idVehicle: $idVehicle) {
+            _id
+            value
+            commentary
+            idDriver
+            idVehicle
+            idService
+        }
+    }
+`;
+
+export const RATING_BY_SERVICE = gql`
+    query RatingByService($idService: String!) {
+        ratingByService(idService: $idService) {
+            _id
+            value
+            commentary
+            idDriver
+            idVehicle
+            idService
+        }
+    }
+`;
+
+export const RANK_BY_VEHICLE = gql`
+    query RankByVehicle($idVehicle: String!) {
+        rankByVehicle(idVehicle: $idVehicle) {
+            _id
+            value
+            totalRatings
             idVehicle
         }
     }

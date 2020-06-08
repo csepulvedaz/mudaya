@@ -1,11 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Layout, Menu } from "antd";
-import {
-    CarOutlined,
-    ReconciliationOutlined,
-    ScheduleOutlined,
-} from "@ant-design/icons";
+import {makeStyles} from "@material-ui/core/styles";
+import {Layout, Menu} from "antd";
+import {CarOutlined, ReconciliationOutlined, ScheduleOutlined, StarOutlined} from "@ant-design/icons";
 
 const { Sider } = Layout;
 const useStyles = makeStyles({
@@ -29,6 +25,9 @@ const DriverLeftSider = (props) => {
     const toVehicles = () => {
         props.setOption(3);
     };
+    const toRatings = () => {
+        props.setOption(4);
+    };
 
     return (
         <Sider className={classes.sider}>
@@ -48,6 +47,10 @@ const DriverLeftSider = (props) => {
                 <Menu.Item key="vehicles" onClick={toVehicles}>
                     <CarOutlined />
                     Vehículos
+                </Menu.Item>
+                <Menu.Item key="ratings" onClick={toRatings}>
+                    <StarOutlined />
+                    Valoraciones
                 </Menu.Item>
             </Menu>
         </Sider>

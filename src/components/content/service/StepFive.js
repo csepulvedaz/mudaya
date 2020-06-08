@@ -1,12 +1,11 @@
 import React from "react";
-import {useMutation} from "@apollo/client";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Col, Collapse, Layout, Modal, Row, Spin} from "antd";
+import {Collapse, Layout, Rate, Row, Spin} from "antd";
 import {LoadingOutlined} from "@ant-design/icons";
 import {Avatar, Grid, Paper, TextField} from "@material-ui/core";
-
-import {ACCEPT_SERVICE, CANCEL_SERVICE, FINISH_SERVICE} from "../../../graphql/mutations";
+import {useQuery} from "@apollo/client";
+import {RATING_BY_SERVICE} from "../../../graphql/queries";
 
 const { Panel } = Collapse;
 
@@ -70,65 +69,13 @@ const useStyles = makeStyles((theme) => ({
         top: "50%",
         left: "40%",
     },
+    rate: {
+        fontSize: "25px",
+    },
 }));
 
-function success(msg) {
-    Modal.success({
-        content: `Servicio ${msg} con éxito. Podrás revisar su estado en la barra de servicios.`,
-    });
-}
-
-function errorModal(msg) {
-    Modal.error({
-        title: "Error",
-        content: msg,
-    });
-}
-
-const StepThree = (props) => {
+const StepFive = (props) => {
     const classes = useStyles();
-    const [acceptService, { loading: loadingService }] = useMutation(
-        ACCEPT_SERVICE,
-        {
-            onCompleted: () => {
-                props.setVisible(false);
-                success("aceptado");
-            },
-            onError: (error) => {
-                errorModal(error.graphQLErrors[0].message);
-            },
-            refetchQueries: ["ServicesByUser"],
-        }
-    );
-
-    const [cancelService, { loading: loadingCancelService }] = useMutation(
-        CANCEL_SERVICE,
-        {
-            onCompleted: () => {
-                props.setVisible(false);
-                success("cancelado");
-            },
-            onError: (error) => {
-                errorModal(error.graphQLErrors[0].message);
-            },
-            refetchQueries: ["ServicesByUser"],
-        }
-    );
-
-    const [finishService, { loading: loadingFinishService }] = useMutation(
-        FINISH_SERVICE,
-        {
-            onCompleted: () => {
-                props.setVisible(false);
-                success("terminado");
-            },
-            onError: (error) => {
-                errorModal(error.graphQLErrors[0].message);
-            },
-            refetchQueries: ["ServicesByUser"],
-        }
-    );
-
     const {
         _id,
         origin,
@@ -138,35 +85,28 @@ const StepThree = (props) => {
         price,
     } = props.value;
 
-    const handleSubmit = async () => {
-        return await acceptService({
-            variables: { _id: _id },
-        });
-    };
+    const {
+        loading: loadingRating,
+        error: errorRating,
+        data: dataRating,
+    } = useQuery(RATING_BY_SERVICE, {
+        variables: { idService: _id },
+        fetchPolicy: "no-cache",
+    });
 
-    const handleSubmitFinish = async () => {
-        return await finishService({
-            variables: { _id: _id },
-        });
-    };
+    if (loadingRating)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
 
-    const handleCancel = async () => {
-        return await cancelService({
-            variables: { _id: _id },
-        });
-    };
+    if (errorRating) return `Error! ${errorRating}`;
 
     return (
         <Layout className={classes.paper}>
-            {(loadingService || loadingCancelService || loadingFinishService) && (
-                <Spin
-                    tip="Cargando..."
-                    indicator={
-                        <LoadingOutlined style={{ fontSize: 40 }} spin />
-                    }
-                    className={classes.spin}
-                />
-            )}
             <Row>
                 <Typography component="h1" variant="h5">
                     Precio del servicio
@@ -257,47 +197,35 @@ const StepThree = (props) => {
                         </Grid>
                     </Paper>
                 </Row>
-                {props.value.state === "onHold" && (
-                    <Row gutter={16} className={classes.buttons}>
-                        <Col>
-                            <Button
-                                variant="contained"
-                                onClick={handleCancel}
-                                className={classes.backButton}
-                            >
-                                Cancelar
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={handleSubmit}
-                            >
-                                Confirmar
-                            </Button>
-                        </Col>
-                    </Row>
-                )}
-                {props.value.state === "accepted" && (
-                    <Row gutter={16} className={classes.buttons}>
-                        <Col>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={handleSubmitFinish}
-                            >
-                                Finalizar
-                            </Button>
-                        </Col>
-                    </Row>
-                )}
+                <Row  className={classes.buttons}>
+                    <Typography component="h1" variant="h5">
+                        Calificación del servicio
+                    </Typography>
+                </Row>
+                <Row className={classes.buttons}>
+                    <Rate
+                        disabled
+                        allowHalf
+                        defaultValue={dataRating.ratingByService.value}
+                        allowClear={false}
+                        className={classes.rate}
+                    />
+                </Row>
+                <Row className={classes.buttons}>
+                    <TextField
+                        label="Comentarios sobre el servicio"
+                        size="small"
+                        variant="outlined"
+                        margin="none"
+                        multiline
+                        rows={4}
+                        defaultValue={dataRating.ratingByService.commentary}
+                        disabled={true}
+                        fullWidth
+                    />
+                </Row>
             </form>
         </Layout>
     );
 };
-export default StepThree;
+export default StepFive;
