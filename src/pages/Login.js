@@ -344,26 +344,20 @@ const Login = (props) => {
                                             fields="email,first_name,last_name"
                                             callback={responseFacebook}
                                             language="es_ES"
-                                            render={(renderProps) => {
-                                                console.log(renderProps);
-
-                                                return (
-                                                    <IconButton
-                                                        onClick={
-                                                            renderProps.onClick
-                                                        }
-                                                        disabled={
-                                                            renderProps.isDisabled
-                                                        }
-                                                    >
-                                                        <FacebookIcon
-                                                            className={
-                                                                classes.fb
-                                                            }
-                                                        />
-                                                    </IconButton>
-                                                );
-                                            }}
+                                            render={(renderProps) => (
+                                                <IconButton
+                                                    onClick={
+                                                        renderProps.onClick
+                                                    }
+                                                    disabled={
+                                                        renderProps.isDisabled
+                                                    }
+                                                >
+                                                    <FacebookIcon
+                                                        className={classes.fb}
+                                                    />
+                                                </IconButton>
+                                            )}
                                         />
                                     </Grid>
                                     <Grid item>

@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
-import ChatBot from "react-simple-chatbot";
+import ChatBot, { Loading } from "react-simple-chatbot";
+import PropTypes from "prop-types";
+import { useMutation } from "@apollo/client";
+import { Modal } from "antd";
+
+import AuthContext from "../../context/auth-context";
+import { CREATE_COMPLAIN_USER } from "../../graphql/mutations";
 
 const config = {
     width: "400px",
@@ -22,47 +28,55 @@ const theme = {
     userBubbleColor: "#FFFFFF",
     userFontColor: "#4a4a4a",
 };
-// import AuthContext from "../../context/auth-context";
-//   const context = useContext(AuthContext);
-//   const { loading: loading1, error: error1, data: data1 } = useQuery(
-//     context.client === "user" ? PROFILEUSER : PROFILEDRIVER,
-//     {
-//       variables: { _id: context.userId },
-//       onError: (error) => {
-//         errorModal(error.graphQLErrors[0].message);
-//       },
-//     }
-//   );
 
-// const User = (props) => {
-//   const { steps } = props;
-//   console.log(steps);
-//   const origen = steps[6].value;
-//   const destino = steps[8].value;
-//   const comentario = steps[10].value;
+function errorModal(msg) {
+    Modal.error({
+        title: "Error",
+        content: msg,
+    });
+}
 
-//   return (
-//     <div style={{ width: "100%" }}>
-//       <h3>Servicio</h3>
-//       <table>
-//         <tbody>
-//           <tr>
-//             <td>Origen</td>
-//             <td>{origen}</td>
-//           </tr>
-//           <tr>
-//             <td>Destino</td>
-//             <td>{destino}</td>
-//           </tr>
-//           <tr>
-//             <td>Comentario</td>
-//             <td>{comentario}</td>
-//           </tr>
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
+const Response = (props) => {
+    const context = useContext(AuthContext);
+    const { steps } = props;
+    console.log(steps.complain2.value);
+
+    const [createComplain, { loading }] = useMutation(CREATE_COMPLAIN_USER, {
+        onError: (error) => {
+            errorModal(error.graphQLErrors[0].message);
+        },
+    });
+
+    useEffect(() => {
+        createComplain({
+            variables: { _id: context.userId, complain: steps.complain2.value },
+        });
+    }, [context.userId, createComplain, steps.complain2.value]);
+
+    return (
+        <div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <span>
+                    La queja: "{steps.complain2.value}" ha sido procesada con
+                    exito.
+                </span>
+            )}
+        </div>
+    );
+};
+
+Response.propTypes = {
+    steps: PropTypes.object,
+    triggerNextStep: PropTypes.func,
+};
+
+Response.defaultProps = {
+    steps: undefined,
+    triggerNextStep: undefined,
+};
+
 const CustomChatBot = (props) => {
     return (
         <ThemeProvider theme={theme}>
@@ -70,12 +84,7 @@ const CustomChatBot = (props) => {
                 steps={[
                     {
                         id: "welcome",
-                        component: (
-                            <span>
-                                Hola! Soy el Bruce, el asistente de PRAVA.
-                            </span>
-                        ),
-                        asMessage: true,
+                        message: "Hola! Soy el Bruce, el asistente de PRAVA.",
                         trigger: "question",
                     },
                     {
@@ -94,7 +103,7 @@ const CustomChatBot = (props) => {
                             {
                                 value: 1,
                                 label: "Quiero solicitar un servicio.",
-                                trigger: "service1",
+                                trigger: "service0",
                             },
                             {
                                 value: 2,
@@ -103,6 +112,7 @@ const CustomChatBot = (props) => {
                             },
                         ],
                     },
+                    // -------- Complain ---------
                     {
                         id: "complain1",
                         message: "Por favor, escriba la queja.",
@@ -112,11 +122,18 @@ const CustomChatBot = (props) => {
                         id: "complain2",
                         placeholder: "Escriba un mensaje...",
                         user: true,
+                        validator: (value) => {
+                            if (value === "") {
+                                return "Debe escribir algo.";
+                            }
+                            return true;
+                        },
                         trigger: "complain3",
                     },
                     {
                         id: "complain3",
-                        message: "Queja procesada con exito.",
+                        component: <Response />,
+                        asMessage: true,
                         trigger: "complain4",
                     },
                     {
@@ -124,6 +141,19 @@ const CustomChatBot = (props) => {
                         message:
                             "Nuestro equipo de atención al cliente te responderá lo mas pronto posible. :)",
                         trigger: "question2",
+                    },
+                    // -------- Service ---------
+                    {
+                        id: "service0",
+                        message:
+                            "Para solicitar un servicio, siga los siguientes pasos:",
+                        trigger: "service1",
+                    },
+                    {
+                        id: "service1",
+                        message:
+                            "Por favor, seleccione el vehiculo de su preferencia en el panel vehiculos disponibles o en el filtro de vehiculos.",
+                        trigger: "service2",
                     },
                     {
                         id: "service1",
