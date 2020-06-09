@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 function success(msg) {
     Modal.success({
-        content: `Servicio ${msg} con éxito. Podrás revisar su estado en la barra de servicios.`,
+        content: `Servicio ${msg} con éxito. Podrás revisar su estado en la barra de servicios. No olvides calificar el servicio ;) `,
     });
 }
 
