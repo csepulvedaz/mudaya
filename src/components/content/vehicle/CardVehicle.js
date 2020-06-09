@@ -1,23 +1,22 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {CardActionArea} from "@material-ui/core";
-import {Button, Rate, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import { CardActionArea } from "@material-ui/core";
+import { Button, Rate, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import VehicleDetailsModal from "./VehicleDetailsModal";
 import CreateServiceModal from "../service/CreateServiceModal";
-import {useQuery} from "@apollo/client";
-import {RANK_BY_VEHICLE} from "../../../graphql/queries";
-
+import { useQuery } from "@apollo/client";
+import { RANK_BY_VEHICLE } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "190rx",
-        height: "300px",
+        height: "320px",
         margin: "20px 25px",
         borderRadius: "8px",
         //boxShadow:theme.shadows[0],
@@ -66,14 +65,13 @@ const CardVehicle = (props) => {
         setVisible(true);
     };
 
-    const {
-        loading: loadingRank,
-        error: errorRank,
-        data: dataRank,
-    } = useQuery(RANK_BY_VEHICLE, {
-        variables: { idVehicle: props.value._id },
-        fetchPolicy: "no-cache",
-    });
+    const { loading: loadingRank, error: errorRank, data: dataRank } = useQuery(
+        RANK_BY_VEHICLE,
+        {
+            variables: { idVehicle: props.value._id },
+            fetchPolicy: "no-cache",
+        }
+    );
 
     if (loadingRank)
         return (
@@ -129,11 +127,19 @@ const CardVehicle = (props) => {
                     <Rate
                         disabled
                         allowHalf
-                        defaultValue={dataRank.rankByVehicle? dataRank.rankByVehicle.value : 5}
+                        defaultValue={
+                            dataRank.rankByVehicle
+                                ? dataRank.rankByVehicle.value
+                                : 5
+                        }
                         className={classes.rate}
                     />
                     <span className={classes.boldText}>
-                        ({dataRank.rankByVehicle? dataRank.rankByVehicle.totalRatings : 0})
+                        (
+                        {dataRank.rankByVehicle
+                            ? dataRank.rankByVehicle.totalRatings
+                            : 0}
+                        )
                     </span>
                     <Button
                         className={classes.button}
