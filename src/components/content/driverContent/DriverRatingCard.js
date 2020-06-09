@@ -11,7 +11,7 @@ import TruckLicense from "../../header/service/TruckLicense";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "720px",
-        padding: "30px 0px",
+        padding: "24px 20px",
         background: "#fff",
         borderRadius: "8px",
         boxShadow: theme.shadows[4],
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
     },
     centerRow: {
@@ -31,16 +30,28 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         backgroundColor: "#fff",
     },
+    leftRow: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "left",
+        alignItems: "center",
+        backgroundColor: "#fff",
+    },
     rate: {
-        fontSize: "25px",
+        fontSize: "20px",
+        alignSelf: "stretch",        
+        margin: "0 20px 20px 30px",
     },
     title: {
-        fontSize: "30px",
-        textAlign: "center",
-        color: "#3d3d3d",
+        alignSelf: "stretch",
+        fontSize: "24px",
+        color: "#3d3d3d",        
+        margin: "0 0 0 20px",
     },
     paddingText: {
-        paddingInline : "5px",
+        paddingInline : "5px",        
+        margin: "0 0 0 16px",
     },
     row: {
         width: "100%",
@@ -48,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         paddingBlock: "5px"
     },
+    avatar:{
+        borderRadius:"16px",
+    }
 }));
 
 const DriverRatingCard = (props) => {
@@ -57,19 +71,19 @@ const DriverRatingCard = (props) => {
         <Row className={classes.root}>
             <Col span={3} className={classes.col}>
                 <Row className={classes.row}>
-                    <TruckLicense vehicleId={props.value.idVehicle} />
+                    <Avatar className={classes.avatar} shape="square" size={64} icon={<UserOutlined />} />
                 </Row>
                 <Row className={classes.row}>
-                    <Avatar shape="square" size={64} icon={<UserOutlined />} />
+                    <TruckLicense vehicleId={props.value.idVehicle} />
                 </Row>
             </Col>
             <Col span={21} className={classes.col}>
-                <Row className={classes.centerRow}>
+                <Row className={classes.leftRow}>
                     <Typography variant="h4" className={classes.title}>
                         Calificación del servicio
                     </Typography>
                 </Row>
-                <Row>
+                <Row className={classes.leftRow}>
                     <Rate
                         disabled
                         allowHalf
@@ -83,7 +97,6 @@ const DriverRatingCard = (props) => {
                         label="Comentarios sobre el servicio"
                         size="small"
                         variant="outlined"
-                        margin="none"
                         multiline
                         rows={4}
                         defaultValue={props.value.commentary}
