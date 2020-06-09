@@ -17,7 +17,7 @@ import {RANK_BY_VEHICLE} from "../../../graphql/queries";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "190rx",
-        height: "300px",
+        height: "340px",
         margin: "20px 25px",
         borderRadius: "8px",
         //boxShadow:theme.shadows[0],
