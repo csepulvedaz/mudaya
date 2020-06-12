@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         height: 100,
     },
     title: {
-        fontSize: "30px",
+        fontSize: "26px",
         textAlign: "center",
         color: "#3d3d3d",
     },

@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import {Button, Col, Descriptions, Row, Spin, Tag} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import {LoadingOutlined, MessageOutlined} from "@ant-design/icons";
 import {useQuery} from "@apollo/client";
 
 import {VEHICLE} from "../../../graphql/queries";
@@ -21,12 +21,16 @@ const useStyles = makeStyles((theme) => ({
         height: "100px",
     },
     title: {
-        fontSize: "30px",
+        fontSize: "26px",
         textAlign: "center",
         color: "#3d3d3d",
     },
     text: {
         fontSize: "15px",
+        textAlign: "center",
+    },
+    service_date: {
+        fontSize: "12px",
         textAlign: "center",
     },
     year: {
@@ -60,6 +64,14 @@ const useStyles = makeStyles((theme) => ({
         padding: "5px",
         fontSize: "13px",
     },
+    chatButtonIcon:{
+        color: theme.palette.primary.main,
+        transform: "scaleX(-1)",
+        fontSize: "24px",
+    },
+    chatButton:{
+        boxShadow: "none !important",
+    }
 }));
 
 const DriverServiceCard = (props) => {
@@ -139,7 +151,7 @@ const DriverServiceCard = (props) => {
                 </Row>
             </Col>
             <Col span={6} className={classes.colState}>
-                <Typography variant="body1" className={classes.text}>
+                <Typography variant="body1" className={classes.service_date}>
                     {date}
                 </Typography>
 
@@ -173,6 +185,11 @@ const DriverServiceCard = (props) => {
                         Calificado
                     </Tag>
                 )}
+
+                
+                <Button className={classes.chatButton}>
+                    <MessageOutlined className={classes.chatButtonIcon}/>
+                </Button>
 
                 <Button
                     className={classes.button}
