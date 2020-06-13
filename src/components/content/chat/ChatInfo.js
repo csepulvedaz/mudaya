@@ -26,7 +26,7 @@ const  useStyles = makeStyles((theme)=>({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        margin: "2px 0",
+        margin: "3px 0",
         padding: "15px 0",
     },
     box_horizontal:{
@@ -35,7 +35,7 @@ const  useStyles = makeStyles((theme)=>({
         margin:"0 18px",
         display: "flex",
         justifyContent: "center",
-        margin: "2px 0",
+        margin: "3px 0",
         padding: "15px 0",
     },
     comment_container:{
