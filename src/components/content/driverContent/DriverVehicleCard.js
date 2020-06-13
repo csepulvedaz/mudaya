@@ -75,7 +75,7 @@ const DriverVehicleCard = (props) => {
                 </Col>
                 <Col span={12} className={classes.col}>
                     <Row>
-                        <Typography variant="h4" className={classes.title}>
+                        <Typography className={classes.title}>
                             {props.value.brand + " • " + props.value.model}
                         </Typography>
                     </Row>
