@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col, Row } from 'antd';
 import {makeStyles} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
+import AuthContext from "../../../context/auth-context";
 
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import MonetizationOnRoundedIcon from '@material-ui/icons/MonetizationOnRounded';
@@ -45,6 +46,7 @@ const  useStyles = makeStyles((theme)=>({
     },
     media: {
         height: "100px",
+        width: "100px",
         borderRadius:"12px",
     },
     tiny_text:{
@@ -56,6 +58,12 @@ const  useStyles = makeStyles((theme)=>({
         fontSize: "18px",
         textAlign: "right",
         color: "#646464",   
+        fontWeight: "bold",
+    },
+    bold_text_error:{
+        fontSize: "14px",
+        textAlign: "right",
+        color: theme.palette.error.main,   
         fontWeight: "bold",
     },
     comment_text:{
@@ -106,6 +114,10 @@ const  useStyles = makeStyles((theme)=>({
 
 const ChatInfo = (props) => {
     const classes = useStyles();
+    const { origin, destination, date, price, commentaryDriver, commentaryUser, idVehicle } = props.valueService;
+    console.log(props.valueService);
+    console.log(price);
+    const { client } = useContext(AuthContext);
     const spanIcon = 5;
     const spanContent = 19;
     return (
@@ -117,7 +129,7 @@ const ChatInfo = (props) => {
                     image={carrito}
                     title="img"
                 />
-                <TruckLicense vehicleId="ESO-000"/>
+                <TruckLicense vehicleId={idVehicle}/>
                 {/* Imagen y Placa */}
             </Row>
             <Row className={classes.box_horizontal}>
@@ -133,7 +145,7 @@ const ChatInfo = (props) => {
                             Fecha:
                         </Typography>
                         <Typography className={classes.bold_text}>
-                            01/01/2020
+                            {date}
                         </Typography>
                     </Row>
                 </Col>  
@@ -150,9 +162,17 @@ const ChatInfo = (props) => {
                     <Typography className={classes.tiny_text}>
                         Precio:
                     </Typography>
-                    <Typography className={classes.bold_text}>
-                        00.000 COP
-                    </Typography>
+                    {price === null && (
+                        <Typography className={classes.bold_text_error}>
+                            No establecido
+                        </Typography>
+                    )}
+                    {price !== null && (
+                        <Typography className={classes.bold_text}>
+                            {price} COP
+                        </Typography>
+                    )}
+                    
                     </Row>
                 </Col>                
             </Row>
@@ -169,7 +189,7 @@ const ChatInfo = (props) => {
                             Origen:
                         </Typography>
                         <Typography className={classes.bold_text} style={{fontSize:"14px"}}>
-                            Calle 00 A # 00 - 00
+                            {origin}
                         </Typography>
                     </Row>
                     <Row className={classes.row} style={{margin:"4px 0"}}>
@@ -177,7 +197,7 @@ const ChatInfo = (props) => {
                             Destino:
                         </Typography>
                         <Typography className={classes.bold_text} style={{fontSize:"14px"}}>
-                            Calle 00 A # 00 - 00
+                            {destination}
                         </Typography>
                     </Row>
                 </Col>                
@@ -197,9 +217,16 @@ const ChatInfo = (props) => {
                             </Typography>
                         </Row>
                         <Row className={classes.leftRow}>
-                            <Typography className={classes.comment_text}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </Typography>
+                            {client === "driver" && (
+                                <Typography className={classes.comment_text}>
+                                    {commentaryDriver}
+                                </Typography>
+                            )}
+                            {client === "user" && (
+                                <Typography className={classes.comment_text}>
+                                    {commentaryUser}
+                                </Typography>
+                            )}
                         </Row>
                     </Col>
                 </Row>
@@ -212,16 +239,34 @@ const ChatInfo = (props) => {
                     </Row>
                 </Col>
                 <Col span={spanContent} className={classes.col} >
-                    <Row className={classes.leftRow} >
-                        <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
-                        Usuario
-                        </Typography>
-                    </Row>
-                    <Row className={classes.leftRow}>
-                        <Typography className={classes.comment_text}>
-                            Sed ut perspiciatis unde omnis iste natus
-                        </Typography>
-                    </Row>
+                {client === "driver" && (
+                    <>
+                        <Row className={classes.leftRow} >
+                            <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
+                            Usuario
+                            </Typography>
+                        </Row>
+                        <Row className={classes.leftRow}>
+                            <Typography className={classes.comment_text}>
+                                {commentaryUser}
+                            </Typography>
+                        </Row>
+                    </>
+                )}
+                {client === "user" && (
+                    <>
+                        <Row className={classes.leftRow} >
+                            <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
+                            Conductor
+                            </Typography>
+                        </Row>
+                        <Row className={classes.leftRow}>
+                            <Typography className={classes.comment_text}>
+                                {commentaryDriver}
+                            </Typography>
+                        </Row>
+                    </>
+                )}
                 </Col>
             </Row>
             </Col>

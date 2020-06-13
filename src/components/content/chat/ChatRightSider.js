@@ -24,7 +24,7 @@ const ChatRightSider = (props) => {
                 {/*Aquí pondría mi chat, si lo tuviera :'v*/}
             </Col>
             <Col span ={10}>
-                <ChatInfo/>
+                <ChatInfo valueService={props.valueService}/>
             </Col>
         </Row>
 

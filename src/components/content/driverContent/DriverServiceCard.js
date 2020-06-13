@@ -221,7 +221,7 @@ const DriverServiceCard = (props) => {
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
             >
-                <CustomChatSider/>
+                <CustomChatSider valueService={props.value}/>
             </Drawer>
         </>
     );
