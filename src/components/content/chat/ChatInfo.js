@@ -62,7 +62,7 @@ const  useStyles = makeStyles((theme)=>({
         fontSize: "13px",
         textAlign: "left",
         color: "#8b8b8b",
-        width:"80%",
+        width:"90%",
         margin:"10px 0",
     },
     col: {
@@ -198,7 +198,7 @@ const ChatInfo = (props) => {
                         </Row>
                         <Row className={classes.leftRow}>
                             <Typography className={classes.comment_text}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             </Typography>
                         </Row>
                     </Col>

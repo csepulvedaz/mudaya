@@ -19,11 +19,11 @@ const ChatRightSider = (props) => {
     const classes = useStyles();
     return (
         <Row className= {classes.root}>
-            <Col span={8}>
+            <Col span={14}>
                 <p className={classes.temp}>CHAT INCOMING</p>
                 {/*Aquí pondría mi chat, si lo tuviera :'v*/}
             </Col>
-            <Col span ={4}>
+            <Col span ={10}>
                 <ChatInfo/>
             </Col>
         </Row>
