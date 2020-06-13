@@ -69,9 +69,17 @@ const  useStyles = makeStyles((theme)=>({
     comment_text:{
         fontSize: "13px",
         textAlign: "left",
-        color: "#8b8b8b",
+        color: "#7b7b7b",
         width:"90%",
         margin:"10px 0",
+    },
+    comment_text_null:{
+        fontSize: "13px",
+        textAlign: "left",
+        color: "#b5b5b5",
+        width:"90%",
+        margin:"10px 0",
+        fontStyle:"italic",
     },
     col: {
         width: "100%",
@@ -123,6 +131,7 @@ const ChatInfo = (props) => {
     return (
         <div className={classes.root}>
         <Col>
+                {/* TRUCK IMAGE & LICENSE:  */}
             <Row className={classes.box_vertical}>
                 <CardMedia
                     className={classes.media}
@@ -130,10 +139,9 @@ const ChatInfo = (props) => {
                     title="img"
                 />
                 <TruckLicense vehicleId={idVehicle}/>
-                {/* Imagen y Placa */}
             </Row>
+                {/* DATE: */}
             <Row className={classes.box_horizontal}>
-                {/* DATE */}
                 <Col span={spanIcon} className={classes.col} style={{justifyContent: "center"}}>
                     <Row className={classes.icon_Row}>  
                         <CalendarTodayRoundedIcon/>
@@ -149,9 +157,9 @@ const ChatInfo = (props) => {
                         </Typography>
                     </Row>
                 </Col>  
-            </Row>
+            </Row> 
+                {/* PRICE: */}
             <Row className={classes.box_horizontal}>
-                {/* PRICE */}
                 <Col span={spanIcon} className={classes.col} style={{justifyContent: "center"}}>
                     <Row className={classes.icon_Row}>  
                         <MonetizationOnRoundedIcon/>
@@ -176,8 +184,9 @@ const ChatInfo = (props) => {
                     </Row>
                 </Col>                
             </Row>
-            <Row className={classes.box_horizontal}>
                 {/* ADRESSES */}
+            <Row className={classes.box_horizontal}>
+
                 <Col span={spanIcon} className={classes.col} style={{justifyContent: "center"}}>
                     <Row className={classes.icon_Row}>      
                         <RoomRoundedIcon/> 
@@ -202,6 +211,7 @@ const ChatInfo = (props) => {
                     </Row>
                 </Col>                
             </Row>
+                {/* COMMENTS */}
             <Col className={classes.box_vertical}>
                 <Row className={classes.comment_container}>
                     {/* COMMNETARY 1 */}
@@ -218,14 +228,33 @@ const ChatInfo = (props) => {
                         </Row>
                         <Row className={classes.leftRow}>
                             {client === "driver" && (
-                                <Typography className={classes.comment_text}>
-                                    {commentaryDriver}
-                                </Typography>
+                                <>
+                                    {commentaryDriver === "" && (
+                                        <Typography className={classes.comment_text_null}>
+                                            No has comentado nada durante la creación del servicio.
+                                        </Typography>
+                                    )}
+                                    {commentaryDriver !== "" && (
+                                        <Typography className={classes.comment_text}>
+                                            {commentaryDriver}
+                                        </Typography>
+                                    )}
+                                </>
                             )}
                             {client === "user" && (
-                                <Typography className={classes.comment_text}>
-                                    {commentaryUser}
-                                </Typography>
+                                <>
+                                    {commentaryUser === "" && (
+                                        <Typography className={classes.comment_text_null}>
+                                            No has comentado nada durante la creación del servicio.
+                                        </Typography>
+                                    )}
+                                    {commentaryUser !== "" && (
+                                        <Typography className={classes.comment_text}>
+                                            {commentaryUser}
+                                        </Typography>
+                                    )}
+                                </>
+                                
                             )}
                         </Row>
                     </Col>
@@ -247,9 +276,18 @@ const ChatInfo = (props) => {
                             </Typography>
                         </Row>
                         <Row className={classes.leftRow}>
-                            <Typography className={classes.comment_text}>
-                                {commentaryUser}
-                            </Typography>
+                            <>
+                                {commentaryUser === "" && (
+                                    <Typography className={classes.comment_text_null}>
+                                        El usuario no ha comentado nada durante la creación del servicio.
+                                    </Typography>
+                                )}
+                                {commentaryUser !== "" && (
+                                    <Typography className={classes.comment_text}>
+                                        {commentaryUser}
+                                    </Typography>
+                                )}
+                            </>
                         </Row>
                     </>
                 )}
@@ -261,9 +299,18 @@ const ChatInfo = (props) => {
                             </Typography>
                         </Row>
                         <Row className={classes.leftRow}>
-                            <Typography className={classes.comment_text}>
-                                {commentaryDriver}
-                            </Typography>
+                            <>
+                                {commentaryDriver === "" && (
+                                    <Typography className={classes.comment_text_null}>
+                                        El conductor no ha comentado nada durante la creación del servicio.
+                                    </Typography>
+                                )}
+                                {commentaryDriver !== "" && (
+                                    <Typography className={classes.comment_text}>
+                                        {commentaryDriver}
+                                    </Typography>
+                                )}
+                            </>
                         </Row>
                     </>
                 )}
