@@ -4,7 +4,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
-import AuthContext from "../../../context/auth-context";
 
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import MonetizationOnRoundedIcon from '@material-ui/icons/MonetizationOnRounded';
@@ -12,6 +11,7 @@ import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
 import ChatBubbleOutlineRoundedIcon from '@material-ui/icons/ChatBubbleOutlineRounded';
 
 import TruckLicense from "../../header/service/TruckLicense";
+import AuthContext from "../../../context/auth-context";
 import carrito from "../../../assets/van.png";
 
 const  useStyles = makeStyles((theme)=>({

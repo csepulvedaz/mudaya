@@ -21,7 +21,7 @@ const ChatRightSider = (props) => {
     return (
         <Row className= {classes.root}>
             <Col span={14}>
-                <CustomChat/>
+                <CustomChat valueService={props.valueService}/>
                 {/*Aquí pondría mi chat, si lo tuviera :'v*/}
             </Col>
             <Col span ={10}>

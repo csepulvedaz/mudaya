@@ -1,5 +1,10 @@
-import React from 'react';
-import { makestyles, makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
+import {useQuery} from "@apollo/client";
+import AuthContext from "../../../context/auth-context";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { PROFILEUSER, PROFILEDRIVER } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme)=>({
     root:{
@@ -19,16 +24,50 @@ const useStyles = makeStyles((theme)=>({
     }
 }))
 
-const ChatHeader = () => {
+const ChatHeader = (props) => {
     const classes = useStyles();
+    const context = useContext(AuthContext);
+    const { idDriver, idUser } = props.valueService;
+    
+    const { loading, error, data:dataU } = useQuery(PROFILEUSER, {
+        variables: { _id: idUser},
+    });
+    const { loading:loading1, error:error1, data:dataD } = useQuery(PROFILEDRIVER, {
+        variables: { _id: idDriver },
+    });
+    if (loading1 || loading)
+        return (
+            <Spin
+                tip="Cargando..."
+                indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />}
+                className={classes.spin}
+            />
+        );
+    const {name: nameU, surname:surnameU, phone:phoneU} = dataU.profileUser;
+    const {name: nameD, surname:surnameD, phone:phoneD} = dataD.profileDriver;
+
     return (
         <div className={classes.root}>
-            <div className={classes.title}>
-                Jhon Fredy Acosta Murillo
-            </div>
-            <div className={classes.phone}>
-                Celular: 300-000-0000
-            </div>
+            {context.client === "driver" && (
+                <>
+                    <div className={classes.title}>
+                    {nameU} {surnameU}
+                    </div>
+                    <div className={classes.phone}>
+                    Celular: {phoneU}
+                    </div>
+                </>
+            )}
+            {context.client === "user" && (
+                <>
+                    <div className={classes.title}>
+                    {nameD} {surnameD}
+                    </div>
+                    <div className={classes.phone}>
+                    Celular: {phoneD}
+                    </div>
+                </>
+            )}
         </div>
     );
 };

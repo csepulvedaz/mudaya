@@ -5,10 +5,10 @@ import SendMessageForm from "./SendMessageForm";
 import ChatHeader from "./ChatHeader";
 
 
-const CustomChat = () => {
+const CustomChat = (props) => {
     return (
         <>
-            <ChatHeader />
+            <ChatHeader valueService={props.valueService}/>
             <MessageList />
             <SendMessageForm />
         </>

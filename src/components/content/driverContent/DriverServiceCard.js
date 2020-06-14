@@ -84,8 +84,6 @@ const DriverServiceCard = (props) => {
         setVisibleService(true);
     };
 
-
-
     const { loading, error, data } = useQuery(VEHICLE, {
         variables: { _id: props.value.idVehicle },
     });
