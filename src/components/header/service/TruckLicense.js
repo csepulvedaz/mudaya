@@ -6,7 +6,7 @@ const useStyles = makeStyles({
     root: {
         width: "84px",
         height: "34px",
-        border: "solid 1px #ffee00",
+        border: "solid 2px #ffee00",
         borderRadius: "6px",
         background: "#ffffc8",
     },

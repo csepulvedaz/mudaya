@@ -9,7 +9,8 @@ import TruckLicense from "../../header/service/TruckLicense";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "700px",
-        background: "#FFFFFF",
+        padding: "30px 0px",
+        background: "#fff",
         borderRadius: "8px",
         boxShadow: theme.shadows[4],
     },

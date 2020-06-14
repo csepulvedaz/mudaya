@@ -63,7 +63,7 @@ const  useStyles = makeStyles((theme)=>({
     bold_text_error:{
         fontSize: "14px",
         textAlign: "right",
-        color: theme.palette.error.main,   
+        color: theme.palette.error.light,   
         fontWeight: "bold",
     },
     comment_text:{
@@ -118,6 +118,15 @@ const  useStyles = makeStyles((theme)=>({
         alignItems: "center",
         backgroundColor: "#fff",
     },
+    calendarIcon:{
+        color: theme.palette.primary.light,
+    },
+    priceIcon:{
+        color: theme.palette.warning.light,
+    },
+    placeIcon:{
+        color: theme.palette.success.light,
+    },
 }))
 
 const ChatInfo = (props) => {
@@ -144,7 +153,7 @@ const ChatInfo = (props) => {
             <Row className={classes.box_horizontal}>
                 <Col span={spanIcon} className={classes.col} style={{justifyContent: "center"}}>
                     <Row className={classes.icon_Row}>  
-                        <CalendarTodayRoundedIcon/>
+                        <CalendarTodayRoundedIcon className={classes.calendarIcon}/>
                     </Row>
                 </Col>
                 <Col span={spanContent} className={classes.col}>
@@ -162,7 +171,7 @@ const ChatInfo = (props) => {
             <Row className={classes.box_horizontal}>
                 <Col span={spanIcon} className={classes.col} style={{justifyContent: "center"}}>
                     <Row className={classes.icon_Row}>  
-                        <MonetizationOnRoundedIcon/>
+                        <MonetizationOnRoundedIcon className={classes.priceIcon}/>
                     </Row>
                 </Col>
                 <Col span={spanContent} className={classes.col}>
@@ -189,7 +198,7 @@ const ChatInfo = (props) => {
 
                 <Col span={spanIcon} className={classes.col} style={{justifyContent: "center"}}>
                     <Row className={classes.icon_Row}>      
-                        <RoomRoundedIcon/> 
+                        <RoomRoundedIcon className={classes.placeIcon}/> 
                     </Row>
                 </Col>
                 <Col span={spanContent} className={classes.col} >
