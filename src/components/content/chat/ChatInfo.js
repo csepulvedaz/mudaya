@@ -217,58 +217,16 @@ const ChatInfo = (props) => {
                     {/* COMMNETARY 1 */}
                     <Col span={spanIcon} className={classes.col}>
                         <Row className={classes.icon_Row}>
-                            <ChatBubbleOutlineRoundedIcon style={{transform: "scaleX(-1)"}}/> 
+                            {client === "user" && (
+                                <ChatBubbleOutlineRoundedIcon style={{transform: "scaleX(-1)"}}/>
+                            )} 
+                            {client === "driver" && (
+                                <ChatBubbleOutlineRoundedIcon/>
+                            )} 
                         </Row>
                     </Col>
                     <Col span={spanContent} className={classes.col} >
-                        <Row className={classes.leftRow} >
-                            <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
-                            Tú
-                            </Typography>
-                        </Row>
-                        <Row className={classes.leftRow}>
-                            {client === "driver" && (
-                                <>
-                                    {commentaryDriver === "" && (
-                                        <Typography className={classes.comment_text_null}>
-                                            No has comentado nada durante la creación del servicio.
-                                        </Typography>
-                                    )}
-                                    {commentaryDriver !== "" && (
-                                        <Typography className={classes.comment_text}>
-                                            {commentaryDriver}
-                                        </Typography>
-                                    )}
-                                </>
-                            )}
-                            {client === "user" && (
-                                <>
-                                    {commentaryUser === "" && (
-                                        <Typography className={classes.comment_text_null}>
-                                            No has comentado nada durante la creación del servicio.
-                                        </Typography>
-                                    )}
-                                    {commentaryUser !== "" && (
-                                        <Typography className={classes.comment_text}>
-                                            {commentaryUser}
-                                        </Typography>
-                                    )}
-                                </>
-                                
-                            )}
-                        </Row>
-                    </Col>
-                </Row>
-                <Divider variant="middle" />
-                <Row className={classes.comment_container}>
-                {/* COMMNETARY 2 */}
-                <Col span={spanIcon} className={classes.col}>
-                    <Row className={classes.icon_Row}>
-                        <ChatBubbleOutlineRoundedIcon/> 
-                    </Row>
-                </Col>
-                <Col span={spanContent} className={classes.col} >
-                {client === "driver" && (
+                    {client === "driver" && (
                     <>
                         <Row className={classes.leftRow} >
                             <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
@@ -290,30 +248,92 @@ const ChatInfo = (props) => {
                             </>
                         </Row>
                     </>
-                )}
-                {client === "user" && (
+                    )}
+                    {client === "user" && (
                     <>
                         <Row className={classes.leftRow} >
                             <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
-                            Conductor
+                            Tú
                             </Typography>
                         </Row>
                         <Row className={classes.leftRow}>
                             <>
-                                {commentaryDriver === "" && (
+                                {commentaryUser === "" && (
                                     <Typography className={classes.comment_text_null}>
-                                        El conductor no ha comentado nada durante la creación del servicio.
+                                        No has comentado nada durante la creación del servicio.
                                     </Typography>
                                 )}
-                                {commentaryDriver !== "" && (
+                                {commentaryUser !== "" && (
                                     <Typography className={classes.comment_text}>
-                                        {commentaryDriver}
+                                        {commentaryUser}
                                     </Typography>
                                 )}
                             </>
                         </Row>
                     </>
                 )}
+                    </Col>
+                </Row>
+                <Divider variant="middle" />
+                <Row className={classes.comment_container}>
+                {/* COMMNETARY 2 */}
+                <Col span={spanIcon} className={classes.col}>
+                    <Row className={classes.icon_Row}>
+                        {client === "user" && (
+                            <ChatBubbleOutlineRoundedIcon />
+                        )} 
+                        {client === "driver" && (
+                            <ChatBubbleOutlineRoundedIcon style={{transform: "scaleX(-1)"}}/>
+                        )} 
+                    </Row>
+                </Col>
+                <Col span={spanContent} className={classes.col} >
+                    {client === "driver" && (
+                        <>
+                            <Row className={classes.leftRow} >
+                                <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
+                                Tú
+                                </Typography>
+                            </Row>
+                            <Row className={classes.leftRow}>
+                                <>
+                                    {commentaryDriver === "" && (
+                                        <Typography className={classes.comment_text_null}>
+                                            No has comentado nada durante la creación del servicio.
+                                        </Typography>
+                                    )}
+                                    {commentaryDriver !== "" && (
+                                        <Typography className={classes.comment_text}>
+                                            {commentaryDriver}
+                                        </Typography>
+                                    )}
+                                </>
+                            </Row>
+                        </>
+                        )}
+                        {client === "user" && (
+                        <>
+                            <Row className={classes.leftRow} >
+                                <Typography className={classes.bold_text} style={{fontSize: "14px", marginTop:"5px"}}>
+                                Conductor
+                                </Typography>
+                            </Row>
+                            <Row className={classes.leftRow}>
+                                <>
+                                    {commentaryDriver === "" && (
+                                        <Typography className={classes.comment_text_null}>                                            
+                                        El conductor no ha comentado nada durante la creación del servicio.
+                                        </Typography>
+                                    )}
+                                    {commentaryDriver !== "" && (
+                                        <Typography className={classes.comment_text}>
+                                            {commentaryDriver}
+                                        </Typography>
+                                    )}
+                                </>
+                            </Row>
+                        </>
+                    )}
                 </Col>
             </Row>
             </Col>
