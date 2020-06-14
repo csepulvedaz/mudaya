@@ -32,5 +32,6 @@ const useStyles = makeStyles({
 
 export default function TruckLicense(props) {
     const classes = useStyles();
-    return <Chip label={props.vehicleId} className={classes.root} />;
+    let upper = props.vehicleId.toUpperCase();
+    return <Chip label={upper} className={classes.root} />;
 }

@@ -19,7 +19,7 @@ const  useStyles = makeStyles((theme)=>({
         width: "340px",
         height:"100%",
         padding: "0px 20px",
-        background: "#e0e0e0",
+        background: "#f9f9f9",
     },
     box_vertical:{
         background:"#fff",
@@ -284,7 +284,7 @@ const ChatInfo = (props) => {
                 )}
                     </Col>
                 </Row>
-                <Divider variant="middle" />
+                <div style={{borderTop:"1px #ccc solid ", width:"70%", margin:"8px 0 14px 0" }}></div>
                 <Row className={classes.comment_container}>
                 {/* COMMNETARY 2 */}
                 <Col span={spanIcon} className={classes.col}>

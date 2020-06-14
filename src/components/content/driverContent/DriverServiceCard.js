@@ -220,6 +220,7 @@ const DriverServiceCard = (props) => {
                 closable={false}
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
+                bodyStyle={{background:"#f9f9f9"}}
             >
                 <CustomChatSider valueService={props.value}/>
             </Drawer>
