@@ -27,16 +27,16 @@ const useStyles = makeStyles((theme)=>({
     },
     message_username: {
         fontSize: "11px",
-        color: "var(--main-text-color)",
+        color: theme.palette.grey[600],
         opacity: "0.9",
-        marginBottom: "6px",
+        margin: "10px 0 6px 0",
     },
     message_text: {
-        background: "var(--main-color)",
-        color: "var(--secondary-color)",
+        background: theme.palette.primary.light,
+        color: "#fff",
         display: "inline",
         padding: "4px 8px",
-        borderRadius: "8px",
+        borderRadius: "2px 8px 8px 8px",
     }
 }));
 

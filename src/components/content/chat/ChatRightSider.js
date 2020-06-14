@@ -1,8 +1,9 @@
 import React from 'react';
 import { Col, Row } from 'antd';
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import ChatInfo from "./ChatInfo"
+import CustomChat from "./CustomChat";
 
 const  useStyles = makeStyles((theme)=>({
     root:{
@@ -20,7 +21,7 @@ const ChatRightSider = (props) => {
     return (
         <Row className= {classes.root}>
             <Col span={14}>
-                <p className={classes.temp}>CHAT INCOMING</p>
+                <CustomChat/>
                 {/*Aquí pondría mi chat, si lo tuviera :'v*/}
             </Col>
             <Col span ={10}>

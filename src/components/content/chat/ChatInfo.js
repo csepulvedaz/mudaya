@@ -17,6 +17,7 @@ import carrito from "../../../assets/van.png";
 const  useStyles = makeStyles((theme)=>({
     root:{
         width: "340px",
+        height:"100%",
         padding: "0px 20px",
         background: "#e0e0e0",
     },
@@ -179,7 +180,7 @@ const ChatInfo = (props) => {
                     <Typography className={classes.tiny_text}>
                         Precio:
                     </Typography>
-                    {price === null && (
+                    {(price === null || price === "") && (
                         <Typography className={classes.bold_text_error}>
                             No establecido
                         </Typography>
@@ -244,7 +245,7 @@ const ChatInfo = (props) => {
                         </Row>
                         <Row className={classes.leftRow}>
                             <>
-                                {commentaryUser === "" && (
+                                {(commentaryUser === "" || commentaryUser === null) && (
                                     <Typography className={classes.comment_text_null}>
                                         El usuario no ha comentado nada durante la creación del servicio.
                                     </Typography>
@@ -267,7 +268,7 @@ const ChatInfo = (props) => {
                         </Row>
                         <Row className={classes.leftRow}>
                             <>
-                                {commentaryUser === "" && (
+                                {(commentaryUser === "" || commentaryUser === null) && (
                                     <Typography className={classes.comment_text_null}>
                                         No has comentado nada durante la creación del servicio.
                                     </Typography>
@@ -306,7 +307,7 @@ const ChatInfo = (props) => {
                             </Row>
                             <Row className={classes.leftRow}>
                                 <>
-                                    {commentaryDriver === "" && (
+                                    {(commentaryDriver === "" || commentaryDriver === null )&& (
                                         <Typography className={classes.comment_text_null}>
                                             No has comentado nada durante la creación del servicio.
                                         </Typography>
@@ -329,7 +330,7 @@ const ChatInfo = (props) => {
                             </Row>
                             <Row className={classes.leftRow}>
                                 <>
-                                    {commentaryDriver === "" && (
+                                    {(commentaryDriver === "" || commentaryDriver === null) && (
                                         <Typography className={classes.comment_text_null}>                                            
                                         El conductor no ha comentado nada durante la creación del servicio.
                                         </Typography>

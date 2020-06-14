@@ -1,10 +1,17 @@
 import React from 'react';
 
+import MessageList from "./MessageList";
+import SendMessageForm from "./SendMessageForm";
+import ChatHeader from "./ChatHeader";
+
+
 const CustomChat = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            <ChatHeader />
+            <MessageList />
+            <SendMessageForm />
+        </>
     );
 };
 
