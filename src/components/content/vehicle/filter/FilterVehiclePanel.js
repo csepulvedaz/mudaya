@@ -58,7 +58,6 @@ const FilterVehiclePanel = (props) => {
         })
     ); // remove "Seleccione un tipo" option
     if (index !== -1) selectType.splice(index, 1);
-    selectType.sort((a, b) => (a.label > b.label) ? 1 : -1);
 
     const selectDepartment = departments;
     index = selectDepartment.indexOf(
@@ -67,7 +66,6 @@ const FilterVehiclePanel = (props) => {
         })
     ); // remove "" option
     if (index !== -1) selectDepartment.splice(index, 1);
-    selectDepartment.sort((a, b) => (a.label > b.label) ? 1 : -1);
 
     const cityData = cities;
     index = cityData.indexOf(
@@ -76,7 +74,7 @@ const FilterVehiclePanel = (props) => {
         })
     ); // remove "Seleccione un municipio" option
     if (index !== -1) cityData.splice(index, 1);
-    const [selectCity, setSelectCity] = useState(cityData.sort((a, b) => (a.city > b.city) ? 1 : -1));
+    const [selectCity, setSelectCity] = useState(cityData);
 
     const toSearch = () => {
         props.setType(option.type);
@@ -98,8 +96,8 @@ const FilterVehiclePanel = (props) => {
     function onChangeDepartment(value) {
         setOption({type:option.type,department:value,city:option.city});
         if (value === undefined) setOption({type:option.type,department:"null",city:option.city});
-        setSelectCity(cityData.filter(function(city){return city.department === value;}).sort((a, b) => (a.city > b.city) ? 1 : -1));
-        if (value === undefined) setSelectCity(cityData.sort((a, b) => (a.city > b.city) ? 1 : -1));
+        setSelectCity(cityData.filter(function(city){return city.department === value;}));
+        if (value === undefined) setSelectCity(cityData);
     }
 
     function onChangeCity(value) {
@@ -132,7 +130,7 @@ const FilterVehiclePanel = (props) => {
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={selectType}
+                                options={selectType.sort((a, b) => (a.label > b.label) ? 1 : -1)}
                             />
                         </Col>
                         <Col>
@@ -149,7 +147,7 @@ const FilterVehiclePanel = (props) => {
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={selectDepartment}
+                                options={selectDepartment.sort((a, b) => (a.label > b.label) ? 1 : -1)}
                             />
                         </Col>
                         <Col>
@@ -167,7 +165,7 @@ const FilterVehiclePanel = (props) => {
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
                             >
-                                {selectCity.map(city => (
+                                {selectCity.sort((a, b) => (a.city > b.city) ? 1 : -1).map(city => (
                                     <Option key={city.city+", "+city.department.substr(0,2)}>{city.city+", "+city.department.substr(0,2)}</Option>
                                 ))}
                             </Select>
