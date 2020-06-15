@@ -10,22 +10,10 @@ const useStyles = makeStyles((theme)=>({
         paddingLeft: "6px",
         width:"100%",
         height: "80%",
-        overflow: "scroll",
-        background: "var(--secondary-color)",
+        overflow: "auto",
+        display: "flex",
+        flexDirection: "column",
     },
-    message_username: {
-        fontSize: "11px",
-        color: theme.palette.grey[600],
-        opacity: "0.9",
-        margin: "10px 0 6px 0",
-    },
-    message_text: {
-        background: theme.palette.primary.light,
-        color: "#fff",
-        display: "inline",
-        padding: "4px 8px",
-        borderRadius: "2px 8px 8px 8px",
-    }
 }));
 
 
