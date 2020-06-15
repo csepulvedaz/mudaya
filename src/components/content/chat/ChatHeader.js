@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme)=>({
         fontSize:"14px",
         textAlign: "left",
         color:"#8b8b8b",
-        marginLeft:"10px",
     }
 }))
 

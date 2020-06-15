@@ -49,6 +49,7 @@ const  useStyles = makeStyles((theme)=>({
         height: "100px",
         width: "100px",
         borderRadius:"12px",
+        marginBottom:"8px",
     },
     tiny_text:{
         fontSize: "14px",
@@ -133,8 +134,6 @@ const  useStyles = makeStyles((theme)=>({
 const ChatInfo = (props) => {
     const classes = useStyles();
     const { origin, destination, date, price, commentaryDriver, commentaryUser, idVehicle } = props.valueService;
-    console.log(props.valueService);
-    console.log(price);
     const { client } = useContext(AuthContext);
     const spanIcon = 5;
     const spanContent = 19;

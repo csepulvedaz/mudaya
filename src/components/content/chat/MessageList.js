@@ -1,27 +1,15 @@
-import React from 'react';
+import React,{useState, useEffect, useContext} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
+import firebase from "../../../firebase";
 
+import Message from "./Message";
 
-const DUMMY_DATA = [
-    {
-        senderId: 'perborgen',
-        text: 'Hey, how is it going?'
-    },
-    {
-        senderId: 'janedoe',
-        text: 'Great! How about you?'
-    },
-    {
-        senderId: 'perborgen',
-        text: 'Good to hear! I am great as well'
-    }
-]
 const useStyles = makeStyles((theme)=>({
     message_list: {
         boxSizing: "border-box",
         paddingLeft: "6px",
         width:"100%",
-        height: "100%",
+        height: "80%",
         overflow: "scroll",
         background: "var(--secondary-color)",
     },
@@ -41,16 +29,25 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 
-const MessageList = () => {
+const MessageList = (props) => {
     const classes = useStyles();
+    var database = firebase.database();
+    const [messagesList, setMessagesList] = useState([]);
+
+    useEffect(() => {
+        database.ref(`chats/${props.valueService._id}`).on('value', snapshots =>{
+            const currentMessages = snapshots.val();
+            if(currentMessages != null){
+                setMessagesList(currentMessages);
+            }
+        });    
+    }, []);
+    console.log(messagesList);
     return (
         <div className={classes.message_list}>
-            {DUMMY_DATA.map((message, index) => {
-                return(
-                <div key={index}>
-                    <div className={classes.message_username}>{message.senderId}</div>
-                    <div className={classes.message_text}>{message.text}</div>
-                </div>
+            {messagesList.map((message, index) => {
+                return(                    
+                    <Message messageId={message.id} messageText={message.text} index={index}/>
                 )
             })}
         </div>
