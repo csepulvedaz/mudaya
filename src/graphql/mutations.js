@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 
 export const CREATE_USER = gql`
     mutation CreateUser($input: userInput!) {
@@ -36,6 +36,8 @@ export const CREATE_VEHICLE = gql`
             type
             dimensions
             capacity
+            department
+            city
             commentary
             idDriver
         }

@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Spin, Button, Modal, Layout, Row } from "antd";
-import { ErrorMessage, Form, Formik } from "formik";
+import React, {useContext, useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Button, Layout, Modal, Row, Spin} from "antd";
+import {ErrorMessage, Form, Formik} from "formik";
 import TextField from "@material-ui/core/TextField";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import CustomSelect from "../../utils/CustomSelect";
-import { types, years } from "../../utils/selectArrays";
 import TextMaskCustom from "../../utils/TextMaskCustom";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
-import { Grid } from "@material-ui/core";
-import { LoadingOutlined } from "@ant-design/icons";
+import {Grid} from "@material-ui/core";
+import {LoadingOutlined} from "@ant-design/icons";
 import * as Yup from "yup";
-import { useMutation } from "@apollo/client";
+import {useMutation} from "@apollo/client";
 
 import AuthContext from "../../../context/auth-context";
-import { CREATE_VEHICLE } from "../../../graphql/mutations";
+import {CREATE_VEHICLE} from "../../../graphql/mutations";
+import {cities, departments, types, years} from "../../utils/selectArrays";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -110,6 +110,8 @@ const CreateVehicleModal = (props) => {
             type: values.type,
             dimensions: values.dimensions,
             capacity: values.capacity,
+            department: values.department,
+            city: values.city,
             commentary: values.commentary,
             idDriver: context.userId,
         };
@@ -122,6 +124,14 @@ const CreateVehicleModal = (props) => {
         document.getElementById("form1").reset();
         props.setVisible(false);
     };
+
+    const [selectCity, setSelectCity] = useState(cities);
+
+    function onChangeDepartment(value) {
+        setSelectCity(cities.filter(function(city){return city.department === value;}));
+        if (value === undefined) setSelectCity(cities);
+    }
+
 
     return (
         <Modal
@@ -150,6 +160,8 @@ const CreateVehicleModal = (props) => {
                         type: "",
                         dimensions: "",
                         capacity: "",
+                        department: "",
+                        city: "",
                         commentary: "",
                     }}
                     validationSchema={Yup.object({
@@ -162,6 +174,8 @@ const CreateVehicleModal = (props) => {
                         brand: Yup.string().required("Campo requerido!"),
                         model: Yup.string().required("Campo requerido!"),
                         year: Yup.string().required("Campo requerido!"),
+                        department: Yup.string().required("Campo requerido!"),
+                        city: Yup.string().required("Campo requerido!"),
                         dimensions: Yup.string()
                             .required("Campo requerido!")
                             .matches(
@@ -190,6 +204,9 @@ const CreateVehicleModal = (props) => {
                             .replace(/\s/g, "");
                         values.year = parseInt(values.year);
                         addVehicle(values);
+                    }}
+                    onChange={(value) => {
+                        console.log("sadsa"+value);
                     }}
                 >
                     {(formik) => (
@@ -357,6 +374,79 @@ const CreateVehicleModal = (props) => {
                                             ))}
                                         </NativeSelect>
                                         <ErrorMessage name="year">
+                                            {(msg) => (
+                                                <p
+                                                    className={
+                                                        classes.helperText
+                                                    }
+                                                >
+                                                    {msg}
+                                                </p>
+                                            )}
+                                        </ErrorMessage>
+                                    </Grid>
+                                </Grid>
+                            </Row>
+                            <Row className={classes.rows}>
+                                <Grid container spacing={2}>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        className={classes.selectYear}
+                                    >
+                                        <NativeSelect
+                                            fullWidth
+                                            variant="outlined"
+                                            name="department"
+                                            input={<CustomSelect />}
+                                            onChange={formik.handleChange}
+                                            {...formik.getFieldProps("department")}
+                                        >
+                                            {departments.map((element, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={element.value}
+                                                >
+                                                    {element.label}
+                                                </option>
+                                            ))}
+                                        </NativeSelect>
+                                        <ErrorMessage name="department">
+                                            {(msg) => (
+                                                <p
+                                                    className={
+                                                        classes.helperText
+                                                    }
+                                                >
+                                                    {msg}
+                                                </p>
+                                            )}
+                                        </ErrorMessage>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        className={classes.selectYear}
+                                    >
+                                        <NativeSelect
+                                            fullWidth
+                                            variant="outlined"
+                                            name="city"
+                                            input={<CustomSelect />}
+                                            {...formik.getFieldProps("city")}
+                                        >
+                                            {selectCity.map((element, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={element.city+", "+element.department.substr(0,2)}
+                                                >
+                                                    {element.city+", "+element.department.substr(0,2)}
+                                                </option>
+                                            ))}
+                                        </NativeSelect>
+                                        <ErrorMessage name="city">
                                             {(msg) => (
                                                 <p
                                                     className={

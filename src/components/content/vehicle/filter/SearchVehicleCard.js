@@ -16,7 +16,7 @@ import {RANK_BY_VEHICLE} from "../../../../graphql/queries";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "290rx",
-        height: "380px",
+        height: "400px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
@@ -153,6 +153,28 @@ const SearchVehicleCard = (props) => {
                     Dimensiones:{" "}
                     <span className={classes.boldText}>
                         {props.value.dimensions} Metros
+                    </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Departamento:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.department}
+                    </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Municipio:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.city}
                     </span>
                 </Typography>
                 <Typography

@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         borderRadius: "13px",
         padding: "20px 20px",
+        width: "100%"
     },
     panel: {
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
-        width: "900px",
+        width: "100%"
     },
     title: {
         textAlign: "center",
@@ -37,11 +38,22 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "600",
         fontSize: "22px",
     },
-    button: {
-        borderRadius: "9px",
-        background: "#fff",
+    button_r: {
+        borderRadius: "0px 8px 8px 0px",
+        background: theme.palette.primary.main,
         fontWeight: "600",
-        color: theme.palette.primary.main,
+        color: "#fff",
+        boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+        fontSize: "60px",
+        alignSelf: "center",
+        width: "40px",
+        height: "70px",
+    },
+    button_l: {
+        borderRadius: "8px 0px 0px 8px",
+        background: theme.palette.primary.main,
+        fontWeight: "600",
+        color: "#fff",
         boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
         fontSize: "60px",
         alignSelf: "center",
@@ -59,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 const SearchVehiclePanel = (props) => {
     const classes = useStyles();
     const { loading, error, data } = useQuery(ALL_VEHICLES, {
-        variables: { type: props.type !== "null" ? props.type : null },
+        variables: { type: props.type !== "null" ? props.type : null,  department: props.department !== "null" ? props.department : null, city: props.city !== "null" ? props.city : null},
         fetchPolicy: "no-cache",
     });
     if (loading) {
@@ -89,14 +101,14 @@ const SearchVehiclePanel = (props) => {
                 <h3 className={classes.title}>RESULTADOS DE TU BÚSQUEDA</h3>
                 <div className={classes.panel}>
                     {size > 4 && (
-                        <NavigateBeforeIcon className={classes.button} />
+                        <NavigateBeforeIcon className={classes.button_l} />
                     )}
                     <Carousel
                         id="carousel"
                         {...carouselprops}
                         arrows="true"
                         style={{
-                            width: `90vw`,
+                            width: "90vw",
                             alignSelf: "center",
                         }}
                     >
@@ -112,7 +124,7 @@ const SearchVehiclePanel = (props) => {
                         })}
                     </Carousel>
                     {size > 4 && (
-                        <NavigateNextIcon className={classes.button} />
+                        <NavigateNextIcon className={classes.button_r} />
                     )}
                 </div>
             </div>
