@@ -52,28 +52,10 @@ const FilterVehiclePanel = (props) => {
     const [option, setOption] = useState({type:"",department:"",city:""});
 
     const selectType = types;
-    let index = selectType.indexOf(
-        selectType.find((obj) => {
-            return obj.value === "";
-        })
-    ); // remove "Seleccione un tipo" option
-    if (index !== -1) selectType.splice(index, 1);
 
     const selectDepartment = departments;
-    index = selectDepartment.indexOf(
-        selectDepartment.find((obj) => {
-            return obj.value === "";
-        })
-    ); // remove "" option
-    if (index !== -1) selectDepartment.splice(index, 1);
 
     const cityData = cities;
-    index = cityData.indexOf(
-        cityData.find((obj) => {
-            return obj.department === "";
-        })
-    ); // remove "Seleccione un municipio" option
-    if (index !== -1) cityData.splice(index, 1);
     const [selectCity, setSelectCity] = useState(cityData);
 
     const toSearch = () => {

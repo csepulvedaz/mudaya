@@ -12,7 +12,6 @@ const yearsArray = () => {
 export const years = yearsArray();
 
 export const types = [
-    { value: "", label: "Seleccione un tipo" },
     { value: "Vehículo Turbo", label: "Vehículo Turbo" },
     { value: "Camión Sencillo", label: "Camión Sencillo" },
     { value: "Doble Troque", label: "Doble Troque" },
@@ -23,7 +22,6 @@ export const types = [
 ];
 
 export const departments = [
-    {value: "", label: "Seleccione un departamento"},
     {value: "Antioquia", label: "Antioquia"},
     {value: "Santander", label: "Santander"},
     {value: "Sucre", label: "Sucre"},
@@ -60,7 +58,6 @@ export const departments = [
 ];
 
 export const cities = [
-    {department: "",city: "Seleccione un municipio"},
     {department: "Antioquia",city: "Medellín"},
     {department: "Antioquia",city: "Abejorral"},
     {department: "Antioquia",city: "Abriaquí"},
