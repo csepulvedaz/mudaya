@@ -227,7 +227,7 @@ export default function DropListElement(props) {
                 closable={false}
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
-                bodyStyle={{background:"#f9f9f9"}}
+                bodyStyle={{background:theme.palette.chat.background}}
             >
                 <CustomChatSider valueService={props.value}/>
             </Drawer>

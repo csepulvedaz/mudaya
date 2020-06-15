@@ -3,7 +3,6 @@ import { Col, Row } from 'antd';
 import {makeStyles} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import Divider from '@material-ui/core/Divider';
 
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import MonetizationOnRoundedIcon from '@material-ui/icons/MonetizationOnRounded';
@@ -19,7 +18,7 @@ const  useStyles = makeStyles((theme)=>({
         width: "340px",
         height:"100%",
         padding: "0px 20px",
-        background: "#f9f9f9",
+        background: theme.palette.chat.background,
     },
     box_vertical:{
         background:"#fff",

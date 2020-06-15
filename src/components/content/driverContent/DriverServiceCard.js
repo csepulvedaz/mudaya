@@ -9,6 +9,7 @@ import {useQuery} from "@apollo/client";
 import {VEHICLE} from "../../../graphql/queries";
 import CreateServiceModal from "../service/CreateServiceModal";
 import CustomChatSider from "../chat/ChatRightSider";
+import theme from "../../utils/AppTheme";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -218,7 +219,7 @@ const DriverServiceCard = (props) => {
                 closable={false}
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
-                bodyStyle={{background:"#f9f9f9"}}
+                bodyStyle={{background:theme.palette.chat.background}}
             >
                 <CustomChatSider valueService={props.value}/>
             </Drawer>

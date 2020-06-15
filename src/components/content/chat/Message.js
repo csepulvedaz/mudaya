@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme)=>({
         margin: "10px 0 6px 0",
     },
     message_text_you: {
-        background: "#fff",
-        color: theme.palette.primary.light,
+        background: theme.palette.chat.yourBubble,
+        color: theme.palette.chat.yourText,
         float:"left",
         maxWidth:"60%",
         display: "inline-lbock",
@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme)=>({
         borderRadius: "2px 16px 16px 16px",
     },
     message_text_me: {
-        background: theme.palette.primary.light,
-        color: "#fff",
+        background: theme.palette.chat.myBubble,
+        color: theme.palette.chat.myText,
         float:"right",
         maxWidth:"60%",
         display: "inline-lbock",

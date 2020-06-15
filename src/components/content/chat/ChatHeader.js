@@ -8,8 +8,10 @@ import { PROFILEUSER, PROFILEDRIVER } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme)=>({
     root:{
-        padding:"",
-        margin:"10px 20px",
+        paddingBottom:"16px",
+        margin:"10px 20px 0px 20px",
+        borderBottom:"1px #e0e0e0 solid",
+        boxShadow:"0 17px 9px -9px #efefef",
     },
     title:{
         fontSize:"24px",
