@@ -235,7 +235,7 @@ const VehicleForm = () => {
                                         input={<CustomSelect />}
                                         {...formik.getFieldProps("type")}
                                     >
-                                        {types.map((element, index) => (
+                                        {types.sort((a, b) => (a.label > b.label) ? 1 : -1).map((element, index) => (
                                             <option
                                                 key={index}
                                                 value={element.value}
@@ -358,7 +358,7 @@ const VehicleForm = () => {
                                         input={<CustomSelect />}
                                         {...formik.getFieldProps("year")}
                                     >
-                                        {years.map((element, index) => (
+                                        {years.sort((a, b) => (a.label > b.label) ? 1 : -1).map((element, index) => (
                                             <option
                                                 key={index}
                                                 value={element.value}
@@ -390,7 +390,7 @@ const VehicleForm = () => {
                                         onChange={formik.handleChange}
                                         {...formik.getFieldProps("department")}
                                     >
-                                        {departments.map((element, index) => (
+                                        {departments.sort((a, b) => (a.label > b.label) ? 1 : -1).map((element, index) => (
                                             <option
                                                 key={index}
                                                 value={element.value}
@@ -425,7 +425,7 @@ const VehicleForm = () => {
                                         input={<CustomSelect />}
                                         {...formik.getFieldProps("city")}
                                     >
-                                        {selectCity.map((element, index) => (
+                                        {selectCity.sort((a, b) => (a.city > b.city) ? 1 : -1).map((element, index) => (
                                             <option
                                                 key={index}
                                                 value={element.city+", "+element.department.substr(0,2)}
