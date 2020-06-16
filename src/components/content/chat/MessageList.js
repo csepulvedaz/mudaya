@@ -23,7 +23,7 @@ const MessageList = (props) => {
     const classes = useStyles();
     var database = firebase.database();
     const [messagesList, setMessagesList] = useState([]);
-
+    const DUMMY_DATE = "18/5/20 12:02";
     const messages = useRef(null);
 
     const scrollToBottom = () => {
@@ -48,6 +48,7 @@ const MessageList = (props) => {
                     <Message
                         messageId={message.id}
                         messageText={message.text}
+                        messageTimestamp={DUMMY_DATE}
                         key={index}
                     />
                 );

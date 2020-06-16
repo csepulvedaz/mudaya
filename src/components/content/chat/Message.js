@@ -74,7 +74,7 @@ const Message = (props) => {
                     </div>                                     
                     {visibleDate && (
                         <div className={classes.my_timeStamp}>
-                            {DUMMY_DATE}
+                            {props.messageTimestamp}
                         </div>
                     )}
                 </div>
@@ -86,7 +86,7 @@ const Message = (props) => {
                     </div>                                      
                     {visibleDate && (
                         <div className={classes.my_timeStamp}>
-                            {DUMMY_DATE}
+                            {props.messageTimestamp}
                         </div>
                     )}
                 </div>
@@ -98,7 +98,7 @@ const Message = (props) => {
                     </div>                                        
                     {visibleDate && (
                         <div className={classes.your_timeStamp}>
-                            {DUMMY_DATE}
+                            {props.messageTimestamp}
                         </div>
                     )}
                 </div>
@@ -110,7 +110,7 @@ const Message = (props) => {
                     </div>                    
                     {visibleDate && (
                         <div className={classes.your_timeStamp}>
-                            {DUMMY_DATE}
+                            {props.messageTimestamp}
                         </div>
                     )}
                 </div>
