@@ -1,91 +1,88 @@
 import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from 'antd';
-import { ErrorMessage, Form, Formik,Field } from "formik";
+import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
+import IconButton from "@material-ui/core/IconButton";
+import SendIcon from "@material-ui/icons/Send";
+
 import firebase from "../../../firebase";
 import AuthContext from "../../../context/auth-context";
 
-const  useStyles = makeStyles((theme)=>({
-    root:{
+const useStyles = makeStyles((theme) => ({
+    root: {
         background: "#ff1111",
     },
-    send_message_form:{
+    send_message_form: {
         gridArea: "f",
     },
-}))
+    input: {
+        width: "87%",
+        margin: "10px 10px 0px 0px",
+        padding: "10px",
+        border: "none",
+    },
+    button: { background: `${theme.palette.primary.light}` },
+    icon: { fontSize: "20px", color: "#fff" },
+}));
 
 const SendMessageForm = (props) => {
     var database = firebase.database();
     const classes = useStyles();
     const context = useContext(AuthContext);
-    const [message, setMessage] = useState("");
     const [messagesList, setMessagesList] = useState([]);
 
     useEffect(() => {
-        database.ref(`chats/${props.valueService._id}`).on('value', snapshots =>{
-            const currentMessages = snapshots.val();
-            if(currentMessages != null){
-                setMessagesList(currentMessages);
-            }
-        });    
-    }, []);
+        database
+            .ref(`chats/${props.valueService._id}`)
+            .on("value", (snapshots) => {
+                const currentMessages = snapshots.val();
+                if (currentMessages != null) {
+                    setMessagesList(currentMessages);
+                }
+            });
+    }, [database, props]);
 
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        if(message!==""){
-            const newMessage={
-                id:context.client,
-                text:message
-            };
-            database.ref(`chats/${props.valueService._id}/${messagesList.length}`).set(newMessage);
-            setMessage('');
-            document.getElementById("chat").reset();
-        }
-        
-    }    
-    const updateMessage = (e) => {
-        setMessage(e.target.value);
-    };
     return (
-        <Formik id="chat"
-            initialValues={{text:""}}
+        <Formik
+            id="chat"
+            initialValues={{ text: "" }}
             className={classes.send_message_form}
             validationSchema={Yup.object({
                 text: Yup.string()
                     .required("Campo requerido!")
                     .matches(/^[A-Z]|[a-z]|[0-9]+/),
-                
             })}
-            onSubmit={(values,{resetForm}) => {   
-                values.text=values.text.trim();             
-                const newMessage={
-                    id:context.client,
-                    text:values.text
+            onSubmit={(values, { resetForm }) => {
+                values.text = values.text.trim();
+                const newMessage = {
+                    id: context.client,
+                    text: values.text,
                 };
-                database.ref(`chats/${props.valueService._id}/${messagesList.length}`).set(newMessage);
+                database
+                    .ref(
+                        `chats/${props.valueService._id}/${messagesList.length}`
+                    )
+                    .set(newMessage);
                 resetForm();
-                // document.getElementById("chat").reset();
-                
             }}
-            
         >
             {(formik) => (
-                        <Form
-                            className={classes.form}
-                            onSubmit={formik.handleSubmit}
-                            noValidate
-                        >
-                            <Field name="text"
-                placeholder="SendMessageForm"
-                type="text"  />
-           
-                        <Button
-                            type="submit"
-                        >
-                            Enviar
-                        </Button>
-        </Form>)}
+                <Form
+                    className={classes.form}
+                    onSubmit={formik.handleSubmit}
+                    noValidate
+                >
+                    <Field
+                        name="text"
+                        placeholder="Escribe algo..."
+                        type="text"
+                        className={classes.input}
+                    />
+                    <IconButton type="submit" className={classes.button}>
+                        <SendIcon className={classes.icon} />
+                    </IconButton>
+                </Form>
+            )}
         </Formik>
     );
 };

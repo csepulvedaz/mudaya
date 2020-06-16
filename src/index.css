@@ -76,3 +76,9 @@ code {
 .ant-steps-item-finish .ant-steps-item-container .ant-steps-item-tail::after {
     background-color: #ccc !important;
 }
+
+.sc-fzoLsD,
+.brZowA,
+.rsc-container {
+    z-index: 1001 !important;
+}

@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import {Button, Col, Descriptions, Row, Spin, Tag, Drawer} from "antd";
-import {LoadingOutlined, MessageOutlined} from "@ant-design/icons";
-import {useQuery} from "@apollo/client";
+import { Button, Col, Descriptions, Row, Spin, Tag, Drawer } from "antd";
+import { LoadingOutlined, MessageOutlined } from "@ant-design/icons";
+import { useQuery } from "@apollo/client";
 
-import {VEHICLE} from "../../../graphql/queries";
+import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
 import theme from "../../utils/AppTheme";
 import CustomChatSider from "../../content/chat/ChatRightSider";
@@ -67,12 +67,12 @@ const useStyles = makeStyles({
         padding: "5px",
         fontSize: "13px",
     },
-    chatButtonIcon:{
+    chatButtonIcon: {
         color: theme.palette.primary.main,
         transform: "scaleX(-1)",
         fontSize: "24px",
     },
-    chatButton:{
+    chatButton: {
         boxShadow: "none !important",
     },
 });
@@ -114,7 +114,7 @@ export default function DropListElement(props) {
         <>
             <Row className={classes.root}>
                 <Col span={6}>
-                    <div className={classes.image_box}/>
+                    <div className={classes.image_box} />
                 </Col>
                 <Col span={12} className={classes.col}>
                     <Row>
@@ -166,9 +166,22 @@ export default function DropListElement(props) {
                     </Typography>
 
                     {state === "accepted" && (
-                        <Tag color="success" className={classes.tag}>
-                            Aceptado
-                        </Tag>
+                        <>
+                            <Tag color="success" className={classes.tag}>
+                                Aceptado
+                            </Tag>
+                            <Button
+                                className={classes.chatButton}
+                                icon={
+                                    <MessageOutlined
+                                        className={classes.chatButtonIcon}
+                                    />
+                                }
+                                onClick={() => {
+                                    setVisibleChat(true);
+                                }}
+                            />
+                        </>
                     )}
                     {state === "cancelled" && (
                         <Tag color="red" className={classes.tag}>
@@ -195,13 +208,6 @@ export default function DropListElement(props) {
                             Calificado
                         </Tag>
                     )}
-                    <Button 
-                        className={classes.chatButton} 
-                        icon={<MessageOutlined className={classes.chatButtonIcon} />}
-                        onClick={()=>{
-                            setVisibleChat(true);
-                        }}
-                    /> 
                     {(state === "onHold" ||
                         state === "accepted" ||
                         state === "started" ||
@@ -227,9 +233,9 @@ export default function DropListElement(props) {
                 closable={false}
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
-                bodyStyle={{background:theme.palette.chat.background}}
+                bodyStyle={{ background: theme.palette.chat.background }}
             >
-                <CustomChatSider valueService={props.value}/>
+                <CustomChatSider valueService={props.value} />
             </Drawer>
         </>
     );

@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Col, Row } from 'antd';
+// import { Col, Row } from 'antd';
 
 import DriverCalendar from "./DriverCalendar";
-import CalendarSymbols from "./DriverCalendarSymbols";
+// import CalendarSymbols from "./DriverCalendarSymbols";
 
 const useStyles = makeStyles((theme) => ({
     content: {

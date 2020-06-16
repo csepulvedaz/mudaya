@@ -1,12 +1,12 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {Button, Col, Descriptions, Row, Spin, Tag, Drawer} from "antd";
-import {LoadingOutlined, MessageOutlined} from "@ant-design/icons";
-import {useQuery} from "@apollo/client";
+import { Button, Col, Descriptions, Row, Spin, Tag, Drawer } from "antd";
+import { LoadingOutlined, MessageOutlined } from "@ant-design/icons";
+import { useQuery } from "@apollo/client";
 
-import {VEHICLE} from "../../../graphql/queries";
+import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../service/CreateServiceModal";
 import CustomChatSider from "../chat/ChatRightSider";
 import theme from "../../utils/AppTheme";
@@ -66,12 +66,12 @@ const useStyles = makeStyles((theme) => ({
         padding: "5px",
         fontSize: "13px",
     },
-    chatButtonIcon:{
+    chatButtonIcon: {
         color: theme.palette.primary.main,
         transform: "scaleX(-1)",
         fontSize: "24px",
     },
-    chatButton:{
+    chatButton: {
         boxShadow: "none !important",
     },
 }));
@@ -156,14 +156,30 @@ const DriverServiceCard = (props) => {
                     </Row>
                 </Col>
                 <Col span={6} className={classes.colState}>
-                    <Typography variant="body1" className={classes.service_date}>
+                    <Typography
+                        variant="body1"
+                        className={classes.service_date}
+                    >
                         {date}
                     </Typography>
 
                     {state === "accepted" && (
-                        <Tag color="success" className={classes.tag}>
-                            Aceptado
-                        </Tag>
+                        <>
+                            <Tag color="success" className={classes.tag}>
+                                Aceptado
+                            </Tag>
+                            <Button
+                                className={classes.chatButton}
+                                icon={
+                                    <MessageOutlined
+                                        className={classes.chatButtonIcon}
+                                    />
+                                }
+                                onClick={() => {
+                                    setVisibleChat(true);
+                                }}
+                            />
+                        </>
                     )}
                     {state === "cancelled" && (
                         <Tag color="red" className={classes.tag}>
@@ -191,15 +207,6 @@ const DriverServiceCard = (props) => {
                         </Tag>
                     )}
 
-                    
-                    <Button 
-                        className={classes.chatButton} 
-                        icon={<MessageOutlined className={classes.chatButtonIcon} />}
-                        onClick={()=>{
-                            setVisibleChat(true);
-                        }}
-                    /> 
-
                     <Button
                         className={classes.button}
                         onClick={(e) => openModal(e)}
@@ -219,9 +226,9 @@ const DriverServiceCard = (props) => {
                 closable={false}
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
-                bodyStyle={{background:theme.palette.chat.background}}
+                bodyStyle={{ background: theme.palette.chat.background }}
             >
-                <CustomChatSider valueService={props.value}/>
+                <CustomChatSider valueService={props.value} />
             </Drawer>
         </>
     );
