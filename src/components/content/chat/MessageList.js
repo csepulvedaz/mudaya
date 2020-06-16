@@ -48,7 +48,7 @@ const MessageList = (props) => {
                     <Message
                         messageId={message.id}
                         messageText={message.text}
-                        index={index}
+                        key={index}
                     />
                 );
             })}
