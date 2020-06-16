@@ -9,15 +9,18 @@ const blueOne = "#63b6bf";
 const yellowOne = "#f2bc79";
 // const orangeOne = "#ffc914"; //https://coolors.co/63b6bf-e4572e-ffc914-2e282a-76b041 paleta tentativa de colores
 
-const borderColorGrey = "#e5edef"; //items border color
-const textColorGrey = "#555"; //titles user view color
-const footerColorGrey = "#fafafa"; //footer background
-
 const greyCustomPalette = {
-    border: borderColorGrey,
-    text: textColorGrey,
-    footer: footerColorGrey,
+    border: "#e5edef", //items border color
+    text: "#555", //titles user view color
+    footer: "#fafafa", //footer background
 };
+const chatPalette={    
+    background: "#f5f5f5",
+    yourBubble: "#e3eaf2",
+    yourText: "#0d1637",
+    myBubble: "#11a5ed",
+    myText: "#fff",
+}
 
 // const prava0 = {
 //   primary:{
@@ -84,6 +87,7 @@ const prava3 = {
         main: "#59CD90",
     },
     colorGrey: greyCustomPalette,
+    chat: chatPalette,
 };
 
 const theme = createMuiTheme({

@@ -6,7 +6,7 @@ const useStyles = makeStyles({
     root: {
         width: "84px",
         height: "34px",
-        border: "solid 1px #ffee00",
+        border: "solid 2px #ffee00",
         borderRadius: "6px",
         background: "#ffffc8",
     },
@@ -32,5 +32,6 @@ const useStyles = makeStyles({
 
 export default function TruckLicense(props) {
     const classes = useStyles();
-    return <Chip label={props.vehicleId} className={classes.root} />;
+    let upper = props.vehicleId.toUpperCase();
+    return <Chip label={upper} className={classes.root} />;
 }

@@ -9,7 +9,8 @@ import TruckLicense from "../../header/service/TruckLicense";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "700px",
-        background: "#FFFFFF",
+        padding: "30px 0px",
+        background: "#fff",
         borderRadius: "8px",
         boxShadow: theme.shadows[4],
     },
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         height: 100,
     },
     title: {
-        fontSize: "30px",
+        fontSize: "26px",
         textAlign: "center",
         color: "#3d3d3d",
     },
@@ -75,7 +76,7 @@ const DriverVehicleCard = (props) => {
                 </Col>
                 <Col span={12} className={classes.col}>
                     <Row>
-                        <Typography variant="h4" className={classes.title}>
+                        <Typography className={classes.title}>
                             {props.value.brand + " • " + props.value.model}
                         </Typography>
                     </Row>
