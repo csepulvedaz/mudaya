@@ -1,14 +1,14 @@
 import React from "react";
-import {useQuery} from "@apollo/client";
-import {makeStyles} from "@material-ui/core/styles";
+import { useQuery } from "@apollo/client";
+import { makeStyles } from "@material-ui/core/styles";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import {Carousel, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import { Carousel, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import SearchVehicleCard from "./SearchVehicleCard";
 import img1 from "../../../../assets/van.png";
-import {ALL_VEHICLES} from "../../../../graphql/queries";
+import { ALL_VEHICLES } from "../../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         borderRadius: "13px",
         padding: "20px 20px",
-        width: "100%"
+        width: "100%",
     },
     panel: {
         borderRadius: "13px",
         display: "flex",
         justifyContent: "center",
-        width: "100%"
+        width: "100%",
     },
     title: {
         textAlign: "center",
@@ -71,7 +71,11 @@ const useStyles = makeStyles((theme) => ({
 const SearchVehiclePanel = (props) => {
     const classes = useStyles();
     const { loading, error, data } = useQuery(ALL_VEHICLES, {
-        variables: { type: props.type !== "null" ? props.type : null,  department: props.department !== "null" ? props.department : null, city: props.city !== "null" ? props.city : null},
+        variables: {
+            type: props.type !== "null" ? props.type : null,
+            department: props.department !== "null" ? props.department : null,
+            city: props.city !== "null" ? props.city : null,
+        },
         fetchPolicy: "no-cache",
     });
     if (loading) {
@@ -84,14 +88,14 @@ const SearchVehiclePanel = (props) => {
         );
     }
 
-    const size = data.vehicles.length;
+    const number = data.vehicles.length;
 
     const carouselprops = {
         dots: false,
         infinite: true,
         speed: 1000,
-        slidesToShow: size > 4 ? 4 : size,
-        slidesToScroll: size > 4 ? 4 : size,
+        slidesToShow: number > 4 ? 4 : number,
+        slidesToScroll: number > 4 ? 4 : number,
     };
     if (error) return `Error! ${error}`;
 
@@ -100,17 +104,14 @@ const SearchVehiclePanel = (props) => {
             <div className={classes.box}>
                 <h3 className={classes.title}>RESULTADOS DE TU BÚSQUEDA</h3>
                 <div className={classes.panel}>
-                    {size > 4 && (
+                    {number > 4 && (
                         <NavigateBeforeIcon className={classes.button_l} />
                     )}
                     <Carousel
                         id="carousel"
                         {...carouselprops}
                         arrows="true"
-                        style={{
-                            width: "90vw",
-                            alignSelf: "center",
-                        }}
+                        style={{ width: `1200px` }}
                     >
                         {data.vehicles.map((value, index) => {
                             return (
@@ -123,7 +124,7 @@ const SearchVehiclePanel = (props) => {
                             );
                         })}
                     </Carousel>
-                    {size > 4 && (
+                    {number > 4 && (
                         <NavigateNextIcon className={classes.button_r} />
                     )}
                 </div>

@@ -77,6 +77,15 @@ code {
     background-color: #ccc !important;
 }
 
+.ant-carousel .slick-initialized .slick-slide {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.ant-carousel .slick-list {
+    min-width: 900px !important;
+}
+
 .sc-fzoLsD,
 .brZowA,
 .rsc-container {

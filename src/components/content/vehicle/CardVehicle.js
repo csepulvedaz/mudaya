@@ -1,22 +1,22 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import {CardActionArea} from "@material-ui/core";
-import {Button, Rate, Spin} from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
+import { CardActionArea } from "@material-ui/core";
+import { Button, Rate, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import VehicleDetailsModal from "./VehicleDetailsModal";
 import CreateServiceModal from "../service/CreateServiceModal";
-import {useQuery} from "@apollo/client";
-import {RANK_BY_VEHICLE} from "../../../graphql/queries";
+import { useQuery } from "@apollo/client";
+import { RANK_BY_VEHICLE } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "190rx",
-        height: "340px",
+        height: "360px",
         margin: "20px 25px",
         borderRadius: "8px",
         //boxShadow:theme.shadows[0],
@@ -141,9 +141,7 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Municipio:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.city}
-                    </span>
+                    <span className={classes.boldText}>{props.value.city}</span>
                 </Typography>
                 <div className={classes.footer}>
                     <Rate

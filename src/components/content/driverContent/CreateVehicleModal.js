@@ -1,7 +1,7 @@
-import React, {useContext, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Button, Layout, Modal, Row, Spin} from "antd";
-import {ErrorMessage, Form, Formik} from "formik";
+import React, { useContext, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Layout, Modal, Row, Spin } from "antd";
+import { ErrorMessage, Form, Formik } from "formik";
 import TextField from "@material-ui/core/TextField";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import CustomSelect from "../../utils/CustomSelect";
@@ -9,14 +9,14 @@ import TextMaskCustom from "../../utils/TextMaskCustom";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import HeightIcon from "@material-ui/icons/Height";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
-import {Grid} from "@material-ui/core";
-import {LoadingOutlined} from "@ant-design/icons";
+import { Grid } from "@material-ui/core";
+import { LoadingOutlined } from "@ant-design/icons";
 import * as Yup from "yup";
-import {useMutation} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import AuthContext from "../../../context/auth-context";
-import {CREATE_VEHICLE} from "../../../graphql/mutations";
-import {cities, departments, types, years} from "../../utils/selectArrays";
+import { CREATE_VEHICLE } from "../../../graphql/mutations";
+import { cities, departments, types, years } from "../../utils/selectArrays";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -125,13 +125,13 @@ const CreateVehicleModal = (props) => {
         props.setVisible(false);
     };
 
-    const [selectCity, setSelectCity] = useState(cities);
+    // const [selectCity, setSelectCity] = useState(cities);
+    const { selectCity } = useState(cities);
 
-    function onChangeDepartment(value) {
-        setSelectCity(cities.filter(function(city){return city.department === value;}));
-        if (value === undefined) setSelectCity(cities);
-    }
-
+    // function onChangeDepartment(value) {
+    //     setSelectCity(cities.filter(function(city){return city.department === value;}));
+    //     if (value === undefined) setSelectCity(cities);
+    // }
 
     return (
         <Modal
@@ -206,7 +206,7 @@ const CreateVehicleModal = (props) => {
                         addVehicle(values);
                     }}
                     onChange={(value) => {
-                        console.log("sadsa"+value);
+                        console.log("sadsa" + value);
                     }}
                 >
                     {(formik) => (
@@ -224,14 +224,18 @@ const CreateVehicleModal = (props) => {
                                     input={<CustomSelect />}
                                     {...formik.getFieldProps("type")}
                                 >
-                                    {types.sort((a, b) => (a.label > b.label) ? 1 : -1).map((element, index) => (
-                                        <option
-                                            key={index}
-                                            value={element.value}
-                                        >
-                                            {element.label}
-                                        </option>
-                                    ))}
+                                    {types
+                                        .sort((a, b) =>
+                                            a.label > b.label ? 1 : -1
+                                        )
+                                        .map((element, index) => (
+                                            <option
+                                                key={index}
+                                                value={element.value}
+                                            >
+                                                {element.label}
+                                            </option>
+                                        ))}
                                 </NativeSelect>
                                 <ErrorMessage name="type">
                                     {(msg) => (
@@ -364,14 +368,18 @@ const CreateVehicleModal = (props) => {
                                             input={<CustomSelect />}
                                             {...formik.getFieldProps("year")}
                                         >
-                                            {years.sort((a, b) => (a.label > b.label) ? 1 : -1).map((element, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={element.value}
-                                                >
-                                                    {element.label}
-                                                </option>
-                                            ))}
+                                            {years
+                                                .sort((a, b) =>
+                                                    a.label > b.label ? 1 : -1
+                                                )
+                                                .map((element, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={element.value}
+                                                    >
+                                                        {element.label}
+                                                    </option>
+                                                ))}
                                         </NativeSelect>
                                         <ErrorMessage name="year">
                                             {(msg) => (
@@ -401,16 +409,22 @@ const CreateVehicleModal = (props) => {
                                             name="department"
                                             input={<CustomSelect />}
                                             onChange={formik.handleChange}
-                                            {...formik.getFieldProps("department")}
+                                            {...formik.getFieldProps(
+                                                "department"
+                                            )}
                                         >
-                                            {departments.sort((a, b) => (a.label > b.label) ? 1 : -1).map((element, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={element.value}
-                                                >
-                                                    {element.label}
-                                                </option>
-                                            ))}
+                                            {departments
+                                                .sort((a, b) =>
+                                                    a.label > b.label ? 1 : -1
+                                                )
+                                                .map((element, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={element.value}
+                                                    >
+                                                        {element.label}
+                                                    </option>
+                                                ))}
                                         </NativeSelect>
                                         <ErrorMessage name="department">
                                             {(msg) => (
@@ -437,14 +451,30 @@ const CreateVehicleModal = (props) => {
                                             input={<CustomSelect />}
                                             {...formik.getFieldProps("city")}
                                         >
-                                            {selectCity.sort((a, b) => (a.city > b.city) ? 1 : -1).map((element, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={element.city+", "+element.department.substr(0,2)}
-                                                >
-                                                    {element.city+", "+element.department.substr(0,2)}
-                                                </option>
-                                            ))}
+                                            {selectCity
+                                                .sort((a, b) =>
+                                                    a.city > b.city ? 1 : -1
+                                                )
+                                                .map((element, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={
+                                                            element.city +
+                                                            ", " +
+                                                            element.department.substr(
+                                                                0,
+                                                                2
+                                                            )
+                                                        }
+                                                    >
+                                                        {element.city +
+                                                            ", " +
+                                                            element.department.substr(
+                                                                0,
+                                                                2
+                                                            )}
+                                                    </option>
+                                                ))}
                                         </NativeSelect>
                                         <ErrorMessage name="city">
                                             {(msg) => (
