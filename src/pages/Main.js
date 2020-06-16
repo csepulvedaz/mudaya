@@ -10,30 +10,30 @@ import Chatbot from "../components/content/ChatBot";
 import AuthContext from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
-  "@global": {
-    body: {
-      background: "#fff",
+    "@global": {
+        body: {
+            background: "#fff",
+        },
     },
-  },
 }));
 
 const Main = () => {
-  const classes = useStyles();
-  const { client } = useContext(AuthContext);
-  console.log(client);
+    const classes = useStyles();
+    const { client } = useContext(AuthContext);
+    console.log(client);
 
-  return (
-    <Layout theme="light" className={classes["@global"]}>
-      <CustomHeader />
-      {client === "user" && (
-        <>
-          <CustomContent /> <Chatbot />
-        </>
-      )}
-      {client === "driver" && <CustomDriverContent />}
-      <CustomFooter />
-    </Layout>
-  );
+    return (
+        <Layout theme="light" className={classes["@global"]}>
+            <CustomHeader />
+            {client === "user" && (
+                <>
+                    <CustomContent /> <Chatbot style={{ zIndex: "1001" }} />
+                </>
+            )}
+            {client === "driver" && <CustomDriverContent />}
+            <CustomFooter />
+        </Layout>
+    );
 };
 
 export default Main;

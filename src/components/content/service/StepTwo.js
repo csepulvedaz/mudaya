@@ -216,16 +216,29 @@ const StepTwo = (props) => {
                             <Paper className={classes.commentary} elevation={2}>
                                 <Grid container wrap="nowrap" spacing={2}>
                                     <Grid item>
-                                        <Avatar>C</Avatar>
+                                        <Avatar>U</Avatar>
                                     </Grid>
                                     <Grid item xs>
-                                        <Typography
-                                            color="textSecondary"
-                                            variant="body2"
-                                        >
-                                            Comentario del cliente:
-                                            {" " + commentaryUser}
-                                        </Typography>
+                                        <>
+                                            {(commentaryUser === "" || commentaryUser === null) && (
+                                                <Typography
+                                                    color="textSecondary"
+                                                    variant="body2"
+                                                    style={{fontStyle:"italic"}}
+                                                >
+                                                    El usuario no ha comentado nada durante la creación del servicio.
+                                                </Typography>
+                                            )}
+                                            {commentaryUser !== "" && (
+                                                <Typography
+                                                    color="textSecondary"
+                                                    variant="body2"
+                                                >
+                                                    Comentario del usuario:
+                                                    {" " + commentaryUser}
+                                                </Typography>
+                                            )}
+                                        </>
                                     </Grid>
                                 </Grid>
                             </Paper>

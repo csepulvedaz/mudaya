@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         alignSelf: "stretch",
-        fontSize: "24px",
+        fontSize: "26px",
         color: "#3d3d3d",        
         margin: "0 0 0 20px",
     },

@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+// import { Col, Row } from 'antd';
 
 import DriverCalendar from "./DriverCalendar";
 // import CalendarSymbols from "./DriverCalendarSymbols";
@@ -37,6 +38,13 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "0px 60px 60px 0px",
         alignSelf: "stretch",
         marginBottom: "20px",
+    },
+    row: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        backgroundColor: "#fff",
+        justifyContent: "space-between",
     },
 }));
 
