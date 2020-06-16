@@ -4,6 +4,7 @@ import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
+import moment from 'moment';
 
 import firebase from "../../../firebase";
 import AuthContext from "../../../context/auth-context";
@@ -58,6 +59,7 @@ const SendMessageForm = (props) => {
                 const newMessage = {
                     id: context.client,
                     text: values.text,
+                    timestamp: moment(new Date()).format("DD/MM/YYYY, h:mm a")
                 };
                 database
                     .ref(

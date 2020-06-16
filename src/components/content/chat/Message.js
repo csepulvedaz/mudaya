@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 		bottom: "-15px",
         color: theme.palette.grey[600],
         fontSize: "10px",
-        marginLeft:"16px",
+        marginLeft:"8px",
         marginBottom:"8px",
         opacity: "0.8",
     }
@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 const Message = (props) => {
     const classes = useStyles();
     const { client } = useContext(AuthContext);
-    const DUMMY_DATE = "18/5/20 12:02";
     const [visibleDate, setVisibleDate] = useState(false);
 
     const showDate = ()=>{
