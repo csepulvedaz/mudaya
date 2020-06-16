@@ -2,11 +2,16 @@ import React from "react";
 import {Button, Modal} from "antd";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
+import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
+import LocalShippingRoundedIcon from '@material-ui/icons/LocalShippingRounded'; 
+import AspectRatioRoundedIcon from '@material-ui/icons/AspectRatioRounded';
+import RecordVoiceOverRoundedIcon from '@material-ui/icons/RecordVoiceOverRounded';
 
 const useStyles = makeStyles((theme)=>({
     text: {
         fontSize: "15px",
         textAlign: "left",
+        marginLeft: "",
     },
     boldText: { fontWeight: "bold" },
     button: {
@@ -32,6 +37,21 @@ const useStyles = makeStyles((theme)=>({
             boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
         }
     },
+    commentary:{
+        fontSize: "13px",
+        textAlign: "left",
+        color: theme.palette.grey[500],
+        width: "90%",
+        fontStyle: "italic"
+    },
+    divider:{
+        borderTop: `1px ${theme.palette.grey[100]} solid`,
+        width: "70%",
+        margin: "12px auto",
+    },
+    icon:{
+        color:theme.palette.grey[500],
+    }
 }));
 
 const VehicleDetaisModal = (props) => {
@@ -68,6 +88,7 @@ const VehicleDetaisModal = (props) => {
                 </Button>,
             ]}
         >
+            <LocalShippingRoundedIcon className={classes.icon}/>
             <Typography
                 variant="body2"
                 color="textSecondary"
@@ -95,15 +116,19 @@ const VehicleDetaisModal = (props) => {
                 Año:{" "}
                 <span className={classes.boldText}>{props.value.year}</span>
             </Typography>
+            <div className={classes.divider}/>
+
+            <AspectRatioRoundedIcon className={classes.icon}/>
+
             <Typography
                 variant="body2"
                 color="textSecondary"
                 component="p"
                 className={classes.text}
             >
-                Capacidad:{" "}
+                Dimensiones del vehículo:{" "}
                 <span className={classes.boldText}>
-                    {props.value.capacity} Metros
+                    {props.value.dimensions}
                 </span>
             </Typography>
             <Typography
@@ -112,11 +137,15 @@ const VehicleDetaisModal = (props) => {
                 component="p"
                 className={classes.text}
             >
-                Dimensiones:{" "}
+                Capacidad de carga:{" "}
                 <span className={classes.boldText}>
-                    {props.value.dimensions} Metros
+                    {props.value.capacity}
                 </span>
             </Typography>
+            <div className={classes.divider}/>
+            
+            <MyLocationRoundedIcon className={classes.icon}/>
+
             <Typography
                 variant="body2"
                 color="textSecondary"
@@ -139,14 +168,18 @@ const VehicleDetaisModal = (props) => {
                         {props.value.city}
                     </span>
             </Typography>
+            <div className={classes.divider}/>
+
+            <RecordVoiceOverRoundedIcon className={classes.icon}/>
+
             <Typography
                 variant="body2"
                 color="textSecondary"
                 component="p"
                 className={classes.text}
             >
-                Comentario:{" "}
-                <span className={classes.boldText}>
+                Comentario del conductor:{" "}
+                <span className={classes.commentary}>
                     {props.value.commentary}
                 </span>
             </Typography>
