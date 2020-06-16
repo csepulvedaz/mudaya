@@ -139,8 +139,7 @@ const VehicleForm = () => {
         });
     };
 
-    // const [selectCity, setSelectCity] = useState(cities);
-    const { selectCity } = useState(cities);
+    const [selectCity, setSelectCity] = useState(cities);
 
     // function onChangeDepartment(value) {
     //     setSelectCity(cities.filter(function(city){return city.department === value;}));
