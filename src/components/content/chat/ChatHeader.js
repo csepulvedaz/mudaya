@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "16px 0px 16px 16px",
         borderBottom: "1px #e0e0e0 solid",
         boxShadow: "0 17px 9px -9px #efefef",
+        borderRadius:"4px 4px 0 0",
     },
     title: {
         fontSize: "24px",

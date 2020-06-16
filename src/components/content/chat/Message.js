@@ -3,11 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import AuthContext from "../../../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
-    message_username: {
-        fontSize: "11px",
-        color: theme.palette.grey[600],
-        opacity: "0.9",
-        margin: "10px 0 6px 0",
+    container:{
+        //display:"flex",
+        //flexDirection:"column",
     },
     message_text_you: {
         background: theme.palette.chat.yourBubble,
@@ -29,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
         margin: "4px 0",
         borderRadius: "16px 2px 16px 16px",
     },
+    time_stamp: {
+        fontSize: "11px",
+        color: theme.palette.grey[600],
+        opacity: "0.9",
+        margin: "10px 0 6px 0",
+    },
 }));
 
 const Message = (props) => {
@@ -38,30 +42,36 @@ const Message = (props) => {
     return (
         <>
             {client === "user" && props.messageId === "user" && (
-                <div key={props.index}>
+                <div key={props.index} className={classes.container}>
                     <div className={classes.message_text_me}>
                         {props.messageText}
                     </div>
                 </div>
             )}
             {client === "driver" && props.messageId === "driver" && (
-                <div key={props.messageIndex}>
+                <div key={props.messageIndex} className={classes.container}>
                     <div className={classes.message_text_me}>
                         {props.messageText}
+                    </div>                    
+                    <div className={classes.time_stamp}>
+                        13:02
                     </div>
                 </div>
             )}
             {client === "user" && props.messageId === "driver" && (
-                <div key={props.index}>
+                <div key={props.index} className={classes.container}>
                     <div className={classes.message_text_you}>
                         {props.messageText}
                     </div>
                 </div>
             )}
             {client === "driver" && props.messageId === "user" && (
-                <div key={props.messageIndex}>
+                <div key={props.messageIndex} className={classes.container}>
                     <div className={classes.message_text_you}>
                         {props.messageText}
+                    </div>                    
+                    <div className={classes.time_stamp}>
+                        13:02
                     </div>
                 </div>
             )}

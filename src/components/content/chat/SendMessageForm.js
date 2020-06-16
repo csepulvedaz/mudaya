@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
     input: {
         width: "87%",
         margin: "10px 10px 0px 0px",
-        padding: "10px",
+        padding: "10px 10px 10px 20px",
         border: "none",
+        borderRadius: "24px",
     },
     button: { background: `${theme.palette.primary.light}` },
     icon: { fontSize: "20px", color: "#fff" },

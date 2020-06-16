@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         height: "520px",
         overflowY: "scroll",
+        borderRadius:"0 0 4px 4px",
+        scrollbarWidth:"thin",
     },
 }));
 

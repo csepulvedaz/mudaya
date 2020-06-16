@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: "340px",
         height: "100%",
-        padding: "0px 20px",
+        padding: "0px 8px",
         background: theme.palette.chat.background,
     },
     box_vertical: {
@@ -140,13 +140,15 @@ const ChatInfo = (props) => {
         idVehicle,
     } = props.valueService;
     const { client } = useContext(AuthContext);
+
     const spanIcon = 5;
     const spanContent = 19;
+
     return (
         <div className={classes.root}>
             <Col>
                 {/* TRUCK IMAGE & LICENSE:  */}
-                <Row className={classes.box_vertical}>
+                <Row className={classes.box_vertical} style={{marginTop:"0"}}>
                     <CardMedia
                         className={classes.media}
                         image={carrito}
