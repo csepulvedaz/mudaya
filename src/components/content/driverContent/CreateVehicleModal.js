@@ -127,10 +127,15 @@ const CreateVehicleModal = (props) => {
 
     const [selectCity, setSelectCity] = useState(cities);
 
-    // function onChangeDepartment(value) {
-    //     setSelectCity(cities.filter(function(city){return city.department === value;}));
-    //     if (value === undefined) setSelectCity(cities);
-    // }
+    const onChangeDepartment = (e) => {
+        const value = departments[e.target.options.selectedIndex].value;
+        setSelectCity(
+            cities.filter(function(city) {
+                return city.department === value;
+            })
+        );
+        if (value === undefined) setSelectCity(cities);
+    };
 
     return (
         <Modal
@@ -204,14 +209,12 @@ const CreateVehicleModal = (props) => {
                         values.year = parseInt(values.year);
                         addVehicle(values);
                     }}
-                    onChange={(value) => {
-                        console.log("sadsa" + value);
-                    }}
                 >
                     {(formik) => (
                         <Form
                             id="form1"
                             className={classes.form}
+                            onChange={onChangeDepartment}
                             onSubmit={formik.handleSubmit}
                             noValidate
                         >
@@ -407,7 +410,6 @@ const CreateVehicleModal = (props) => {
                                             variant="outlined"
                                             name="department"
                                             input={<CustomSelect />}
-                                            onChange={formik.handleChange}
                                             {...formik.getFieldProps(
                                                 "department"
                                             )}
