@@ -45,6 +45,8 @@ export const VEHICLE = gql`
             type
             dimensions
             capacity
+            department
+            city
             commentary
             idDriver
         }
@@ -61,6 +63,8 @@ export const VEHICLES_BY_DRIVER = gql`
             type
             dimensions
             capacity
+            department
+            city
             commentary
             idDriver
         }
@@ -68,8 +72,8 @@ export const VEHICLES_BY_DRIVER = gql`
 `;
 
 export const ALL_VEHICLES = gql`
-    query Vehicles($type: String) {
-        vehicles(type: $type) {
+    query Vehicles($type: String, $department: String, $city: String) {
+        vehicles(type: $type, department: $department, city: $city) {
             _id
             brand
             model
@@ -77,6 +81,8 @@ export const ALL_VEHICLES = gql`
             type
             dimensions
             capacity
+            department
+            city
             commentary
             idDriver
         }

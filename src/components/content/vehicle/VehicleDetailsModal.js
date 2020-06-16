@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Modal } from "antd";
+import {Button, Modal} from "antd";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme)=>({
     text: {
@@ -116,6 +116,28 @@ const VehicleDetaisModal = (props) => {
                 <span className={classes.boldText}>
                     {props.value.dimensions} Metros
                 </span>
+            </Typography>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Departamento:{" "}
+                <span className={classes.boldText}>
+                        {props.value.department}
+                    </span>
+            </Typography>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.text}
+            >
+                Municipio:{" "}
+                <span className={classes.boldText}>
+                        {props.value.city}
+                    </span>
             </Typography>
             <Typography
                 variant="body2"

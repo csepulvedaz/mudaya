@@ -1,8 +1,8 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-import { Col, Row } from "antd";
+import {Col, Row} from "antd";
 
 import TruckLicense from "../../header/service/TruckLicense";
 
@@ -93,12 +93,18 @@ const DriverVehicleCard = (props) => {
                         <Typography variant="body1" className={classes.text}>
                             • Capacidad:{" " + props.value.capacity}
                         </Typography>
+                        <Typography variant="body1" className={classes.text}>
+                            • Dimensiones:{" " + props.value.dimensions}
+                        </Typography>
+                        <Typography variant="body1" className={classes.text}>
+                            • Departamento:{" " + props.value.department}
+                        </Typography>
                         <Typography
                             variant="body1"
                             gutterBottom
                             className={classes.text}
                         >
-                            • Dimensiones:{" " + props.value.dimensions}
+                            • Municipio:{" " + props.value.city}
                         </Typography>
                     </Row>
                 </Col>

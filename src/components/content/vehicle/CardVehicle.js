@@ -16,7 +16,7 @@ import { RANK_BY_VEHICLE } from "../../../graphql/queries";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "190rx",
-        height: "340px",
+        height: "360px",
         margin: "20px 25px",
         borderRadius: "8px",
         //boxShadow:theme.shadows[0],
@@ -122,6 +122,26 @@ const CardVehicle = (props) => {
                     <span className={classes.boldText}>
                         {props.dimensions} m
                     </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Departamento:{" "}
+                    <span className={classes.boldText}>
+                        {props.value.department}
+                    </span>
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.text}
+                >
+                    Municipio:{" "}
+                    <span className={classes.boldText}>{props.value.city}</span>
                 </Typography>
                 <div className={classes.footer}>
                     <Rate

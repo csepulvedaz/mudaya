@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Col, Row, Select } from "antd";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Button, Col, Row, Select} from "antd";
 
-import { types } from "../../../utils/selectArrays";
+import {cities, departments, types} from "../../../utils/selectArrays";
 import bg from "../../../../assets/filter-bg.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,30 +45,46 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "16px",
     },
 }));
+const { Option } = Select;
 
 const FilterVehiclePanel = (props) => {
     const classes = useStyles();
-    const [option, setOption] = useState("");
+    const [option, setOption] = useState({type:"",department:"",city:""});
 
     const selectType = types;
-    let index = selectType.indexOf(
-        selectType.find((obj) => {
-            return obj.value === "";
-        })
-    ); // remove "Seleccione un tipo" option
-    if (index !== -1) selectType.splice(index, 1);
+
+    const selectDepartment = departments;
+
+    const cityData = cities;
+    const [selectCity, setSelectCity] = useState(cityData);
 
     const toSearch = () => {
-        props.setType(option);
+        props.setType(option.type);
+        props.setDepartment(option.department);
+        props.setCity(option.city);
     };
 
     const toMain = () => {
         props.setType(null);
+        props.setDepartment(null);
+        props.setCity(null);
     };
 
-    function onChange(value) {
-        setOption(value);
-        if (value === undefined) setOption("null");
+    function onChangeType(value) {
+        setOption({type:value,department:option.department,city:option.city});
+        if (value === undefined) setOption({type:"null",department:option.department,city:option.city});
+    }
+
+    function onChangeDepartment(value) {
+        setOption({type:option.type,department:value,city:option.city});
+        if (value === undefined) setOption({type:option.type,department:"null",city:option.city});
+        setSelectCity(cityData.filter(function(city){return city.department === value;}));
+        if (value === undefined) setSelectCity(cityData);
+    }
+
+    function onChangeCity(value) {
+        setOption({type:option.type,department:option.department,city:value});
+        if (value === undefined) setOption({type:option.type,department:option.department,city:"null"});
     }
 
     return (
@@ -90,14 +106,51 @@ const FilterVehiclePanel = (props) => {
                                 placeholder="Busca por tipo"
                                 optionFilterProp="value"
                                 allowClear
-                                onChange={onChange}
+                                onChange={onChangeType}
                                 filterOption={(input, option) =>
                                     option.label
                                         .toLowerCase()
                                         .indexOf(input.toLowerCase()) >= 0
                                 }
-                                options={selectType}
+                                options={selectType.sort((a, b) => (a.label > b.label) ? 1 : -1)}
                             />
+                        </Col>
+                        <Col>
+                            <Select
+                                className={classes.select}
+                                size={"large"}
+                                showSearch
+                                placeholder="Busca por departamento"
+                                optionFilterProp="value"
+                                allowClear
+                                onChange={onChangeDepartment}
+                                filterOption={(input, option) =>
+                                    option.label
+                                        .toLowerCase()
+                                        .indexOf(input.toLowerCase()) >= 0
+                                }
+                                options={selectDepartment.sort((a, b) => (a.label > b.label) ? 1 : -1)}
+                            />
+                        </Col>
+                        <Col>
+                            <Select
+                                className={classes.select}
+                                size={"large"}
+                                showSearch
+                                placeholder="Busca por municipio"
+                                optionFilterProp="value"
+                                allowClear
+                                onChange={onChangeCity}
+                                filterOption={(input, option) =>
+                                    option.value
+                                        .toLowerCase()
+                                        .indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
+                                {selectCity.sort((a, b) => (a.city > b.city) ? 1 : -1).map(city => (
+                                    <Option key={city.city+", "+city.department.substr(0,2)}>{city.city+", "+city.department.substr(0,2)}</Option>
+                                ))}
+                            </Select>
                         </Col>
                         <Col>
                             <Button
@@ -107,7 +160,7 @@ const FilterVehiclePanel = (props) => {
                                 BUSCAR
                             </Button>
                         </Col>
-                        {props.type && (
+                        {(props.type||props.department||props.city)&& (
                             <Col>
                                 <Button
                                     className={classes.button}
