@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: theme.shadows[3],
         },
     },
+    rankText:{
+        color:theme.palette.grey[500],
+        fontSize:"13px",
+    }
 }));
 
 const CardVehicle = (props) => {
@@ -154,12 +158,14 @@ const CardVehicle = (props) => {
                         }
                         className={classes.rate}
                     />
-                    <span className={classes.boldText}>
-                        (
-                        {dataRank.rankByVehicle
+                    <span className={classes.rankText}>
+                        Calificaciones: 
+                        <span style={{fontWeight:"bold"}}>
+                            
+                            {dataRank.rankByVehicle
                             ? dataRank.rankByVehicle.totalRatings
                             : 0}
-                        )
+                        </span>
                     </span>
                     <Button
                         className={classes.button}

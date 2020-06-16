@@ -16,7 +16,7 @@ import { RANK_BY_VEHICLE } from "../../../../graphql/queries";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "280px",
-        height: "400px",
+        height: "420px",
         margin: "20px 25px",
         borderRadius: "9px",
     },
@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: theme.shadows[3],
         },
     },
+    rankText:{
+        color:theme.palette.grey[500],
+        fontSize:"13px",
+    }
 }));
 
 const SearchVehicleCard = (props) => {
@@ -196,12 +200,14 @@ const SearchVehicleCard = (props) => {
                         }
                         className={classes.rate}
                     />
-                    <span className={classes.boldText}>
-                        (
-                        {dataRank.rankByVehicle
+                    <span className={classes.rankText}>
+                        Calificaciones: 
+                        <span style={{fontWeight:"bold"}}>
+                            
+                            {dataRank.rankByVehicle
                             ? dataRank.rankByVehicle.totalRatings
                             : 0}
-                        )
+                        </span>
                     </span>
                     <Button
                         className={classes.button}
