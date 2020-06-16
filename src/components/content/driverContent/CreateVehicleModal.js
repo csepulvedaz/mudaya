@@ -126,13 +126,15 @@ const CreateVehicleModal = (props) => {
     };
 
     const [selectCity, setSelectCity] = useState(cities);
-    // const { selectCity } = useState(cities);
 
-    const onChangeDepartment = (value) => {
-        console.log(value);
-
-        // setSelectCity(cities.filter(function(city){return city.department === value;}));
-        // if (value === undefined) setSelectCity(cities);
+    const onChangeDepartment = (e) => {
+        const value = departments[e.target.options.selectedIndex].value;
+        setSelectCity(
+            cities.filter(function(city) {
+                return city.department === value;
+            })
+        );
+        if (value === undefined) setSelectCity(cities);
     };
 
     return (
