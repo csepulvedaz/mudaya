@@ -19,7 +19,12 @@ const useStyles = makeStyles((theme) => ({
         height: "360px",
         margin: "20px 25px",
         borderRadius: "8px",
-        //boxShadow:theme.shadows[0],
+        border:`1px ${theme.palette.grey[300]} solid`,
+        boxShadow:"none",
+        "&:hover": {
+            border:`2px ${theme.palette.primary.light} solid`,
+            boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+        },
     },
     media: {
         height: "90px",
@@ -114,7 +119,7 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Capacidad:{" "}
-                    <span className={classes.boldText}>{props.capacity} m</span>
+                    <span className={classes.boldText}>{props.capacity}</span>
                 </Typography>
                 <Typography
                     variant="body2"
@@ -124,7 +129,7 @@ const CardVehicle = (props) => {
                 >
                     Dimensiones:{" "}
                     <span className={classes.boldText}>
-                        {props.dimensions} m
+                        {props.dimensions}
                     </span>
                 </Typography>
                 <Typography
@@ -161,7 +166,7 @@ const CardVehicle = (props) => {
                     <span className={classes.rankText}>
                         Calificaciones: 
                         <span style={{fontWeight:"bold"}}>
-                            
+                            {" "}
                             {dataRank.rankByVehicle
                             ? dataRank.rankByVehicle.totalRatings
                             : 0}

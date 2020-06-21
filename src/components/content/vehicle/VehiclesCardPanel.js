@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.colorGrey.text,
         fontWeight: "600",
         fontSize: "22px",
+        marginTop: "16px",
+        marginBottom:"32px",
     },
     button_r: {
         borderRadius: "0px 8px 8px 0px",
@@ -94,7 +96,7 @@ const VehiclesCardPanel = (props) => {
                         {...carouselprops}
                         arrows="true"
                         style={{
-                            width: "70vw",
+                            width: "80vw",
                             alignSelf: "center",
                         }}
                     >

@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.colorGrey.text,
         fontWeight: "600",
         fontSize: "22px",
+        marginBottom: "32px",
     },
 }));
 

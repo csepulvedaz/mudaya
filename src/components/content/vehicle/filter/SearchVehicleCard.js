@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
         height: "420px",
         margin: "20px 25px",
         borderRadius: "9px",
+        border:`1px ${theme.palette.grey[300]} solid`,
+        boxShadow:"none",
+        "&:hover": {
+            border:`2px ${theme.palette.primary.light} solid`,
+            boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+        },
     },
     media: {
         height: 100,
@@ -55,7 +61,13 @@ const useStyles = makeStyles((theme) => ({
     rankText:{
         color:theme.palette.grey[500],
         fontSize:"13px",
-    }
+    },
+    commentary:{
+        fontSize: "13px",
+        textAlign: "left",
+        color: theme.palette.grey[500],
+        width: "90%",
+    },
 }));
 
 const SearchVehicleCard = (props) => {
@@ -165,9 +177,17 @@ const SearchVehicleCard = (props) => {
                     className={classes.text}
                 >
                     Departamento:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.department}
-                    </span>
+                    {console.log("dpto:",props.value.department )}
+                    {props.value.department === null && 
+                        <span className={classes.commentary}>
+                            No especificado
+                        </span> 
+                    }
+                    {props.value.department !== null && 
+                        <span className={classes.boldText}>
+                            {props.value.department}
+                        </span>
+                    }
                 </Typography>
                 <Typography
                     variant="body2"
@@ -176,7 +196,17 @@ const SearchVehicleCard = (props) => {
                     className={classes.text}
                 >
                     Municipio:{" "}
-                    <span className={classes.boldText}>{props.value.city}</span>
+                    {console.log("municipio:",props.value.city )}
+                    {props.value.city === null && 
+                        <span className={classes.commentary}>
+                            No especificado
+                        </span> 
+                    }
+                    {props.value.city !== null && 
+                        <span className={classes.boldText}>
+                            {props.value.city}
+                        </span>
+                    }
                 </Typography>
                 <Typography
                     variant="body2"
@@ -185,9 +215,16 @@ const SearchVehicleCard = (props) => {
                     className={classes.text}
                 >
                     Comentario:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.commentary}
-                    </span>
+                    {props.value.commentary === "" && 
+                        <span className={classes.commentary}>
+                            No especificado
+                        </span> 
+                    }
+                    {props.value.commentary !== "" && 
+                        <span className={classes.commentary} style={{fontStyle: "italic"}}>
+                            "{props.value.commentary}"
+                        </span>
+                    }
                 </Typography>
                 <div className={classes.footer}>
                     <Rate
@@ -203,7 +240,7 @@ const SearchVehicleCard = (props) => {
                     <span className={classes.rankText}>
                         Calificaciones: 
                         <span style={{fontWeight:"bold"}}>
-                            
+                            {" "}
                             {dataRank.rankByVehicle
                             ? dataRank.rankByVehicle.totalRatings
                             : 0}
