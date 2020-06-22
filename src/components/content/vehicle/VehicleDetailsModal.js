@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Modal, Row} from "antd";
+import {Button, Modal, Row, Col} from "antd";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
@@ -51,7 +51,42 @@ const useStyles = makeStyles((theme)=>({
     },
     icon:{
         color:theme.palette.grey[500],
+    },
+    box_horizontal:{
+        //background: "#fff",
+        //borderRadius: "4px",
+        //margin: "4px 18px",
+        display: "flex",
+        justifyContent: "center",
+    },
+    box_vertical:{ 
+        display:"flex", 
+        flexDirection:"column", 
+        justifyContent:"center",
+    },
+    text_brand:{
+        fontSize:"28px",
+        fontWeight:"bold",
+        color:theme.palette.grey[800],
+        textAlign:"left",
+    },
+    text_model:{
+        fontSize:"18px",
+        fontWeight:"bold",
+        color:theme.palette.grey[800],
+        textAlign:"left",
+    },
+    text_year:{
+        fontSize:"14px",
+        color:theme.palette.grey[500],
+        textAlign:"center",
+    },
+    text_location:{
+        fontSize:"14px",
+        color:theme.palette.grey[400],
+        textAlign:"left",
     }
+
 }));
 
 const VehicleDetaisModal = (props) => {
@@ -73,15 +108,64 @@ const VehicleDetaisModal = (props) => {
             visible={props.visible}
             centered
             title={
-                <Row>
-                    <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                        className={classes.text}
-                    >
-                        "Detalles del vehículo"
-                    </Typography>   
+                <Row className={classes.box_horizontal}>
+                    <Col span={16} style={{margin:"14px 0", padding:"0 32px"}}>
+                        <Row style={{marginBottom:"11px"}}>      
+                            <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                                className={classes.text_brand}
+                            >
+                                TOYOTA
+                            </Typography> 
+                        </Row> 
+                        <Row > 
+                            <Col span = {18}>
+                                <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                    className={classes.text_model}
+                                    style={{marginLeft:"4px"}}
+                                >
+                                    HILUX
+                                </Typography> 
+                            </Col>  
+                            <Col span={6}>
+                                <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    component="p"
+                                    className={classes.text_year}
+                                >
+                                    1995
+                                </Typography> 
+                            </Col>
+                        </Row> 
+                    </Col>  
+                    <Col span={8} className={classes.box_vertical} style={{margin:"20px 0", padding:"0 8px"}}> 
+                        <Row>
+                            <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                                className={classes.text_location}
+                            >
+                                Cundinamarca
+                            </Typography> 
+                        </Row>   
+                        <Row>
+                            <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                                className={classes.text_location}
+                            >
+                                Bogotá D.C.
+                            </Typography> 
+                        </Row> 
+                    </Col>  
                 </Row>}
             onOk={handleOk}
             onCancel={handleCancel}
