@@ -156,7 +156,7 @@ const SearchVehicleCard = (props) => {
                 >
                     Capacidad:{" "}
                     <span className={classes.boldText}>
-                        {props.value.capacity} Metros
+                        {props.value.capacity}
                     </span>
                 </Typography>
                 <Typography
@@ -167,7 +167,7 @@ const SearchVehicleCard = (props) => {
                 >
                     Dimensiones:{" "}
                     <span className={classes.boldText}>
-                        {props.value.dimensions} Metros
+                        {props.value.dimensions}
                     </span>
                 </Typography>
                 <Typography

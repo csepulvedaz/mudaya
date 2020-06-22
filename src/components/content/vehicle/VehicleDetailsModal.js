@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Modal} from "antd";
+import {Button, Modal, Row} from "antd";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
@@ -68,7 +68,17 @@ const VehicleDetaisModal = (props) => {
         <Modal
             visible={props.visible}
             centered
-            title="Detalles del vehículo"
+            title={
+                <Row>
+                    <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        className={classes.text}
+                    >
+                        "Detalles del vehículo"
+                    </Typography>   
+                </Row>}
             onOk={handleOk}
             onCancel={handleCancel}
             footer={[
