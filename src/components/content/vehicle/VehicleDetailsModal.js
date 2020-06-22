@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 const VehicleDetaisModal = (props) => {
+    var dimension=props.value.dimensions.split(' x ');
+    var capacity=props.value.capacity.split(' x ');
+    console.log(dimension[0]);
+    console.log(capacity[0]);
     const classes = useStyles();
     const handleOk = () => {
         props.setVisible(false);
