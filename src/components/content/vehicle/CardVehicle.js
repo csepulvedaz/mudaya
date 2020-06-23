@@ -139,9 +139,15 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Departamento:{" "}
-                    <span className={classes.boldText}>
-                        {props.value.department}
-                    </span>
+                    
+                    {props.value.department === null && 
+                        <span className={classes.text} style= {{fontStyle:"italic"}}>No especificado</span>
+                    }
+                    {props.value.department !== null && 
+                        <span className={classes.boldText}>
+                            {props.value.department}
+                        </span>
+                    }
                 </Typography>
                 <Typography
                     variant="body2"
@@ -150,7 +156,12 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Municipio:{" "}
-                    <span className={classes.boldText}>{props.value.city}</span>
+                    {props.value.city === null && 
+                        <span className={classes.text} style= {{fontStyle:"italic"}}>No especificado</span>
+                    }
+                    {props.value.city !== null && 
+                        <span className={classes.boldText}>{props.value.city}</span>
+                    }
                 </Typography>
                 <div className={classes.footer}>
                     <Rate

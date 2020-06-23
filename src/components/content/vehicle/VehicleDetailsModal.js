@@ -313,7 +313,7 @@ const VehicleDetaisModal = (props) => {
                 </Col>
                 <Col span= {14}>
                     {props.value.commentary === "" && 
-                        <Typography className={classes.commentary} >
+                        <Typography className={classes.commentary} style={{fontStyle:"normal"}} >
                             No especificado
                         </Typography> 
                     }
