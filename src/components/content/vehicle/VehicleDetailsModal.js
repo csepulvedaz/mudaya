@@ -2,11 +2,6 @@ import React from "react";
 import {Button, Modal, Row, Col} from "antd";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
-import CardMedia from "@material-ui/core/CardMedia";
-import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
-import LocalShippingRoundedIcon from '@material-ui/icons/LocalShippingRounded'; 
-import AspectRatioRoundedIcon from '@material-ui/icons/AspectRatioRounded';
-import RecordVoiceOverRoundedIcon from '@material-ui/icons/RecordVoiceOverRounded';
 
 import HeightWhite from "../../../assets/height-white-icon.png";
 import DepthWhite from "../../../assets/depth-white-icon.png";
@@ -17,44 +12,7 @@ import DepthBlue from "../../../assets/depth-blue-icon.png";
 import WidthBlue from "../../../assets/width-blue-icon.png";
 import theme from "../../utils/AppTheme";
 
-const useStyles = makeStyles((theme)=>({
-    text: {
-        fontSize: "15px",
-        textAlign: "left",
-        marginLeft: "",
-    },
-    boldText: { fontWeight: "bold" },
-    button: {
-        margin: "5px 0px",
-        borderRadius: "7px",
-        background: theme.palette.primary.main,
-        color: "#fff",
-        focus: "false",
-        fontWeight: "600",
-        "&:hover": {
-            background: theme.palette.primary.main,
-            color: "#fff !important",
-            boxShadow: theme.shadows[26],
-        },
-    },
-    backButton: {
-        margin: "5px 0px",
-        borderRadius: "7px",
-        background: "#fff",
-        color: theme.palette.primary.main,
-        fontWeight: "600",
-        "&:hover":{
-            boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        }
-    },
-    divider:{
-        borderTop: `1px ${theme.palette.grey[100]} solid`,
-        width: "70%",
-        margin: "12px auto",
-    },
-    icon:{
-        color:theme.palette.grey[500],
-    },
+const useStyles = makeStyles((theme)=>({ 
     box_horizontal:{
         display: "flex",
         justifyContent: "center",
@@ -119,7 +77,29 @@ const useStyles = makeStyles((theme)=>({
         fontStyle:"italic",
         width:"80%"
     },
-
+    button: {
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: theme.palette.primary.main,
+        color: "#fff",
+        focus: "false",
+        fontWeight: "600",
+        "&:hover": {
+            background: theme.palette.primary.main,
+            color: "#fff !important",
+            boxShadow: theme.shadows[26],
+        },
+    },
+    backButton: {
+        margin: "5px 0px",
+        borderRadius: "7px",
+        background: "#fff",
+        color: theme.palette.primary.main,
+        fontWeight: "600",
+        "&:hover":{
+            boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
+        }
+    },
 }));
 
 const VehicleDetaisModal = (props) => {
