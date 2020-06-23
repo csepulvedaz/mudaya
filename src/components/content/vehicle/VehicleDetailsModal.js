@@ -105,8 +105,6 @@ const useStyles = makeStyles((theme)=>({
 const VehicleDetaisModal = (props) => {
     var dimension=props.value.dimensions.split(' x ');
     var capacity=props.value.capacity.split(' x ');
-    console.log(dimension[0]);
-    console.log(capacity[0]);
     const classes = useStyles();
     const handleOk = () => {
         props.setVisible(false);
@@ -145,14 +143,28 @@ const VehicleDetaisModal = (props) => {
                         className={classes.box_vertical} 
                         style={{margin:"20px 0", paddingLeft:"24px", borderLeft: `1px ${theme.palette.grey[300]} solid`}}> 
                         <Row>
-                            <Typography className={classes.text_location} >
-                                {props.value.department}
-                            </Typography> 
+                            {props.value.department === null &&  
+                                <Typography className={classes.text_location} >
+                                    Dpto no especificado
+                                </Typography> 
+                            }
+                            {props.value.department !== null && 
+                                <Typography className={classes.text_location} >
+                                    {props.value.department}
+                                </Typography> 
+                            }
                         </Row>   
                         <Row>
-                            <Typography className={classes.text_location} >
-                                {props.value.city}
-                            </Typography> 
+                            {props.value.city === null &&  
+                                <Typography className={classes.text_location} >
+                                    Ciudad no especificada
+                                </Typography> 
+                            }
+                            {props.value.city !== null && 
+                                <Typography className={classes.text_location} >
+                                    {props.value.city}
+                                </Typography> 
+                            }
                         </Row> 
                     </Col>  
                 </Row>}
@@ -234,7 +246,6 @@ const VehicleDetaisModal = (props) => {
                     </Col>
                 </Row>
             </Col>
-
             <Col 
                 className={classes.box_vertical} 
                 style={{background:"#fff",marginBottom:"24px",}} >
@@ -301,9 +312,16 @@ const VehicleDetaisModal = (props) => {
                     </Typography>
                 </Col>
                 <Col span= {14}>
-                    <Typography className={classes.commentary} >
-                        {props.value.commentary}
-                    </Typography>
+                    {props.value.commentary === "" && 
+                        <Typography className={classes.commentary} >
+                            No especificado
+                        </Typography> 
+                    }
+                    {props.value.commentary !== "" && 
+                        <Typography className={classes.commentary} >
+                            {props.value.commentary}
+                        </Typography>
+                    }
                 </Col>
             </Row>
         </Modal>

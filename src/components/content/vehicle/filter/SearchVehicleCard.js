@@ -177,7 +177,6 @@ const SearchVehicleCard = (props) => {
                     className={classes.text}
                 >
                     Departamento:{" "}
-                    {console.log("dpto:",props.value.department )}
                     {props.value.department === null && 
                         <span className={classes.commentary}>
                             No especificado
@@ -196,7 +195,6 @@ const SearchVehicleCard = (props) => {
                     className={classes.text}
                 >
                     Municipio:{" "}
-                    {console.log("municipio:",props.value.city )}
                     {props.value.city === null && 
                         <span className={classes.commentary}>
                             No especificado
