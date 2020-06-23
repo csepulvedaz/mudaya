@@ -2,10 +2,20 @@ import React from "react";
 import {Button, Modal, Row, Col} from "antd";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
+import CardMedia from "@material-ui/core/CardMedia";
 import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
 import LocalShippingRoundedIcon from '@material-ui/icons/LocalShippingRounded'; 
 import AspectRatioRoundedIcon from '@material-ui/icons/AspectRatioRounded';
 import RecordVoiceOverRoundedIcon from '@material-ui/icons/RecordVoiceOverRounded';
+
+import HeightWhite from "../../../assets/height-white-icon.png";
+import DepthWhite from "../../../assets/depth-white-icon.png";
+import WidthWhite from "../../../assets/width-white-icon.png";
+
+import HeightBlue from "../../../assets/height-blue-icon.png";
+import DepthBlue from "../../../assets/depth-blue-icon.png";
+import WidthBlue from "../../../assets/width-blue-icon.png";
+import theme from "../../utils/AppTheme";
 
 const useStyles = makeStyles((theme)=>({
     text: {
@@ -37,13 +47,6 @@ const useStyles = makeStyles((theme)=>({
             boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
         }
     },
-    commentary:{
-        fontSize: "13px",
-        textAlign: "left",
-        color: theme.palette.grey[500],
-        width: "90%",
-        fontStyle: "italic"
-    },
     divider:{
         borderTop: `1px ${theme.palette.grey[100]} solid`,
         width: "70%",
@@ -53,9 +56,6 @@ const useStyles = makeStyles((theme)=>({
         color:theme.palette.grey[500],
     },
     box_horizontal:{
-        //background: "#fff",
-        //borderRadius: "4px",
-        //margin: "4px 18px",
         display: "flex",
         justifyContent: "center",
     },
@@ -85,7 +85,40 @@ const useStyles = makeStyles((theme)=>({
         fontSize:"14px",
         color:theme.palette.grey[400],
         textAlign:"left",
-    }
+    },
+    blue_section_text:{
+        width:"100%",
+        fontSize:"18px",
+        fontWeight:"bold",
+        textAlign:"center",
+        color:"#fff",
+    },
+    
+    white_section_text:{
+        width:"100%",
+        fontSize:"18px",
+        fontWeight:"bold",
+        textAlign:"center",
+        color:theme.palette.primary.main,
+    },
+    icon_media: {
+        height: "40px",
+        //border:`1px ${theme.palette.grey[200]} solid`,
+        marginBottom: "14px",
+    },
+    commentary_header:{
+        fontSize:"18px",
+        fontWeight:"bold",
+        color:theme.palette.grey[600],
+        textAlign:"center",
+    },
+    commentary:{
+        fontSize:"14px",
+        color:theme.palette.grey[500],
+        textAlign:"left",
+        fontStyle:"italic",
+        width:"80%"
+    },
 
 }));
 
@@ -111,58 +144,34 @@ const VehicleDetaisModal = (props) => {
                 <Row className={classes.box_horizontal}>
                     <Col span={16} style={{margin:"14px 0", padding:"0 32px"}}>
                         <Row style={{marginBottom:"11px"}}>      
-                            <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                                className={classes.text_brand}
-                            >
-                                TOYOTA
+                            <Typography className={classes.text_brand} >
+                                {props.value.brand}
                             </Typography> 
                         </Row> 
                         <Row > 
                             <Col span = {18}>
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                    component="p"
-                                    className={classes.text_model}
-                                    style={{marginLeft:"4px"}}
-                                >
-                                    HILUX
+                                <Typography className={classes.text_model} style={{marginLeft:"4px"}} >
+                                    {props.value.model}
                                 </Typography> 
                             </Col>  
                             <Col span={6}>
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                    component="p"
-                                    className={classes.text_year}
-                                >
-                                    1995
+                                <Typography className={classes.text_year} >
+                                    {props.value.year}
                                 </Typography> 
                             </Col>
                         </Row> 
                     </Col>  
-                    <Col span={8} className={classes.box_vertical} style={{margin:"20px 0", padding:"0 8px"}}> 
+                    <Col span={8} 
+                        className={classes.box_vertical} 
+                        style={{margin:"20px 0", paddingLeft:"24px", borderLeft: `1px ${theme.palette.grey[300]} solid`}}> 
                         <Row>
-                            <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                                className={classes.text_location}
-                            >
-                                Cundinamarca
+                            <Typography className={classes.text_location} >
+                                {props.value.department}
                             </Typography> 
                         </Row>   
                         <Row>
-                            <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                                className={classes.text_location}
-                            >
-                                Bogotá D.C.
+                            <Typography className={classes.text_location} >
+                                {props.value.city}
                             </Typography> 
                         </Row> 
                     </Col>  
@@ -185,102 +194,138 @@ const VehicleDetaisModal = (props) => {
                     Reservar
                 </Button>,
             ]}
+            bodyStyle={{padding:"0"}}
         >
-            <LocalShippingRoundedIcon className={classes.icon}/>
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Marca:{" "}
-                <span className={classes.boldText}>{props.value.brand}</span>
-            </Typography>
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Modelo:{" "}
-                <span className={classes.boldText}>{props.value.model}</span>
-            </Typography>
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Año:{" "}
-                <span className={classes.boldText}>{props.value.year}</span>
-            </Typography>
-            <div className={classes.divider}/>
+            <Col 
+                className={classes.box_vertical} 
+                style={{background:theme.palette.primary.light, marginBottom:"24px"}} >
+                <Row>
+                    <Typography className={classes.blue_section_text} style={{marginBottom:"24px",marginTop:"24px"}}>
+                        CAPACIDAD
+                    </Typography>
+                </Row>
+                <Row style={{paddingBottom:"16px"}} >
+                    <Col span={8} className={classes.box_vertical} >
+                        <Row style={{justifyContent:"center"}}>
+                            <img 
+                                className={classes.icon_media}
+                                src= {HeightWhite} 
+                                alt="alto" 
+                            />
+                        </Row>
+                        <Row style={{justifyContent:"center"}}>
+                            <Typography className={classes.blue_section_text} >
+                                {capacity[0]}
+                            </Typography>
+                        </Row>
+                    </Col>
+                    <Col span={8} 
+                        className={classes.box_vertical}
+                        style={{borderLeft:`1px ${theme.palette.primary.main} solid`,
+                                borderRight:`1px ${theme.palette.primary.main} solid`
+                        }} 
+                    >
+                        <Row style={{justifyContent:"center"}}>
+                            <img 
+                                className={classes.icon_media}
+                                src= {WidthWhite} 
+                                alt="ancho" 
+                            />
+                        </Row>
+                        <Row style={{justifyContent:"center"}}>
+                            <Typography className={classes.blue_section_text} >
+                                {capacity[1]}
+                            </Typography>
+                        </Row>
+                    </Col>
+                    <Col span={8} className={classes.box_vertical} >
+                        <Row style={{justifyContent:"center"}}>
+                            <img 
+                                className={classes.icon_media}
+                                src= {DepthWhite} 
+                                alt="largo" 
+                            />
+                        </Row>
+                        <Row style={{justifyContent:"center"}}>
+                            <Typography className={classes.blue_section_text} >
+                                {capacity[2]}
+                            </Typography>
+                        </Row>
+                    </Col>
+                </Row>
+            </Col>
 
-            <AspectRatioRoundedIcon className={classes.icon}/>
-
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Dimensiones del vehículo:{" "}
-                <span className={classes.boldText}>
-                    {props.value.dimensions}
-                </span>
-            </Typography>
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Capacidad de carga:{" "}
-                <span className={classes.boldText}>
-                    {props.value.capacity}
-                </span>
-            </Typography>
-            <div className={classes.divider}/>
+            <Col 
+                className={classes.box_vertical} 
+                style={{background:"#fff",marginBottom:"24px",}} >
+                <Row>
+                    <Typography className={classes.white_section_text} style={{marginBottom:"24px",marginTop:"8px"}}>
+                        DIMENSIONES
+                    </Typography>
+                </Row>
+                <Row style={{paddingBottom:"16px"}} >
+                    <Col span={8} className={classes.box_vertical} >
+                        <Row style={{justifyContent:"center"}}>
+                            <img 
+                                className={classes.icon_media}
+                                src= {HeightBlue} 
+                                alt="alto" 
+                            />
+                        </Row>
+                        <Row style={{justifyContent:"center"}}>
+                            <Typography className={classes.white_section_text} >
+                                {dimension[0]}
+                            </Typography>
+                        </Row>
+                    </Col>
+                    <Col span={8} 
+                        className={classes.box_vertical}
+                        style={{borderLeft:`1px ${theme.palette.grey[300]} solid`,
+                                borderRight:`1px ${theme.palette.grey[300]} solid`
+                        }} 
+                    >
+                        <Row style={{justifyContent:"center"}}>
+                            <img 
+                                className={classes.icon_media}
+                                src= {WidthBlue} 
+                                alt="ancho" 
+                            />
+                        </Row>
+                        <Row style={{justifyContent:"center"}}>
+                            <Typography className={classes.white_section_text} >
+                                {dimension[1]}
+                            </Typography>
+                        </Row>
+                    </Col>
+                    <Col span={8} className={classes.box_vertical} >
+                        <Row style={{justifyContent:"center"}}>
+                            <img 
+                                className={classes.icon_media}
+                                src= {DepthBlue} 
+                                alt="largo" 
+                            />
+                        </Row>
+                        <Row style={{justifyContent:"center"}}>
+                            <Typography className={classes.white_section_text} >
+                                {dimension[2]}
+                            </Typography>
+                        </Row>
+                    </Col>
+                </Row>
+            </Col>
             
-            <MyLocationRoundedIcon className={classes.icon}/>
-
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Departamento:{" "}
-                <span className={classes.boldText}>
-                        {props.value.department}
-                    </span>
-            </Typography>
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Municipio:{" "}
-                <span className={classes.boldText}>
-                        {props.value.city}
-                    </span>
-            </Typography>
-            <div className={classes.divider}/>
-
-            <RecordVoiceOverRoundedIcon className={classes.icon}/>
-
-            <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.text}
-            >
-                Comentario del conductor:{" "}
-                <span className={classes.commentary}>
-                    {props.value.commentary}
-                </span>
-            </Typography>
+            <Row style={{marginBottom:"32px"}}>
+                <Col span= {10}>
+                    <Typography className={classes.commentary_header} >
+                        COMENTARIO
+                    </Typography>
+                </Col>
+                <Col span= {14}>
+                    <Typography className={classes.commentary} >
+                        {props.value.commentary}
+                    </Typography>
+                </Col>
+            </Row>
         </Modal>
     );
 };
