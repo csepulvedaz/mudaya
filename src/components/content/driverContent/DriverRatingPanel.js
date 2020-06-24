@@ -1,13 +1,13 @@
-import React, {useContext} from "react";
-import {useQuery} from "@apollo/client";
-import {Spin} from "antd";
-import {makeStyles} from "@material-ui/core/styles";
-import {LoadingOutlined} from "@ant-design/icons";
+import React, { useContext } from "react";
+import { useQuery } from "@apollo/client";
+import { Spin } from "antd";
+import { makeStyles } from "@material-ui/core/styles";
+import { LoadingOutlined } from "@ant-design/icons";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 
 import DriverRatingCard from "./DriverRatingCard";
-import {RATINGS_BY_DRIVER} from "../../../graphql/queries";
+import { RATINGS_BY_DRIVER } from "../../../graphql/queries";
 import AuthContext from "../../../context/auth-context";
 import NoElements from "./NoElements";
 
@@ -64,6 +64,7 @@ const DriverRatingPanel = (props) => {
     } = useQuery(RATINGS_BY_DRIVER, {
         variables: { idDriver: context.userId },
         fetchPolicy: "no-cache",
+        pollInterval: 500,
     });
 
     if (loadingRatings)
@@ -87,18 +88,16 @@ const DriverRatingPanel = (props) => {
             <div className={classes.panel}>
                 <List className={classes.list}>
                     {ratings.length === 0 && (
-                        <NoElements element ={"valoraciones"}></NoElements>
+                        <NoElements element={"valoraciones"}></NoElements>
                     )}
                     {ratings &&
-                    ratings.map((value, index) => {
-                        return (
-                            <div key={index} className={classes.listItem}>
-                                <DriverRatingCard
-                                    value={value}
-                                />
-                            </div>
-                        );
-                    })}
+                        [...ratings].reverse().map((value, index) => {
+                            return (
+                                <div key={index} className={classes.listItem}>
+                                    <DriverRatingCard value={value} />
+                                </div>
+                            );
+                        })}
                 </List>
             </div>
         </div>
