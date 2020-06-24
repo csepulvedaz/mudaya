@@ -15,8 +15,8 @@ import { RANK_BY_VEHICLE } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "230px",
-        height: "360px",
+        width: "240px",
+        height: "340px",
         margin: "20px 25px",
         borderRadius: "8px",
         border: `1px ${theme.palette.grey[300]} solid`,
