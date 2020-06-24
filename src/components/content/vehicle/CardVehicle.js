@@ -15,15 +15,16 @@ import { RANK_BY_VEHICLE } from "../../../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "190rx",
+        width: "230px",
         height: "360px",
         margin: "20px 25px",
         borderRadius: "8px",
-        border:`1px ${theme.palette.grey[300]} solid`,
-        boxShadow:"none",
+        border: `1px ${theme.palette.grey[300]} solid`,
+        boxShadow: "none",
         "&:hover": {
-            border:`2px ${theme.palette.primary.light} solid`,
-            boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+            border: `2px ${theme.palette.primary.light} solid`,
+            boxShadow:
+                "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
         },
     },
     media: {
@@ -59,10 +60,10 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: theme.shadows[3],
         },
     },
-    rankText:{
-        color:theme.palette.grey[500],
-        fontSize:"13px",
-    }
+    rankText: {
+        color: theme.palette.grey[500],
+        fontSize: "13px",
+    },
 }));
 
 const CardVehicle = (props) => {
@@ -128,9 +129,7 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Dimensiones:{" "}
-                    <span className={classes.boldText}>
-                        {props.dimensions}
-                    </span>
+                    <span className={classes.boldText}>{props.dimensions}</span>
                 </Typography>
                 <Typography
                     variant="body2"
@@ -139,15 +138,19 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Departamento:{" "}
-                    
-                    {props.value.department === null && 
-                        <span className={classes.text} style= {{fontStyle:"italic"}}>No especificado</span>
-                    }
-                    {props.value.department !== null && 
+                    {props.value.department === null && (
+                        <span
+                            className={classes.text}
+                            style={{ fontStyle: "italic" }}
+                        >
+                            No especificado
+                        </span>
+                    )}
+                    {props.value.department !== null && (
                         <span className={classes.boldText}>
                             {props.value.department}
                         </span>
-                    }
+                    )}
                 </Typography>
                 <Typography
                     variant="body2"
@@ -156,12 +159,19 @@ const CardVehicle = (props) => {
                     className={classes.text}
                 >
                     Municipio:{" "}
-                    {props.value.city === null && 
-                        <span className={classes.text} style= {{fontStyle:"italic"}}>No especificado</span>
-                    }
-                    {props.value.city !== null && 
-                        <span className={classes.boldText}>{props.value.city}</span>
-                    }
+                    {props.value.city === null && (
+                        <span
+                            className={classes.text}
+                            style={{ fontStyle: "italic" }}
+                        >
+                            No especificado
+                        </span>
+                    )}
+                    {props.value.city !== null && (
+                        <span className={classes.boldText}>
+                            {props.value.city}
+                        </span>
+                    )}
                 </Typography>
                 <div className={classes.footer}>
                     <Rate
@@ -175,12 +185,12 @@ const CardVehicle = (props) => {
                         className={classes.rate}
                     />
                     <span className={classes.rankText}>
-                        Calificaciones: 
-                        <span style={{fontWeight:"bold"}}>
+                        Calificaciones:
+                        <span style={{ fontWeight: "bold" }}>
                             {" "}
                             {dataRank.rankByVehicle
-                            ? dataRank.rankByVehicle.totalRatings
-                            : 0}
+                                ? dataRank.rankByVehicle.totalRatings
+                                : 0}
                         </span>
                     </span>
                     <Button

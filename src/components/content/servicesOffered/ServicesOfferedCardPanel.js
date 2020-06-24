@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundPositionY: "90%",
     },
     box: {
-        width: "90%",
+        width: "80%",
         display: "flex",
         flexDirection: "column",
         //backdropFilter: "blur(9px) contrast(80%)",
