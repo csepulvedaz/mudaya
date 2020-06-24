@@ -163,7 +163,9 @@ export default function DropListElement(props) {
                 </Col>
                 <Col span={8} className={classes.colState}>
                     <Typography variant="body1" className={classes.text}>
-                        {moment.tz(date, "America/Los_Angeles").format("LLL")}
+                        {moment(date)
+                            .tz("America/Bogota")
+                            .format("LLL")}
                     </Typography>
 
                     {state === "accepted" && (
