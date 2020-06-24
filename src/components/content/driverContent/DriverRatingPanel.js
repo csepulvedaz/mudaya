@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import DriverRatingCard from "./DriverRatingCard";
 import {RATINGS_BY_DRIVER} from "../../../graphql/queries";
 import AuthContext from "../../../context/auth-context";
+import NoElements from "./NoElements";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -85,6 +86,9 @@ const DriverRatingPanel = (props) => {
             </div>
             <div className={classes.panel}>
                 <List className={classes.list}>
+                    {ratings.length === 0 && (
+                        <NoElements element ={"valoraciones"}></NoElements>
+                    )}
                     {ratings &&
                     ratings.map((value, index) => {
                         return (

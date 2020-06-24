@@ -4,8 +4,8 @@ import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles({
     root: {
-        width: "84px",
-        height: "34px",
+        width: "90px",
+        height: "36px",
         border: "solid 2px #ffee00",
         borderRadius: "6px",
         background: "#ffffc8",

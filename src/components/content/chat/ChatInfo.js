@@ -17,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: "340px",
         height: "100%",
-        padding: "0px 20px",
+        padding: "0px 8px",
         background: theme.palette.chat.background,
     },
     box_vertical: {
         background: "#fff",
         borderRadius: "4px",
-        margin: "3px 18px",
+        margin: "4px 18px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     box_horizontal: {
         background: "#fff",
         borderRadius: "4px",
-        margin: "3px 18px",
+        margin: "4px 18px",
         display: "flex",
         justifyContent: "center",
         padding: "15px 0",
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100px",
         borderRadius: "12px",
         marginBottom: "8px",
+        border:`1px ${theme.palette.grey[200]} solid`,
     },
     tiny_text: {
         fontSize: "14px",
@@ -140,13 +141,15 @@ const ChatInfo = (props) => {
         idVehicle,
     } = props.valueService;
     const { client } = useContext(AuthContext);
+
     const spanIcon = 5;
     const spanContent = 19;
+
     return (
         <div className={classes.root}>
             <Col>
                 {/* TRUCK IMAGE & LICENSE:  */}
-                <Row className={classes.box_vertical}>
+                <Row className={classes.box_vertical} style={{marginTop:"0"}}>
                     <CardMedia
                         className={classes.media}
                         image={carrito}

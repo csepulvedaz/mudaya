@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         height: "520px",
         overflowY: "scroll",
+        borderRadius:"0 0 4px 4px",
+        scrollbarWidth:"thin",
     },
 }));
 
@@ -21,7 +23,7 @@ const MessageList = (props) => {
     const classes = useStyles();
     var database = firebase.database();
     const [messagesList, setMessagesList] = useState([]);
-
+    const DUMMY_DATE = "18/5/20 12:02";
     const messages = useRef(null);
 
     const scrollToBottom = () => {
@@ -46,7 +48,8 @@ const MessageList = (props) => {
                     <Message
                         messageId={message.id}
                         messageText={message.text}
-                        index={index}
+                        messageTimestamp={message.timestamp}
+                        key={index}
                     />
                 );
             })}

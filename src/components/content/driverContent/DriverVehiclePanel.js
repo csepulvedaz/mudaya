@@ -10,6 +10,7 @@ import DriverVehicleCard from "./DriverVehicleCard";
 import img1 from "../../../assets/van.png";
 import { VEHICLES_BY_DRIVER } from "../../../graphql/queries";
 import AuthContext from "../../../context/auth-context";
+import NoElements from "./NoElements";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -86,6 +87,9 @@ const DriverVehiclePanel = (props) => {
             </div>
             <div className={classes.panel}>
                 <List className={classes.list}>
+                    {vehicles.length === 0 && (
+                        <NoElements element ={"vehículos"}></NoElements>
+                    )}
                     {vehicles &&
                         vehicles.map((value, index) => {
                             return (

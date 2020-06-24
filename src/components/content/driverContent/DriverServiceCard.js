@@ -226,7 +226,7 @@ const DriverServiceCard = (props) => {
                 closable={false}
                 onClose={() => setVisibleChat(false)}
                 visible={visibleChat}
-                bodyStyle={{ background: theme.palette.chat.background }}
+                bodyStyle={{ background: theme.palette.chat.background, scrollbarWidth:"thin"}}
             >
                 <CustomChatSider valueService={props.value} />
             </Drawer>

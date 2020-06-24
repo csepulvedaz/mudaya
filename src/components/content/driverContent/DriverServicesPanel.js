@@ -10,6 +10,7 @@ import DriverServiceCard from "./DriverServiceCard";
 import img1 from "../../../assets/van.png";
 import { SERVICES_BY_DRIVER } from "../../../graphql/queries";
 import AuthContext from "../../../context/auth-context";
+import NoElements from "./NoElements";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -86,6 +87,9 @@ const DriverServicesPanel = (props) => {
             </div>
             <div className={classes.panel}>
                 <List className={classes.list}>
+                    {services.length === 0 && (
+                        <NoElements element ={"servicios"}></NoElements>
+                    )}
                     {services &&
                         services.map((value, index) => {
                             return (
