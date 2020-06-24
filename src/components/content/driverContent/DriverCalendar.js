@@ -8,7 +8,7 @@ import PlaceIcon from "@material-ui/icons/RoomRounded";
 import OriginIcon from "@material-ui/icons/NearMeRounded";
 import CommentaryL from "@material-ui/icons/ChatBubbleRounded";
 import CommentaryR from "@material-ui/icons/ModeCommentRounded";
-import moment from "moment-timezone";
+import moment from "moment";
 import {
     Scheduler,
     WeekView,
@@ -133,10 +133,9 @@ const DriverCalendar = (props) => {
     var dataServ;
     services.map((serv) => {
         dataServ = {};
-        finaldate = moment(serv.date).tz("America/Bogota");
-        console.log(finaldate, moment(serv.date).tz("America/Bogota"));
+        finaldate = new moment(serv.date);
         finaldate.add(2, "h");
-        dataServ.startDate = moment(serv.date).tz("America/Bogota");
+        dataServ.startDate = serv.date;
         dataServ.endDate = finaldate.format().slice(0, -9);
         dataServ.title = serv.destination;
         dataServ.origin = serv.origin;

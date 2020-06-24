@@ -4,7 +4,6 @@ import Typography from "@material-ui/core/Typography";
 import { Button, Col, Descriptions, Row, Spin, Tag, Drawer } from "antd";
 import { LoadingOutlined, MessageOutlined } from "@ant-design/icons";
 import { useQuery } from "@apollo/client";
-import moment from "moment-timezone";
 
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
@@ -163,9 +162,7 @@ export default function DropListElement(props) {
                 </Col>
                 <Col span={8} className={classes.colState}>
                     <Typography variant="body1" className={classes.text}>
-                        {moment(date)
-                            .tz("America/Bogota")
-                            .format("LLL")}
+                        {date}
                     </Typography>
 
                     {state === "accepted" && (
