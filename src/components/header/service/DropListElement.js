@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { Button, Col, Descriptions, Row, Spin, Tag, Drawer } from "antd";
 import { LoadingOutlined, MessageOutlined } from "@ant-design/icons";
 import { useQuery } from "@apollo/client";
+import moment from "moment-timezone";
 
 import { VEHICLE } from "../../../graphql/queries";
 import CreateServiceModal from "../../content/service/CreateServiceModal";
@@ -116,7 +117,7 @@ export default function DropListElement(props) {
                 <Col span={6}>
                     <div className={classes.image_box} />
                 </Col>
-                <Col span={12} className={classes.col}>
+                <Col span={10} className={classes.col}>
                     <Row>
                         <Typography variant="h4" className={classes.title}>
                             {vehicle.brand + " • " + vehicle.model}
@@ -160,9 +161,9 @@ export default function DropListElement(props) {
                         </Descriptions>
                     </Row>
                 </Col>
-                <Col span={6} className={classes.colState}>
+                <Col span={8} className={classes.colState}>
                     <Typography variant="body1" className={classes.text}>
-                        {date}
+                        {moment.tz(date, "America/Los_Angeles").format("LLL")}
                     </Typography>
 
                     {state === "accepted" && (
