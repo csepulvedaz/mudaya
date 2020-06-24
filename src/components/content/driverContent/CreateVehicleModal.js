@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     helperText: {
-        margin: "0px 0px -20px 10px",
+        margin: "0px 0px -19px 10px",
         color: theme.palette.error.main,
         fontSize: "12px",
     },
@@ -228,18 +228,24 @@ const CreateVehicleModal = (props) => {
                                     input={<CustomSelect />}
                                     {...formik.getFieldProps("type")}
                                 >
-                                    {types
-                                        .sort((a, b) =>
-                                            a.label > b.label ? 1 : -1
-                                        )
-                                        .map((element, index) => (
-                                            <option
-                                                key={index}
-                                                value={element.value}
-                                            >
-                                                {element.label}
-                                            </option>
-                                        ))}
+                                    {[
+                                        <option value="" disabled>
+                                            Tipo Vehículo
+                                        </option>,
+                                    ].concat(
+                                        types
+                                            .sort((a, b) =>
+                                                a.label > b.label ? 1 : -1
+                                            )
+                                            .map((element, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={element.value}
+                                                >
+                                                    {element.label}
+                                                </option>
+                                            ))
+                                    )}
                                 </NativeSelect>
                                 <ErrorMessage name="type">
                                     {(msg) => (
@@ -416,18 +422,28 @@ const CreateVehicleModal = (props) => {
                                                 "department"
                                             )}
                                         >
-                                            {departments
-                                                .sort((a, b) =>
-                                                    a.label > b.label ? 1 : -1
-                                                )
-                                                .map((element, index) => (
-                                                    <option
-                                                        key={index}
-                                                        value={element.value}
-                                                    >
-                                                        {element.label}
-                                                    </option>
-                                                ))}
+                                            {[
+                                                <option value="" disabled>
+                                                    Departamento
+                                                </option>,
+                                            ].concat(
+                                                departments
+                                                    .sort((a, b) =>
+                                                        a.label > b.label
+                                                            ? 1
+                                                            : -1
+                                                    )
+                                                    .map((element, index) => (
+                                                        <option
+                                                            key={index}
+                                                            value={
+                                                                element.value
+                                                            }
+                                                        >
+                                                            {element.label}
+                                                        </option>
+                                                    ))
+                                            )}
                                         </NativeSelect>
                                         <ErrorMessage name="department">
                                             {(msg) => (
@@ -454,30 +470,36 @@ const CreateVehicleModal = (props) => {
                                             input={<CustomSelect />}
                                             {...formik.getFieldProps("city")}
                                         >
-                                            {selectCity
-                                                .sort((a, b) =>
-                                                    a.city > b.city ? 1 : -1
-                                                )
-                                                .map((element, index) => (
-                                                    <option
-                                                        key={index}
-                                                        value={
-                                                            element.city +
-                                                            ", " +
-                                                            element.department.substr(
-                                                                0,
-                                                                2
-                                                            )
-                                                        }
-                                                    >
-                                                        {element.city +
-                                                            ", " +
-                                                            element.department.substr(
-                                                                0,
-                                                                2
-                                                            )}
-                                                    </option>
-                                                ))}
+                                            {[
+                                                <option value="" disabled>
+                                                    Ciudad
+                                                </option>,
+                                            ].concat(
+                                                selectCity
+                                                    .sort((a, b) =>
+                                                        a.city > b.city ? 1 : -1
+                                                    )
+                                                    .map((element, index) => (
+                                                        <option
+                                                            key={index}
+                                                            value={
+                                                                element.city +
+                                                                ", " +
+                                                                element.department.substr(
+                                                                    0,
+                                                                    2
+                                                                )
+                                                            }
+                                                        >
+                                                            {element.city +
+                                                                ", " +
+                                                                element.department.substr(
+                                                                    0,
+                                                                    2
+                                                                )}
+                                                        </option>
+                                                    ))
+                                            )}
                                         </NativeSelect>
                                         <ErrorMessage name="city">
                                             {(msg) => (

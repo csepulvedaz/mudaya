@@ -248,18 +248,24 @@ const VehicleForm = () => {
                                         input={<CustomSelect />}
                                         {...formik.getFieldProps("type")}
                                     >
-                                        {types
-                                            .sort((a, b) =>
-                                                a.label > b.label ? 1 : -1
-                                            )
-                                            .map((element, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={element.value}
-                                                >
-                                                    {element.label}
-                                                </option>
-                                            ))}
+                                        {[
+                                            <option value="" disabled>
+                                                Tipo Vehículo
+                                            </option>,
+                                        ].concat(
+                                            types
+                                                .sort((a, b) =>
+                                                    a.label > b.label ? 1 : -1
+                                                )
+                                                .map((element, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={element.value}
+                                                    >
+                                                        {element.label}
+                                                    </option>
+                                                ))
+                                        )}
                                     </NativeSelect>
                                     <ErrorMessage name="type">
                                         {(msg) => (
@@ -411,18 +417,24 @@ const VehicleForm = () => {
                                         onChange={formik.handleChange}
                                         {...formik.getFieldProps("department")}
                                     >
-                                        {departments
-                                            .sort((a, b) =>
-                                                a.label > b.label ? 1 : -1
-                                            )
-                                            .map((element, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={element.value}
-                                                >
-                                                    {element.label}
-                                                </option>
-                                            ))}
+                                        {[
+                                            <option value="" disabled>
+                                                Departamento
+                                            </option>,
+                                        ].concat(
+                                            departments
+                                                .sort((a, b) =>
+                                                    a.label > b.label ? 1 : -1
+                                                )
+                                                .map((element, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={element.value}
+                                                    >
+                                                        {element.label}
+                                                    </option>
+                                                ))
+                                        )}
                                     </NativeSelect>
                                     <ErrorMessage name="department">
                                         {(msg) => (
@@ -446,30 +458,36 @@ const VehicleForm = () => {
                                         input={<CustomSelect />}
                                         {...formik.getFieldProps("city")}
                                     >
-                                        {selectCity
-                                            .sort((a, b) =>
-                                                a.city > b.city ? 1 : -1
-                                            )
-                                            .map((element, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={
-                                                        element.city +
-                                                        ", " +
-                                                        element.department.substr(
-                                                            0,
-                                                            2
-                                                        )
-                                                    }
-                                                >
-                                                    {element.city +
-                                                        ", " +
-                                                        element.department.substr(
-                                                            0,
-                                                            2
-                                                        )}
-                                                </option>
-                                            ))}
+                                        {[
+                                            <option value="" disabled>
+                                                Ciudad
+                                            </option>,
+                                        ].concat(
+                                            selectCity
+                                                .sort((a, b) =>
+                                                    a.city > b.city ? 1 : -1
+                                                )
+                                                .map((element, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={
+                                                            element.city +
+                                                            ", " +
+                                                            element.department.substr(
+                                                                0,
+                                                                2
+                                                            )
+                                                        }
+                                                    >
+                                                        {element.city +
+                                                            ", " +
+                                                            element.department.substr(
+                                                                0,
+                                                                2
+                                                            )}
+                                                    </option>
+                                                ))
+                                        )}
                                     </NativeSelect>
                                     <ErrorMessage name="city">
                                         {(msg) => (

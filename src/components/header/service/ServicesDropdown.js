@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useSubscription, useQuery } from "@apollo/client";
-import { Dropdown, Button, Badge, Spin } from "antd";
+import { Dropdown, Button, Badge, Spin, Menu } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import ListIcon from "@material-ui/icons/FormatListBulletedRounded";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 
 import DropListElement from "./DropListElement";
 import { SERVICE_ADDED, SERVICE_UPDATED } from "../../../graphql/subscriptions";
@@ -86,21 +84,22 @@ const ServicesDropdown = (props) => {
         );
     if (errorServices) return `Error! ${errorServices}`;
     const menu = (
-        <List className={classes.menu}>
+        <Menu>
             {[...dataServices.servicesByUser].reverse().map((value, index) => {
                 return (
-                    <ListItem key={index}>
+                    <Menu.Item key={index}>
                         <DropListElement value={value} />
-                    </ListItem>
+                    </Menu.Item>
                 );
             })}
-        </List>
+        </Menu>
     );
     return (
         <Dropdown
             className={classes.box}
             overlay={menu}
             trigger={["click"]}
+            overlayClassName={classes.menu}
             onClick={() => setCount(0)}
         >
             <Button

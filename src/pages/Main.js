@@ -20,8 +20,6 @@ const useStyles = makeStyles((theme) => ({
 const Main = () => {
     const classes = useStyles();
     const { client } = useContext(AuthContext);
-    console.log(client);
-
     return (
         <Layout theme="light" className={classes["@global"]}>
             <CustomHeader />
