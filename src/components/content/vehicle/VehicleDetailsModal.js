@@ -1,7 +1,7 @@
 import React from "react";
-import {Button, Modal, Row, Col} from "antd";
+import { Button, Modal, Row, Col } from "antd";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import HeightWhite from "../../../assets/height-white-icon.png";
 import DepthWhite from "../../../assets/depth-white-icon.png";
@@ -12,70 +12,70 @@ import DepthBlue from "../../../assets/depth-blue-icon.png";
 import WidthBlue from "../../../assets/width-blue-icon.png";
 import theme from "../../utils/AppTheme";
 
-const useStyles = makeStyles((theme)=>({ 
-    box_horizontal:{
+const useStyles = makeStyles((theme) => ({
+    box_horizontal: {
         display: "flex",
         justifyContent: "center",
     },
-    box_vertical:{ 
-        display:"flex", 
-        flexDirection:"column", 
-        justifyContent:"center",
+    box_vertical: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
     },
-    text_brand:{
-        fontSize:"28px",
-        fontWeight:"bold",
-        color:theme.palette.grey[800],
-        textAlign:"left",
+    text_brand: {
+        fontSize: "28px",
+        fontWeight: "bold",
+        color: theme.palette.grey[800],
+        textAlign: "left",
     },
-    text_model:{
-        fontSize:"18px",
-        fontWeight:"bold",
-        color:theme.palette.grey[800],
-        textAlign:"left",
+    text_model: {
+        fontSize: "18px",
+        fontWeight: "bold",
+        color: theme.palette.grey[800],
+        textAlign: "left",
     },
-    text_year:{
-        fontSize:"14px",
-        color:theme.palette.grey[500],
-        textAlign:"center",
+    text_year: {
+        fontSize: "14px",
+        color: theme.palette.grey[500],
+        textAlign: "center",
     },
-    text_location:{
-        fontSize:"14px",
-        color:theme.palette.grey[400],
-        textAlign:"left",
+    text_location: {
+        fontSize: "14px",
+        color: theme.palette.grey[400],
+        textAlign: "left",
     },
-    blue_section_text:{
-        width:"100%",
-        fontSize:"18px",
-        fontWeight:"bold",
-        textAlign:"center",
-        color:"#fff",
+    blue_section_text: {
+        width: "100%",
+        fontSize: "18px",
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "#fff",
     },
-    
-    white_section_text:{
-        width:"100%",
-        fontSize:"18px",
-        fontWeight:"bold",
-        textAlign:"center",
-        color:theme.palette.primary.main,
+
+    white_section_text: {
+        width: "100%",
+        fontSize: "18px",
+        fontWeight: "bold",
+        textAlign: "center",
+        color: theme.palette.primary.main,
     },
     icon_media: {
         height: "40px",
         //border:`1px ${theme.palette.grey[200]} solid`,
         marginBottom: "14px",
     },
-    commentary_header:{
-        fontSize:"18px",
-        fontWeight:"bold",
-        color:theme.palette.grey[600],
-        textAlign:"center",
+    commentary_header: {
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: theme.palette.grey[600],
+        textAlign: "center",
     },
-    commentary:{
-        fontSize:"14px",
-        color:theme.palette.grey[500],
-        textAlign:"left",
-        fontStyle:"italic",
-        width:"80%"
+    commentary: {
+        fontSize: "14px",
+        color: theme.palette.grey[500],
+        textAlign: "left",
+        fontStyle: "italic",
+        width: "80%",
     },
     button: {
         margin: "5px 0px",
@@ -96,15 +96,15 @@ const useStyles = makeStyles((theme)=>({
         background: "#fff",
         color: theme.palette.primary.main,
         fontWeight: "600",
-        "&:hover":{
+        "&:hover": {
             boxShadow: "0 3px 3px rgba(0, 0, 0, 0.16)",
-        }
+        },
     },
 }));
 
 const VehicleDetaisModal = (props) => {
-    var dimension=props.value.dimensions.split(' x ');
-    var capacity=props.value.capacity.split(' x ');
+    var dimension = props.value.dimensions.split(" x ");
+    var capacity = props.value.capacity.split(" x ");
     const classes = useStyles();
     const handleOk = () => {
         props.setVisible(false);
@@ -120,54 +120,67 @@ const VehicleDetaisModal = (props) => {
             centered
             title={
                 <Row className={classes.box_horizontal}>
-                    <Col span={16} style={{margin:"14px 0", padding:"0 32px"}}>
-                        <Row style={{marginBottom:"11px"}}>      
-                            <Typography className={classes.text_brand} >
+                    <Col
+                        span={16}
+                        style={{ margin: "14px 0", padding: "0 32px" }}
+                    >
+                        <Row style={{ marginBottom: "11px" }}>
+                            <Typography className={classes.text_brand}>
                                 {props.value.brand}
-                            </Typography> 
-                        </Row> 
-                        <Row > 
-                            <Col span = {18}>
-                                <Typography className={classes.text_model} style={{marginLeft:"4px"}} >
+                            </Typography>
+                        </Row>
+                        <Row>
+                            <Col span={18}>
+                                <Typography
+                                    className={classes.text_model}
+                                    style={{ marginLeft: "4px" }}
+                                >
                                     {props.value.model}
-                                </Typography> 
-                            </Col>  
-                            <Col span={6}>
-                                <Typography className={classes.text_year} >
-                                    {props.value.year}
-                                </Typography> 
+                                </Typography>
                             </Col>
-                        </Row> 
-                    </Col>  
-                    <Col span={8} 
-                        className={classes.box_vertical} 
-                        style={{margin:"20px 0", paddingLeft:"24px", borderLeft: `1px ${theme.palette.grey[300]} solid`}}> 
+                            <Col span={6}>
+                                <Typography className={classes.text_year}>
+                                    {props.value.year}
+                                </Typography>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col
+                        span={8}
+                        className={classes.box_vertical}
+                        style={{
+                            margin: "20px 0",
+                            paddingLeft: "24px",
+                            borderLeft: `1px ${theme.palette.grey[300]} solid`,
+                        }}
+                    >
                         <Row>
-                            {props.value.department === null &&  
-                                <Typography className={classes.text_location} >
+                            {props.value.department === null && (
+                                <Typography className={classes.text_location}>
                                     Dpto no especificado
-                                </Typography> 
-                            }
-                            {props.value.department !== null && 
-                                <Typography className={classes.text_location} >
+                                </Typography>
+                            )}
+                            {props.value.department !== null && (
+                                <Typography className={classes.text_location}>
                                     {props.value.department}
-                                </Typography> 
-                            }
-                        </Row>   
+                                </Typography>
+                            )}
+                        </Row>
                         <Row>
-                            {props.value.city === null &&  
-                                <Typography className={classes.text_location} >
+                            {props.value.city === null && (
+                                <Typography className={classes.text_location}>
                                     Ciudad no especificada
-                                </Typography> 
-                            }
-                            {props.value.city !== null && 
-                                <Typography className={classes.text_location} >
+                                </Typography>
+                            )}
+                            {props.value.city !== null && (
+                                <Typography className={classes.text_location}>
                                     {props.value.city}
-                                </Typography> 
-                            }
-                        </Row> 
-                    </Col>  
-                </Row>}
+                                </Typography>
+                            )}
+                        </Row>
+                    </Col>
+                </Row>
+            }
             onOk={handleOk}
             onCancel={handleCancel}
             footer={[
@@ -186,142 +199,160 @@ const VehicleDetaisModal = (props) => {
                     Reservar
                 </Button>,
             ]}
-            bodyStyle={{padding:"0"}}
+            bodyStyle={{ padding: "0" }}
         >
-            <Col 
-                className={classes.box_vertical} 
-                style={{background:theme.palette.primary.light, marginBottom:"24px"}} >
+            <Col
+                className={classes.box_vertical}
+                style={{
+                    background: theme.palette.primary.light,
+                    marginBottom: "24px",
+                }}
+            >
                 <Row>
-                    <Typography className={classes.blue_section_text} style={{marginBottom:"24px",marginTop:"24px"}}>
+                    <Typography
+                        className={classes.blue_section_text}
+                        style={{ marginBottom: "24px", marginTop: "24px" }}
+                    >
                         CAPACIDAD
                     </Typography>
                 </Row>
-                <Row style={{paddingBottom:"16px"}} >
-                    <Col span={8} className={classes.box_vertical} >
-                        <Row style={{justifyContent:"center"}}>
-                            <img 
+                <Row style={{ paddingBottom: "16px" }}>
+                    <Col span={8} className={classes.box_vertical}>
+                        <Row style={{ justifyContent: "center" }}>
+                            <img
                                 className={classes.icon_media}
-                                src= {HeightWhite} 
-                                alt="alto" 
+                                src={HeightWhite}
+                                alt="alto"
                             />
                         </Row>
-                        <Row style={{justifyContent:"center"}}>
-                            <Typography className={classes.blue_section_text} >
+                        <Row style={{ justifyContent: "center" }}>
+                            <Typography className={classes.blue_section_text}>
                                 {capacity[0]}
                             </Typography>
                         </Row>
                     </Col>
-                    <Col span={8} 
+                    <Col
+                        span={8}
                         className={classes.box_vertical}
-                        style={{borderLeft:`1px ${theme.palette.primary.main} solid`,
-                                borderRight:`1px ${theme.palette.primary.main} solid`
-                        }} 
+                        style={{
+                            borderLeft: `1px ${theme.palette.primary.main} solid`,
+                            borderRight: `1px ${theme.palette.primary.main} solid`,
+                        }}
                     >
-                        <Row style={{justifyContent:"center"}}>
-                            <img 
+                        <Row style={{ justifyContent: "center" }}>
+                            <img
                                 className={classes.icon_media}
-                                src= {WidthWhite} 
-                                alt="ancho" 
+                                src={WidthWhite}
+                                alt="ancho"
                             />
                         </Row>
-                        <Row style={{justifyContent:"center"}}>
-                            <Typography className={classes.blue_section_text} >
+                        <Row style={{ justifyContent: "center" }}>
+                            <Typography className={classes.blue_section_text}>
                                 {capacity[1]}
                             </Typography>
                         </Row>
                     </Col>
-                    <Col span={8} className={classes.box_vertical} >
-                        <Row style={{justifyContent:"center"}}>
-                            <img 
+                    <Col span={8} className={classes.box_vertical}>
+                        <Row style={{ justifyContent: "center" }}>
+                            <img
                                 className={classes.icon_media}
-                                src= {DepthWhite} 
-                                alt="largo" 
+                                src={DepthWhite}
+                                alt="largo"
                             />
                         </Row>
-                        <Row style={{justifyContent:"center"}}>
-                            <Typography className={classes.blue_section_text} >
+                        <Row style={{ justifyContent: "center" }}>
+                            <Typography className={classes.blue_section_text}>
                                 {capacity[2]}
                             </Typography>
                         </Row>
                     </Col>
                 </Row>
             </Col>
-            <Col 
-                className={classes.box_vertical} 
-                style={{background:"#fff",marginBottom:"24px",}} >
+            <Col
+                className={classes.box_vertical}
+                style={{ background: "#fff", marginBottom: "24px" }}
+            >
                 <Row>
-                    <Typography className={classes.white_section_text} style={{marginBottom:"24px",marginTop:"8px"}}>
+                    <Typography
+                        className={classes.white_section_text}
+                        style={{ marginBottom: "24px", marginTop: "8px" }}
+                    >
                         DIMENSIONES
                     </Typography>
                 </Row>
-                <Row style={{paddingBottom:"16px"}} >
-                    <Col span={8} className={classes.box_vertical} >
-                        <Row style={{justifyContent:"center"}}>
-                            <img 
+                <Row style={{ paddingBottom: "16px" }}>
+                    <Col span={8} className={classes.box_vertical}>
+                        <Row style={{ justifyContent: "center" }}>
+                            <img
                                 className={classes.icon_media}
-                                src= {HeightBlue} 
-                                alt="alto" 
+                                src={HeightBlue}
+                                alt="alto"
                             />
                         </Row>
-                        <Row style={{justifyContent:"center"}}>
-                            <Typography className={classes.white_section_text} >
+                        <Row style={{ justifyContent: "center" }}>
+                            <Typography className={classes.white_section_text}>
                                 {dimension[0]}
                             </Typography>
                         </Row>
                     </Col>
-                    <Col span={8} 
+                    <Col
+                        span={8}
                         className={classes.box_vertical}
-                        style={{borderLeft:`1px ${theme.palette.grey[300]} solid`,
-                                borderRight:`1px ${theme.palette.grey[300]} solid`
-                        }} 
+                        style={{
+                            borderLeft: `1px ${theme.palette.grey[300]} solid`,
+                            borderRight: `1px ${theme.palette.grey[300]} solid`,
+                        }}
                     >
-                        <Row style={{justifyContent:"center"}}>
-                            <img 
+                        <Row style={{ justifyContent: "center" }}>
+                            <img
                                 className={classes.icon_media}
-                                src= {WidthBlue} 
-                                alt="ancho" 
+                                src={WidthBlue}
+                                alt="ancho"
                             />
                         </Row>
-                        <Row style={{justifyContent:"center"}}>
-                            <Typography className={classes.white_section_text} >
+                        <Row style={{ justifyContent: "center" }}>
+                            <Typography className={classes.white_section_text}>
                                 {dimension[1]}
                             </Typography>
                         </Row>
                     </Col>
-                    <Col span={8} className={classes.box_vertical} >
-                        <Row style={{justifyContent:"center"}}>
-                            <img 
+                    <Col span={8} className={classes.box_vertical}>
+                        <Row style={{ justifyContent: "center" }}>
+                            <img
                                 className={classes.icon_media}
-                                src= {DepthBlue} 
-                                alt="largo" 
+                                src={DepthBlue}
+                                alt="largo"
                             />
                         </Row>
-                        <Row style={{justifyContent:"center"}}>
-                            <Typography className={classes.white_section_text} >
+                        <Row style={{ justifyContent: "center" }}>
+                            <Typography className={classes.white_section_text}>
                                 {dimension[2]}
                             </Typography>
                         </Row>
                     </Col>
                 </Row>
             </Col>
-            
-            <Row style={{marginBottom:"32px"}}>
-                <Col span= {10}>
-                    <Typography className={classes.commentary_header} >
-                        COMENTARIO
+
+            <Row style={{ marginBottom: "32px" }}>
+                <Col span={10}>
+                    <Typography className={classes.commentary_header}>
+                        Comentarios:
                     </Typography>
                 </Col>
-                <Col span= {14}>
-                    {props.value.commentary === "" && 
-                        <Typography className={classes.commentary} style={{fontStyle:"normal"}} >
+                <Col span={14}>
+                    {props.value.commentary === "" && (
+                        <Typography
+                            className={classes.commentary}
+                            style={{ fontStyle: "normal" }}
+                        >
                             No especificado
-                        </Typography> 
-                    }
-                    {props.value.commentary !== "" && 
-                        <Typography className={classes.commentary} >
+                        </Typography>
+                    )}
+                    {props.value.commentary !== "" && (
+                        <Typography className={classes.commentary}>
                             {props.value.commentary}
                         </Typography>
-                    }
+                    )}
                 </Col>
             </Row>
         </Modal>
