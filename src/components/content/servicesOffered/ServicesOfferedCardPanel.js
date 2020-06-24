@@ -9,82 +9,84 @@ import img4 from "../../../assets/ourservices4.jpg";
 import waves from "../../../assets/waves-bg.png";
 
 const useStyles = makeStyles((theme) => ({
-  content: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    margin: "50px 0px",
-    background: `url(${waves}) no-repeat 50% 100%`,
-    backgroundSize: "1400px 250px",
-    backgroundPositionY: "90%",
-  },
-  box: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    //backdropFilter: "blur(9px) contrast(80%)",
-    // background:theme.palette.secondary.light,
-    //borderRadius: "13px",
-    padding: "20px 20px",
-  },
-  panel: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  title: {
-    textAlign: "center",
-    color: theme.palette.colorGrey.text,
-    fontWeight: "600",
-    fontSize: "22px",
-    marginBottom: "32px",
-  },
+    content: {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        margin: "50px 0px",
+        background: `url(${waves}) no-repeat 50% 100%`,
+        backgroundSize: "1600px 250px",
+        backgroundPositionY: "90%",
+    },
+    box: {
+        width: "90%",
+        display: "flex",
+        flexDirection: "column",
+        //backdropFilter: "blur(9px) contrast(80%)",
+        // background:theme.palette.secondary.light,
+        //borderRadius: "13px",
+        padding: "20px 20px",
+    },
+    title: {
+        textAlign: "center",
+        color: theme.palette.colorGrey.text,
+        fontWeight: "600",
+        fontSize: "22px",
+        marginBottom: "42px",
+    },
 }));
 
 const ServicesOfferedCardPanel = () => {
-  const classes = useStyles();
-  const services = [
-    {
-      img: img1,
-      text: "PUBLICACIÓN",
-      description: "Haz conocer tu negocio",
-    },
-    {
-      img: img2,
-      text: "EMPRESAS",
-      description: "Apropiado para grandes volumenes",
-    },
-    {
-      img: img3,
-      text: "HOGARES",
-      description: "Ideal para mudanzas familiares",
-    },
-    {
-      img: img4,
-      text: "LARGA DISTANCIA",
-      description: "Especial para grandes recorridos",
-    },
-  ];
-  return (
-    <div className={classes.content}>
-      <div className={classes.box}>
-        <h3 className={classes.title}>NUESTROS SERVICIOS</h3>
-        <div className={classes.panel}>
-          <Grid container>
-            {services.map((value, index) => (
-              <Grid key={index} item xs={12} sm={6} md={3}>
-                <CardServicesOffered
-                  key={index}
-                  image={value.img}
-                  text={value.text}
-                  description={value.description}
-                />
-              </Grid>
-            ))}
-          </Grid>
+    const classes = useStyles();
+    const services = [
+        {
+            img: img1,
+            text: "PUBLICACIÓN",
+            description: "Haz conocer tu negocio",
+        },
+        {
+            img: img2,
+            text: "EMPRESAS",
+            description: "Apropiado para grandes volumenes",
+        },
+        {
+            img: img3,
+            text: "HOGARES",
+            description: "Ideal para mudanzas familiares",
+        },
+        {
+            img: img4,
+            text: "LARGA DISTANCIA",
+            description: "Especial para grandes recorridos",
+        },
+    ];
+    return (
+        <div className={classes.content}>
+            <div className={classes.box}>
+                <h3 className={classes.title}>NUESTROS SERVICIOS</h3>
+                <Grid container direction="row" justify="center" spacing={3}>
+                    {services.map((value, index) => (
+                        <Grid
+                            key={index}
+                            item
+                            xs
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <CardServicesOffered
+                                key={index}
+                                image={value.img}
+                                text={value.text}
+                                description={value.description}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ServicesOfferedCardPanel;

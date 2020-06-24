@@ -128,13 +128,15 @@ const CreateVehicleModal = (props) => {
     const [selectCity, setSelectCity] = useState(cities);
 
     const onChangeDepartment = (e) => {
-        const value = departments[e.target.options.selectedIndex].value;
-        setSelectCity(
-            cities.filter(function(city) {
-                return city.department === value;
-            })
-        );
-        if (value === undefined) setSelectCity(cities);
+        if (e.target.name === "department") {
+            const value = departments[e.target.options.selectedIndex].value;
+            setSelectCity(
+                cities.filter(function(city) {
+                    return city.department === value;
+                })
+            );
+            if (value === undefined) setSelectCity(cities);
+        }
     };
 
     return (
@@ -143,7 +145,7 @@ const CreateVehicleModal = (props) => {
             centered
             title="Agregar vehiculo"
             onCancel={handleCancel}
-            footer={[]}
+            footer={null}
         >
             <Layout className={classes.paper}>
                 {loadingVehicle && (

@@ -1,5 +1,5 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +10,6 @@ const useStyles = makeStyles({
     root: {
         width: "190px",
         height: "230px",
-        margin: "10px 25px",
         borderRadius: "9px",
         boxShadow: theme.shadows[28],
     },
