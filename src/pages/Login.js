@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { ErrorMessage, Form, Formik } from "formik";
 import { useLazyQuery } from "@apollo/client";
 import * as Yup from "yup";
+import DOMPurify from 'dompurify';
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -210,7 +211,9 @@ const Login = (props) => {
                             password: Yup.string().required("Requerido"),
                         })}
                         onSubmit={(values) => {
-                            // alert(JSON.stringify(values, null, 2));
+                            values.email = DOMPurify.sanitize(values.email);
+                            values.password = DOMPurify.sanitize(values.password);
+                            //alert(JSON.stringify(values, null, 2));
                             login({
                                 variables: {
                                     email: values.email,

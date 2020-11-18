@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 import { Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import * as Yup from "yup";
+import DOMPurify from 'dompurify';
 import { ErrorMessage, Form, Formik } from "formik";
 
 import { CREATE_DRIVER, CREATE_USER } from "../graphql/mutations";
@@ -215,7 +216,13 @@ const SignUp = (props) => {
                         password: Yup.string().required("Campo requerido"),
                     })}
                     onSubmit={(values) => {
-                        // alert(JSON.stringify(values, null, 2));
+                        values._id = DOMPurify.sanitize(values._id);
+                        values.name = DOMPurify.sanitize(values.name);
+                        values.surname = DOMPurify.sanitize(values.surname);
+                        values.phone = DOMPurify.sanitize(values.phone);
+                        values.email = DOMPurify.sanitize(values.email);
+                        values.password = DOMPurify.sanitize(values.password);
+                        alert(JSON.stringify(values, null, 2));
                         values._id = values._id.slice(3).replace(/\s/g, "");
                         values.phone = values.phone.replace(/\s/g, "");
                         create(values);
