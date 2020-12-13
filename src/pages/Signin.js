@@ -10,11 +10,12 @@ import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Modal, Spin } from "antd";
+import { Modal, Spin, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import * as Yup from "yup";
 import DOMPurify from 'dompurify';
 import { ErrorMessage, Form, Formik } from "formik";
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import { CREATE_DRIVER, CREATE_USER } from "../graphql/mutations";
 import { LOGIN } from "../graphql/queries";
@@ -98,6 +99,20 @@ function errorModal(msg) {
         title: "Error",
         content: msg,
     });
+}
+let state = {
+    human: false,
+    humanKey: null
+  }
+  function onChange(value) {
+      state.human = true;
+      state.humanKey = value;
+    console.log("Captcha value:", value)
+  }
+  function onExpire(value) {
+    state.human = false;
+    state.humanKey = null;
+  console.log("Captcha value:", value)
 }
 
 const SignUp = (props) => {
@@ -189,6 +204,7 @@ const SignUp = (props) => {
                     />
                 )}
                 <LocalShippingIcon className={classes.truck} />
+                <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={onChange} onExpired={onExpire}/>
                 <Typography component="h1" variant="h5">
                     Registro
                 </Typography>
@@ -225,7 +241,10 @@ const SignUp = (props) => {
                         alert(JSON.stringify(values, null, 2));
                         values._id = values._id.slice(3).replace(/\s/g, "");
                         values.phone = values.phone.replace(/\s/g, "");
-                        create(values);
+                        if(state.human && state.humanKey != null)
+                            create(values);
+                        else
+                            message.warning("unvalid captcha, try again");
                     }}
                 >
                     {(formik) => (
