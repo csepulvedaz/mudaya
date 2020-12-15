@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { ErrorMessage, Form, Formik } from "formik";
 import { useLazyQuery } from "@apollo/client";
 import * as Yup from "yup";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -212,7 +212,9 @@ const Login = (props) => {
                         })}
                         onSubmit={(values) => {
                             values.email = DOMPurify.sanitize(values.email);
-                            values.password = DOMPurify.sanitize(values.password);
+                            values.password = DOMPurify.sanitize(
+                                values.password
+                            );
                             //alert(JSON.stringify(values, null, 2));
                             login({
                                 variables: {
@@ -343,7 +345,7 @@ const Login = (props) => {
                                 >
                                     <Grid item>
                                         <FacebookLogin
-                                            appId="262085324993789"
+                                            appId="1154438828237144"
                                             fields="email,first_name,last_name"
                                             callback={responseFacebook}
                                             language="es_ES"
