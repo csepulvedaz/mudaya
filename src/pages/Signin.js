@@ -244,7 +244,7 @@ const SignUp = (props) => {
                         values.phone = DOMPurify.sanitize(values.phone);
                         values.email = DOMPurify.sanitize(values.email);
                         values.password = DOMPurify.sanitize(values.password);
-                        alert(JSON.stringify(values, null, 2));
+                        // alert(JSON.stringify(values, null, 2));
                         values._id = values._id.slice(3).replace(/\s/g, "");
                         values.phone = values.phone.replace(/\s/g, "");
                         if (state.human && state.humanKey != null)
