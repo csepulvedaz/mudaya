@@ -383,7 +383,7 @@ const Login = (props) => {
                                                     />
                                                 </IconButton>
                                             )}
-                                            clientId="886423021881-6f3l3ci4dv0o7mmafuhqu7p0ntg4ulvh.apps.googleusercontent.com"
+                                            clientId="515176564508-1fvr1sv7kghek5p23fffgv0f177sucon.apps.googleusercontent.com"
                                             buttonText="Ingresa con Google"
                                             onSuccess={responseGoogle}
                                             onFailure={responseGoogleFail}
